@@ -80,8 +80,7 @@ var navbarItem = {
 			display: 'inline-block',
 			paddingRight: '15px',
 			textAlign: 'center',
-			pointerEvents: 'all',
-			color: 'white'
+			pointerEvents: 'all'
 		}
 	},
 	get oneA() {
@@ -93,8 +92,7 @@ var navbarItem = {
 			display: 'inline-block',
 			textAlign: 'center',
 			borderLeft: 'solid 2px brown',
-			pointerEvents: 'all',
-			color: 'white'
+			pointerEvents: 'all'
 		}
 	}
 }

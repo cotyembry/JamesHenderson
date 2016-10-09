@@ -1,2 +1,4 @@
-9/14/16
-	5:50pm	6:25pm
+started development: Tue Sep 27 22:52:36 CDT 2016
+ended development: Wed Sep 28 00:06:11 CDT 2016
+started development: Sat Oct  1 11:22:23 CDT 2016
+ended development: Sat Oct  1 12:38:54 CDT 2016

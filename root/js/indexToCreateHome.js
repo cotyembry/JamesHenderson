@@ -11,7 +11,7 @@
 *	Proverbs 3:5-6 (one of my favorites, go check it out)
 */
 
-import documentReady from './documentReady.js';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
@@ -25,8 +25,21 @@ import Home from './components/Home.jsx';
 
 
 $(document).ready(function() {
-	documentReady.ready();
+	home.ready();
 });
+
+var home = {
+	ready: function ready() {
+		$(window).resize(home.adjustSize);
+		//start the stuff necessary to do when the document has been loaded
+		var widthToSet = $(document.documentElement).outerWidth();
+		$('#page').css({ 'width': widthToSet + 'px' });
+	},
+	adjustSize: function adjustSize() {
+		var widthToSet = $(document.documentElement).outerWidth();
+		$('#page').css({ 'width': widthToSet + 'px' });
+	}
+}
 
 // ReactDOM.render(<Emblem />, document.getElementById('emblem'));
 // ReactDOM.render(<Header />, document.getElementById('header'));

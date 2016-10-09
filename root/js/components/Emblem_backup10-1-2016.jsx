@@ -46,16 +46,14 @@ var Emblem = React.createClass({
 		//at the end of mounting...I'm still having to clean up with jquery because of the lazy way I'm doing this...
 		//this helps me properly set the height as a perfect percentage
 		var totalHeight = $('#emblem-element').outerHeight(),
-		logosHeight = $('#logo').outerHeight(),
-		heightTS = (100 - ((logosHeight / totalHeight) * 100)) + '%'; //in %'s
+			logosHeight = $('#logo').outerHeight(),
+			heightTS = (100 - ((logosHeight / totalHeight) * 100)) + '%'; //in %'s
 
-		$('#emblem-background-image').css({ height: heightTS });
+			$('#emblem-background-image').css({ height: heightTS });
 
-		var top = $('emblem-element').outerHeight();
+			var top = $('emblem-element').outerHeight();
 
-		this.setState({ gradientHelperTopShift: top })
-
-		document.getElementById('logo').appendChild(document.getElementById('svg2'));
+			this.setState({ gradientHelperTopShift: top })
 
 	},
 	render: function() {
@@ -63,6 +61,9 @@ var Emblem = React.createClass({
 			<div>
 				<div id="emblem-element" style={styles.one}>
 					<div id="logo">
+						<svg style={styles.svg}>
+							<circle style={styles.two}></circle>
+						</svg>
 					</div>
 					<div id="emblem-background-image"></div>
 				</div>
@@ -72,19 +73,7 @@ var Emblem = React.createClass({
 	}
 });
 
-/* //I will have to convert this css into what react expects in the inline styles
-	width: 100%;
-	height: 75px;
-	/*background: #511515;
-	background: #511515;
-	background: -moz-linear-gradient(#511515, #000);
-	background: -webkit-linear-gradient(#511515, #000);
-	background: -o-linear-gradient(#511515, #000);
-	background: -ms-linear-gradient(#511515, #000);/*For IE10
-	background: linear-gradient(#511515, #000);
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000');/*For IE7-8-9
-	margin-bottom: 5px;
-*/
+
 
 
 var styles = {
@@ -94,8 +83,7 @@ var styles = {
 		position: 'fixed',
 		top: '0px',
 		// left: '-25%',
-		// background: '#511515'
-		background: '#D5EFF8'
+		background: '#511515'
 	},
 	two: {
 		cx: 100,
@@ -110,14 +98,14 @@ var styles = {
 	gradientHelper: {
 		width: '100%',
 		height: 75,
-		background: '#D5EFF8',
-		background: '#D5EFF8',
-		background: '-moz-linear-gradient(#D5EFF8, #D5EFF8)',
-		background: '-webkit-linear-gradient(#D5EFF8, #D5EFF8)',
-		background: '-o-linear-gradient(#D5EFF8, #D5EFF8)',
-		background: '-ms-linear-gradient(#D5EFF8, #D5EFF8)',/*For IE10*/
-		background: 'linear-gradient(#D5EFF8, #D5EFF8)',
-		filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#D5EFF8', endColorstr='#D5EFF8')",/*For IE7-8-9*/
+		background: '#511515',
+		background: '#511515',
+		background: '-moz-linear-gradient(#511515, #000)',
+		background: '-webkit-linear-gradient(#511515, #000)',
+		background: '-o-linear-gradient(#511515, #000)',
+		background: '-ms-linear-gradient(#511515, #000)',/*For IE10*/
+		background: 'linear-gradient(#511515, #000)',
+		filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')",/*For IE7-8-9*/
 		marginBottom: 5,
 		top: 350,
 		position: 'fixed'

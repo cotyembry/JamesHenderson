@@ -1,8 +1,10 @@
 module.exports = {
-  entry: './js/indexToCreateBeliefs.js',
+  entry: './js/indexToCreateHome.js',
+  // entry: './js/indexToCreateApplication.js',
   output: {
     path: __dirname,
-    filename: './dist/beliefs.js'
+    // filename: './dist/application.js'
+    filename: './dist/bundle.js'
   },
   module: {
     loaders: [{

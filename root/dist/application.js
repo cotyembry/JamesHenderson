@@ -54,59 +54,26 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(175);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _Emblem = __webpack_require__(176);
+	var _Emblem = __webpack_require__(175);
 
 	var _Emblem2 = _interopRequireDefault(_Emblem);
 
-	var _Home = __webpack_require__(196);
+	var _Navbar = __webpack_require__(196);
 
-	var _Home2 = _interopRequireDefault(_Home);
+	var _Navbar2 = _interopRequireDefault(_Navbar);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	(0, _jquery2.default)(document).ready(function () {
-		home.ready();
-	});
-	// import Header from './components/Header.jsx';
-	// import Navbar from './components/Navbar.jsx';
-	// import Footer from './components/Footer.jsx';
 	/*
 	*		   Author:  John Coty Embry
-	*	 Date Created:  8/9/16
-	*	Last Modified:  8/11/16
-	*
-	*	Program comment: use this index file in conjunction with webpack
-	*	to generate the 'bundle.js file' that needs to be linked on the home.html
-	*	page (this file being created, rather than being called bundle.js, I am
-	*	calling it home.js since this name seems appropriate)
+	*	 Date Created:  9/17/16
+	*	Last Modified:  9/17/16
 	*
 	*	Proverbs 3:5-6 (one of my favorites, go check it out)
 	*/
 
-	var home = {
-		ready: function ready() {
-			(0, _jquery2.default)(window).resize(home.adjustSize);
-			//start the stuff necessary to do when the document has been loaded
-			var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
-			(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
-		},
-		adjustSize: function adjustSize() {
-			var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
-			(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
-		}
-	};
-
-	// ReactDOM.render(<Emblem />, document.getElementById('emblem'));
-	// ReactDOM.render(<Header />, document.getElementById('header'));
-	// ReactDOM.render(<Navbar />, document.getElementById('navbar'));
-	// ReactDOM.render(<Footer />, document.getElementById('footer'));
-
 	_reactDom2.default.render(_react2.default.createElement(_Emblem2.default, null), document.getElementById('emblem'));
-	_reactDom2.default.render(_react2.default.createElement(_Home2.default, null), document.getElementById('root'));
+	_reactDom2.default.render(_react2.default.createElement(_Navbar2.default, null), document.getElementById('navbar'));
 
 /***/ },
 /* 1 */
@@ -21518,6 +21485,490 @@
 /* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var _defineProperty2 = __webpack_require__(176);
+
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+	var _gradientHelper;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _jquery = __webpack_require__(195);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	//document.addEventListener('scroll', EmblemObject.pageDidScroll)
+
+
+	/*
+
+	when scrolling down, make the emblem have sort of a background
+	and it either reveals it fully, or hides it (depending on if the
+	user is scrolling up or down)
+
+	once I get scrolled down to a certain point, animate a transition effect
+	to make another smaller header appear (maybe make it only like 35px in 
+	height - not very intrusive at all)
+
+
+	*/
+
+	//http://jsfiddle.net/skmasq/mP974/
+	// function wheel($div, deltaY) {
+	//     var step = 80;
+	//     var pos = $div.scrollTop();
+	//     var nextPos = pos + (step * (-deltaY))
+	//     console.log("DelatY: " + deltaY + ", Step: " + step + ", nextPos: " + nextPos);
+	//     $div.scrollTop(nextPos);
+	// }
+
+	// $('#test').bind('mousewheel', function (event, delta, deltaX, deltaY) {
+	//     if (delta > -2 && delta < 2) {
+	//         wheel($(this), deltaY);
+	//         event.preventDefault();
+	//     }
+	//     console.log(delta);
+	// });
+
+
+	var Emblem = _react2.default.createClass({
+		displayName: 'Emblem',
+
+		getInitialState: function getInitialState() {
+			return {
+				gradientHelperTopShift: 350
+			};
+		},
+		componentDidMount: function componentDidMount() {
+
+			//at the end of mounting...I'm still having to clean up with jquery because of the lazy way I'm doing this...
+			//this helps me properly set the height as a perfect percentage
+			var totalHeight = (0, _jquery2.default)('#emblem-element').outerHeight(),
+			    logosHeight = (0, _jquery2.default)('#logo').outerHeight(),
+			    heightTS = 100 - logosHeight / totalHeight * 100 + '%'; //in %'s
+
+			(0, _jquery2.default)('#emblem-background-image').css({ height: heightTS });
+
+			var top = (0, _jquery2.default)('emblem-element').outerHeight();
+
+			this.setState({ gradientHelperTopShift: top });
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'div',
+					{ id: 'emblem-element', style: styles.one },
+					_react2.default.createElement(
+						'div',
+						{ id: 'logo' },
+						_react2.default.createElement(
+							'svg',
+							{ style: styles.svg },
+							_react2.default.createElement('circle', { style: styles.two })
+						)
+					),
+					_react2.default.createElement('div', { id: 'emblem-background-image' })
+				),
+				_react2.default.createElement('div', { id: 'gradientHelper', style: styles.gradientHelper })
+			);
+		}
+	});
+
+	/* //I will have to convert this css into what react expects in the inline styles
+		width: 100%;
+		height: 75px;
+		/*background: #511515;
+		background: #511515;
+		background: -moz-linear-gradient(#511515, #000);
+		background: -webkit-linear-gradient(#511515, #000);
+		background: -o-linear-gradient(#511515, #000);
+		background: -ms-linear-gradient(#511515, #000);/*For IE10
+		background: linear-gradient(#511515, #000);
+		filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000');/*For IE7-8-9
+		margin-bottom: 5px;
+	*/
+
+	var styles = {
+		one: {
+			width: '100%',
+			height: '350px',
+			position: 'fixed',
+			top: '0px',
+			// left: '-25%',
+			background: '#511515'
+		},
+		two: {
+			cx: 100,
+			cy: 100,
+			r: 75,
+			fill: 'orange'
+		},
+		svg: {
+			width: '100%',
+			height: '175px'
+		},
+		gradientHelper: (_gradientHelper = {
+			width: '100%',
+			height: 75,
+			background: '#511515'
+		}, (0, _defineProperty3.default)(_gradientHelper, 'background', '#511515'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-moz-linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-webkit-linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-o-linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-ms-linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'background', 'linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"), (0, _defineProperty3.default)(_gradientHelper, 'marginBottom', 5), (0, _defineProperty3.default)(_gradientHelper, 'top', 350), (0, _defineProperty3.default)(_gradientHelper, 'position', 'fixed'), _gradientHelper)
+	};
+
+	var EmblemObject = {
+		//hasScrolled will help me initialize the scrolling starting value
+		hasScrolled: false,
+		scrollPosition: 0,
+
+		prior_scrollTop: 0,
+		increment: 1,
+		start: function start() {
+			window.addEventListener('scroll', EmblemObject.pageDidScroll);
+
+			(0, _jquery2.default)('#body').bind('wheel', function (event, delta, deltaX, deltaY) {
+				/* //make this better
+	   var current_scrollTop = $('#body').scrollTop();
+	   if(current_scrollTop > EmblemObject.prior_scrollTop) {
+	   	//further scrolled down the page
+	   	//alert(current_scrollTop + ' > ' + EmblemObject.prior_scrollTop)
+	   	$('#body').scrollTop($('#body').scrollTop() + 2)
+	   	}
+	   else {
+	   	//lesser scrolled on the page
+	   	//alert(current_scrollTop + ' < ' + EmblemObject.prior_scrollTop)	
+	   	$('#body').scrollTop($('#body').scrollTop() - 2)
+	   	}
+	   EmblemObject.prior_scrollTop = current_scrollTop;
+	   //EmblemObject.increment += 2;
+	   */
+			});
+		},
+		wheel: function wheel($div, deltaY) {
+			alert('here');
+			var step = 160;
+			var pos = $div.scrollTop();
+			var nextPos = pos + step * -deltaY;
+			//alert("DelatY: " + deltaY + ", Step: " + step + ", nextPos: " + nextPos);
+			$div.scrollTop(nextPos);
+		},
+		iteration: 0,
+		pageDidScroll: function pageDidScroll(e) {
+			//if(EmblemObject.iteration < 25) {
+			//window.scrollTo(0, $('#page').scrollTop(EmblemObject.iteration));
+			//}
+
+			//EmblemObject.interation++;
+		}
+	};
+
+	//kick it off
+	EmblemObject.start();
+
+	module.exports = Emblem;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	exports.__esModule = true;
+
+	var _defineProperty = __webpack_require__(177);
+
+	var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = function (obj, key, value) {
+	  if (key in obj) {
+	    (0, _defineProperty2.default)(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+
+	  return obj;
+	};
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(178), __esModule: true };
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(179);
+	var $Object = __webpack_require__(182).Object;
+	module.exports = function defineProperty(it, key, desc){
+	  return $Object.defineProperty(it, key, desc);
+	};
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $export = __webpack_require__(180);
+	// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+	$export($export.S + $export.F * !__webpack_require__(190), 'Object', {defineProperty: __webpack_require__(186).f});
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global    = __webpack_require__(181)
+	  , core      = __webpack_require__(182)
+	  , ctx       = __webpack_require__(183)
+	  , hide      = __webpack_require__(185)
+	  , PROTOTYPE = 'prototype';
+
+	var $export = function(type, name, source){
+	  var IS_FORCED = type & $export.F
+	    , IS_GLOBAL = type & $export.G
+	    , IS_STATIC = type & $export.S
+	    , IS_PROTO  = type & $export.P
+	    , IS_BIND   = type & $export.B
+	    , IS_WRAP   = type & $export.W
+	    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+	    , expProto  = exports[PROTOTYPE]
+	    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+	    , key, own, out;
+	  if(IS_GLOBAL)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !IS_FORCED && target && target[key] !== undefined;
+	    if(own && key in exports)continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+	    // bind timers to global for call from export context
+	    : IS_BIND && own ? ctx(out, global)
+	    // wrap global constructors for prevent change them in library
+	    : IS_WRAP && target[key] == out ? (function(C){
+	      var F = function(a, b, c){
+	        if(this instanceof C){
+	          switch(arguments.length){
+	            case 0: return new C;
+	            case 1: return new C(a);
+	            case 2: return new C(a, b);
+	          } return new C(a, b, c);
+	        } return C.apply(this, arguments);
+	      };
+	      F[PROTOTYPE] = C[PROTOTYPE];
+	      return F;
+	    // make static versions for prototype methods
+	    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+	    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+	    if(IS_PROTO){
+	      (exports.virtual || (exports.virtual = {}))[key] = out;
+	      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+	      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
+	    }
+	  }
+	};
+	// type bitmap
+	$export.F = 1;   // forced
+	$export.G = 2;   // global
+	$export.S = 4;   // static
+	$export.P = 8;   // proto
+	$export.B = 16;  // bind
+	$export.W = 32;  // wrap
+	$export.U = 64;  // safe
+	$export.R = 128; // real proto method for `library` 
+	module.exports = $export;
+
+/***/ },
+/* 181 */
+/***/ function(module, exports) {
+
+	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+	var global = module.exports = typeof window != 'undefined' && window.Math == Math
+	  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+
+/***/ },
+/* 182 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '2.4.0'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// optional / simple context binding
+	var aFunction = __webpack_require__(184);
+	module.exports = function(fn, that, length){
+	  aFunction(fn);
+	  if(that === undefined)return fn;
+	  switch(length){
+	    case 1: return function(a){
+	      return fn.call(that, a);
+	    };
+	    case 2: return function(a, b){
+	      return fn.call(that, a, b);
+	    };
+	    case 3: return function(a, b, c){
+	      return fn.call(that, a, b, c);
+	    };
+	  }
+	  return function(/* ...args */){
+	    return fn.apply(that, arguments);
+	  };
+	};
+
+/***/ },
+/* 184 */
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
+	  return it;
+	};
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var dP         = __webpack_require__(186)
+	  , createDesc = __webpack_require__(194);
+	module.exports = __webpack_require__(190) ? function(object, key, value){
+	  return dP.f(object, key, createDesc(1, value));
+	} : function(object, key, value){
+	  object[key] = value;
+	  return object;
+	};
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var anObject       = __webpack_require__(187)
+	  , IE8_DOM_DEFINE = __webpack_require__(189)
+	  , toPrimitive    = __webpack_require__(193)
+	  , dP             = Object.defineProperty;
+
+	exports.f = __webpack_require__(190) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+	  anObject(O);
+	  P = toPrimitive(P, true);
+	  anObject(Attributes);
+	  if(IE8_DOM_DEFINE)try {
+	    return dP(O, P, Attributes);
+	  } catch(e){ /* empty */ }
+	  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+	  if('value' in Attributes)O[P] = Attributes.value;
+	  return O;
+	};
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(188);
+	module.exports = function(it){
+	  if(!isObject(it))throw TypeError(it + ' is not an object!');
+	  return it;
+	};
+
+/***/ },
+/* 188 */
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  return typeof it === 'object' ? it !== null : typeof it === 'function';
+	};
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = !__webpack_require__(190) && !__webpack_require__(191)(function(){
+	  return Object.defineProperty(__webpack_require__(192)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Thank's IE8 for his funny defineProperty
+	module.exports = !__webpack_require__(191)(function(){
+	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 191 */
+/***/ function(module, exports) {
+
+	module.exports = function(exec){
+	  try {
+	    return !!exec();
+	  } catch(e){
+	    return true;
+	  }
+	};
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(188)
+	  , document = __webpack_require__(181).document
+	  // in old IE typeof document.createElement is 'object'
+	  , is = isObject(document) && isObject(document.createElement);
+	module.exports = function(it){
+	  return is ? document.createElement(it) : {};
+	};
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.1 ToPrimitive(input [, PreferredType])
+	var isObject = __webpack_require__(188);
+	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+	// and the second argument - flag - preferred type is a string
+	module.exports = function(it, S){
+	  if(!isObject(it))return it;
+	  var fn, val;
+	  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+	  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+	  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+	  throw TypeError("Can't convert object to primitive value");
+	};
+
+/***/ },
+/* 194 */
+/***/ function(module, exports) {
+
+	module.exports = function(bitmap, value){
+	  return {
+	    enumerable  : !(bitmap & 1),
+	    configurable: !(bitmap & 2),
+	    writable    : !(bitmap & 4),
+	    value       : value
+	  };
+	};
+
+/***/ },
+/* 195 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*eslint-disable no-unused-vars*/
 	/*!
 	 * jQuery JavaScript Library v3.1.0
@@ -31595,490 +32046,6 @@
 
 
 /***/ },
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _defineProperty2 = __webpack_require__(177);
-
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
-	var _gradientHelper;
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _jquery = __webpack_require__(175);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	//document.addEventListener('scroll', EmblemObject.pageDidScroll)
-
-
-	/*
-
-	when scrolling down, make the emblem have sort of a background
-	and it either reveals it fully, or hides it (depending on if the
-	user is scrolling up or down)
-
-	once I get scrolled down to a certain point, animate a transition effect
-	to make another smaller header appear (maybe make it only like 35px in 
-	height - not very intrusive at all)
-
-
-	*/
-
-	//http://jsfiddle.net/skmasq/mP974/
-	// function wheel($div, deltaY) {
-	//     var step = 80;
-	//     var pos = $div.scrollTop();
-	//     var nextPos = pos + (step * (-deltaY))
-	//     console.log("DelatY: " + deltaY + ", Step: " + step + ", nextPos: " + nextPos);
-	//     $div.scrollTop(nextPos);
-	// }
-
-	// $('#test').bind('mousewheel', function (event, delta, deltaX, deltaY) {
-	//     if (delta > -2 && delta < 2) {
-	//         wheel($(this), deltaY);
-	//         event.preventDefault();
-	//     }
-	//     console.log(delta);
-	// });
-
-
-	var Emblem = _react2.default.createClass({
-		displayName: 'Emblem',
-
-		getInitialState: function getInitialState() {
-			return {
-				gradientHelperTopShift: 350
-			};
-		},
-		componentDidMount: function componentDidMount() {
-
-			//at the end of mounting...I'm still having to clean up with jquery because of the lazy way I'm doing this...
-			//this helps me properly set the height as a perfect percentage
-			var totalHeight = (0, _jquery2.default)('#emblem-element').outerHeight(),
-			    logosHeight = (0, _jquery2.default)('#logo').outerHeight(),
-			    heightTS = 100 - logosHeight / totalHeight * 100 + '%'; //in %'s
-
-			(0, _jquery2.default)('#emblem-background-image').css({ height: heightTS });
-
-			var top = (0, _jquery2.default)('emblem-element').outerHeight();
-
-			this.setState({ gradientHelperTopShift: top });
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'div',
-					{ id: 'emblem-element', style: styles.one },
-					_react2.default.createElement(
-						'div',
-						{ id: 'logo' },
-						_react2.default.createElement(
-							'svg',
-							{ style: styles.svg },
-							_react2.default.createElement('circle', { style: styles.two })
-						)
-					),
-					_react2.default.createElement('div', { id: 'emblem-background-image' })
-				),
-				_react2.default.createElement('div', { id: 'gradientHelper', style: styles.gradientHelper })
-			);
-		}
-	});
-
-	/* //I will have to convert this css into what react expects in the inline styles
-		width: 100%;
-		height: 75px;
-		/*background: #511515;
-		background: #511515;
-		background: -moz-linear-gradient(#511515, #000);
-		background: -webkit-linear-gradient(#511515, #000);
-		background: -o-linear-gradient(#511515, #000);
-		background: -ms-linear-gradient(#511515, #000);/*For IE10
-		background: linear-gradient(#511515, #000);
-		filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000');/*For IE7-8-9
-		margin-bottom: 5px;
-	*/
-
-	var styles = {
-		one: {
-			width: '100%',
-			height: '350px',
-			position: 'fixed',
-			top: '0px',
-			// left: '-25%',
-			background: '#511515'
-		},
-		two: {
-			cx: 100,
-			cy: 100,
-			r: 75,
-			fill: 'orange'
-		},
-		svg: {
-			width: '100%',
-			height: '175px'
-		},
-		gradientHelper: (_gradientHelper = {
-			width: '100%',
-			height: 75,
-			background: '#511515'
-		}, (0, _defineProperty3.default)(_gradientHelper, 'background', '#511515'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-moz-linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-webkit-linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-o-linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-ms-linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'background', 'linear-gradient(#511515, #000)'), (0, _defineProperty3.default)(_gradientHelper, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"), (0, _defineProperty3.default)(_gradientHelper, 'marginBottom', 5), (0, _defineProperty3.default)(_gradientHelper, 'top', 350), (0, _defineProperty3.default)(_gradientHelper, 'position', 'fixed'), _gradientHelper)
-	};
-
-	var EmblemObject = {
-		//hasScrolled will help me initialize the scrolling starting value
-		hasScrolled: false,
-		scrollPosition: 0,
-
-		prior_scrollTop: 0,
-		increment: 1,
-		start: function start() {
-			window.addEventListener('scroll', EmblemObject.pageDidScroll);
-
-			(0, _jquery2.default)('#body').bind('wheel', function (event, delta, deltaX, deltaY) {
-				/* //make this better
-	   var current_scrollTop = $('#body').scrollTop();
-	   if(current_scrollTop > EmblemObject.prior_scrollTop) {
-	   	//further scrolled down the page
-	   	//alert(current_scrollTop + ' > ' + EmblemObject.prior_scrollTop)
-	   	$('#body').scrollTop($('#body').scrollTop() + 2)
-	   	}
-	   else {
-	   	//lesser scrolled on the page
-	   	//alert(current_scrollTop + ' < ' + EmblemObject.prior_scrollTop)	
-	   	$('#body').scrollTop($('#body').scrollTop() - 2)
-	   	}
-	   EmblemObject.prior_scrollTop = current_scrollTop;
-	   //EmblemObject.increment += 2;
-	   */
-			});
-		},
-		wheel: function wheel($div, deltaY) {
-			alert('here');
-			var step = 160;
-			var pos = $div.scrollTop();
-			var nextPos = pos + step * -deltaY;
-			//alert("DelatY: " + deltaY + ", Step: " + step + ", nextPos: " + nextPos);
-			$div.scrollTop(nextPos);
-		},
-		iteration: 0,
-		pageDidScroll: function pageDidScroll(e) {
-			//if(EmblemObject.iteration < 25) {
-			//window.scrollTo(0, $('#page').scrollTop(EmblemObject.iteration));
-			//}
-
-			//EmblemObject.interation++;
-		}
-	};
-
-	//kick it off
-	EmblemObject.start();
-
-	module.exports = Emblem;
-
-/***/ },
-/* 177 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	exports.__esModule = true;
-
-	var _defineProperty = __webpack_require__(178);
-
-	var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = function (obj, key, value) {
-	  if (key in obj) {
-	    (0, _defineProperty2.default)(obj, key, {
-	      value: value,
-	      enumerable: true,
-	      configurable: true,
-	      writable: true
-	    });
-	  } else {
-	    obj[key] = value;
-	  }
-
-	  return obj;
-	};
-
-/***/ },
-/* 178 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(179), __esModule: true };
-
-/***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(180);
-	var $Object = __webpack_require__(183).Object;
-	module.exports = function defineProperty(it, key, desc){
-	  return $Object.defineProperty(it, key, desc);
-	};
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $export = __webpack_require__(181);
-	// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-	$export($export.S + $export.F * !__webpack_require__(191), 'Object', {defineProperty: __webpack_require__(187).f});
-
-/***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var global    = __webpack_require__(182)
-	  , core      = __webpack_require__(183)
-	  , ctx       = __webpack_require__(184)
-	  , hide      = __webpack_require__(186)
-	  , PROTOTYPE = 'prototype';
-
-	var $export = function(type, name, source){
-	  var IS_FORCED = type & $export.F
-	    , IS_GLOBAL = type & $export.G
-	    , IS_STATIC = type & $export.S
-	    , IS_PROTO  = type & $export.P
-	    , IS_BIND   = type & $export.B
-	    , IS_WRAP   = type & $export.W
-	    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
-	    , expProto  = exports[PROTOTYPE]
-	    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
-	    , key, own, out;
-	  if(IS_GLOBAL)source = name;
-	  for(key in source){
-	    // contains in native
-	    own = !IS_FORCED && target && target[key] !== undefined;
-	    if(own && key in exports)continue;
-	    // export native or passed
-	    out = own ? target[key] : source[key];
-	    // prevent global pollution for namespaces
-	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-	    // bind timers to global for call from export context
-	    : IS_BIND && own ? ctx(out, global)
-	    // wrap global constructors for prevent change them in library
-	    : IS_WRAP && target[key] == out ? (function(C){
-	      var F = function(a, b, c){
-	        if(this instanceof C){
-	          switch(arguments.length){
-	            case 0: return new C;
-	            case 1: return new C(a);
-	            case 2: return new C(a, b);
-	          } return new C(a, b, c);
-	        } return C.apply(this, arguments);
-	      };
-	      F[PROTOTYPE] = C[PROTOTYPE];
-	      return F;
-	    // make static versions for prototype methods
-	    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-	    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-	    if(IS_PROTO){
-	      (exports.virtual || (exports.virtual = {}))[key] = out;
-	      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-	      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
-	    }
-	  }
-	};
-	// type bitmap
-	$export.F = 1;   // forced
-	$export.G = 2;   // global
-	$export.S = 4;   // static
-	$export.P = 8;   // proto
-	$export.B = 16;  // bind
-	$export.W = 32;  // wrap
-	$export.U = 64;  // safe
-	$export.R = 128; // real proto method for `library` 
-	module.exports = $export;
-
-/***/ },
-/* 182 */
-/***/ function(module, exports) {
-
-	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-	var global = module.exports = typeof window != 'undefined' && window.Math == Math
-	  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
-	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-
-/***/ },
-/* 183 */
-/***/ function(module, exports) {
-
-	var core = module.exports = {version: '2.4.0'};
-	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// optional / simple context binding
-	var aFunction = __webpack_require__(185);
-	module.exports = function(fn, that, length){
-	  aFunction(fn);
-	  if(that === undefined)return fn;
-	  switch(length){
-	    case 1: return function(a){
-	      return fn.call(that, a);
-	    };
-	    case 2: return function(a, b){
-	      return fn.call(that, a, b);
-	    };
-	    case 3: return function(a, b, c){
-	      return fn.call(that, a, b, c);
-	    };
-	  }
-	  return function(/* ...args */){
-	    return fn.apply(that, arguments);
-	  };
-	};
-
-/***/ },
-/* 185 */
-/***/ function(module, exports) {
-
-	module.exports = function(it){
-	  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
-	  return it;
-	};
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var dP         = __webpack_require__(187)
-	  , createDesc = __webpack_require__(195);
-	module.exports = __webpack_require__(191) ? function(object, key, value){
-	  return dP.f(object, key, createDesc(1, value));
-	} : function(object, key, value){
-	  object[key] = value;
-	  return object;
-	};
-
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var anObject       = __webpack_require__(188)
-	  , IE8_DOM_DEFINE = __webpack_require__(190)
-	  , toPrimitive    = __webpack_require__(194)
-	  , dP             = Object.defineProperty;
-
-	exports.f = __webpack_require__(191) ? Object.defineProperty : function defineProperty(O, P, Attributes){
-	  anObject(O);
-	  P = toPrimitive(P, true);
-	  anObject(Attributes);
-	  if(IE8_DOM_DEFINE)try {
-	    return dP(O, P, Attributes);
-	  } catch(e){ /* empty */ }
-	  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
-	  if('value' in Attributes)O[P] = Attributes.value;
-	  return O;
-	};
-
-/***/ },
-/* 188 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isObject = __webpack_require__(189);
-	module.exports = function(it){
-	  if(!isObject(it))throw TypeError(it + ' is not an object!');
-	  return it;
-	};
-
-/***/ },
-/* 189 */
-/***/ function(module, exports) {
-
-	module.exports = function(it){
-	  return typeof it === 'object' ? it !== null : typeof it === 'function';
-	};
-
-/***/ },
-/* 190 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = !__webpack_require__(191) && !__webpack_require__(192)(function(){
-	  return Object.defineProperty(__webpack_require__(193)('div'), 'a', {get: function(){ return 7; }}).a != 7;
-	});
-
-/***/ },
-/* 191 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// Thank's IE8 for his funny defineProperty
-	module.exports = !__webpack_require__(192)(function(){
-	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
-	});
-
-/***/ },
-/* 192 */
-/***/ function(module, exports) {
-
-	module.exports = function(exec){
-	  try {
-	    return !!exec();
-	  } catch(e){
-	    return true;
-	  }
-	};
-
-/***/ },
-/* 193 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isObject = __webpack_require__(189)
-	  , document = __webpack_require__(182).document
-	  // in old IE typeof document.createElement is 'object'
-	  , is = isObject(document) && isObject(document.createElement);
-	module.exports = function(it){
-	  return is ? document.createElement(it) : {};
-	};
-
-/***/ },
-/* 194 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 7.1.1 ToPrimitive(input [, PreferredType])
-	var isObject = __webpack_require__(189);
-	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-	// and the second argument - flag - preferred type is a string
-	module.exports = function(it, S){
-	  if(!isObject(it))return it;
-	  var fn, val;
-	  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-	  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
-	  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-	  throw TypeError("Can't convert object to primitive value");
-	};
-
-/***/ },
-/* 195 */
-/***/ function(module, exports) {
-
-	module.exports = function(bitmap, value){
-	  return {
-	    enumerable  : !(bitmap & 1),
-	    configurable: !(bitmap & 2),
-	    writable    : !(bitmap & 4),
-	    value       : value
-	  };
-	};
-
-/***/ },
 /* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -32088,158 +32055,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _jquery = __webpack_require__(175);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _Header = __webpack_require__(197);
-
-	var _Header2 = _interopRequireDefault(_Header);
-
-	var _Navbar = __webpack_require__(198);
-
-	var _Navbar2 = _interopRequireDefault(_Navbar);
-
-	var _Footer = __webpack_require__(199);
-
-	var _Footer2 = _interopRequireDefault(_Footer);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// ReactDOM.render(<Header />, document.getElementById('header'));
-	// ReactDOM.render(<Navbar />, document.getElementById('navbar'));
-	// ReactDOM.render(<Footer />, document.getElementById('footer'));
-
-
-	// const dropdownItems = [
-	//     {href: '#', name: 'Overview'},
-	//     {href: '#', name: 'Setup'},
-	//     {href: '#', name: 'Usage'},
-	// ];
-
-	// const navbar = (
-	//     <Navbar>
-	//         <NavbarHeader href="homepage.html" name="Website Name"/>
-	//         <NavbarItems>
-	//             <Item link="about.html" title="About" />
-	//             <Item link="contact.html" title="Contact" />
-	//             <Item link="services.html" title="Services" />
-	//             <NavbarDropdown name="Features">
-	//                   <DropdownMenu menuItems={dropdownItems}/>
-	//             </NavbarDropdown>
-	//         </NavbarItems>
-	//     </Navbar>
-	// );
-
-	//React.render(navbar, document.getElementById('navbar'));
-
-
-	var Home = _react2.default.createClass({
-		displayName: 'Home',
-
-		elements: [],
-		componentDidMount: function componentDidMount() {},
-		render: function render() {
-			var _this = this;
-
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement('div', { id: 'backgroundDiv' }),
-				_react2.default.createElement(
-					'div',
-					{ id: 'page' },
-					_react2.default.createElement(
-						'div',
-						{ id: 'paddingHelper' },
-						_react2.default.createElement(_Header2.default, null),
-						_react2.default.createElement(_Navbar2.default, { ref: function ref(elem) {
-								return _this.elements['Navbar'] = elem;
-							} }),
-						_react2.default.createElement(
-							'div',
-							{ id: 'all-content' },
-							_react2.default.createElement('div', { id: 'section-1', className: 'section' }),
-							_react2.default.createElement(
-								'div',
-								{ id: 'section-2', className: 'section' },
-								_react2.default.createElement(
-									'h3',
-									null,
-									'Introduction Information one'
-								),
-								_react2.default.createElement(
-									'h4',
-									null,
-									'Introduction Information two'
-								),
-								_react2.default.createElement(
-									'div',
-									{ id: 'all-content-picture' },
-									_react2.default.createElement(
-										'h3',
-										null,
-										'TODO: insert picture here'
-									)
-								)
-							),
-							_react2.default.createElement('div', { id: 'section-3', className: 'section' }),
-							_react2.default.createElement('div', { id: 'section-4', className: 'section' }),
-							_react2.default.createElement('div', { id: 'section-5', className: 'section' }),
-							_react2.default.createElement('div', { id: 'section-6', className: 'section' }),
-							_react2.default.createElement('div', { id: 'section-7', className: 'section' })
-						)
-					),
-					_react2.default.createElement(_Footer2.default, null),
-					_react2.default.createElement('div', { id: 'end' })
-				)
-			);
-		}
-	});
-
-	// import Emblem from './Emblem.jsx';
-
-
-	module.exports = Home;
-
-/***/ },
-/* 197 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Header = _react2.default.createClass({
-		displayName: 'Header',
-
-		render: function render() {
-			return _react2.default.createElement('div', { id: 'parent-header', style: parentHeader });
-		}
-	});
-
-	var parentHeader = {
-		width: '100%',
-		height: '100%'
-	};
-
-	module.exports = Header;
-
-/***/ },
-/* 198 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _jquery = __webpack_require__(175);
+	var _jquery = __webpack_require__(195);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -32377,61 +32193,6 @@
 	// ReactDOM.render(<div style={divStyle}>Hello World!</div>, mountNode);
 
 	module.exports = Navbar;
-
-/***/ },
-/* 199 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(35);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Footer = _react2.default.createClass({
-		displayName: 'Footer',
-
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ style: styles.parent },
-				_react2.default.createElement(
-					'div',
-					{ style: styles.one },
-					'This is the footer'
-				),
-				_react2.default.createElement(
-					'div',
-					{ style: styles.two },
-					'Coty'
-				)
-			);
-		}
-	});
-
-	var styles = {
-		parent: {
-			width: '100%',
-			height: '20%'
-		},
-		one: {
-			width: '100%',
-			height: '500px',
-			background: '#ffffff'
-		},
-		two: {
-			width: '100%',
-			height: '20%'
-		}
-	};
-
-	module.exports = Footer;
 
 /***/ }
 /******/ ]);

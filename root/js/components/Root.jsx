@@ -64,7 +64,7 @@ var Root = React.createClass({
 									<h3>Introduction Information one</h3>
 									<h4>Introduction Information two</h4>
 
-									<div id="all-content-picture"><h3>TODO: insert picture here</h3></div>
+									<img id="jpg1" src="./assets/AlMcKayPhoto.jpg" onerror="this.onerror=null; this.src=''">
 									
 								</div>
 								<div id="section-3" className="section"></div>
