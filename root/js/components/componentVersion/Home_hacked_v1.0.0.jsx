@@ -17,8 +17,6 @@ var Home = React.createClass({
 	componentDidMount: function() {
 		//setting the src attribute the React way in the styles object wasn't working so, jquery it is
 		document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src)
-
-		$('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 	},
 	render: function() {
 			return (
@@ -42,20 +40,38 @@ var Home = React.createClass({
 									{/*<div style={styles.headingAndPicture}>
 										
 									</div>*/}
-									
-
-					
-									<div style={styles.paragraphWrapper}>
-										
-										<div style={styles.section1Heading} id="headerAndPictureWrapper">
+									<div style={styles.section1Heading}>
 											<center>
-												<div id="headerWrapper">
-													<h3>MSG ALBERT McKAY</h3>
-													<h4>U.S. Army</h4>
-												</div>
-												<img id="jpg1" style={styles.img}></img>
+												<h3>MSG ALBERT McKAY</h3>
+												<h4>U.S. Army</h4>
 											</center>
 										</div>
+
+										
+										<img id="jpg1" style={styles.img}></img>
+
+
+
+										<div style={styles.paragraphOne}>
+											<p style={styles.piece1} id="piece1">
+											
+												Albert Mckay was born in Parks, Arkansas on January 20, 1932. He attended Grade School and High School in Heavener, OK. He joined the Oklahoma National Guard on October 13, 1947 at the age of 15. He served in HQ & HQ Company, 279th Infantry, 45th Infantry Division and received an Honorable Discharge on January 15, 1948 to enlist into the Regular Army. He enlisted in the Air Force on January 16, 1948, received his basic training in San Antonio, TX and then was assigned to Wheeler Field, Hawaii. He received an Honorable Discharge on January 5, 1949. He re-enlisted in the U.S. Army on July 16, 1949 at FT. Sill, OK with the 43rd AIB, 2nd Armored
+											</p>
+
+										</div>
+									<div style={styles.paragraphWrapper}>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
+										<br/>
 
 										{/*<div class="w3-panel w3-white w3-card-2 w3-display-container">
 										    <span class="w3-display-topright w3-padding w3-hover-red">X</span>
@@ -63,10 +79,6 @@ var Home = React.createClass({
 										   <p>http://www.w3schools.com/lib/email.zip</p>
 										   <p class="w3-text-blue">Show in folder</p>
 										</div>*/}
-										<p style={styles.piece1} id="piece1">
-											
-												Albert Mckay was born in Parks, Arkansas on January 20, 1932. He attended Grade School and High School in Heavener, OK. He joined the Oklahoma National Guard on October 13, 1947 at the age of 15. He served in HQ & HQ Company, 279th Infantry, 45th Infantry Division and received an Honorable Discharge on January 15, 1948 to enlist into the Regular Army. He enlisted in the Air Force on January 16, 1948, received his basic training in San Antonio, TX and then was assigned to Wheeler Field, Hawaii. He received an Honorable Discharge on January 5, 1949. He re-enlisted in the U.S. Army on July 16, 1949 at FT. Sill, OK with the 43rd AIB, 2nd Armored
-											</p>
 										<p id="piece2">
 												Division. In 1951 he was transferred to Korea with the Second Infantry Division, 38th Infantry Regiment. He returned to the States in 1952. Master Sergeant McKay served in different locations including Ft. Sill and was reassigned to Korea from 1955 to 1957 with the 34th Infantry Regiment. He was assigned as 1st Seargeant at Hunter Liggett Military Reservation, CA until 1958. He was then assigned to Staff and Faculty Battery, USAAMS, 4th U.S. Army at Ft. Sill, OK.
 											</p>
@@ -124,13 +136,12 @@ var styles = {
 		margin: '0px',
 		padding: '0px',
 		display: 'inline-block',
-		// float: 'left'
-		// width: 300 //this is the pictures width
+		width: 300 //this is the pictures width
 	},
 	img: {
 		width: widthHelper,
 		height: widthHelper * 2388 / 3144, //to preserver aspect ratio
-		// position: 'absolute'
+		position: 'absolute'
 	},
 	imgSrc: {
 		src: './assets/AlMcKayPhoto.jpg'
@@ -140,9 +151,9 @@ var styles = {
 		float: 'right'
 	},
 	paragraphWrapper: {
-		// width: 500,
-		// marginLeft: 'auto',
-		// marginRight: 'auto'
+		width: 500,
+		marginLeft: 'auto',
+		marginRight: 'auto'
 	},
 	piece1: {
 		margin: 0,
@@ -150,9 +161,7 @@ var styles = {
 	},
 	section1Heading: {
 		width: 300, //that's what the picture's width is so this heading text will center perfectly above the picture
-		
-		// display: 'inline-block'
-		float: 'left'
+		// float: 'left'
 	}
 }
 
