@@ -23,15 +23,15 @@ var Navbar = React.createClass({
 		$.extend(parentNavbar, {
 			position: this.props.position === 'absolute' ? 'absolute' : '',		//for application.html
 			marginTop: typeof this.props.marginTop !== 'undefined' ? this.props.marginTop : '',	
-			paddingTop: this.props.doNotSetPadding === true ? 0 : parentNavbar.paddingTop,												//for application.html
-			paddingBottom: this.props.doNotSetPadding === true ? 0 : parentNavbar.paddingBottom												//for application.html
+			paddingTop: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingTop,												//for application.html
+			paddingBottom: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingBottom												//for application.html
 		});
 		return ( 
 			<div id="parent-navbar-item" style={parentNavbar}>
 				<center>
 					<div className="navbar-item" id="1-navbar-item"  style={navbarItem.one} onClick={this.onClickHome}>Home</div>
 					<div className="navbar-item" id="2-navbar-item"  style={navbarItem.one} onClick={this.onClickHistory}>History</div>
-					<div className="navbar-item" id="3-navbar-item"  style={navbarItem.one}>Tribal Administration</div>
+					<div className="navbar-item" id="3-navbar-item"  style={navbarItem.one} onClick={this.onClickTribalAdministration}>Tribal Administration</div>
 					<div className="navbar-item" id="4-navbar-item"  style={navbarItem.one} onClick={this.onClickApplication}>Application</div>
 					<div className="navbar-item" id="5-navbar-item"  style={navbarItem.one} onClick={this.onClickBeliefs}>Beliefs</div>
 					<div className="navbar-item" id="6-navbar-item"  style={navbarItem.oneA} onClick={this.onClickContact}>Contact Us</div>
@@ -56,6 +56,9 @@ var Navbar = React.createClass({
 	},
 	onClickBeliefs: function() {
 		location = './beliefs.html';
+	},
+	onClickTribalAdministration: function() {
+		location = './tribaladministration.html'
 	}
 });
 /*
@@ -65,8 +68,8 @@ var Navbar = React.createClass({
 var parentNavbar = {
 	//I'm going to assume that the browser is above - I suppose - 500px in width?? (apparently 1024 is the average number, so I'll try my best to include tablets)
 	width: '100%',
-	paddingTop: 15,
-	paddingBottom: 15,
+	// paddingTop: 15,
+	// paddingBottom: 15,
 	background: 'rgba(0,0,0,0)',
 	pointerEvents: 'none'
 	// height: '35px',

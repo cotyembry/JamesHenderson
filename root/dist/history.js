@@ -31610,38 +31610,34 @@
 				'div',
 				{ id: 'parent-navbar-item', style: parentNavbar },
 				_react2.default.createElement(
-					'center',
-					null,
-					_react2.default.createElement(
-						'div',
-						{ className: 'navbar-item', id: '1-navbar-item', style: navbarItem.one, onClick: this.onClickHome },
-						'Home'
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'navbar-item', id: '2-navbar-item', style: navbarItem.two, onClick: this.onClickHistory },
-						'History'
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'navbar-item', id: '3-navbar-item', style: navbarItem.one },
-						'Tribal Administration'
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'navbar-item', id: '4-navbar-item', style: navbarItem.one, onClick: this.onClickApplication },
-						'Application'
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'navbar-item', id: '5-navbar-item', style: navbarItem.one, onClick: this.onClickBeliefs },
-						'Beliefs'
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'navbar-item', id: '6-navbar-item', style: navbarItem.oneA, onClick: this.onClickContact },
-						'Contact Us'
-					)
+					'div',
+					{ className: 'navbarTwoItem', style: navbarItem.one, onClick: this.onClickHome },
+					'Home'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'navbarTwoItem', style: navbarItem.one, onClick: this.onClickHistory },
+					'History'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'navbarTwoItem', style: navbarItem.one, onClick: this.onClickTribalAdministration },
+					'Tribal Administration'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'navbarTwoItem', style: navbarItem.one, onClick: this.onClickApplication },
+					'Application'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'navbarTwoItem', style: navbarItem.one, onClick: this.onClickBeliefs },
+					'Beliefs'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'navbarTwoItem', style: navbarItem.oneA, onClick: this.onClickContact },
+					'Contact Us'
 				)
 			);
 		},
@@ -31662,6 +31658,9 @@
 		},
 		onClickBeliefs: function onClickBeliefs() {
 			location = './beliefs.html';
+		},
+		onClickTribalAdministration: function onClickTribalAdministration() {
+			location = './tribaladministration.html';
 		}
 	});
 	/*
@@ -31693,8 +31692,10 @@
 				// paddingRight: '15px',
 				textAlign: 'center',
 				pointerEvents: 'all',
-				color: 'white',
-				margin: 0
+				// color: 'white',
+				margin: 0,
+				cursor: 'pointer'
+				// position: 'absolute'
 			};
 		},
 		get oneA() {
@@ -31703,11 +31704,13 @@
 				//width: widthTS,
 				height: '100%',
 				boxSizing: 'border-box',
-				// display: 'inline-block',
+				display: 'inline-block',
 				textAlign: 'center',
 				// borderLeft: 'solid 2px brown',
 				pointerEvents: 'all',
-				color: 'white'
+				// color: 'white',
+				margin: 0,
+				cursor: 'pointer'
 			};
 		},
 		get two() {
@@ -31722,7 +31725,7 @@
 				// paddingRight: '15px',
 				textAlign: 'center',
 				pointerEvents: 'all',
-				color: 'white',
+				// color: 'white',
 				margin: 0
 			};
 		}
@@ -31825,19 +31828,19 @@
 							{ style: styles.container },
 							'Around 1811 Ooholonteskee half brother of Tahlonteskee known by the whites as "John Jolly", Chief Chickalah migrated to Dardanelle Arkansas now know as ',
 							_react2.default.createElement(
-								'h1',
+								'strong',
 								null,
 								'Chickzlah'
 							),
 							' town bringing a band of Chickamauga Cherokees 1811-1812. Chief Bowles - Chief Dutch with a number of Chickamauga Cherokees in the Danville area. One initial location on the Arkansas was at ',
 							_react2.default.createElement(
-								'h1',
+								'strong',
 								null,
 								'point'
 							),
 							' where the river passed between two samll mountains. They dubbed the site as The Dardanelle. From there the Cherokees spread out up the Arkansas and along inlet creeks such as Illinois, Pine, ',
 							_react2.default.createElement(
-								'h1',
+								'strong',
 								null,
 								'Spadnz'
 							),

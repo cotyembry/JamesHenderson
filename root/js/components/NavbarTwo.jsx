@@ -30,7 +30,7 @@ var NavbarTwo = React.createClass({
 				
 					<div className='navbarTwoItem' style={navbarItem.one} onClick={this.onClickHome}>Home</div>
 					<div className='navbarTwoItem' style={navbarItem.one} onClick={this.onClickHistory}>History</div>
-					<div className='navbarTwoItem' style={navbarItem.one}>Tribal Administration</div>
+					<div className='navbarTwoItem' style={navbarItem.one} onClick={this.onClickTribalAdministration}>Tribal Administration</div>
 					<div className='navbarTwoItem' style={navbarItem.one} onClick={this.onClickApplication}>Application</div>
 					<div className='navbarTwoItem' style={navbarItem.one} onClick={this.onClickBeliefs}>Beliefs</div>
 					<div className='navbarTwoItem' style={navbarItem.oneA} onClick={this.onClickContact}>Contact Us</div>
@@ -49,13 +49,16 @@ var NavbarTwo = React.createClass({
 		location = './contact.html';
 	},
 	onClickHome: function() {
-		location = './home.html';
+		location = './index.html';
 	},
 	onClickHistory: function() {
 		location = './history.html';
 	},
 	onClickBeliefs: function() {
 		location = './beliefs.html';
+	},
+	onClickTribalAdministration: function() {
+		location = './tribaladministration.html'
 	}
 });
 /*
