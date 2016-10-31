@@ -10,10 +10,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Emblem from './components/Emblem.jsx';
-import Navbar from './components/Navbar.jsx';
+// import Navbar from './components/Navbar.jsx';
 import Application from './components/Application.jsx';
 
 
 ReactDOM.render(<Emblem />, document.getElementById('emblem'));
-ReactDOM.render(<Navbar doNotSetPadding={true} />, document.getElementById('navbar'));
+// ReactDOM.render(<Navbar doNotSetPadding={true} />, document.getElementById('navbar'));
 ReactDOM.render(<Application />, document.getElementById('application'));

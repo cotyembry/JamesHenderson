@@ -1,18 +1,34 @@
 import React from 'react';
 
+import $ from 'jquery';
+
 import Navbar from './Navbar.jsx';
 
 export default class Beliefs extends React.Component {
+	componentDidMount() {
+		var topTS = $('#parent-navbar-item').outerHeight();
+		$('#contentParent').css({ top: topTS });
+
+		var heightTS = $('#contentParent').outerHeight() + topTS;
+		$('#beliefsPage').css({ height: heightTS });
+
+	}
+
 	render() {
 		return (
-			<div>
-				<Navbar position={'absolute'} top={425}/>
-				<div style={styles.beliefsRoot}>
+			<div style={styles.beliefsPage} id="beliefsPage">
+				<Navbar position={'absolute'} fontSize={20} />
+				<div id="contentParent" style={styles.beliefsRoot}>
 					<div id="content" style={styles.content}>
-						<h1>Beliefs</h1>
-						<p>
-							Traditional Cherokee Beliefs
+						
+						<center style={styles.container}><h1 style={styles.removePaddingAndMargin}>Beliefs</h1></center>
+
+						<p style={styles.container}>
+							
 							<br />
+
+							<center><h3 style={styles.removePaddingAndMargin}>Traditional Cherokee Beliefs</h3></center>
+							
 							<br />
 							In the Cherokee language there was no word for “religion” because spiritual practices are an integral part of every aspect of daily life; they are necessary for the harmony and balance or wellness of the individual, family, clan and community. Healing and worship are considered one and the same.
 							<br />
@@ -44,8 +60,12 @@ export default class Beliefs extends React.Component {
 							<br />
 							<br />
 						</p>
-							<h2>A CHEROKEE PRAYER</h2>
-						<p>
+						
+
+							<center style={styles.container}><h2 style={styles.removePaddingAndMargin}>A CHEROKEE PRAYER</h2></center>
+						
+
+						<p style={styles.container}>
 							<br/>
 							O Great One
 							<br/>
@@ -120,13 +140,38 @@ export default class Beliefs extends React.Component {
 var styles = {
 	beliefsRoot: {
 		width: '100%',
-		top: 490,
+		paddingTop: 10,
+		// top: 490,
 		position: 'absolute',
-		background: 'rgba(255, 255, 255, 0.5)'
+		// background: 'rgba(255, 255, 255, 0.5)'
+	},
+	beliefsPage: {
+		width: '100%',
+		marginTop: 425,
+		position: 'absolute',
+		background: '#d9d9d9',
+		background: '-moz-linear-gradient(#d9d9d9, #000)',
+		background: '-webkit-linear-gradient(#d9d9d9, #000)',
+		background: '-o-linear-gradient(#d9d9d9, #000)',
+		background: '-ms-linear-gradient(#d9d9d9, #000)',/*For IE10*/
+		background: 'linear-gradient(#d9d9d9, #000)',
+		filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"/*For IE7-8-9*/
 	},
 	content: {
-		width: 420,
+		width: 500,
 		marginLeft: 'auto',
 		marginRight: 'auto'
+	},
+	container: {
+		fontSize: 20,
+		padding: 15,
+	    marginBottom: 20,
+	    borderRadius: 0,
+	    backgroundColor: '#FFF',
+	    boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
+	},
+	removePaddingAndMargin: {
+		margin: 0,
+		padding: 0
 	}
 }

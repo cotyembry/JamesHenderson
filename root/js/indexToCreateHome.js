@@ -23,11 +23,6 @@ import Emblem from './components/Emblem.jsx';
 import Home from './components/Home.jsx';
 
 
-
-$(document).ready(function() {
-	home.ready();
-});
-
 var home = {
 	ready: function ready() {
 		$(window).resize(home.adjustSize);
@@ -46,5 +41,9 @@ var home = {
 // ReactDOM.render(<Navbar />, document.getElementById('navbar'));
 // ReactDOM.render(<Footer />, document.getElementById('footer'));
 
-ReactDOM.render(<Emblem />, document.getElementById('emblem'));
-ReactDOM.render(<Home />, document.getElementById('root'));
+$(document).ready(function() {
+	ReactDOM.render(<Emblem />, document.getElementById('emblem'));
+	ReactDOM.render(<Home />, document.getElementById('root'));
+	
+	home.ready();
+});

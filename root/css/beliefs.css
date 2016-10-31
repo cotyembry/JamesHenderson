@@ -1,0 +1,16 @@
+html, body {
+	width: 100%;
+	height: 100%;
+}
+#background {
+	width: 100%;
+	height: 100%;
+	background: rgb(213, 239, 248);
+	position: fixed;
+}
+#emblem {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgb(213, 239, 248);
+}

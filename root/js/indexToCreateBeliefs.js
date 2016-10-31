@@ -9,9 +9,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import $ from 'jquery';
+
 import Emblem from './components/Emblem.jsx';
 import Beliefs from './components/Beliefs.jsx';
 
-
-ReactDOM.render(<Emblem />, document.getElementById('emblem'));
-ReactDOM.render(<Beliefs />, document.getElementById('beliefs'));
+$(document).ready(function() {
+	ReactDOM.render(<Emblem />, document.getElementById('emblem'));
+	ReactDOM.render(<Beliefs />, document.getElementById('beliefs'));
+})

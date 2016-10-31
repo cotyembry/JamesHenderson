@@ -21491,6 +21491,10 @@
 		value: true
 	});
 
+	var _defineProperty2 = __webpack_require__(265);
+
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
 	var _getPrototypeOf = __webpack_require__(176);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -21511,6 +21515,12 @@
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
+	var _contactRoot; /*
+	                  *		   Author:  John Coty Embry
+	                  *	 Date Created:  8/9/16
+	                  *	Last Modified:  8/11/16
+	                  */
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -21528,12 +21538,6 @@
 	var _jquery2 = _interopRequireDefault(_jquery);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/*
-	*		   Author:  John Coty Embry
-	*	 Date Created:  8/9/16
-	*	Last Modified:  8/11/16
-	*/
 
 	var self;
 
@@ -21559,7 +21563,7 @@
 					var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
 				} else {
 					var marginLeft = 15;
-					console.error("Change style sheets to fit a smaller screen - or do something different");
+					// console.error("Change style sheets to fit a smaller screen - or do something different")
 				}
 				(0, _jquery2.default)(window).resize(self.resize);
 				this.setState({ marginLeft: marginLeft });
@@ -21579,21 +21583,26 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				//$.extend(styles.mapParent, { marginLeft: this.state.marginLeft })
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_Navbar2.default, null),
 					_react2.default.createElement(
 						'div',
 						{ id: 'contact-root', style: styles.contactRoot },
+						_react2.default.createElement(_Navbar2.default, { fontSize: 20 }),
 						_react2.default.createElement(
-							'h1',
-							{ style: styles.h1 },
-							'Contact Us!'
+							'center',
+							{ style: styles.paddingBottom },
+							_react2.default.createElement(
+								'h1',
+								{ style: styles.h1 },
+								'Contact Us!'
+							)
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'google-map', style: _jquery2.default.extend(styles.mapParent, { marginLeft: this.state.marginLeft }) },
+							{ id: 'google-map', style: (styles.mapParent, { marginLeft: this.state.marginLeft }) },
 							_react2.default.createElement('iframe', { src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754', allowFullScreen: true, style: styles.mapStyle })
 						)
 					)
@@ -21616,12 +21625,14 @@
 
 	exports.default = Contact;
 	var styles = {
-		contactRoot: {
+		contactRoot: (_contactRoot = {
 			width: '100%',
 			height: 1000,
-			top: 350,
-			background: 'white'
-		},
+			// top: 350,
+			background: 'white',
+			marginTop: 425,
+			position: 'absolute'
+		}, (0, _defineProperty3.default)(_contactRoot, 'background', '#d9d9d9'), (0, _defineProperty3.default)(_contactRoot, 'background', '-moz-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'background', '-webkit-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'background', '-o-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'background', '-ms-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'background', 'linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"), _contactRoot),
 		mapParent: {
 			display: 'inline-block' //,
 			// marginLeft: '100px',
@@ -21635,8 +21646,13 @@
 			// marginLeft: 'auto',
 			// marginRight: 'auto'
 		},
+		paddingBottom: {
+			paddingBottom: 15
+		},
 		h1: {
-			color: 'black'
+			color: 'black',
+			margin: 0,
+			padding: 0
 		}
 	};
 
@@ -23210,8 +23226,9 @@
 			_jquery2.default.extend(parentNavbar, {
 				position: this.props.position === 'absolute' ? 'absolute' : '', //for application.html
 				marginTop: typeof this.props.marginTop !== 'undefined' ? this.props.marginTop : '',
-				paddingTop: this.props.doNotSetPadding === true ? 0 : parentNavbar.paddingTop, //for application.html
-				paddingBottom: this.props.doNotSetPadding === true ? 0 : parentNavbar.paddingBottom //for application.html
+				paddingTop: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingTop, //for application.html
+				paddingBottom: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingBottom, //for application.html
+				fontSize: typeof this.props.fontSize === 'undefined' ? '' : this.props.fontSize //for application.html
 			});
 			return _react2.default.createElement(
 				'div',
@@ -23231,7 +23248,7 @@
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'navbar-item', id: '3-navbar-item', style: navbarItem.one },
+						{ className: 'navbar-item', id: '3-navbar-item', style: navbarItem.one, onClick: this.onClickTribalAdministration },
 						'Tribal Administration'
 					),
 					_react2.default.createElement(
@@ -23269,6 +23286,9 @@
 		},
 		onClickBeliefs: function onClickBeliefs() {
 			location = './beliefs.html';
+		},
+		onClickTribalAdministration: function onClickTribalAdministration() {
+			location = './tribaladministration.html';
 		}
 	});
 	/*

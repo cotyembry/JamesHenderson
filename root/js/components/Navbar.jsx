@@ -24,7 +24,8 @@ var Navbar = React.createClass({
 			position: this.props.position === 'absolute' ? 'absolute' : '',		//for application.html
 			marginTop: typeof this.props.marginTop !== 'undefined' ? this.props.marginTop : '',	
 			paddingTop: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingTop,												//for application.html
-			paddingBottom: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingBottom												//for application.html
+			paddingBottom: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingBottom,											//for application.html
+			fontSize: typeof this.props.fontSize === 'undefined' ? '' : this.props.fontSize												//for application.html
 		});
 		return ( 
 			<div id="parent-navbar-item" style={parentNavbar}>
@@ -68,8 +69,8 @@ var Navbar = React.createClass({
 var parentNavbar = {
 	//I'm going to assume that the browser is above - I suppose - 500px in width?? (apparently 1024 is the average number, so I'll try my best to include tablets)
 	width: '100%',
-	// paddingTop: 15,
-	// paddingBottom: 15,
+	paddingTop: 15,
+	paddingBottom: 15,
 	background: 'rgba(0,0,0,0)',
 	pointerEvents: 'none'
 	// height: '35px',

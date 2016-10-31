@@ -27,7 +27,7 @@ export default class Contact extends React.Component {
 		}
 		else {
 			var marginLeft = 15;
-			console.error("Change style sheets to fit a smaller screen - or do something different")
+			// console.error("Change style sheets to fit a smaller screen - or do something different")
 		}
 		$(window).resize(self.resize);
 		this.setState({ marginLeft: marginLeft });
@@ -47,9 +47,12 @@ export default class Contact extends React.Component {
 		//$.extend(styles.mapParent, { marginLeft: this.state.marginLeft })
 		return (
 			<div>
-				<Navbar doNotSetPadding={true} />
 				<div id="contact-root" style={styles.contactRoot}>
-					<h1 style={styles.h1}>Contact Us!</h1>
+					
+					<Navbar fontSize={20} />
+					
+					<center style={styles.paddingBottom}><h1 style={styles.h1}>Contact Us!</h1></center>
+
 						<div id="google-map" style={styles.mapParent, { marginLeft: this.state.marginLeft }}>
 							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={styles.mapStyle}></iframe>
 						</div>
@@ -74,8 +77,17 @@ var styles = {
 	contactRoot: {
 		width: '100%',
 		height: 1000,
-		top: 350,
-		background: 'white'
+		// top: 350,
+		background: 'white',
+		marginTop: 425,
+		position: 'absolute',
+		background: '#d9d9d9',
+		background: '-moz-linear-gradient(#d9d9d9, #000)',
+		background: '-webkit-linear-gradient(#d9d9d9, #000)',
+		background: '-o-linear-gradient(#d9d9d9, #000)',
+		background: '-ms-linear-gradient(#d9d9d9, #000)',/*For IE10*/
+		background: 'linear-gradient(#d9d9d9, #000)',
+		filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"/*For IE7-8-9*/
 	},
 	mapParent: {
 		display: 'inline-block'//,
@@ -89,6 +101,9 @@ var styles = {
 		border: 0//,
 		// marginLeft: 'auto',
 		// marginRight: 'auto'
+	},
+	paddingBottom: {
+		paddingBottom: 15
 	},
 	h1: {
 		color: 'black',
