@@ -51,17 +51,27 @@ var Emblem = React.createClass({
 
 		$('#emblem-background-image').css({ height: heightTS });
 
-		var top = $('emblem-element').outerHeight();
+		var top = $('#emblem-element').outerHeight();
 
 		this.setState({ gradientHelperTopShift: top })
 
 		document.getElementById('logo').appendChild(document.getElementById('svg2'));
+
+		//here I need to add an event to listen if the browser window zoomed
+		//$().someListener(EmblemObject.zoomChanged)
+
+		//now to expose the EmblemObject globally
+		window.EmblemObject = EmblemObject;
+		window.EmblemObject.backgroundImageWidth = stylesHelper.backgroundImageWidth;
+		//and to keep things consistent:
+		EmblemObject.backgroundImageWidth = stylesHelper.backgroundImageWidth;
 
 	},
 	render: function() {
 		return (
 			<div>
 				{/*<div style={styles.backgroundImage}></div>*/}
+				<div id="backgroundImage"style={styles.backgroundImage}></div>
 				<div id="emblem-element" style={styles.one}>
 					<div id="logo">
 					</div>
@@ -87,59 +97,12 @@ var Emblem = React.createClass({
 	margin-bottom: 5px;
 */
 
-var stylesHelper = {
-	helperWidth: '100%',
-	helperHeight: '350px'
-}
-
-var styles = {
-	one: {
-		width: stylesHelper.helperWidth, 
-		height: stylesHelper.helperHeight,
-		position: 'fixed',
-		top: '0px',
-		// left: '-25%',
-		// background: '#511515'
-		background: '#D5EFF8'
-	},
-	two: {
-		cx: 100,
-		cy: 100,
-		r: 75,
-		fill: 'orange'
-	},
-	svg: {
-		width: '100%',
-		height: '175px'
-	},
-	gradientHelper: {
-		width: '100%',
-		height: 75,
-		background: '#D5EFF8',
-		background: '#D5EFF8',
-		background: '-moz-linear-gradient(#D5EFF8, #D5EFF8)',
-		background: '-webkit-linear-gradient(#D5EFF8, #D5EFF8)',
-		background: '-o-linear-gradient(#D5EFF8, #D5EFF8)',
-		background: '-ms-linear-gradient(#D5EFF8, #D5EFF8)',/*For IE10*/
-		background: 'linear-gradient(#D5EFF8, #D5EFF8)',
-		filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#D5EFF8', endColorstr='#D5EFF8')",/*For IE7-8-9*/
-		marginBottom: 5,
-		top: 350,
-		position: 'fixed'
-	},
-	backgroundImage: {
-		width: stylesHelper.helperWidth, 
-		height: stylesHelper.helperHeight,
-		backgroundImage: 'url("../../assets/main-background.jpg")',
-		transform: 'scale(0.5, 0.5)'
-	}
-}
 
 var EmblemObject = {
 	//hasScrolled will help me initialize the scrolling starting value
 	hasScrolled: false,
 	scrollPosition: 0,
-
+	backgroundImageWidth: '',
 	prior_scrollTop: 0,
 	increment: 1,
 	start: function() {
@@ -184,8 +147,102 @@ var EmblemObject = {
 		//}
 
 		//EmblemObject.interation++;
+	},
+	zoomChanged: function() {
+		
+		var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
+		var backgroundWidth = parseFloat(EmblemObject.backgroundImageWidth);
+
+		
+		console.log(totalWidth,  backgroundWidth)
+
+
+		if(totalWidth > backgroundWidth) {	
+			// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+			// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+			var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
+
+			var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help will error
+
+			// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
+
+			// console.log(document.getElementById('backgroundImage'))
+			document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
+
+		}
+		else {
+			document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+		}
+	},
+}
+
+var stylesHelper = {
+	helperWidth: '100%',
+	helperHeight: '350px',
+	backgroundImageWidth: '1200'
+}
+
+var styles = {
+	one: {
+		width: stylesHelper.helperWidth, 
+		height: stylesHelper.helperHeight,
+		position: 'fixed',
+		top: '0px',
+		// left: '-25%',
+		// background: '#511515'
+		background: '#D5EFF8'
+	},
+	two: {
+		cx: 100,
+		cy: 100,
+		r: 75,
+		fill: 'orange'
+	},
+	svg: {
+		width: '100%',
+		height: '175px'
+	},
+	gradientHelper: {
+		width: '100%',
+		height: 75,
+		background: '#D5EFF8',
+		background: '#D5EFF8',
+		background: '-moz-linear-gradient(#D5EFF8, #D5EFF8)',
+		background: '-webkit-linear-gradient(#D5EFF8, #D5EFF8)',
+		background: '-o-linear-gradient(#D5EFF8, #D5EFF8)',
+		background: '-ms-linear-gradient(#D5EFF8, #D5EFF8)',/*For IE10*/
+		background: 'linear-gradient(#D5EFF8, #D5EFF8)',
+		filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#D5EFF8', endColorstr='#D5EFF8')",/*For IE7-8-9*/
+		marginBottom: 5,
+		top: 350,
+		position: 'fixed'
+	},
+	/*
+		very badly I need to account for the different zoom percentages
+	*/
+	backgroundImage: {
+		// width: stylesHelper.helperWidth, 
+		// width: '100px', 
+		// width: '1000px', 
+		// // height: stylesHelper.helperHeight,
+		// height: '1000px',
+		backgroundImage: 'url("../../assets/main-background.jpg")',
+		// transform: 'scale(1.25, 1.25)',
+		position: 'fixed',
+		top: '0px',
+		zIndex: '1',
+		// width: '1200px',
+		width: stylesHelper.backgroundImageWidth + 'px',
+		height:'600px',
+		backgroundSize: 'cover',
+		backgroundPosition: 'center -150px',
+		backgroundRepeat: 'no-repeat',
+		textAlign: 'center',
+		margin: 'auto',
+		padding: '0'
 	}
 }
+
 
 //kick it off
 EmblemObject.start();
