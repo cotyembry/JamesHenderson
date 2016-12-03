@@ -61,6 +61,7 @@ var Emblem = React.createClass({
 	render: function() {
 		return (
 			<div>
+				{/*<div style={styles.backgroundImage}></div>*/}
 				<div id="emblem-element" style={styles.one}>
 					<div id="logo">
 					</div>
@@ -86,11 +87,15 @@ var Emblem = React.createClass({
 	margin-bottom: 5px;
 */
 
+var stylesHelper = {
+	helperWidth: '100%',
+	helperHeight: '350px'
+}
 
 var styles = {
 	one: {
-		width: '100%',
-		height: '350px',
+		width: stylesHelper.helperWidth, 
+		height: stylesHelper.helperHeight,
 		position: 'fixed',
 		top: '0px',
 		// left: '-25%',
@@ -121,6 +126,12 @@ var styles = {
 		marginBottom: 5,
 		top: 350,
 		position: 'fixed'
+	},
+	backgroundImage: {
+		width: stylesHelper.helperWidth, 
+		height: stylesHelper.helperHeight,
+		backgroundImage: 'url("../../assets/main-background.jpg")',
+		transform: 'scale(0.5, 0.5)'
 	}
 }
 
