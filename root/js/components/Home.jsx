@@ -8,10 +8,6 @@ import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
 
 
-
-//todo: finish material design theme for the paragraphs
-//http://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_material_download
-
 var Home = React.createClass({
 	elements: [],
 
@@ -58,7 +54,6 @@ var Home = React.createClass({
 		//so I need to account for this when the width is '', otherwise I
 		//can continue with the flow as normal
 		if(document.getElementById('page').style.width == '') {
-			console.log('in setTimeout branch')
 			//for the set timeout option
 			setTimeout(self.resize, 100);
 		}
