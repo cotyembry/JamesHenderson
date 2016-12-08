@@ -18,8 +18,11 @@ var Home = React.createClass({
 		//setting the src attribute the React way in the styles object wasn't working so, jquery it is
 		document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src)
 
+		//added the following lines to set the position of the font header
 		var fontHeaderHeight = $('#fontText1').outerHeight();
 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+
+		$(window).resize(console.log('here?'))
 
 		// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 		// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
