@@ -14,7 +14,12 @@ import Footer from './Footer.jsx';
 
 var Home = React.createClass({
 	elements: [],
+
+	totalFontWidth: 0,
+
 	componentDidMount: function() {
+		self = this; //self helps me with not conflicting with jquery's `this`
+
 		//setting the src attribute the React way in the styles object wasn't working so, jquery it is
 		document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src)
 
@@ -22,10 +27,55 @@ var Home = React.createClass({
 		var fontHeaderHeight = $('#fontText1').outerHeight();
 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
 
-		$(window).resize(console.log('here?'))
+		//this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
+		var fontText1 = $('#fontText1').outerWidth();
+		var fontText2 = $('#fontText2').outerWidth();
+
+		console.log(fontText1, fontText2)
+
+		var totalFontWidth = fontText1 + fontText2;
+		this.totalFontWidth = totalFontWidth;
+
+
+		$(window).resize( self.resize )
+		//and so its ran at least one time
+		this.resize();
 
 		// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 		// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
+	},
+	resize: function() {
+		var self = this;
+		var fontText1Element = document.getElementById('fontText1');
+		var fontText2Element = document.getElementById('fontText2');
+		// var fontText1 = $(fontText1Element).outerWidth();
+		// var fontText2 = $(fontText2Element).outerWidth();
+		// var totalFontWidth = fontText1 + fontText2;
+
+		var totalWidth = parseFloat(document.getElementById('page').style.width);
+
+		//sometimes when this resize method runs nothing gets accomplished
+		//so I need to account for this when the width is '', otherwise I
+		//can continue with the flow as normal
+		if(document.getElementById('page').style.width == '') {
+			console.log('in setTimeout branch')
+			//for the set timeout option
+			setTimeout(self.resize, 100);
+		}
+		else {
+			if(totalWidth < this.totalFontWidth) {
+				$(fontText1Element).css({ display: 'block'});
+				$(fontText2Element).css({ display: 'block'});
+				var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
+				$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
+			}
+			else {
+				$(fontText1Element).css({ display: 'inline-block'});
+				$(fontText2Element).css({ display: 'inline-block'});
+				var fontHeaderHeight = $('#fontText1').outerHeight();
+				$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+			}
+		}
 	},
 	render: function() {
 			return (
