@@ -18,6 +18,9 @@ var Home = React.createClass({
 		//setting the src attribute the React way in the styles object wasn't working so, jquery it is
 		document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src)
 
+		var fontHeaderHeight = $('#fontText1').outerHeight();
+		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+
 		// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 		// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 	},
@@ -27,6 +30,10 @@ var Home = React.createClass({
 					{/*<Emblem />*/}
 					<div id="backgroundDiv"></div>
 					<div id="page">
+						{/* the font declarations and the size is set in index.html */}
+						<div style={styles.fontHeaderContainer} id="fontHeader">
+							<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
+						</div>
 						{/*<div id="gradientHelper"></div>*/}
 						<div id="paddingHelper">
 							<Header />
@@ -135,6 +142,14 @@ var styles = {
 	},
 	credits: {
 		fontSize: 14
+	},
+	fontHeader: {
+		display: 'inline-block'
+	},
+	fontHeaderContainer: {
+		width: '100%',
+		textAlign: 'center',
+		position: 'absolute'
 	},
 	headingAndPicture: {
 		margin: '0px',

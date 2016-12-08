@@ -29,6 +29,8 @@ var home = {
 		//start the stuff necessary to do when the document has been loaded
 		var widthToSet = $(document.documentElement).outerWidth();
 		$('#page').css({ 'width': widthToSet + 'px' });
+
+		EmblemObject.zoomChanged();
 	},
 	adjustSize: function adjustSize() {
 		var widthToSet = $(document.documentElement).outerWidth();

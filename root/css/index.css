@@ -4,7 +4,9 @@ html, body {
 	margin: 0px;
 	padding: 0px;
 }
-
+#fontText1 {
+	padding-right: 10px;
+}
 #historyBackground {
 	width: 100%;
 	height: 100%;
