@@ -76,7 +76,7 @@ var Home = React.createClass({
 			return (
 				<div style={styles.paddingBottom}>
 					{/*<Emblem />*/}
-					<div id="backgroundDiv"></div>
+					{/*<div id="backgroundDiv"></div> commented out 12-08-2016 to help fix issue with background image */}
 					<div id="page">
 						{/* the font declarations and the size is set in index.html */}
 						<div style={styles.fontHeaderContainer} id="fontHeader">
@@ -214,6 +214,9 @@ var styles = {
 	imgSrc: {
 		src: './assets/AlMcKayPhoto.jpg'
 	},
+	// page: { //added 12-08-2016 to help fix IE issue with the background picture
+	// 	position: 'relative'
+	// },
 	paddingBottom: {
 		paddingBottom: 15
 	},

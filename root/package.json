@@ -15,13 +15,15 @@
     "babel-polyfill": "^6.13.0",
     "babel-runtime": "^6.11.6",
     "jquery": "^3.1.0",
+    "path-is-absolute": "^1.0.0",
+    "radium": "^0.13.4",
     "react": "^15.3.0",
     "react-bootstrap-navbar": "^1.1.0",
     "react-dom": "^15.3.0",
     "react-nav-bar": "^0.6.4",
     "react-navbar": "^1.0.0",
-    "path-is-absolute": "^1.0.0",
-    "radium": "^0.13.4"
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
   },
   "devDependencies": {
     "babel-core": "^6.13.2",
