@@ -14,7 +14,7 @@ var Home = React.createClass({
 	totalFontWidth: 0,
 
 	componentDidMount: function() {
-		self = this; //self helps me with not conflicting with jquery's `this`
+		var self = this; //self helps me with not conflicting with jquery's `this`
 
 		//setting the src attribute the React way in the styles object wasn't working so, jquery it is
 		document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src)
@@ -73,6 +73,7 @@ var Home = React.createClass({
 		}
 	},
 	render: function() {
+		console.log(styles.fontHeaderContainer)
 			return (
 				<div style={styles.paddingBottom}>
 					{/*<Emblem />*/}
