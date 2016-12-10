@@ -13,8 +13,15 @@ var Home = React.createClass({
 
 	totalFontWidth: 0,
 
+	smallestWidthPossible: 445,
+
 	componentDidMount: function() {
-		var self = this; //self helps me with not conflicting with jquery's `this`
+		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+
+		//first I will set the page's width
+		var widthToSet = $(document.documentElement).outerWidth();
+		$('#page').css({ 'width': widthToSet + 'px' });
+
 
 		//setting the src attribute the React way in the styles object wasn't working so, jquery it is
 		document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src)
@@ -27,7 +34,7 @@ var Home = React.createClass({
 		var fontText1 = $('#fontText1').outerWidth();
 		var fontText2 = $('#fontText2').outerWidth();
 
-		console.log(fontText1, fontText2)
+		// console.log(fontText1, fontText2)
 
 		var totalFontWidth = fontText1 + fontText2;
 		this.totalFontWidth = totalFontWidth;
@@ -42,6 +49,33 @@ var Home = React.createClass({
 	},
 	resize: function() {
 		var self = this;
+
+		
+
+		var widthToSet = $(document.documentElement).outerWidth();
+
+		if(widthToSet >= this.smallestWidthPossible) {
+			$('#page').css({ 'width': widthToSet + 'px' });
+		}
+
+		// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
+
+		// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
+			
+		// 	this.setPageWidth();
+
+		// }
+		// else {
+		// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
+		// 	// //
+		// 	// if(currentWidth > this.lastWidth) {
+
+		// 	// }
+
+		// 	var 
+		// }
+
+		//now I need to position the font element
 		var fontText1Element = document.getElementById('fontText1');
 		var fontText2Element = document.getElementById('fontText2');
 		// var fontText1 = $(fontText1Element).outerWidth();
@@ -71,9 +105,10 @@ var Home = React.createClass({
 				$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
 			}
 		}
+
+		// this.lastWidth = widthToSet;
 	},
-	render: function() {
-		console.log(styles.fontHeaderContainer)
+	render: function() {		
 			return (
 				<div style={styles.paddingBottom}>
 					{/*<Emblem />*/}
@@ -108,8 +143,8 @@ var Home = React.createClass({
 											<center id="headerWrapperCenterElement">
 												<img id="jpg1" style={styles.img}></img>
 												<div id="headerWrapper">
-													<h3 style={styles.removePaddingAndMargin}>MSG ALBERT McKAY</h3>
-													<h4 style={styles.removePaddingAndMargin}>U.S. Army</h4>
+													<h2 style={styles.removePaddingAndMargin}>MSG ALBERT McKAY</h2>
+													<h2 style={styles.removePaddingAndMargin}>U.S. Army</h2>
 												</div>
 											</center>
 										</div>
@@ -235,7 +270,7 @@ var styles = {
 	paragraphElement: {
 		paddingRight: 25,
 		paddingLeft: 25,
-		fontSize: 20,
+		fontSize: 30,
 		margin: 0
 	},
 	removePaddingAndMargin: {
