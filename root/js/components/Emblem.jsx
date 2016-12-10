@@ -60,7 +60,7 @@ var Emblem = React.createClass({
 		//here I need to add an event to listen if the browser window zoomed
 		//$().someListener(EmblemObject.zoomChanged)
 		$(window).resize( EmblemObject.zoomChanged )
-
+		EmblemObject.zoomChanged();
 
 		//now to expose the EmblemObject globally
 		window.EmblemObject = EmblemObject;
@@ -155,11 +155,13 @@ var EmblemObject = {
 
 
 		var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
-		var backgroundWidth = parseFloat(EmblemObject.backgroundImageWidth);
+		var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
 
 		
 		// console.log(totalWidth,  backgroundWidth)
 
+
+		// console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
 
 		if(totalWidth > backgroundWidth) {	
 			// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth

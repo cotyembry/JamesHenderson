@@ -54,6 +54,8 @@ var Home = React.createClass({
 
 		var widthToSet = $(document.documentElement).outerWidth();
 
+		// console.log(widthToSet)
+
 		if(widthToSet >= this.smallestWidthPossible) {
 			$('#page').css({ 'width': widthToSet + 'px' });
 		}
