@@ -105,7 +105,7 @@ export default class TribalAdministration extends React.Component {
 							<div style={styles.fontSize}>District 4: Jimmy Huett - (479)-970-4830</div>
 							<br />
 							<br />
-							<div style={styles.fontSize}>District 5: Kenneth Wilderson - (479)-477-2577</div>
+							<div style={styles.fontSize}>District 5: Kenneth Wilkerson - (479)-477-2577</div>
 							<br />
 							<br />
 							<div style={styles.fontSize}>District 6: Bob Dixon - (479)-355-0595</div>
