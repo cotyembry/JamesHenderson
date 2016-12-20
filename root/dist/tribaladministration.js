@@ -72,11 +72,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	alert('now..?');
-
 	(0, _jquery2.default)(document).ready(function () {
-
-		alert('here');
 
 		_reactDom2.default.render(_react2.default.createElement(_Emblem2.default, null), document.getElementById('emblem'));
 		_reactDom2.default.render(_react2.default.createElement(_Navbar2.default, { fontSize: 20 }), document.getElementById('navbar'));
@@ -31918,9 +31914,10 @@
 			height: stylesHelper.helperHeight,
 			position: 'fixed',
 			top: '0px',
+			zIndex: '2' //this makes the emblem be right on top of the main-background image (the clouds/sky)
 			// left: '-25%',
 			// background: '#511515'
-			background: '#D5EFF8'
+			// background: '#D5FF8'
 		},
 		two: {
 			cx: 100,
@@ -32640,7 +32637,7 @@
 								_react2.default.createElement(
 									'div',
 									{ style: styles.fontSize },
-									'District 5: Kenneth Wilderson - (479)-477-2577'
+									'District 5: Kenneth Wilkerson - (479)-477-2577'
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement('br', null),

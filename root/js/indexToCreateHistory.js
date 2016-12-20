@@ -11,7 +11,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
-import NavbarTwo from './components/NavbarTwo.jsx';
+import Emblem from './components/Emblem.jsx';
 import History from './components/History.jsx';
 // import HistoryBackground from './components/History.jsx';
 
@@ -22,7 +22,7 @@ $(document).ready(function() {
 
 
 
-	ReactDOM.render(<NavbarTwo />, document.getElementById('navbartwo'));
+	ReactDOM.render(<Emblem />, document.getElementById('emblem'));
 	ReactDOM.render(<History />, document.getElementById('history'));
 	// ReactDOM.render(<Home />, document.getElementById('root'));
 });

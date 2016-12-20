@@ -1,21 +1,53 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-	<title>History</title>
+	<!-- <meta name="viewport" content="width=device-width", initial-scale="1", maximum-scale="1"> -->
+	<!-- <meta name="viewport" content="width=device-width", initial-scale="1", maximum-scale="1"> -->
+	<meta name="viewport" content="width=device-width", initial-scale="1", maximum-scale="1">
 
-	<link rel="stylesheet" type="text/css" href="./css/index.css">
-	<link rel="stylesheet" type="text/css" href="./css/navbarTwo.css">
+	<title>Sovereign Chickamauga Cherokee</title>
 
+	<link rel="stylesheet" type="text/css" href="./css/history.css">
+	<link rel="stylesheet" type="text/css" href="./css/jquery-ui.css">
+
+	<!-- now for the fancy fonts font -->
+	<style type="text/css">
+	@font-face {
+	    font-family: "CustomFont1";
+	    src: url(./assets/fonts/AlexBrush-Regular.ttf) format("truetype");
+	}
+	.customfont1 { 
+	    font-family: "CustomFont1", Verdana, Tahoma;
+	    /*font-size: 70px;*/
+	    font-size: 100px;
+	}
+	</style>
+
+<!--
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-blue-grey.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+-->
 </head>
-<body>
-	<div id="navbartwo"></div>
-	<div id="historyBackground">
-		<div id="history"></div>
-	</div>
+<body id="body">
 
+
+	<center><img id="svg2" src="./assets/Seal1.png" alt=""></center><!-- height="42" width="42" -->
+
+
+
+
+<div id="emblem" style="position: fixed;"></div>
+
+<div id="history" style="position: relative; z-index: 100;"></div>
+
+<!-- <div><a href="/assets/test.pdf">click me to go to pdf</a></div> -->
 
 
 <script type="text/javascript" src="./dist/history.js"></script>
+
+<!--<button style="position: fixed; width: 100%; top: 0px; z-index: 2" onclick="EmblemObject.zoomChanged()">click me</button>-->
 
 </body>
 </html>
