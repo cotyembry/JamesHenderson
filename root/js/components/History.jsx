@@ -22,18 +22,20 @@ var History = React.createClass({
 		var widthToSet = $(document.documentElement).outerWidth();
 		$('#page').css({ 'width': widthToSet + 'px' });
 
-		//added the following lines to set the position of the font header
-		var fontHeaderHeight = $('#fontText1').outerHeight();
-		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+		// Coty commented out 12-20_2016 since this History.jsx does not need to know about the text elements
+		//
+		// //added the following lines to set the position of the font header
+		// var fontHeaderHeight = $('#fontText1').outerHeight();
+		// $('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
 
-		//this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
-		var fontText1 = $('#fontText1').outerWidth();
-		var fontText2 = $('#fontText2').outerWidth();
+		// //this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
+		// var fontText1 = $('#fontText1').outerWidth();
+		// var fontText2 = $('#fontText2').outerWidth();
 
-		// console.log(fontText1, fontText2)
+		// // console.log(fontText1, fontText2)
 
-		var totalFontWidth = fontText1 + fontText2;
-		this.totalFontWidth = totalFontWidth;
+		// var totalFontWidth = fontText1 + fontText2;
+		// this.totalFontWidth = totalFontWidth;
 
 
 		$(window).resize( self.resize )
@@ -73,36 +75,38 @@ var History = React.createClass({
 		// 	var 
 		// }
 
-		//now I need to position the font element
-		var fontText1Element = document.getElementById('fontText1');
-		var fontText2Element = document.getElementById('fontText2');
-		// var fontText1 = $(fontText1Element).outerWidth();
-		// var fontText2 = $(fontText2Element).outerWidth();
-		// var totalFontWidth = fontText1 + fontText2;
+		// Coty commented out 12-20_2016 since this History.jsx does not need to know about the text elements
+		//
+		// //now I need to position the font element
+		// var fontText1Element = document.getElementById('fontText1');
+		// var fontText2Element = document.getElementById('fontText2');
+		// // var fontText1 = $(fontText1Element).outerWidth();
+		// // var fontText2 = $(fontText2Element).outerWidth();
+		// // var totalFontWidth = fontText1 + fontText2;
 
-		var totalWidth = parseFloat(document.getElementById('page').style.width);
+		// var totalWidth = parseFloat(document.getElementById('page').style.width);
 
-		//sometimes when this resize method runs nothing gets accomplished
-		//so I need to account for this when the width is '', otherwise I
-		//can continue with the flow as normal
-		if(document.getElementById('page').style.width == '') {
-			//for the set timeout option
-			setTimeout(self.resize, 100);
-		}
-		else {
-			if(totalWidth < this.totalFontWidth) {
-				$(fontText1Element).css({ display: 'block'});
-				$(fontText2Element).css({ display: 'block'});
-				var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
-				$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
-			}
-			else {
-				$(fontText1Element).css({ display: 'inline-block'});
-				$(fontText2Element).css({ display: 'inline-block'});
-				var fontHeaderHeight = $('#fontText1').outerHeight();
-				$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-			}
-		}
+		// //sometimes when this resize method runs nothing gets accomplished
+		// //so I need to account for this when the width is '', otherwise I
+		// //can continue with the flow as normal
+		// if(document.getElementById('page').style.width == '') {
+		// 	//for the set timeout option
+		// 	setTimeout(self.resize, 100);
+		// }
+		// else {
+		// 	if(totalWidth < this.totalFontWidth) {
+		// 		$(fontText1Element).css({ display: 'block'});
+		// 		$(fontText2Element).css({ display: 'block'});
+		// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
+		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
+		// 	}
+		// 	else {
+		// 		$(fontText1Element).css({ display: 'inline-block'});
+		// 		$(fontText2Element).css({ display: 'inline-block'});
+		// 		var fontHeaderHeight = $('#fontText1').outerHeight();
+		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+		// 	}
+		// }
 
 		// this.lastWidth = widthToSet;
 	},
@@ -113,9 +117,12 @@ var History = React.createClass({
 					{/*<div id="backgroundDiv"></div> commented out 12-08-2016 to help fix issue with background image */}
 					<div id="page">
 						{/* the font declarations and the size is set in index.html */}
+						{/*}
 						<div style={styles.fontHeaderContainer} id="fontHeader">
 							<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
 						</div>
+						*/}
+
 						{/*<div id="gradientHelper"></div>*/}
 						<div id="paddingHelper">
 							<Header />

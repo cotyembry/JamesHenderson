@@ -1,3 +1,14 @@
+@font-face {
+    font-family: "CustomFont1";
+    src: url(./assets/fonts/AlexBrush-Regular.ttf) format("truetype");
+}/*
+
+.customfont1 { 
+    font-family: "CustomFont1", Verdana, Tahoma;
+    font-size: 100px;
+}
+*/
+
 #fontText1 {
 	color: white;
 }

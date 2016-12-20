@@ -68,6 +68,12 @@ var Emblem = React.createClass({
 		//and to keep things consistent:
 		EmblemObject.backgroundImageWidth = stylesHelper.backgroundImageWidth;
 
+
+		//now I will set the logo's position up in the correct position on the screen
+		var topToShift = $('#logo').outerHeight() - 10;	//-10 to not cut off the bottom of the fancy font heading
+		$('#fontHeader').css({ top: topToShift })
+
+
 	},
 	render: function() {
 		return (
@@ -79,6 +85,15 @@ var Emblem = React.createClass({
 					</div>
 					<div id="emblem-background-image"></div>
 				</div>
+				
+
+				{/* the font declarations and the size is set in index.html */}
+				<div style={styles.fontHeaderContainer} id="fontHeader">
+					<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
+				</div>
+				
+
+
 				<div id="gradientHelper" style={styles.gradientHelper}></div>
 			</div>
 		)
@@ -247,6 +262,16 @@ var styles = {
 		textAlign: 'center',
 		margin: 'auto',
 		padding: '0'
+	},
+	fontHeader: {
+		display: 'inline-block',
+		fontFamily: '"CustomFont1", Verdana, Tahoma',
+	    fontSize: 100	},
+	fontHeaderContainer: {
+		width: '100%',
+		textAlign: 'center',
+		position: 'fixed',
+		zIndex: 3
 	}
 }
 
