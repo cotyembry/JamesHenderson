@@ -194,9 +194,10 @@ var styles = {
 		height: stylesHelper.helperHeight,
 		position: 'fixed',
 		top: '0px',
+		zIndex: '2'	//this makes the emblem be right on top of the main-background image (the clouds/sky)
 		// left: '-25%',
 		// background: '#511515'
-		background: '#D5EFF8'
+		// background: '#D5FF8'
 	},
 	two: {
 		cx: 100,
