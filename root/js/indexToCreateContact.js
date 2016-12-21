@@ -9,9 +9,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import $ from 'jquery';
+
 import Contact from './components/Contact.jsx';
 import Emblem from './components/Emblem.jsx';
 
-
-ReactDOM.render(<Emblem />, document.getElementById('emblem'));
-ReactDOM.render(<Contact />, document.getElementById('contact'));
+$(document).ready(function() {
+	ReactDOM.render(<Emblem />, document.getElementById('emblem'));
+	ReactDOM.render(<Contact />, document.getElementById('contact'));
+})
