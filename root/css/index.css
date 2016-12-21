@@ -1,7 +1,11 @@
+
+/*
+	I could not get this to work in this .css stylesheet, I had to include it on the actual page in index.html
+
 @font-face {
     font-family: "CustomFont1";
     src: url(./assets/fonts/AlexBrush-Regular.ttf) format("truetype");
-}/*
+}
 
 .customfont1 { 
     font-family: "CustomFont1", Verdana, Tahoma;

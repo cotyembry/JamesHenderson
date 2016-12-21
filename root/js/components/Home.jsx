@@ -22,22 +22,25 @@ var Home = React.createClass({
 		var widthToSet = $(document.documentElement).outerWidth();
 		$('#page').css({ 'width': widthToSet + 'px' });
 
-
+		//this is for Al's photo:
 		//setting the src attribute the React way in the styles object wasn't working so, jquery it is
 		document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src)
 
-		//added the following lines to set the position of the font header
-		var fontHeaderHeight = $('#fontText1').outerHeight();
-		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
 
-		//this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
-		var fontText1 = $('#fontText1').outerWidth();
-		var fontText2 = $('#fontText2').outerWidth();
-
-		// console.log(fontText1, fontText2)
-
-		var totalFontWidth = fontText1 + fontText2;
-		this.totalFontWidth = totalFontWidth;
+		// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
+		//
+		// //added the following lines to set the position of the font header
+		// var fontHeaderHeight = $('#fontText1').outerHeight();
+		// $('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+		//
+		// //this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
+		// var fontText1 = $('#fontText1').outerWidth();
+		// var fontText2 = $('#fontText2').outerWidth();
+		//
+		// // console.log(fontText1, fontText2)
+		//
+		// var totalFontWidth = fontText1 + fontText2;
+		// this.totalFontWidth = totalFontWidth;
 
 
 		$(window).resize( self.resize )
@@ -77,36 +80,41 @@ var Home = React.createClass({
 		// 	var 
 		// }
 
-		//now I need to position the font element
-		var fontText1Element = document.getElementById('fontText1');
-		var fontText2Element = document.getElementById('fontText2');
-		// var fontText1 = $(fontText1Element).outerWidth();
-		// var fontText2 = $(fontText2Element).outerWidth();
-		// var totalFontWidth = fontText1 + fontText2;
 
-		var totalWidth = parseFloat(document.getElementById('page').style.width);
 
-		//sometimes when this resize method runs nothing gets accomplished
-		//so I need to account for this when the width is '', otherwise I
-		//can continue with the flow as normal
-		if(document.getElementById('page').style.width == '') {
-			//for the set timeout option
-			setTimeout(self.resize, 100);
-		}
-		else {
-			if(totalWidth < this.totalFontWidth) {
-				$(fontText1Element).css({ display: 'block'});
-				$(fontText2Element).css({ display: 'block'});
-				var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
-				$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
-			}
-			else {
-				$(fontText1Element).css({ display: 'inline-block'});
-				$(fontText2Element).css({ display: 'inline-block'});
-				var fontHeaderHeight = $('#fontText1').outerHeight();
-				$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-			}
-		}
+
+		// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
+		//
+		// //now I need to position the font element
+		// var fontText1Element = document.getElementById('fontText1');
+		// var fontText2Element = document.getElementById('fontText2');
+		// // var fontText1 = $(fontText1Element).outerWidth();
+		// // var fontText2 = $(fontText2Element).outerWidth();
+		// // var totalFontWidth = fontText1 + fontText2;
+
+		// var totalWidth = parseFloat(document.getElementById('page').style.width);
+
+		// //sometimes when this resize method runs nothing gets accomplished
+		// //so I need to account for this when the width is '', otherwise I
+		// //can continue with the flow as normal
+		// if(document.getElementById('page').style.width == '') {
+		// 	//for the set timeout option
+		// 	setTimeout(self.resize, 100);
+		// }
+		// else {
+		// 	if(totalWidth < this.totalFontWidth) {
+		// 		$(fontText1Element).css({ display: 'block'});
+		// 		$(fontText2Element).css({ display: 'block'});
+		// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
+		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
+		// 	}
+		// 	else {
+		// 		$(fontText1Element).css({ display: 'inline-block'});
+		// 		$(fontText2Element).css({ display: 'inline-block'});
+		// 		var fontHeaderHeight = $('#fontText1').outerHeight();
+		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+		// 	}
+		// }
 
 		// this.lastWidth = widthToSet;
 	},
@@ -116,10 +124,14 @@ var Home = React.createClass({
 					{/*<Emblem />*/}
 					{/*<div id="backgroundDiv"></div> commented out 12-08-2016 to help fix issue with background image */}
 					<div id="page">
-						{/* the font declarations and the size is set in index.html */}
-						<div style={styles.fontHeaderContainer} id="fontHeader">
-							<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
-						</div>
+						{/*
+							Coty commented this out 12-21-2016 since I moved this html into the Emblem.jsx file
+
+							{/* the font declarations and the size is set in index.html (finish closing this comment)}
+							<div style={styles.fontHeaderContainer} id="fontHeader">
+								<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
+							</div>
+						*/}
 						{/*<div id="gradientHelper"></div>*/}
 						<div id="paddingHelper">
 							<Header />

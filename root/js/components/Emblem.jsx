@@ -71,8 +71,7 @@ var Emblem = React.createClass({
 
 		//now I will set the logo's position up in the correct position on the screen
 		var topToShift = $('#logo').outerHeight() - 10;	//-10 to not cut off the bottom of the fancy font heading
-		$('#fontHeader').css({ top: topToShift })
-
+		$('#fontHeader').css({ top: topToShift });
 
 	},
 	render: function() {
@@ -266,7 +265,8 @@ var styles = {
 	fontHeader: {
 		display: 'inline-block',
 		fontFamily: '"CustomFont1", Verdana, Tahoma',
-	    fontSize: 100	},
+	    fontSize: 100
+	},
 	fontHeaderContainer: {
 		width: '100%',
 		textAlign: 'center',

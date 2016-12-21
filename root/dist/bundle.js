@@ -31806,6 +31806,10 @@
 			window.EmblemObject.backgroundImageWidth = stylesHelper.backgroundImageWidth;
 			//and to keep things consistent:
 			EmblemObject.backgroundImageWidth = stylesHelper.backgroundImageWidth;
+
+			//now I will set the logo's position up in the correct position on the screen
+			var topToShift = (0, _jquery2.default)('#logo').outerHeight() - 10; //-10 to not cut off the bottom of the fancy font heading
+			(0, _jquery2.default)('#fontHeader').css({ top: topToShift });
 		},
 		render: function render() {
 			return _react2.default.createElement(
@@ -31817,6 +31821,20 @@
 					{ id: 'emblem-element', style: styles.one },
 					_react2.default.createElement('div', { id: 'logo' }),
 					_react2.default.createElement('div', { id: 'emblem-background-image' })
+				),
+				_react2.default.createElement(
+					'div',
+					{ style: styles.fontHeaderContainer, id: 'fontHeader' },
+					_react2.default.createElement(
+						'div',
+						{ style: styles.fontHeader, className: 'customfont1', id: 'fontText1' },
+						'Chickamauga'
+					),
+					_react2.default.createElement(
+						'div',
+						{ style: styles.fontHeader, className: 'customfont1', id: 'fontText2' },
+						'Cherokee'
+					)
 				),
 				_react2.default.createElement('div', { id: 'gradientHelper', style: styles.gradientHelper })
 			);
@@ -31962,6 +31980,16 @@
 			textAlign: 'center',
 			margin: 'auto',
 			padding: '0'
+		},
+		fontHeader: {
+			display: 'inline-block',
+			fontFamily: '"CustomFont1", Verdana, Tahoma',
+			fontSize: 100 },
+		fontHeaderContainer: {
+			width: '100%',
+			textAlign: 'center',
+			position: 'fixed',
+			zIndex: 3
 		}
 	};
 
