@@ -21489,9 +21489,8 @@
 /* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*eslint-disable no-unused-vars*/
-	/*!
-	 * jQuery JavaScript Library v3.1.0
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	 * jQuery JavaScript Library v3.1.1
 	 * https://jquery.com/
 	 *
 	 * Includes Sizzle.js
@@ -21501,7 +21500,7 @@
 	 * Released under the MIT license
 	 * https://jquery.org/license
 	 *
-	 * Date: 2016-07-07T21:44Z
+	 * Date: 2016-09-22T22:30Z
 	 */
 	( function( global, factory ) {
 
@@ -21574,13 +21573,13 @@
 			doc.head.appendChild( script ).parentNode.removeChild( script );
 		}
 	/* global Symbol */
-	// Defining this global in .eslintrc would create a danger of using the global
+	// Defining this global in .eslintrc.json would create a danger of using the global
 	// unguarded in another place, it seems safer to define global only for this module
 
 
 
 	var
-		version = "3.1.0",
+		version = "3.1.1",
 
 		// Define a local copy of jQuery
 		jQuery = function( selector, context ) {
@@ -21620,13 +21619,14 @@
 		// Get the Nth element in the matched element set OR
 		// Get the whole matched element set as a clean array
 		get: function( num ) {
-			return num != null ?
 
-				// Return just the one element from the set
-				( num < 0 ? this[ num + this.length ] : this[ num ] ) :
+			// Return all the elements in a clean array
+			if ( num == null ) {
+				return slice.call( this );
+			}
 
-				// Return all the elements in a clean array
-				slice.call( this );
+			// Return just the one element from the set
+			return num < 0 ? this[ num + this.length ] : this[ num ];
 		},
 
 		// Take an array of elements and push it onto the stack
@@ -22034,14 +22034,14 @@
 	}
 	var Sizzle =
 	/*!
-	 * Sizzle CSS Selector Engine v2.3.0
+	 * Sizzle CSS Selector Engine v2.3.3
 	 * https://sizzlejs.com/
 	 *
 	 * Copyright jQuery Foundation and other contributors
 	 * Released under the MIT license
 	 * http://jquery.org/license
 	 *
-	 * Date: 2016-01-04
+	 * Date: 2016-08-08
 	 */
 	(function( window ) {
 
@@ -22187,7 +22187,7 @@
 
 		// CSS string/identifier serialization
 		// https://drafts.csswg.org/cssom/#common-serializing-idioms
-		rcssescape = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\x80-\uFFFF\w-]/g,
+		rcssescape = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g,
 		fcssescape = function( ch, asCodePoint ) {
 			if ( asCodePoint ) {
 
@@ -22214,7 +22214,7 @@
 
 		disabledAncestor = addCombinator(
 			function( elem ) {
-				return elem.disabled === true;
+				return elem.disabled === true && ("form" in elem || "label" in elem);
 			},
 			{ dir: "parentNode", next: "legend" }
 		);
@@ -22500,26 +22500,54 @@
 	 * @param {Boolean} disabled true for :disabled; false for :enabled
 	 */
 	function createDisabledPseudo( disabled ) {
-		// Known :disabled false positives:
-		// IE: *[disabled]:not(button, input, select, textarea, optgroup, option, menuitem, fieldset)
-		// not IE: fieldset[disabled] > legend:nth-of-type(n+2) :can-disable
+
+		// Known :disabled false positives: fieldset[disabled] > legend:nth-of-type(n+2) :can-disable
 		return function( elem ) {
 
-			// Check form elements and option elements for explicit disabling
-			return "label" in elem && elem.disabled === disabled ||
-				"form" in elem && elem.disabled === disabled ||
+			// Only certain elements can match :enabled or :disabled
+			// https://html.spec.whatwg.org/multipage/scripting.html#selector-enabled
+			// https://html.spec.whatwg.org/multipage/scripting.html#selector-disabled
+			if ( "form" in elem ) {
 
-				// Check non-disabled form elements for fieldset[disabled] ancestors
-				"form" in elem && elem.disabled === false && (
-					// Support: IE6-11+
-					// Ancestry is covered for us
-					elem.isDisabled === disabled ||
+				// Check for inherited disabledness on relevant non-disabled elements:
+				// * listed form-associated elements in a disabled fieldset
+				//   https://html.spec.whatwg.org/multipage/forms.html#category-listed
+				//   https://html.spec.whatwg.org/multipage/forms.html#concept-fe-disabled
+				// * option elements in a disabled optgroup
+				//   https://html.spec.whatwg.org/multipage/forms.html#concept-option-disabled
+				// All such elements have a "form" property.
+				if ( elem.parentNode && elem.disabled === false ) {
 
-					// Otherwise, assume any non-<option> under fieldset[disabled] is disabled
-					/* jshint -W018 */
-					elem.isDisabled !== !disabled &&
-						("label" in elem || !disabledAncestor( elem )) !== disabled
-				);
+					// Option elements defer to a parent optgroup if present
+					if ( "label" in elem ) {
+						if ( "label" in elem.parentNode ) {
+							return elem.parentNode.disabled === disabled;
+						} else {
+							return elem.disabled === disabled;
+						}
+					}
+
+					// Support: IE 6 - 11
+					// Use the isDisabled shortcut property to check for disabled fieldset ancestors
+					return elem.isDisabled === disabled ||
+
+						// Where there is no isDisabled, check manually
+						/* jshint -W018 */
+						elem.isDisabled !== !disabled &&
+							disabledAncestor( elem ) === disabled;
+				}
+
+				return elem.disabled === disabled;
+
+			// Try to winnow out elements that can't be disabled before trusting the disabled property.
+			// Some victims get caught in our net (label, legend, menu, track), but it shouldn't
+			// even exist on them, let alone have a boolean value.
+			} else if ( "label" in elem ) {
+				return elem.disabled === disabled;
+			}
+
+			// Remaining elements are neither :enabled nor :disabled
+			return false;
 		};
 	}
 
@@ -22635,25 +22663,21 @@
 			return !document.getElementsByName || !document.getElementsByName( expando ).length;
 		});
 
-		// ID find and filter
+		// ID filter and find
 		if ( support.getById ) {
-			Expr.find["ID"] = function( id, context ) {
-				if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
-					var m = context.getElementById( id );
-					return m ? [ m ] : [];
-				}
-			};
 			Expr.filter["ID"] = function( id ) {
 				var attrId = id.replace( runescape, funescape );
 				return function( elem ) {
 					return elem.getAttribute("id") === attrId;
 				};
 			};
+			Expr.find["ID"] = function( id, context ) {
+				if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
+					var elem = context.getElementById( id );
+					return elem ? [ elem ] : [];
+				}
+			};
 		} else {
-			// Support: IE6/7
-			// getElementById is not reliable as a find shortcut
-			delete Expr.find["ID"];
-
 			Expr.filter["ID"] =  function( id ) {
 				var attrId = id.replace( runescape, funescape );
 				return function( elem ) {
@@ -22661,6 +22685,36 @@
 						elem.getAttributeNode("id");
 					return node && node.value === attrId;
 				};
+			};
+
+			// Support: IE 6 - 7 only
+			// getElementById is not reliable as a find shortcut
+			Expr.find["ID"] = function( id, context ) {
+				if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
+					var node, i, elems,
+						elem = context.getElementById( id );
+
+					if ( elem ) {
+
+						// Verify the id attribute
+						node = elem.getAttributeNode("id");
+						if ( node && node.value === id ) {
+							return [ elem ];
+						}
+
+						// Fall back on getElementsByName
+						elems = context.getElementsByName( id );
+						i = 0;
+						while ( (elem = elems[i++]) ) {
+							node = elem.getAttributeNode("id");
+							if ( node && node.value === id ) {
+								return [ elem ];
+							}
+						}
+					}
+
+					return [];
+				}
 			};
 		}
 
@@ -23702,6 +23756,7 @@
 						return matcher( elem, context, xml );
 					}
 				}
+				return false;
 			} :
 
 			// Check against all ancestor/preceding elements
@@ -23746,6 +23801,7 @@
 						}
 					}
 				}
+				return false;
 			};
 	}
 
@@ -24108,8 +24164,7 @@
 			// Reduce context if the leading compound selector is an ID
 			tokens = match[0] = match[0].slice( 0 );
 			if ( tokens.length > 2 && (token = tokens[0]).type === "ID" &&
-					support.getById && context.nodeType === 9 && documentIsHTML &&
-					Expr.relative[ tokens[1].type ] ) {
+					context.nodeType === 9 && documentIsHTML && Expr.relative[ tokens[1].type ] ) {
 
 				context = ( Expr.find["ID"]( token.matches[0].replace(runescape, funescape), context ) || [] )[0];
 				if ( !context ) {
@@ -24291,24 +24346,29 @@
 			return jQuery.grep( elements, function( elem, i ) {
 				return !!qualifier.call( elem, i, elem ) !== not;
 			} );
-
 		}
 
+		// Single element
 		if ( qualifier.nodeType ) {
 			return jQuery.grep( elements, function( elem ) {
 				return ( elem === qualifier ) !== not;
 			} );
-
 		}
 
-		if ( typeof qualifier === "string" ) {
-			if ( risSimple.test( qualifier ) ) {
-				return jQuery.filter( qualifier, elements, not );
-			}
-
-			qualifier = jQuery.filter( qualifier, elements );
+		// Arraylike of elements (jQuery, arguments, Array)
+		if ( typeof qualifier !== "string" ) {
+			return jQuery.grep( elements, function( elem ) {
+				return ( indexOf.call( qualifier, elem ) > -1 ) !== not;
+			} );
 		}
 
+		// Simple selector that can be filtered directly, removing non-Elements
+		if ( risSimple.test( qualifier ) ) {
+			return jQuery.filter( qualifier, elements, not );
+		}
+
+		// Complex selector, compare the two sets, removing non-Elements
+		qualifier = jQuery.filter( qualifier, elements );
 		return jQuery.grep( elements, function( elem ) {
 			return ( indexOf.call( qualifier, elem ) > -1 ) !== not && elem.nodeType === 1;
 		} );
@@ -24321,11 +24381,13 @@
 			expr = ":not(" + expr + ")";
 		}
 
-		return elems.length === 1 && elem.nodeType === 1 ?
-			jQuery.find.matchesSelector( elem, expr ) ? [ elem ] : [] :
-			jQuery.find.matches( expr, jQuery.grep( elems, function( elem ) {
-				return elem.nodeType === 1;
-			} ) );
+		if ( elems.length === 1 && elem.nodeType === 1 ) {
+			return jQuery.find.matchesSelector( elem, expr ) ? [ elem ] : [];
+		}
+
+		return jQuery.find.matches( expr, jQuery.grep( elems, function( elem ) {
+			return elem.nodeType === 1;
+		} ) );
 	};
 
 	jQuery.fn.extend( {
@@ -24653,14 +24715,14 @@
 			return this.pushStack( matched );
 		};
 	} );
-	var rnotwhite = ( /\S+/g );
+	var rnothtmlwhite = ( /[^\x20\t\r\n\f]+/g );
 
 
 
 	// Convert String-formatted options into Object-formatted ones
 	function createOptions( options ) {
 		var object = {};
-		jQuery.each( options.match( rnotwhite ) || [], function( _, flag ) {
+		jQuery.each( options.match( rnothtmlwhite ) || [], function( _, flag ) {
 			object[ flag ] = true;
 		} );
 		return object;
@@ -25425,13 +25487,16 @@
 			}
 		}
 
-		return chainable ?
-			elems :
+		if ( chainable ) {
+			return elems;
+		}
 
-			// Gets
-			bulk ?
-				fn.call( elems ) :
-				len ? fn( elems[ 0 ], key ) : emptyGet;
+		// Gets
+		if ( bulk ) {
+			return fn.call( elems );
+		}
+
+		return len ? fn( elems[ 0 ], key ) : emptyGet;
 	};
 	var acceptData = function( owner ) {
 
@@ -25568,7 +25633,7 @@
 					// Otherwise, create an array by matching non-whitespace
 					key = key in cache ?
 						[ key ] :
-						( key.match( rnotwhite ) || [] );
+						( key.match( rnothtmlwhite ) || [] );
 				}
 
 				i = key.length;
@@ -25616,6 +25681,31 @@
 	var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
 		rmultiDash = /[A-Z]/g;
 
+	function getData( data ) {
+		if ( data === "true" ) {
+			return true;
+		}
+
+		if ( data === "false" ) {
+			return false;
+		}
+
+		if ( data === "null" ) {
+			return null;
+		}
+
+		// Only convert to a number if it doesn't change the string
+		if ( data === +data + "" ) {
+			return +data;
+		}
+
+		if ( rbrace.test( data ) ) {
+			return JSON.parse( data );
+		}
+
+		return data;
+	}
+
 	function dataAttr( elem, key, data ) {
 		var name;
 
@@ -25627,14 +25717,7 @@
 
 			if ( typeof data === "string" ) {
 				try {
-					data = data === "true" ? true :
-						data === "false" ? false :
-						data === "null" ? null :
-
-						// Only convert to a number if it doesn't change the string
-						+data + "" === data ? +data :
-						rbrace.test( data ) ? JSON.parse( data ) :
-						data;
+					data = getData( data );
 				} catch ( e ) {}
 
 				// Make sure we set the data so it isn't changed later
@@ -26011,7 +26094,7 @@
 			return display;
 		}
 
-		temp = doc.body.appendChild( doc.createElement( nodeName ) ),
+		temp = doc.body.appendChild( doc.createElement( nodeName ) );
 		display = jQuery.css( temp, "display" );
 
 		temp.parentNode.removeChild( temp );
@@ -26129,15 +26212,23 @@
 
 		// Support: IE <=9 - 11 only
 		// Use typeof to avoid zero-argument method invocation on host objects (#15151)
-		var ret = typeof context.getElementsByTagName !== "undefined" ?
-				context.getElementsByTagName( tag || "*" ) :
-				typeof context.querySelectorAll !== "undefined" ?
-					context.querySelectorAll( tag || "*" ) :
-				[];
+		var ret;
 
-		return tag === undefined || tag && jQuery.nodeName( context, tag ) ?
-			jQuery.merge( [ context ], ret ) :
-			ret;
+		if ( typeof context.getElementsByTagName !== "undefined" ) {
+			ret = context.getElementsByTagName( tag || "*" );
+
+		} else if ( typeof context.querySelectorAll !== "undefined" ) {
+			ret = context.querySelectorAll( tag || "*" );
+
+		} else {
+			ret = [];
+		}
+
+		if ( tag === undefined || tag && jQuery.nodeName( context, tag ) ) {
+			return jQuery.merge( [ context ], ret );
+		}
+
+		return ret;
 	}
 
 
@@ -26411,7 +26502,7 @@
 			}
 
 			// Handle multiple events separated by a space
-			types = ( types || "" ).match( rnotwhite ) || [ "" ];
+			types = ( types || "" ).match( rnothtmlwhite ) || [ "" ];
 			t = types.length;
 			while ( t-- ) {
 				tmp = rtypenamespace.exec( types[ t ] ) || [];
@@ -26493,7 +26584,7 @@
 			}
 
 			// Once for each type.namespace in types; type may be omitted
-			types = ( types || "" ).match( rnotwhite ) || [ "" ];
+			types = ( types || "" ).match( rnothtmlwhite ) || [ "" ];
 			t = types.length;
 			while ( t-- ) {
 				tmp = rtypenamespace.exec( types[ t ] ) || [];
@@ -26619,51 +26710,58 @@
 		},
 
 		handlers: function( event, handlers ) {
-			var i, matches, sel, handleObj,
+			var i, handleObj, sel, matchedHandlers, matchedSelectors,
 				handlerQueue = [],
 				delegateCount = handlers.delegateCount,
 				cur = event.target;
 
-			// Support: IE <=9
 			// Find delegate handlers
-			// Black-hole SVG <use> instance trees (#13180)
-			//
-			// Support: Firefox <=42
-			// Avoid non-left-click in FF but don't block IE radio events (#3861, gh-2343)
-			if ( delegateCount && cur.nodeType &&
-				( event.type !== "click" || isNaN( event.button ) || event.button < 1 ) ) {
+			if ( delegateCount &&
+
+				// Support: IE <=9
+				// Black-hole SVG <use> instance trees (trac-13180)
+				cur.nodeType &&
+
+				// Support: Firefox <=42
+				// Suppress spec-violating clicks indicating a non-primary pointer button (trac-3861)
+				// https://www.w3.org/TR/DOM-Level-3-Events/#event-type-click
+				// Support: IE 11 only
+				// ...but not arrow key "clicks" of radio inputs, which can have `button` -1 (gh-2343)
+				!( event.type === "click" && event.button >= 1 ) ) {
 
 				for ( ; cur !== this; cur = cur.parentNode || this ) {
 
 					// Don't check non-elements (#13208)
 					// Don't process clicks on disabled elements (#6911, #8165, #11382, #11764)
-					if ( cur.nodeType === 1 && ( cur.disabled !== true || event.type !== "click" ) ) {
-						matches = [];
+					if ( cur.nodeType === 1 && !( event.type === "click" && cur.disabled === true ) ) {
+						matchedHandlers = [];
+						matchedSelectors = {};
 						for ( i = 0; i < delegateCount; i++ ) {
 							handleObj = handlers[ i ];
 
 							// Don't conflict with Object.prototype properties (#13203)
 							sel = handleObj.selector + " ";
 
-							if ( matches[ sel ] === undefined ) {
-								matches[ sel ] = handleObj.needsContext ?
+							if ( matchedSelectors[ sel ] === undefined ) {
+								matchedSelectors[ sel ] = handleObj.needsContext ?
 									jQuery( sel, this ).index( cur ) > -1 :
 									jQuery.find( sel, this, null, [ cur ] ).length;
 							}
-							if ( matches[ sel ] ) {
-								matches.push( handleObj );
+							if ( matchedSelectors[ sel ] ) {
+								matchedHandlers.push( handleObj );
 							}
 						}
-						if ( matches.length ) {
-							handlerQueue.push( { elem: cur, handlers: matches } );
+						if ( matchedHandlers.length ) {
+							handlerQueue.push( { elem: cur, handlers: matchedHandlers } );
 						}
 					}
 				}
 			}
 
 			// Add the remaining (directly-bound) handlers
+			cur = this;
 			if ( delegateCount < handlers.length ) {
-				handlerQueue.push( { elem: this, handlers: handlers.slice( delegateCount ) } );
+				handlerQueue.push( { elem: cur, handlers: handlers.slice( delegateCount ) } );
 			}
 
 			return handlerQueue;
@@ -26897,7 +26995,19 @@
 
 			// Add which for click: 1 === left; 2 === middle; 3 === right
 			if ( !event.which && button !== undefined && rmouseEvent.test( event.type ) ) {
-				return ( button & 1 ? 1 : ( button & 2 ? 3 : ( button & 4 ? 2 : 0 ) ) );
+				if ( button & 1 ) {
+					return 1;
+				}
+
+				if ( button & 2 ) {
+					return 3;
+				}
+
+				if ( button & 4 ) {
+					return 2;
+				}
+
+				return 0;
 			}
 
 			return event.which;
@@ -27653,15 +27763,17 @@
 	}
 
 	function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
-		var i = extra === ( isBorderBox ? "border" : "content" ) ?
-
-			// If we already have the right measurement, avoid augmentation
-			4 :
-
-			// Otherwise initialize for horizontal or vertical properties
-			name === "width" ? 1 : 0,
-
+		var i,
 			val = 0;
+
+		// If we already have the right measurement, avoid augmentation
+		if ( extra === ( isBorderBox ? "border" : "content" ) ) {
+			i = 4;
+
+		// Otherwise initialize for horizontal or vertical properties
+		} else {
+			i = name === "width" ? 1 : 0;
+		}
 
 		for ( ; i < 4; i += 2 ) {
 
@@ -28515,7 +28627,7 @@
 				callback = props;
 				props = [ "*" ];
 			} else {
-				props = props.match( rnotwhite );
+				props = props.match( rnothtmlwhite );
 			}
 
 			var prop,
@@ -28553,9 +28665,14 @@
 			opt.duration = 0;
 
 		} else {
-			opt.duration = typeof opt.duration === "number" ?
-				opt.duration : opt.duration in jQuery.fx.speeds ?
-					jQuery.fx.speeds[ opt.duration ] : jQuery.fx.speeds._default;
+			if ( typeof opt.duration !== "number" ) {
+				if ( opt.duration in jQuery.fx.speeds ) {
+					opt.duration = jQuery.fx.speeds[ opt.duration ];
+
+				} else {
+					opt.duration = jQuery.fx.speeds._default;
+				}
+			}
 		}
 
 		// Normalize opt.queue - true/undefined/null -> "fx"
@@ -28905,7 +29022,10 @@
 		removeAttr: function( elem, value ) {
 			var name,
 				i = 0,
-				attrNames = value && value.match( rnotwhite );
+
+				// Attribute names can contain non-HTML whitespace characters
+				// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+				attrNames = value && value.match( rnothtmlwhite );
 
 			if ( attrNames && elem.nodeType === 1 ) {
 				while ( ( name = attrNames[ i++ ] ) ) {
@@ -29012,12 +29132,19 @@
 					// Use proper attribute retrieval(#12072)
 					var tabindex = jQuery.find.attr( elem, "tabindex" );
 
-					return tabindex ?
-						parseInt( tabindex, 10 ) :
+					if ( tabindex ) {
+						return parseInt( tabindex, 10 );
+					}
+
+					if (
 						rfocusable.test( elem.nodeName ) ||
-							rclickable.test( elem.nodeName ) && elem.href ?
-								0 :
-								-1;
+						rclickable.test( elem.nodeName ) &&
+						elem.href
+					) {
+						return 0;
+					}
+
+					return -1;
 				}
 			}
 		},
@@ -29034,9 +29161,14 @@
 	// on the option
 	// The getter ensures a default option is selected
 	// when in an optgroup
+	// eslint rule "no-unused-expressions" is disabled for this code
+	// since it considers such accessions noop
 	if ( !support.optSelected ) {
 		jQuery.propHooks.selected = {
 			get: function( elem ) {
+
+				/* eslint no-unused-expressions: "off" */
+
 				var parent = elem.parentNode;
 				if ( parent && parent.parentNode ) {
 					parent.parentNode.selectedIndex;
@@ -29044,6 +29176,9 @@
 				return null;
 			},
 			set: function( elem ) {
+
+				/* eslint no-unused-expressions: "off" */
+
 				var parent = elem.parentNode;
 				if ( parent ) {
 					parent.selectedIndex;
@@ -29074,7 +29209,13 @@
 
 
 
-	var rclass = /[\t\r\n\f]/g;
+		// Strip and collapse whitespace according to HTML spec
+		// https://html.spec.whatwg.org/multipage/infrastructure.html#strip-and-collapse-whitespace
+		function stripAndCollapse( value ) {
+			var tokens = value.match( rnothtmlwhite ) || [];
+			return tokens.join( " " );
+		}
+
 
 	function getClass( elem ) {
 		return elem.getAttribute && elem.getAttribute( "class" ) || "";
@@ -29092,12 +29233,11 @@
 			}
 
 			if ( typeof value === "string" && value ) {
-				classes = value.match( rnotwhite ) || [];
+				classes = value.match( rnothtmlwhite ) || [];
 
 				while ( ( elem = this[ i++ ] ) ) {
 					curValue = getClass( elem );
-					cur = elem.nodeType === 1 &&
-						( " " + curValue + " " ).replace( rclass, " " );
+					cur = elem.nodeType === 1 && ( " " + stripAndCollapse( curValue ) + " " );
 
 					if ( cur ) {
 						j = 0;
@@ -29108,7 +29248,7 @@
 						}
 
 						// Only assign if different to avoid unneeded rendering.
-						finalValue = jQuery.trim( cur );
+						finalValue = stripAndCollapse( cur );
 						if ( curValue !== finalValue ) {
 							elem.setAttribute( "class", finalValue );
 						}
@@ -29134,14 +29274,13 @@
 			}
 
 			if ( typeof value === "string" && value ) {
-				classes = value.match( rnotwhite ) || [];
+				classes = value.match( rnothtmlwhite ) || [];
 
 				while ( ( elem = this[ i++ ] ) ) {
 					curValue = getClass( elem );
 
 					// This expression is here for better compressibility (see addClass)
-					cur = elem.nodeType === 1 &&
-						( " " + curValue + " " ).replace( rclass, " " );
+					cur = elem.nodeType === 1 && ( " " + stripAndCollapse( curValue ) + " " );
 
 					if ( cur ) {
 						j = 0;
@@ -29154,7 +29293,7 @@
 						}
 
 						// Only assign if different to avoid unneeded rendering.
-						finalValue = jQuery.trim( cur );
+						finalValue = stripAndCollapse( cur );
 						if ( curValue !== finalValue ) {
 							elem.setAttribute( "class", finalValue );
 						}
@@ -29189,7 +29328,7 @@
 					// Toggle individual class names
 					i = 0;
 					self = jQuery( this );
-					classNames = value.match( rnotwhite ) || [];
+					classNames = value.match( rnothtmlwhite ) || [];
 
 					while ( ( className = classNames[ i++ ] ) ) {
 
@@ -29232,10 +29371,8 @@
 			className = " " + selector + " ";
 			while ( ( elem = this[ i++ ] ) ) {
 				if ( elem.nodeType === 1 &&
-					( " " + getClass( elem ) + " " ).replace( rclass, " " )
-						.indexOf( className ) > -1
-				) {
-					return true;
+					( " " + stripAndCollapse( getClass( elem ) ) + " " ).indexOf( className ) > -1 ) {
+						return true;
 				}
 			}
 
@@ -29246,8 +29383,7 @@
 
 
 
-	var rreturn = /\r/g,
-		rspaces = /[\x20\t\r\n\f]+/g;
+	var rreturn = /\r/g;
 
 	jQuery.fn.extend( {
 		val: function( value ) {
@@ -29268,13 +29404,13 @@
 
 					ret = elem.value;
 
-					return typeof ret === "string" ?
+					// Handle most common string cases
+					if ( typeof ret === "string" ) {
+						return ret.replace( rreturn, "" );
+					}
 
-						// Handle most common string cases
-						ret.replace( rreturn, "" ) :
-
-						// Handle cases where value is null/undef or number
-						ret == null ? "" : ret;
+					// Handle cases where value is null/undef or number
+					return ret == null ? "" : ret;
 				}
 
 				return;
@@ -29331,20 +29467,24 @@
 						// option.text throws exceptions (#14686, #14858)
 						// Strip and collapse whitespace
 						// https://html.spec.whatwg.org/#strip-and-collapse-whitespace
-						jQuery.trim( jQuery.text( elem ) ).replace( rspaces, " " );
+						stripAndCollapse( jQuery.text( elem ) );
 				}
 			},
 			select: {
 				get: function( elem ) {
-					var value, option,
+					var value, option, i,
 						options = elem.options,
 						index = elem.selectedIndex,
 						one = elem.type === "select-one",
 						values = one ? null : [],
-						max = one ? index + 1 : options.length,
-						i = index < 0 ?
-							max :
-							one ? index : 0;
+						max = one ? index + 1 : options.length;
+
+					if ( index < 0 ) {
+						i = max;
+
+					} else {
+						i = one ? index : 0;
+					}
 
 					// Loop through all the selected options
 					for ( ; i < max; i++ ) {
@@ -29798,13 +29938,17 @@
 			.map( function( i, elem ) {
 				var val = jQuery( this ).val();
 
-				return val == null ?
-					null :
-					jQuery.isArray( val ) ?
-						jQuery.map( val, function( val ) {
-							return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
-						} ) :
-						{ name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
+				if ( val == null ) {
+					return null;
+				}
+
+				if ( jQuery.isArray( val ) ) {
+					return jQuery.map( val, function( val ) {
+						return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
+					} );
+				}
+
+				return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
 			} ).get();
 		}
 	} );
@@ -29813,7 +29957,7 @@
 	var
 		r20 = /%20/g,
 		rhash = /#.*$/,
-		rts = /([?&])_=[^&]*/,
+		rantiCache = /([?&])_=[^&]*/,
 		rheaders = /^(.*?):[ \t]*([^\r\n]*)$/mg,
 
 		// #7653, #8125, #8152: local protocol detection
@@ -29859,7 +30003,7 @@
 
 			var dataType,
 				i = 0,
-				dataTypes = dataTypeExpression.toLowerCase().match( rnotwhite ) || [];
+				dataTypes = dataTypeExpression.toLowerCase().match( rnothtmlwhite ) || [];
 
 			if ( jQuery.isFunction( func ) ) {
 
@@ -30327,7 +30471,7 @@
 			s.type = options.method || options.type || s.method || s.type;
 
 			// Extract dataTypes list
-			s.dataTypes = ( s.dataType || "*" ).toLowerCase().match( rnotwhite ) || [ "" ];
+			s.dataTypes = ( s.dataType || "*" ).toLowerCase().match( rnothtmlwhite ) || [ "" ];
 
 			// A cross-domain request is in order when the origin doesn't match the current origin.
 			if ( s.crossDomain == null ) {
@@ -30399,9 +30543,9 @@
 					delete s.data;
 				}
 
-				// Add anti-cache in uncached url if needed
+				// Add or update anti-cache param if needed
 				if ( s.cache === false ) {
-					cacheURL = cacheURL.replace( rts, "" );
+					cacheURL = cacheURL.replace( rantiCache, "$1" );
 					uncached = ( rquery.test( cacheURL ) ? "&" : "?" ) + "_=" + ( nonce++ ) + uncached;
 				}
 
@@ -31140,7 +31284,7 @@
 			off = url.indexOf( " " );
 
 		if ( off > -1 ) {
-			selector = jQuery.trim( url.slice( off ) );
+			selector = stripAndCollapse( url.slice( off ) );
 			url = url.slice( 0, off );
 		}
 
@@ -31532,7 +31676,6 @@
 
 
 
-
 	var
 
 		// Map over jQuery in case of overwrite
@@ -31559,6 +31702,9 @@
 	if ( !noGlobal ) {
 		window.jQuery = window.$ = jQuery;
 	}
+
+
+
 
 
 	return jQuery;
@@ -31639,21 +31785,51 @@
 
 			(0, _jquery2.default)('#emblem-background-image').css({ height: heightTS });
 
-			var top = (0, _jquery2.default)('emblem-element').outerHeight();
+			var top = (0, _jquery2.default)('#emblem-element').outerHeight();
 
 			this.setState({ gradientHelperTopShift: top });
 
 			document.getElementById('logo').appendChild(document.getElementById('svg2'));
+
+			//here I need to add an event to listen if the browser window zoomed
+			//$().someListener(EmblemObject.zoomChanged)
+			(0, _jquery2.default)(window).resize(EmblemObject.zoomChanged);
+			EmblemObject.zoomChanged();
+
+			//now to expose the EmblemObject globally
+			window.EmblemObject = EmblemObject;
+			window.EmblemObject.backgroundImageWidth = stylesHelper.backgroundImageWidth;
+			//and to keep things consistent:
+			EmblemObject.backgroundImageWidth = stylesHelper.backgroundImageWidth;
+
+			//now I will set the logo's position up in the correct position on the screen
+			var topToShift = (0, _jquery2.default)('#logo').outerHeight() - 10; //-10 to not cut off the bottom of the fancy font heading
+			(0, _jquery2.default)('#fontHeader').css({ top: topToShift });
 		},
 		render: function render() {
 			return _react2.default.createElement(
 				'div',
 				null,
+				_react2.default.createElement('div', { id: 'backgroundImage', style: styles.backgroundImage }),
 				_react2.default.createElement(
 					'div',
 					{ id: 'emblem-element', style: styles.one },
 					_react2.default.createElement('div', { id: 'logo' }),
 					_react2.default.createElement('div', { id: 'emblem-background-image' })
+				),
+				_react2.default.createElement(
+					'div',
+					{ style: styles.fontHeaderContainer, id: 'fontHeader' },
+					_react2.default.createElement(
+						'div',
+						{ style: styles.fontHeader, className: 'customfont1', id: 'fontText1' },
+						'Chickamauga'
+					),
+					_react2.default.createElement(
+						'div',
+						{ style: styles.fontHeader, className: 'customfont1', id: 'fontText2' },
+						'Cherokee'
+					)
 				),
 				_react2.default.createElement('div', { id: 'gradientHelper', style: styles.gradientHelper })
 			);
@@ -31674,38 +31850,11 @@
 		margin-bottom: 5px;
 	*/
 
-	var styles = {
-		one: {
-			width: '100%',
-			height: '350px',
-			position: 'fixed',
-			top: '0px',
-			// left: '-25%',
-			// background: '#511515'
-			background: '#D5EFF8'
-		},
-		two: {
-			cx: 100,
-			cy: 100,
-			r: 75,
-			fill: 'orange'
-		},
-		svg: {
-			width: '100%',
-			height: '175px'
-		},
-		gradientHelper: (_gradientHelper = {
-			width: '100%',
-			height: 75,
-			background: '#D5EFF8'
-		}, (0, _defineProperty3.default)(_gradientHelper, 'background', '#D5EFF8'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-moz-linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-webkit-linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-o-linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-ms-linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'background', 'linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#D5EFF8', endColorstr='#D5EFF8')"), (0, _defineProperty3.default)(_gradientHelper, 'marginBottom', 5), (0, _defineProperty3.default)(_gradientHelper, 'top', 350), (0, _defineProperty3.default)(_gradientHelper, 'position', 'fixed'), _gradientHelper)
-	};
-
 	var EmblemObject = {
 		//hasScrolled will help me initialize the scrolling starting value
 		hasScrolled: false,
 		scrollPosition: 0,
-
+		backgroundImageWidth: '',
 		prior_scrollTop: 0,
 		increment: 1,
 		start: function start() {
@@ -31718,12 +31867,12 @@
 	   	//further scrolled down the page
 	   	//alert(current_scrollTop + ' > ' + EmblemObject.prior_scrollTop)
 	   	$('#body').scrollTop($('#body').scrollTop() + 2)
-	   	}
+	   		}
 	   else {
 	   	//lesser scrolled on the page
 	   	//alert(current_scrollTop + ' < ' + EmblemObject.prior_scrollTop)	
 	   	$('#body').scrollTop($('#body').scrollTop() - 2)
-	   	}
+	   		}
 	   EmblemObject.prior_scrollTop = current_scrollTop;
 	   //EmblemObject.increment += 2;
 	   */
@@ -31743,6 +31892,100 @@
 			//}
 
 			//EmblemObject.interation++;
+		},
+		zoomChanged: function zoomChanged() {
+
+			var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
+			var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
+
+			// console.log(totalWidth,  backgroundWidth)
+
+
+			// console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
+
+			if (totalWidth > backgroundWidth) {
+				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+				var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
+
+				var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help will error
+
+				// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
+
+				// console.log(document.getElementById('backgroundImage'))
+				document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
+			} else {
+				document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+			}
+		}
+	};
+
+	var stylesHelper = {
+		helperWidth: '100%',
+		helperHeight: '350px',
+		backgroundImageWidth: '1200'
+	};
+
+	var styles = {
+		one: {
+			width: stylesHelper.helperWidth,
+			height: stylesHelper.helperHeight,
+			position: 'fixed',
+			top: '0px',
+			zIndex: '2' //this makes the emblem be right on top of the main-background image (the clouds/sky)
+			// left: '-25%',
+			// background: '#511515'
+			// background: '#D5FF8'
+		},
+		two: {
+			cx: 100,
+			cy: 100,
+			r: 75,
+			fill: 'orange'
+		},
+		svg: {
+			width: '100%',
+			height: '175px'
+		},
+		gradientHelper: (_gradientHelper = {
+			width: '100%',
+			height: 75,
+			background: '#D5EFF8'
+		}, (0, _defineProperty3.default)(_gradientHelper, 'background', '#D5EFF8'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-moz-linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-webkit-linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-o-linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'background', '-ms-linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'background', 'linear-gradient(#D5EFF8, #D5EFF8)'), (0, _defineProperty3.default)(_gradientHelper, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#D5EFF8', endColorstr='#D5EFF8')"), (0, _defineProperty3.default)(_gradientHelper, 'marginBottom', 5), (0, _defineProperty3.default)(_gradientHelper, 'top', 350), (0, _defineProperty3.default)(_gradientHelper, 'position', 'fixed'), _gradientHelper),
+		/*
+	 	very badly I need to account for the different zoom percentages
+	 */
+		backgroundImage: {
+			// width: stylesHelper.helperWidth, 
+			// width: '100px', 
+			// width: '1000px', 
+			// // height: stylesHelper.helperHeight,
+			// height: '1000px',
+			backgroundImage: 'url("../../assets/main-background.jpg")',
+			// transform: 'scale(1.25, 1.25)',
+			position: 'fixed',
+			top: '0px',
+			zIndex: '1',
+			// width: '1200px',
+			width: stylesHelper.backgroundImageWidth + 'px',
+			height: '600px',
+			backgroundSize: 'cover',
+			backgroundPosition: 'center -150px',
+			backgroundRepeat: 'no-repeat',
+			textAlign: 'center',
+			margin: 'auto',
+			padding: '0'
+		},
+		fontHeader: {
+			display: 'inline-block',
+			fontFamily: '"CustomFont1", Verdana, Tahoma',
+			fontSize: 100
+		},
+		fontHeaderContainer: {
+			width: '100%',
+			textAlign: 'center',
+			position: 'fixed',
+			zIndex: 3
 		}
 	};
 
@@ -32104,11 +32347,32 @@
 		(0, _createClass3.default)(Beliefs, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				var self = this;
+
 				var topTS = (0, _jquery2.default)('#parent-navbar-item').outerHeight();
 				(0, _jquery2.default)('#contentParent').css({ top: topTS });
 
 				var heightTS = (0, _jquery2.default)('#contentParent').outerHeight() + topTS;
 				(0, _jquery2.default)('#beliefsPage').css({ height: heightTS });
+
+				this.window = window; //this will help later in the resize event as far as performance goes
+				(0, _jquery2.default)(window).resize(self.resize);
+			}
+		}, {
+			key: 'resize',
+			value: function resize() {
+				//start Coty added 12-21-2016
+				var totalWidth = this.window.document.documentElement.clientWidth;
+				if (totalWidth <= stylesHelper.minimumPageWidth + stylesHelper.padding) {
+					//this is the minimum width allowed, don't allow the width to get any smaller
+					//in this case the element #beliefsPage is the page element that will keep
+					//the width state of the page
+					(0, _jquery2.default)('#beliefsPage').css({ width: '800px' });
+				} else {
+					//the width needs to stay at 100% if the totalWidth space allows for it
+					(0, _jquery2.default)('#beliefsPage').css({ width: '100%' });
+				}
+				//end
 			}
 		}, {
 			key: 'render',
@@ -32133,7 +32397,7 @@
 								)
 							),
 							_react2.default.createElement(
-								'p',
+								'div',
 								{ style: styles.container },
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
@@ -32175,7 +32439,7 @@
 								)
 							),
 							_react2.default.createElement(
-								'p',
+								'div',
 								{ style: styles.container },
 								_react2.default.createElement('br', null),
 								'O Great One',
@@ -32213,7 +32477,6 @@
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement('br', null),
-								'-------',
 								_react2.default.createElement('br', null),
 								'O Great One, We come before you in a humble manner, offering what gifts we have, Giving thanks for the gifts of life that we have been given amidst the beauty of the Great Creation, so that we may learn to walk the path of Good Medicine as we give thanks to each of the Four Directions:',
 								_react2.default.createElement('br', null),
@@ -32253,6 +32516,11 @@
 	exports.default = Beliefs;
 
 
+	var stylesHelper = {
+		minimumPageWidth: 800,
+		padding: 15 * 2 //*2 since it contributes twice (on the left and right side of the element)
+	};
+
 	var styles = {
 		beliefsRoot: {
 			width: '100%',
@@ -32267,13 +32535,13 @@
 			background: '#d9d9d9'
 		}, (0, _defineProperty3.default)(_beliefsPage, 'background', '-moz-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'background', '-webkit-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'background', '-o-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'background', '-ms-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'background', 'linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"), _beliefsPage),
 		content: {
-			width: 500,
+			width: stylesHelper.minimumPageWidth,
 			marginLeft: 'auto',
 			marginRight: 'auto'
 		},
 		container: {
-			fontSize: 20,
-			padding: 15,
+			fontSize: 30,
+			padding: stylesHelper.padding,
 			marginBottom: 20,
 			borderRadius: 0,
 			backgroundColor: '#FFF',

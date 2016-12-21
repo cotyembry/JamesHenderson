@@ -6,12 +6,33 @@ import Navbar from './Navbar.jsx';
 
 export default class Beliefs extends React.Component {
 	componentDidMount() {
+		var self = this;
+
 		var topTS = $('#parent-navbar-item').outerHeight();
 		$('#contentParent').css({ top: topTS });
 
 		var heightTS = $('#contentParent').outerHeight() + topTS;
 		$('#beliefsPage').css({ height: heightTS });
 
+		this.window = window;	//this will help later in the resize event as far as performance goes
+		$(window).resize(self.resize);
+
+	}
+
+	resize() {
+		//start Coty added 12-21-2016
+		var totalWidth = this.window.document.documentElement.clientWidth;
+		if(totalWidth <= (stylesHelper.minimumPageWidth + stylesHelper.padding)) {
+			//this is the minimum width allowed, don't allow the width to get any smaller
+			//in this case the element #beliefsPage is the page element that will keep
+			//the width state of the page
+			$('#beliefsPage').css({ width: '800px' });
+		}
+		else {
+			//the width needs to stay at 100% if the totalWidth space allows for it
+			$('#beliefsPage').css({ width: '100%' });
+		}
+		//end
 	}
 
 	render() {
@@ -23,7 +44,7 @@ export default class Beliefs extends React.Component {
 						
 						<center style={styles.container}><h1 style={styles.removePaddingAndMargin}>Beliefs</h1></center>
 
-						<p style={styles.container}>
+						<div style={styles.container}>
 							
 							<br />
 
@@ -59,13 +80,13 @@ export default class Beliefs extends React.Component {
 							This is why we give thanks always to the Four Directions, the that which makes us what we are, both in substance and in form. And in the Center is our spirit, the ever-changing, every-lasting connection with all that is, all that moves and flows and breaths and flickers. We are one with all that is, and things are connected like the blood that unites on family. We arrive, emerging from the formlessness to separateness, and return once again to the formless, boundless, and undivided realm of the spirit-complete consciousness and forever emerging. We are our Nuwhati. We learn our Nuwhati. We become our Nuwhati, and once again we are our Nuwhati.
 							<br />
 							<br />
-						</p>
+						</div>
 						
 
 							<center style={styles.container}><h2 style={styles.removePaddingAndMargin}>A CHEROKEE PRAYER</h2></center>
 						
 
-						<p style={styles.container}>
+						<div style={styles.container}>
 							<br/>
 							O Great One
 							<br/>
@@ -105,7 +126,6 @@ export default class Beliefs extends React.Component {
 							<strong>Giving Thanks</strong>
 							<br/>
 							<br/>
-							-------
 							<br/>
 							O Great One, We come before you in a humble manner, offering what gifts we have, Giving thanks for the gifts of life that we have been given amidst the beauty of the Great Creation, so that we may learn to walk the path of Good Medicine as we give thanks to each of the Four Directions:
 							<br />
@@ -129,12 +149,17 @@ export default class Beliefs extends React.Component {
 							<br />
 							<br />
 							Our Father heaven dweller, My loving will be (to) thy name, Your Lordship, let it make its appearance. Here upon Earth let it happen what you think, the same as in heaven is done. Daily our food is given to us this day. Forgive us our debts the same as we forgive our debtors, and not temptation being lead us into, deliver us from evil existing. For Thine, Your Lordship is and the power is, and the glory is forever. Amen.
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		)
 	}
+}
+
+var stylesHelper = {
+	minimumPageWidth: 800,
+	padding: 15 * 2		//*2 since it contributes twice (on the left and right side of the element)
 }
 
 var styles = {
@@ -158,13 +183,13 @@ var styles = {
 		filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"/*For IE7-8-9*/
 	},
 	content: {
-		width: 500,
+		width: stylesHelper.minimumPageWidth,
 		marginLeft: 'auto',
 		marginRight: 'auto'
 	},
 	container: {
-		fontSize: 20,
-		padding: 15,
+		fontSize: 30,
+		padding: stylesHelper.padding,
 	    marginBottom: 20,
 	    borderRadius: 0,
 	    backgroundColor: '#FFF',

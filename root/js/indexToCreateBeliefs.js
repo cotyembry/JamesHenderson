@@ -17,4 +17,5 @@ import Beliefs from './components/Beliefs.jsx';
 $(document).ready(function() {
 	ReactDOM.render(<Emblem />, document.getElementById('emblem'));
 	ReactDOM.render(<Beliefs />, document.getElementById('beliefs'));
+
 })
