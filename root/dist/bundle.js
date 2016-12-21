@@ -31984,7 +31984,8 @@
 		fontHeader: {
 			display: 'inline-block',
 			fontFamily: '"CustomFont1", Verdana, Tahoma',
-			fontSize: 100 },
+			fontSize: 100
+		},
 		fontHeaderContainer: {
 			width: '100%',
 			textAlign: 'center',
@@ -32334,21 +32335,25 @@
 			var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
 			(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
 
+			//this is for Al's photo:
 			//setting the src attribute the React way in the styles object wasn't working so, jquery it is
 			document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src);
 
-			//added the following lines to set the position of the font header
-			var fontHeaderHeight = (0, _jquery2.default)('#fontText1').outerHeight();
-			(0, _jquery2.default)('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+			// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
+			//
+			// //added the following lines to set the position of the font header
+			// var fontHeaderHeight = $('#fontText1').outerHeight();
+			// $('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+			//
+			// //this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
+			// var fontText1 = $('#fontText1').outerWidth();
+			// var fontText2 = $('#fontText2').outerWidth();
+			//
+			// // console.log(fontText1, fontText2)
+			//
+			// var totalFontWidth = fontText1 + fontText2;
+			// this.totalFontWidth = totalFontWidth;
 
-			//this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
-			var fontText1 = (0, _jquery2.default)('#fontText1').outerWidth();
-			var fontText2 = (0, _jquery2.default)('#fontText2').outerWidth();
-
-			// console.log(fontText1, fontText2)
-
-			var totalFontWidth = fontText1 + fontText2;
-			this.totalFontWidth = totalFontWidth;
 
 			(0, _jquery2.default)(window).resize(self.resize);
 			//and so its ran at least one time
@@ -32385,34 +32390,39 @@
 			// 	var 
 			// }
 
-			//now I need to position the font element
-			var fontText1Element = document.getElementById('fontText1');
-			var fontText2Element = document.getElementById('fontText2');
-			// var fontText1 = $(fontText1Element).outerWidth();
-			// var fontText2 = $(fontText2Element).outerWidth();
-			// var totalFontWidth = fontText1 + fontText2;
 
-			var totalWidth = parseFloat(document.getElementById('page').style.width);
+			// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
+			//
+			// //now I need to position the font element
+			// var fontText1Element = document.getElementById('fontText1');
+			// var fontText2Element = document.getElementById('fontText2');
+			// // var fontText1 = $(fontText1Element).outerWidth();
+			// // var fontText2 = $(fontText2Element).outerWidth();
+			// // var totalFontWidth = fontText1 + fontText2;
 
-			//sometimes when this resize method runs nothing gets accomplished
-			//so I need to account for this when the width is '', otherwise I
-			//can continue with the flow as normal
-			if (document.getElementById('page').style.width == '') {
-				//for the set timeout option
-				setTimeout(self.resize, 100);
-			} else {
-				if (totalWidth < this.totalFontWidth) {
-					(0, _jquery2.default)(fontText1Element).css({ display: 'block' });
-					(0, _jquery2.default)(fontText2Element).css({ display: 'block' });
-					var fontHeaderHeight = (0, _jquery2.default)('#fontText1').outerHeight() * 2;
-					(0, _jquery2.default)('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-				} else {
-					(0, _jquery2.default)(fontText1Element).css({ display: 'inline-block' });
-					(0, _jquery2.default)(fontText2Element).css({ display: 'inline-block' });
-					var fontHeaderHeight = (0, _jquery2.default)('#fontText1').outerHeight();
-					(0, _jquery2.default)('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-				}
-			}
+			// var totalWidth = parseFloat(document.getElementById('page').style.width);
+
+			// //sometimes when this resize method runs nothing gets accomplished
+			// //so I need to account for this when the width is '', otherwise I
+			// //can continue with the flow as normal
+			// if(document.getElementById('page').style.width == '') {
+			// 	//for the set timeout option
+			// 	setTimeout(self.resize, 100);
+			// }
+			// else {
+			// 	if(totalWidth < this.totalFontWidth) {
+			// 		$(fontText1Element).css({ display: 'block'});
+			// 		$(fontText2Element).css({ display: 'block'});
+			// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
+			// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
+			// 	}
+			// 	else {
+			// 		$(fontText1Element).css({ display: 'inline-block'});
+			// 		$(fontText2Element).css({ display: 'inline-block'});
+			// 		var fontHeaderHeight = $('#fontText1').outerHeight();
+			// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+			// 	}
+			// }
 
 			// this.lastWidth = widthToSet;
 		},
@@ -32425,20 +32435,6 @@
 				_react2.default.createElement(
 					'div',
 					{ id: 'page' },
-					_react2.default.createElement(
-						'div',
-						{ style: styles.fontHeaderContainer, id: 'fontHeader' },
-						_react2.default.createElement(
-							'div',
-							{ style: styles.fontHeader, className: 'customfont1', id: 'fontText1' },
-							'Chickamauga'
-						),
-						_react2.default.createElement(
-							'div',
-							{ style: styles.fontHeader, className: 'customfont1', id: 'fontText2' },
-							'Cherokee'
-						)
-					),
 					_react2.default.createElement(
 						'div',
 						{ id: 'paddingHelper' },

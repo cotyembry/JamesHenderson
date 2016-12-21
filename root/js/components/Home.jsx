@@ -124,14 +124,7 @@ var Home = React.createClass({
 					{/*<Emblem />*/}
 					{/*<div id="backgroundDiv"></div> commented out 12-08-2016 to help fix issue with background image */}
 					<div id="page">
-						{/*
-							Coty commented this out 12-21-2016 since I moved this html into the Emblem.jsx file
-
-							{/* the font declarations and the size is set in index.html (finish closing this comment)}
-							<div style={styles.fontHeaderContainer} id="fontHeader">
-								<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
-							</div>
-						*/}
+						
 						{/*<div id="gradientHelper"></div>*/}
 						<div id="paddingHelper">
 							<Header />
