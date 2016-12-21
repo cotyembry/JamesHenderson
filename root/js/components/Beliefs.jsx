@@ -188,7 +188,7 @@ var styles = {
 		marginRight: 'auto'
 	},
 	container: {
-		fontSize: 30,
+		fontSize: 35,
 		padding: stylesHelper.padding,
 	    marginBottom: 20,
 	    borderRadius: 0,

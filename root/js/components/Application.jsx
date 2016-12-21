@@ -22,10 +22,7 @@ var Home = React.createClass({
 		var widthToSet = $(document.documentElement).outerWidth();
 		$('#page').css({ 'width': widthToSet + 'px' });
 
-		//this is for Al's photo:
-		//setting the src attribute the React way in the styles object wasn't working so, jquery it is
-		document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src)
-
+		
 
 		// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
 		//
@@ -128,7 +125,7 @@ var Home = React.createClass({
 						
 						<div style={styles.application}>
 							<Navbar doNotSetPadding={true} />
-							<center style={styles.paddingTop}>Click <a id="pdfLink" target="_blank" href="../../assets/application_final.pdf" style={styles.a}>here</a> for an application (opens in a new tab).</center>
+							<center style={styles.pdfLink}>Click <a id="pdfLink" target="_blank" href="../../assets/application_final.pdf" style={styles.a}>here</a> for an application (opens in a new tab).</center>
 						</div>
 
 					</div>
@@ -143,8 +140,17 @@ var Home = React.createClass({
 
 const widthHelper = 300; //set the width for the image here to preserver aspect ratio
 var styles = {
+	a: {
+		cursor: 'pointer'
+	},
 	allContent: {
 		marginBottom: 30
+	},
+	application: {
+		width: '100%',
+		height: 1000,
+		fontSize: 20,
+		marginTop: 50
 	},
 	credits: {
 		fontSize: 14
@@ -208,17 +214,12 @@ var styles = {
 	section1: {
 		paddingTop: 30
 	},
-	a: {
-		cursor: 'pointer'
-	},
-	application: {
-		width: '100%',
-		height: 1000,
-		fontSize: 20,
-		marginTop: 30
-	},
 	paddingTop: {
 		paddingTop: 15
+	},
+	pdfLink: {
+		paddingTop: 15,
+		fontSize: 40
 	}
 }
 

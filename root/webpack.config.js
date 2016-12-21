@@ -1,17 +1,17 @@
 module.exports = {
   // entry: './js/indexToCreateHome.js',
   // entry: './js/indexToCreateContact.js',
-  entry: './js/indexToCreateTribalAdministration.js',
+  // entry: './js/indexToCreateTribalAdministration.js',
   // entry: './js/indexToCreateHistory.js',
-  // entry: './js/indexToCreateBeliefs.js',
+  entry: './js/indexToCreateBeliefs.js',
   // entry: './js/indexToCreateApplication.js',
   output: {
     path: __dirname,
     // filename: './dist/bundle.js'
     // filename: './dist/contact.js'
-    filename: './dist/tribaladministration.js'
+    // filename: './dist/tribaladministration.js'
     // filename: './dist/history.js'
-    // filename: './dist/beliefs.js'
+    filename: './dist/beliefs.js'
     // filename: './dist/application.js'
   },
   module: {
