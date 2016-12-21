@@ -31984,7 +31984,8 @@
 		fontHeader: {
 			display: 'inline-block',
 			fontFamily: '"CustomFont1", Verdana, Tahoma',
-			fontSize: 100 },
+			fontSize: 100
+		},
 		fontHeaderContainer: {
 			width: '100%',
 			textAlign: 'center',
@@ -32447,12 +32448,12 @@
 									{ style: styles.paragraphWrapper },
 									_react2.default.createElement(
 										'div',
+										{ style: styles.paragraphHeader },
+										'History of the Sovereign Chickamauga Cherokee Tribe of Cherokee Nation West'
+									),
+									_react2.default.createElement(
+										'div',
 										{ style: styles.container },
-										_react2.default.createElement(
-											'div',
-											{ style: styles.paragraphHeader },
-											'History of the Sovereign Chickamauga Cherokee Tribe of Cherokee Nation West'
-										),
 										_react2.default.createElement('br', null),
 										_react2.default.createElement(
 											'div',
@@ -32547,7 +32548,12 @@
 		},
 		paragraphHeader: {
 			textAlign: 'center',
-			fontSize: 50
+			fontSize: 50,
+			padding: 15,
+			marginBottom: 20,
+			borderRadius: 0,
+			backgroundColor: '#FFF',
+			boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
 		},
 		paragraphOne: {
 			width: 'calc(100% - 300px)',

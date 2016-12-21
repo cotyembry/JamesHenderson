@@ -69,8 +69,8 @@ export default class TribalAdministration extends React.Component {
 		return (
 			<div style={styles.paddingLeftAndTop}>
 				<center>
-					<div style={styles.pageName} className="paddingTop">Tribal Administration</div>
-					<div><div style={styles.div} className="paddingTop10">Soverign Chickamauga Cherokee Tribe</div></div>
+					<div style={styles.pageName} className="paddingTop">Tribal Administration of the Soverign Chickamauga Cherokee Tribe</div>
+					{/*<div><div style={styles.div} className="paddingTop10"></div></div>*/}
 
 
 					<br />
@@ -149,7 +149,16 @@ var styles = {
 		paddingTop: 20
 	},
 	pageName: {
-		fontSize: 60
+		fontSize: 60,
+		display: 'inline-block',
+		padding: 20,
+		marginRight: 25,
+		marginLeft: 25,
+		marginTop: 25,
+	    marginBottom: 20,
+	    borderRadius: 0,
+	    backgroundColor: '#FFF',
+	    boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'		
 	},
 	positionFontSize: {
 		fontSize: 35,

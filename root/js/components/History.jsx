@@ -145,12 +145,12 @@ var History = React.createClass({
 									<div style={styles.paragraphWrapper}>
 										
 									
-
+										<div style={styles.paragraphHeader}>
+											History of the Sovereign Chickamauga Cherokee Tribe of Cherokee Nation West
+										</div>
 									
 										<div style={styles.container}>
-											<div style={styles.paragraphHeader}>
-												History of the Sovereign Chickamauga Cherokee Tribe of Cherokee Nation West
-											</div>
+											
 											
 											<br />
 											
@@ -239,7 +239,12 @@ var styles = {
 	},
 	paragraphHeader: {
 		textAlign: 'center',
-		fontSize: 50
+		fontSize: 50,
+		padding: 15,
+	    marginBottom: 20,
+	    borderRadius: 0,
+	    backgroundColor: '#FFF',
+	    boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'		
 	},
 	paragraphOne: {
 		width: 'calc(100% - 300px)',
