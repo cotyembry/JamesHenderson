@@ -44,3 +44,20 @@ function handleSayHello(req, res) {
 handleSayHello();
 
 
+/*
+    I will leaved the code below as just an example on how to get a post request to work
+
+    <html>
+      <body>
+
+      <button onclick="document.getElementById('form').submit()">click me</button>
+
+      <form id="form" name="name" value="Johnny Bravo"></form>
+      
+      </body>
+    </html>
+
+    If the button is clicked, it will perform a post request (I think) using the form
+
+*/
+
