@@ -11,6 +11,10 @@ import Navbar from './Navbar.jsx';
 
 import $ from 'jquery';
 
+//now to get the email feature to work
+import sendmail from 'sendmail';
+sendmail = sendmail();
+
 var self;
 
 export default class Contact extends React.Component {
@@ -20,6 +24,7 @@ export default class Contact extends React.Component {
 	}
 	componentDidMount() {
 		self = this;
+
 
 		var totalWidth = $('#contact-root').outerWidth();
 		if(styles.mapStyle.width < totalWidth) {
@@ -86,6 +91,9 @@ export default class Contact extends React.Component {
 					<div style={styles.fontSizeHelper} id="content">
 						<center>
 							<div style={styles.container} id="container">
+
+							<button onclick={alert("hi")}>Click me</button>
+
 								<div id="address"  style={styles.fontSizeHelper}>
 									<p style={styles.pElement}>Tribal Office</p>
 
@@ -117,6 +125,24 @@ export default class Contact extends React.Component {
 				</div>
 			</div>
 		)
+	}
+
+	sendMailMethod() {
+
+
+		// var sendmail = require('sendmail')();
+	 
+		sendmail({
+		    from: 'no-reply@yourdomain.com',
+		    to: 'cotyembry@gmail.com, cotyembry@live.com',
+		    subject: 'test sendmail',
+		    html: 'Mail of test sendmail ',
+		  }, function(err, reply) {
+		    console.log(err && err.stack);
+		    console.dir(reply);
+		});
+
+
 	}
 }
 
