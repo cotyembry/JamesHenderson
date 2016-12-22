@@ -8,12 +8,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Navbar from './Navbar.jsx';
+import EmailForm from './EmailForm.jsx';
 
 import $ from 'jquery';
-
-//now to get the email feature to work
-import sendmail from 'sendmail';
-sendmail = sendmail();
 
 var self;
 
@@ -24,7 +21,6 @@ export default class Contact extends React.Component {
 	}
 	componentDidMount() {
 		self = this;
-
 
 		var totalWidth = $('#contact-root').outerWidth();
 		if(styles.mapStyle.width < totalWidth) {
@@ -48,6 +44,7 @@ export default class Contact extends React.Component {
 		$(window).resize(self.resize);
 		this.setState({ marginLeft: marginLeft });
 	}
+
 	resize() {
 		var totalWidth = $('#contact-root').outerWidth();
 		if(styles.mapStyle.width < totalWidth) {
@@ -121,6 +118,16 @@ export default class Contact extends React.Component {
 						<center style={styles.paddingBottom}><h1 style={styles.h1}>Contact Us!</h1></center>
 
 
+						<center>
+							<div style={styles.emailCaption}>
+								Send us an email below
+							</div>
+
+							<EmailForm />
+
+						</center>
+
+
 				</div>
 			</div>
 		)
@@ -179,6 +186,11 @@ var styles = {
 	    borderRadius: 0,
 	    backgroundColor: '#FFF',
 	    boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
+	},
+	emailCaption: {
+		color: 'white',
+		fontSize: 25,
+		marginBottom: 10
 	},
 	fontSizeHelper: {
 		fontSize: 30
