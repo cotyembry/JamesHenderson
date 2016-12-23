@@ -31967,7 +31967,7 @@
 			// width: '1000px', 
 			// // height: stylesHelper.helperHeight,
 			// height: '1000px',
-			backgroundImage: 'url("../../assets/main-background.jpg")',
+			backgroundImage: 'url("../static/assets/main-background.jpg")',
 			// transform: 'scale(1.25, 1.25)',
 			position: 'fixed',
 			top: '0px',
@@ -32534,7 +32534,7 @@
 			width: widthHelper,
 			height: widthHelper * 2388 / 3144 },
 		imgSrc: {
-			src: './assets/AlMcKayPhoto.jpg'
+			src: '../static/assets/AlMcKayPhoto.jpg'
 		},
 		// page: { //added 12-08-2016 to help fix IE issue with the background picture
 		// 	position: 'relative'
