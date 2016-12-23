@@ -36,6 +36,64 @@ app.locals.theme = process.env.THEME; //Make the THEME environment variable avai
 var config = fs.readFileSync('./app_config.json', 'utf8');
 config = JSON.parse(config);
 
+
+
+//define the modules Ill be using for the email feature
+var nodemailer = require('nodemailer');
+
+//the sendEmail object will do the work to get the email to be send when necessary (I should make this more modular something later in the future)
+var sendEmail = {
+    send: function(toRecipient, subject, messageBody) {
+
+        subject = 'test subject for now';
+
+        var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'sovereignchickamaugacherokee@gmail.com', // Your email id
+                pass: 'securePassword2016' // Your password
+            }
+        });
+
+
+        var mailOptions = {
+            from: 'sovereignchickamaugacherokee@gmail.com', // sender address
+            to: toRecipient, // list of receivers
+            subject: subject, // Subject line
+            text: messageBody //, // plaintext body
+            // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
+        };
+
+        //now to actually send the email
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                console.log(error);
+                // res.json({yo: 'error'});
+            }else{
+                console.log('Message sent: ' + info.response);
+                // res.json({yo: info.response});
+            };
+        });
+
+
+        
+    }
+}
+
+app.post('/send', function(req, res) {
+	//send the email now
+	sendEmail.send('cotyembry@gmail.com', 'junkSubject', 'fake message body right now');
+
+
+	//then render the contact us page again
+	res.render('contact', { appTitle: "Sovereign Chickamauga Cherokee" });
+})
+
+
+
+
+
+
 //GET home page.
 app.get('/', routes.home);
 

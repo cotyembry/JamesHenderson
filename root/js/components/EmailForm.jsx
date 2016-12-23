@@ -2,6 +2,8 @@ import React from 'react';
 
 import $ from 'jquery';
 
+var self;
+
 export default class EmailForm extends React.Component {
   constructor(props) {
     super(props);
@@ -9,12 +11,13 @@ export default class EmailForm extends React.Component {
 
     this.handleSendToChange = this.handleSendToChange.bind(this);
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
+    this.handleSubjectChange = this.handleMessageChange.bind(this);
   }
 
   componentDidMount() {
-    var self = this;
+    self = this;
 
-    $('#submitButton').click(self.handleSubmit)
+    // $('#submitButton').click(self.handleClick);
   }
 
   handleSendToChange(event) {
@@ -22,20 +25,28 @@ export default class EmailForm extends React.Component {
   }
 
   handleSubjectChange(event) {
-    this.setState({value: subject.target.value});
+    console.log('in handleSubjectChange')
+
+    this.setState({subject: event.target.value});
   }
 
   handleMessageChange(event) {
     this.setState({message: event.target.value});
   }
 
-  handleSubmit(event) {
+  handleClick(event) {
+
+
+    console.log('yo event', event)
+
+
     var messageBody = document.getElementById('messageBody').value;
     //sweet, now I have the messageBody next that was typed in the textarea element
     //now I need to use it and send it to the server so that an email can be sent
 
-    alert('Email was submittedsdfgsdfg: ' +  messageBody);
+    console.log('Email was submitted: ' +  messageBody);
 
+  
 
 
     //todo - finish this
@@ -44,9 +55,35 @@ export default class EmailForm extends React.Component {
     //email on the node.js side of things rather than sending
     //this in the client
 
+    self.post('/send', {name: 'Johnny Bravo'});
+
+
 
     event.preventDefault();
-  } 
+  }
+  post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+             }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+  }
 
   render() {
     return (
@@ -69,7 +106,7 @@ export default class EmailForm extends React.Component {
         
         <br />
 
-        <button id="submitButton" style={styles.submit}>Send</button>
+        <button id="submitButton" style={styles.submit} onClick={this.handleClick}>Send</button>
 
         <br />
 

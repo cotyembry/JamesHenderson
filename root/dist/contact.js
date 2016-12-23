@@ -33827,6 +33827,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var self;
+
 	var EmailForm = function (_React$Component) {
 	  (0, _inherits3.default)(EmailForm, _React$Component);
 
@@ -33839,15 +33841,16 @@
 
 	    _this.handleSendToChange = _this.handleSendToChange.bind(_this);
 	    _this.handleSubjectChange = _this.handleSubjectChange.bind(_this);
+	    _this.handleSubjectChange = _this.handleMessageChange.bind(_this);
 	    return _this;
 	  }
 
 	  (0, _createClass3.default)(EmailForm, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var self = this;
+	      self = this;
 
-	      (0, _jquery2.default)('#submitButton').click(self.handleSubmit);
+	      // $('#submitButton').click(self.handleClick);
 	    }
 	  }, {
 	    key: 'handleSendToChange',
@@ -33857,7 +33860,9 @@
 	  }, {
 	    key: 'handleSubjectChange',
 	    value: function handleSubjectChange(event) {
-	      this.setState({ value: subject.target.value });
+	      console.log('in handleSubjectChange');
+
+	      this.setState({ subject: event.target.value });
 	    }
 	  }, {
 	    key: 'handleMessageChange',
@@ -33865,13 +33870,16 @@
 	      this.setState({ message: event.target.value });
 	    }
 	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
+	    key: 'handleClick',
+	    value: function handleClick(event) {
+
+	      console.log(event);
+
 	      var messageBody = document.getElementById('messageBody').value;
 	      //sweet, now I have the messageBody next that was typed in the textarea element
 	      //now I need to use it and send it to the server so that an email can be sent
 
-	      alert('Email was submittedsdfgsdfg: ' + messageBody);
+	      alert('Email was submitted: ' + messageBody);
 
 	      //todo - finish this
 	      //What I probably need to do now is create a hidden form for
@@ -33879,8 +33887,34 @@
 	      //email on the node.js side of things rather than sending
 	      //this in the client
 
+	      self.post('/send', { name: 'Johnny Bravo' });
 
 	      event.preventDefault();
+	    }
+	  }, {
+	    key: 'post',
+	    value: function post(path, params, method) {
+	      method = method || "post"; // Set method to post by default if not specified.
+
+	      // The rest of this code assumes you are not using a library.
+	      // It can be made less wordy if you use one.
+	      var form = document.createElement("form");
+	      form.setAttribute("method", method);
+	      form.setAttribute("action", path);
+
+	      for (var key in params) {
+	        if (params.hasOwnProperty(key)) {
+	          var hiddenField = document.createElement("input");
+	          hiddenField.setAttribute("type", "hidden");
+	          hiddenField.setAttribute("name", key);
+	          hiddenField.setAttribute("value", params[key]);
+
+	          form.appendChild(hiddenField);
+	        }
+	      }
+
+	      document.body.appendChild(form);
+	      form.submit();
 	    }
 	  }, {
 	    key: 'render',
@@ -33903,7 +33937,7 @@
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	          'button',
-	          { id: 'submitButton', style: styles.submit },
+	          { id: 'submitButton', style: styles.submit, onClick: this.handleClick },
 	          'Send'
 	        ),
 	        _react2.default.createElement('br', null)
