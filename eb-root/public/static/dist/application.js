@@ -32464,7 +32464,7 @@
 							'Click ',
 							_react2.default.createElement(
 								'a',
-								{ id: 'pdfLink', target: '_blank', href: '../../assets/application_final.pdf', style: styles.a },
+								{ id: 'pdfLink', target: '_blank', href: '../static/assets/application_final.pdf', style: styles.a },
 								'here'
 							),
 							' for an application (opens in a new tab).'
