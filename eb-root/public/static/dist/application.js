@@ -31992,7 +31992,7 @@
 			// width: '1000px', 
 			// // height: stylesHelper.helperHeight,
 			// height: '1000px',
-			backgroundImage: 'url("../../assets/main-background.jpg")',
+			backgroundImage: 'url("../static/assets/main-background.jpg")',
 			// transform: 'scale(1.25, 1.25)',
 			position: 'fixed',
 			top: '0px',
@@ -32001,7 +32001,7 @@
 			// width: stylesHelper.backgroundImageWidth + 'px',
 			// height:'600px',
 			backgroundSize: 'cover',
-			backgroundPosition: 'center -150px',
+			backgroundPosition: 'center -100px', //this pans the photo around
 			backgroundRepeat: 'no-repeat',
 			textAlign: 'center',
 			margin: 'auto',
@@ -32465,7 +32465,7 @@
 							'Click ',
 							_react2.default.createElement(
 								'a',
-								{ id: 'pdfLink', target: '_blank', href: '../../assets/application_final.pdf', style: styles.a },
+								{ id: 'pdfLink', target: '_blank', href: '../static/assets/application_final.pdf', style: styles.a },
 								'here'
 							),
 							' for an application (opens in a new tab).'
@@ -32515,7 +32515,7 @@
 			width: widthHelper,
 			height: widthHelper * 2388 / 3144 },
 		imgSrc: {
-			src: './assets/AlMcKayPhoto.jpg'
+			src: '../static/assets/AlMcKayPhoto.jpg'
 		},
 		// page: { //added 12-08-2016 to help fix IE issue with the background picture
 		// 	position: 'relative'
@@ -32678,22 +32678,82 @@
 			this.setState({ default: 'default' });
 		},
 		onClickApplication: function onClickApplication() {
-			location = './application.html';
+			//Coty commented out the line below and removed the .html part from it on 12_23_2016
+			//I'm converting this webpack-dev-server to be used as an express app so the .html
+			//is no longer needed. Instead the express router will handle this routing on the
+			//server side
+
+			//note: in the future when you want to develop on this code base again on the
+			//webpack-dev-server you will need to flip the comment of these statements to
+			//bring back the location = '*.html' code
+
+			// location = './application.html';
+			location = './application';
 		},
 		onClickContact: function onClickContact() {
-			location = './contact.html';
+			//Coty commented out the line below and removed the .html part from it on 12_23_2016
+			//I'm converting this webpack-dev-server to be used as an express app so the .html
+			//is no longer needed. Instead the express router will handle this routing on the
+			//server side
+
+			//note: in the future when you want to develop on this code base again on the
+			//webpack-dev-server you will need to flip the comment of these statements to
+			//bring back the location = '*.html' code
+
+			// location = './contact.html';
+			location = './contact';
 		},
 		onClickHome: function onClickHome() {
-			location = './index.html';
+			//Coty commented out the line below and removed the .html part from it on 12_23_2016
+			//I'm converting this webpack-dev-server to be used as an express app so the .html
+			//is no longer needed. Instead the express router will handle this routing on the
+			//server side
+
+			//note: in the future when you want to develop on this code base again on the
+			//webpack-dev-server you will need to flip the comment of these statements to
+			//bring back the location = '*.html' code
+
+			// location = './index.html';
+			location = '/';
 		},
 		onClickHistory: function onClickHistory() {
-			location = './history.html';
+			//Coty commented out the line below and removed the .html part from it on 12_23_2016
+			//I'm converting this webpack-dev-server to be used as an express app so the .html
+			//is no longer needed. Instead the express router will handle this routing on the
+			//server side
+
+			//note: in the future when you want to develop on this code base again on the
+			//webpack-dev-server you will need to flip the comment of these statements to
+			//bring back the location = '*.html' code
+
+			// location = './history.html';
+			location = './history';
 		},
 		onClickBeliefs: function onClickBeliefs() {
-			location = './beliefs.html';
+			//Coty commented out the line below and removed the .html part from it on 12_23_2016
+			//I'm converting this webpack-dev-server to be used as an express app so the .html
+			//is no longer needed. Instead the express router will handle this routing on the
+			//server side
+
+			//note: in the future when you want to develop on this code base again on the
+			//webpack-dev-server you will need to flip the comment of these statements to
+			//bring back the location = '*.html' code
+
+			// location = './beliefs.html';
+			location = './beliefs';
 		},
 		onClickTribalAdministration: function onClickTribalAdministration() {
-			location = './tribaladministration.html';
+			//Coty commented out the line below and removed the .html part from it on 12_23_2016
+			//I'm converting this webpack-dev-server to be used as an express app so the .html
+			//is no longer needed. Instead the express router will handle this routing on the
+			//server side
+
+			//note: in the future when you want to develop on this code base again on the
+			//webpack-dev-server you will need to flip the comment of these statements to
+			//bring back the location = '*.html' code
+
+			// location = './tribaladministration.html'
+			location = './tribaladministration';
 		}
 	});
 	/*

@@ -1,44 +1,43 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Tribal Administration</title>
+html
+	head
+		title Tribal Administration
 
-	<link rel="stylesheet" type="text/css" href="./css/index.css">
-	<link rel="stylesheet" type="text/css" href="./css/tribaladministration.css">
-
-
-
-<!-- use mongodb for my database -->
-
-	<style type="text/css">
-	@font-face {
-	    font-family: "CustomFont1";
-	    src: url(./assets/fonts/AlexBrush-Regular.ttf) format("truetype");
-	}
-	.customfont1 { 
-	    font-family: "CustomFont1", Verdana, Tahoma;
-	    /*font-size: 70px;*/
-	    font-size: 100px;
-	}
-	</style>
+		link(rel="stylesheet" type="text/css" href="../static/css/index.css")
+		link(rel="stylesheet" type="text/css" href="../static/css/tribaladministration.css")
 
 
 
-</head>
-<body>
+		// use mongodb for my database -->
 
-	<div id="emblem" style="position: fixed;"></div>
-
-	<center><img id="svg2" src="./assets/Seal1.png" alt=""></center>
-
-	<div id="page" style="background: #d9d9d9; padding-bottom: 500px; z-index: 100; position: relative;">
-		<div id="navbar" style="background: #d9d9d9;"></div>
-
-		<div id="tribaladministration"></div>
-	</div>
-
-	<script type="text/javascript" src="./dist/tribaladministration.js"></script>
+		style(type="text/css").
+			@font-face {
+			    font-family: "CustomFont1";
+			    src: url(../static/assets/fonts/AlexBrush-Regular.ttf) format("truetype");
+			}
+			.customfont1 { 
+			    font-family: "CustomFont1", Verdana, Tahoma;
+			    /*font-size: 70px;*/
+			    font-size: 100px;
+			}
 
 
-</body>
-</html>
+
+
+
+body
+
+	div(id="emblem" style="position: fixed;")
+
+	center
+		img(id="svg2" src="../static/assets/Seal1.png" alt="")
+
+	div(id="page" style="background: #d9d9d9; padding-bottom: 500px; z-index: 100; position: relative;")
+		div(id="navbar" style="background: #d9d9d9;")
+
+		div(id="tribaladministration")
+	
+
+	script(type="text/javascript" src="../static/dist/tribaladministration.js")
+
+
