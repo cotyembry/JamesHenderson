@@ -1,5 +1,5 @@
 exports.home = function(req, res) {
-	res.render('home', { appTitle: "Sovereign Chickamauga Cherokee" });
+	res.render('index', { appTitle: "Sovereign Chickamauga Cherokee" });
 }
 
 //start Coty added 12-22-2016
