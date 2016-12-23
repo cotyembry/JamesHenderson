@@ -13,7 +13,7 @@ html
 		style(type="text/css").
 			@font-face {
 			    font-family: "CustomFont1";
-			    src: url(./assets/fonts/AlexBrush-Regular.ttf) format("truetype");
+			    src: url(../static/assets/fonts/AlexBrush-Regular.ttf) format("truetype");
 			}
 			.customfont1 { 
 			    font-family: "CustomFont1", Verdana, Tahoma;
@@ -23,16 +23,16 @@ html
 
 body(id="body")
 
-	//<!-- add image here -->
+	// add image here
 
 	center
-		img(id="svg2" src="./assets/Seal1.png" alt="")
+		img(id="svg2" src="../static/assets/Seal1.png" alt="")
 
 		div(id="emblem" style="position: fixed;")
 
 		div(id="beliefs" style="z-index: 100; position: relative;")
 
-		//<!-- <div><a href="/assets/test.pdf">click me to go to pdf</a></div> -->
+		// <div><a href="../static/assets/test.pdf">click me to go to pdf</a></div>
 
 
-	script(type="text/javascript" src="./dist/beliefs.js")
+	script(type="text/javascript" src="../static/dist/beliefs.js")
