@@ -1,0 +1,26 @@
+html(style='width: 100%; height: 100%;')
+	head
+		title SVG - Seems like a good way to start off
+		script(type='text/javascript' src='../static/bin/jQuery.min.js')
+		script(type='text/javascript' src='../static/src/documentReady.js')
+		script(type='text/javascript' src='../static/src/Router.js')
+		script(type='text/javascript' src='../static/bootstrap/js/bootstrap.min.js')
+		link(href='../static/bootstrap/css/jumbotron-narrow.css' type='text/css')
+	body
+		div(class="navbar navbar-inverse navbar-static-top")
+			//
+				h1 Hello everyone! The dots were finally connected and I set up my own node.js webserver to host my website - Im excited
+				br
+				h1 I'll get this website looking better soon (we can hope), but until then you can deal with this purple svg circle I created
+				body(style='width: 100%; height: 100%;')
+					svg(style='width: 100%; height: 50%;')
+						circle(fill="purple" cx="250" cy="250" r="100")
+					br
+					br
+					h2 If you want to be notified when Im ready for its release
+					a(href='/#/signup')
+						h2 click here
+					br
+					br
+					h2 Thanks for stopping by
+					
