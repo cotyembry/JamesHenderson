@@ -12,7 +12,12 @@
 
 //Get modules.
 var express = require('express');
+
 var routes = require('./routes');
+
+console.log(routes.length)
+
+
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
@@ -36,6 +41,15 @@ config = JSON.parse(config);
 
 //GET home page.
 app.get('/', routes.home);
+
+//start Coty added 12-22-2016
+app.get('/application', routes.application);
+app.get('/beliefs', routes.beliefs);
+app.get('/contact', routes.contact);
+app.get('/history', routes.history);
+app.get('/home', routes.home);
+app.get('/tribaladministration', routes.tribaladministration);
+//end
 
 
 http.createServer(app).listen(app.get('port'), function(){
