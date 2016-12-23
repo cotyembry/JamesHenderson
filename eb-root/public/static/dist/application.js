@@ -31813,7 +31813,7 @@
 			    logosHeight = (0, _jquery2.default)('#logo').outerHeight(),
 			    heightTS = 100 - logosHeight / totalHeight * 100 + '%'; //in %'s
 
-			(0, _jquery2.default)('#emblem-background-image').css({ height: heightTS });
+			// $('#emblem-background-image').css({ height: heightTS });	Coty commented out 12_23_2016 since I will be using background-size: cover in css to set the width and height of the image
 
 			var top = (0, _jquery2.default)('#emblem-element').outerHeight();
 
@@ -31987,18 +31987,19 @@
 	 */
 		backgroundImage: {
 			// width: stylesHelper.helperWidth, 
-			// width: '100px', 
+			width: '100%',
+			height: '100%',
 			// width: '1000px', 
 			// // height: stylesHelper.helperHeight,
 			// height: '1000px',
-			backgroundImage: 'url("../static/assets/main-background.jpg")',
+			backgroundImage: 'url("../../assets/main-background.jpg")',
 			// transform: 'scale(1.25, 1.25)',
 			position: 'fixed',
 			top: '0px',
 			zIndex: '1',
 			// width: '1200px',
-			width: stylesHelper.backgroundImageWidth + 'px',
-			height: '600px',
+			// width: stylesHelper.backgroundImageWidth + 'px',
+			// height:'600px',
 			backgroundSize: 'cover',
 			backgroundPosition: 'center -150px',
 			backgroundRepeat: 'no-repeat',
@@ -32464,7 +32465,7 @@
 							'Click ',
 							_react2.default.createElement(
 								'a',
-								{ id: 'pdfLink', target: '_blank', href: '../static/assets/application_final.pdf', style: styles.a },
+								{ id: 'pdfLink', target: '_blank', href: '../../assets/application_final.pdf', style: styles.a },
 								'here'
 							),
 							' for an application (opens in a new tab).'

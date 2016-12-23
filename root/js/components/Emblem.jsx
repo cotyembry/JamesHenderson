@@ -49,7 +49,7 @@ var Emblem = React.createClass({
 		logosHeight = $('#logo').outerHeight(),
 		heightTS = (100 - ((logosHeight / totalHeight) * 100)) + '%'; //in %'s
 
-		$('#emblem-background-image').css({ height: heightTS });
+		// $('#emblem-background-image').css({ height: heightTS });	Coty commented out 12_23_2016 since I will be using background-size: cover in css to set the width and height of the image
 
 		var top = $('#emblem-element').outerHeight();
 
@@ -243,7 +243,8 @@ var styles = {
 	*/
 	backgroundImage: {
 		// width: stylesHelper.helperWidth, 
-		// width: '100px', 
+		width: '100%', 
+		height: '100%', 
 		// width: '1000px', 
 		// // height: stylesHelper.helperHeight,
 		// height: '1000px',
@@ -253,8 +254,8 @@ var styles = {
 		top: '0px',
 		zIndex: '1',
 		// width: '1200px',
-		width: stylesHelper.backgroundImageWidth + 'px',
-		height:'600px',
+		// width: stylesHelper.backgroundImageWidth + 'px',
+		// height:'600px',
 		backgroundSize: 'cover',
 		backgroundPosition: 'center -150px',
 		backgroundRepeat: 'no-repeat',
