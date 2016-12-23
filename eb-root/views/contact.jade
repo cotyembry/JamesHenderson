@@ -1,12 +1,34 @@
 <!DOCTYPE html>
-html
-	head
-		title Webpage Title
-		link(rel="stylesheet" type="text/css" href="../static/css/index.css")
-		link(rel="stylesheet" type="text/css" href="../static/css/jquery-ui.css")
+<html>
+<head>
+	<title>Contact Us</title>
 
-	body(id="body")
+	<link rel="stylesheet" type="text/css" href="./css/index.css">
+	<link rel="stylesheet" type="text/css" href="./css/contact.css">
 
-	div(id="root")
+	<style type="text/css">
+	@font-face {
+	    font-family: "CustomFont1";
+	    src: url(./assets/fonts/AlexBrush-Regular.ttf) format("truetype");
+	}
+	.customfont1 { 
+	    font-family: "CustomFont1", Verdana, Tahoma;
+	    /*font-size: 70px;*/
+	    font-size: 100px;
+	}
+	</style>
 
-	script(type='text/javascript' src='../static/dist/bundle.js')
+</head>
+<body>
+
+	<div id="emblem" style="position: fixed; height: 100%; background: rgb(213, 239, 248);"></div>
+	
+	<center><img id="svg2" src="./assets/Seal1.png" alt=""></center>
+
+	<div id="contact" style="width: 100%; position: relative; z-index: 100;"></div>
+
+	<!-- <script type="text/javascript" src="./dist/bundle.js"></script> -->
+	<script type="text/javascript" src="./dist/contact.js"></script>
+
+</body>
+</html>

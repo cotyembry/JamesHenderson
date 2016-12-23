@@ -257,7 +257,7 @@ var styles = {
 		// width: stylesHelper.backgroundImageWidth + 'px',
 		// height:'600px',
 		backgroundSize: 'cover',
-		backgroundPosition: 'center -150px',
+		backgroundPosition: 'center -100px',	//this pans the photo around
 		backgroundRepeat: 'no-repeat',
 		textAlign: 'center',
 		margin: 'auto',
