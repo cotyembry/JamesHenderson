@@ -15,9 +15,6 @@ var express = require('express');
 
 var routes = require('./routes');
 
-console.log(routes.length)
-
-
 var http = require('http');
 var path = require('path');
 var fs = require('fs');

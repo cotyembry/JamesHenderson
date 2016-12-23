@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+html
+	head
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+
+		title.
+			Sovereign Cherokee Chickamauga
+
+		link(rel="stylesheet" type="text/css" href="../static/css/index.css")
+		link(rel="stylesheet" type="text/css" href="../static/css/beliefs.css")
+
+
+		style(type="text/css").
+			@font-face {
+			    font-family: "CustomFont1";
+			    src: url(./assets/fonts/AlexBrush-Regular.ttf) format("truetype");
+			}
+			.customfont1 { 
+			    font-family: "CustomFont1", Verdana, Tahoma;
+			    /*font-size: 70px;*/
+			    font-size: 100px;
+			}
+
+body(id="body")
+
+	//<!-- add image here -->
+
+	center
+		img(id="svg2" src="./assets/Seal1.png" alt="")
+
+		div(id="emblem" style="position: fixed;")
+
+		div(id="beliefs" style="z-index: 100; position: relative;")
+
+		//<!-- <div><a href="/assets/test.pdf">click me to go to pdf</a></div> -->
+
+
+	script(type="text/javascript" src="./dist/beliefs.js")
