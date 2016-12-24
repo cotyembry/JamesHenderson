@@ -169,37 +169,49 @@ var EmblemObject = {
 
 
 		var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
-		var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
-
 		
-		// console.log(totalWidth,  backgroundWidth)
+		// Coty commented out 12_23_2016
+		//
+		// var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
+		// // console.log(totalWidth,  backgroundWidth)
+		// // console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
+		// if(totalWidth > backgroundWidth) {	
+		// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+		// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+		// 	var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
+
+		// 	var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help with error
+
+		// 	// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
+
+		// 	// console.log(document.getElementById('backgroundImage'))
+		// 	document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
+
+		// }
+		// else {
+		// 	document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+		// }
 
 
-		// console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
 
-		if(totalWidth > backgroundWidth) {	
-			// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-			// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-			var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
-
-			var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help will error
-
-			// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
-
-			// console.log(document.getElementById('backgroundImage'))
-			document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
-
+		//Coty added 12_23_2016 to make the image position change based on the size of the image
+		if(totalWidth >= 1200) {
+			// backgroundPosition: 'center -100px'
+			$('#backgroundImage').css({ backgroundPosition: 'center -150px' });
 		}
-		else {
-			document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+		else if(totalWidth < 1200) {
+
+			$('#backgroundImage').css({ backgroundPosition: '' });
 		}
 	},
 }
 
 var stylesHelper = {
+	backgroundImageWidth: '1200',
 	helperWidth: '100%',
 	helperHeight: '350px',
-	backgroundImageWidth: '1200'
+	imagePositionConstant: 'center -100px',
+	imagePosition: ''
 }
 
 var styles = {
@@ -243,7 +255,7 @@ var styles = {
 	*/
 	backgroundImage: {
 		// width: stylesHelper.helperWidth, 
-		width: '100%', 
+		width: '102%',	//because I noticed an issue of the picture not quite making it the full width sometimes 
 		height: '100%', 
 		// width: '1000px', 
 		// // height: stylesHelper.helperHeight,
@@ -257,7 +269,8 @@ var styles = {
 		// width: stylesHelper.backgroundImageWidth + 'px',
 		// height:'600px',
 		backgroundSize: 'cover',
-		backgroundPosition: 'center -100px',	//this pans the photo around
+		// backgroundPosition: 'center -100px',	//this pans the photo around
+		// backgroundPosition: stylesHelper.imagePosition,	//this pans the photo around
 		backgroundRepeat: 'no-repeat',
 		textAlign: 'center',
 		margin: 'auto',

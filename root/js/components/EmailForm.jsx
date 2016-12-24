@@ -2,6 +2,11 @@ import React from 'react';
 
 import $ from 'jquery';
 
+/*
+  Time to add to timesheet 9:40 - 9:55
+
+*/
+
 var self;
 
 export default class EmailForm extends React.Component {
@@ -9,23 +14,23 @@ export default class EmailForm extends React.Component {
     super(props);
     this.state = {value: '', sendTo: '', subject: '', message: ''};
 
-    this.handleSendToChange = this.handleSendToChange.bind(this);
+    //understanding and figuring out that I needed to bind this was so hard
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
-    this.handleSubjectChange = this.handleMessageChange.bind(this);
+    this.handleMessageChange = this.handleMessageChange.bind(this);
   }
 
   componentDidMount() {
     self = this;
 
     // $('#submitButton').click(self.handleClick);
-  }
 
-  handleSendToChange(event) {
-    this.setState({sendTo: event.target.value});
+    //now I will format the labels and input elements
+    var widthAvailable = $('#inputContainer').outerWidth();
+    $('#inputContainer').css({ width: widthAvailable });
   }
 
   handleSubjectChange(event) {
-    console.log('in handleSubjectChange')
+    console.log('in test')
 
     this.setState({subject: event.target.value});
   }
@@ -34,18 +39,18 @@ export default class EmailForm extends React.Component {
     this.setState({message: event.target.value});
   }
 
-  handleClick(event) {
-
-
-    console.log('yo event', event)
+  handleSubmit(event) {
 
 
     var messageBody = document.getElementById('messageBody').value;
     //sweet, now I have the messageBody next that was typed in the textarea element
     //now I need to use it and send it to the server so that an email can be sent
-
     console.log('Email was submitted: ' +  messageBody);
 
+    var finalObject = {
+      subject: this.state.subject,
+      messageBody: messageBody
+    }
   
 
 
@@ -55,7 +60,7 @@ export default class EmailForm extends React.Component {
     //email on the node.js side of things rather than sending
     //this in the client
 
-    self.post('/send', {name: 'Johnny Bravo'});
+    self.post('/send', finalObject);
 
 
 
@@ -88,25 +93,29 @@ export default class EmailForm extends React.Component {
   render() {
     return (
       <div id="divFormId">
-        <label style={styles.labelStyle}>
-          Send To:
-          <input style={styles.sendTo} type="text" value={this.state.sendTo} onChange={this.handleSendToChange} />
+        <label id="inputContainer" style={styles.labelStyle}>
+
+          <div>
+            Subject:
+          </div>
+          <div>
+            <input style={styles.subject} type="text" value={this.state.subject} onChange={this.handleSubjectChange} />
+          </div>
+
+          <br />
+
+          <div>
+            Message Body:
+          </div>
+          <div>
+            <textarea style={styles.messageBody} id="messageBody"></textarea>
+          </div>
           
-          <br />
-
-          Subject:
-          <input style={styles.subject} type="text" value={this.state.subject} onChange={this.handleSubjectChange} />
-        
-          <br />
-
-          Message Body:
-          {/*<input style={styles.messageBody} type="text" value={this.state.message} onChange={this.handleMessageChange} />*/}
-          <textarea id="messageBody"></textarea>
         </label>
         
         <br />
 
-        <button id="submitButton" style={styles.submit} onClick={this.handleClick}>Send</button>
+        <button id="submitButton" style={styles.submit} onClick={this.handleSubmit.bind(this)}>Send</button>
 
         <br />
 
@@ -127,12 +136,16 @@ var styles = {
     marginBottom: 5
   },
   subject: {
-    marginBottom: 5
+    marginBottom: 5,
+    // float: 'right'
   },
   messageBody: {
     marginBottom: 5
   },
   submit: {
     cursor: 'pointer'
+  },
+  messageBody: {
+    // float: 'right'
   }
 }

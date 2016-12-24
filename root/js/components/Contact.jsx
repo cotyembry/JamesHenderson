@@ -22,6 +22,8 @@ export default class Contact extends React.Component {
 	componentDidMount() {
 		self = this;
 
+		this.window = window;
+
 		var totalWidth = $('#contact-root').outerWidth();
 		if(styles.mapStyle.width < totalWidth) {
 			var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
@@ -46,6 +48,7 @@ export default class Contact extends React.Component {
 	}
 
 	resize() {
+		var outerWidth = this.window.document.documentElement.clientWidth;
 		var totalWidth = $('#contact-root').outerWidth();
 		if(styles.mapStyle.width < totalWidth) {
 			var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
@@ -71,6 +74,15 @@ export default class Contact extends React.Component {
 
 		//end
 
+		var smallestWidthPossible = $('#container').outerWidth();
+
+		//finally I need to make sure that having the width as 100% doesnt let the element get too small
+		if(outerWidth > smallestWidthPossible) {
+			$('#contact-root').css({ width: '100%' })
+		}
+		else if(outerWidth <= smallestWidthPossible) {
+			$('#contact-root').css({ width: smallestWidthPossible })
+		}
 
 		self.setState({ marginLeft: marginLeft });
 	}
@@ -105,27 +117,23 @@ export default class Contact extends React.Component {
 					</div>
 
 
+					<div id="google-map" style={tempStyle}>
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={styles.mapStyle}></iframe>
+					</div>
 
 
-					
 
-						<div id="google-map" style={tempStyle}>
-							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={styles.mapStyle}></iframe>
+					<center style={styles.paddingBottom}><h1 style={styles.h1}>Contact Us!</h1></center>
+
+
+					<center style={styles.emailFormParent}>
+						<div style={styles.emailCaption}>
+							Send us an email below
 						</div>
 
+						<EmailForm />
 
-
-						<center style={styles.paddingBottom}><h1 style={styles.h1}>Contact Us!</h1></center>
-
-
-						<center>
-							<div style={styles.emailCaption}>
-								Send us an email below
-							</div>
-
-							<EmailForm />
-
-						</center>
+					</center>
 
 
 				</div>
@@ -166,10 +174,11 @@ export default class Contact extends React.Component {
 var styles = {
 	contactRoot: {
 		width: '100%',
-		height: 1000,
+		// height: 1000,
 		// top: 350,
 		background: 'white',
 		marginTop: 425,
+		paddingBottom: 50,
 		position: 'absolute',
 		background: '#d9d9d9',
 		background: '-moz-linear-gradient(#d9d9d9, #000)',
@@ -191,6 +200,9 @@ var styles = {
 		color: 'white',
 		fontSize: 25,
 		marginBottom: 10
+	},
+	emailFormParent: {
+		width: '100%'
 	},
 	fontSizeHelper: {
 		fontSize: 30
@@ -227,3 +239,5 @@ var styles = {
 	}
 }
 
+//I'll use this to give EmailForm.jsx access to the variable
+window.mapStyle = styles.mapStyle;

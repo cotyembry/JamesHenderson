@@ -41,11 +41,12 @@ config = JSON.parse(config);
 //define the modules Ill be using for the email feature
 var nodemailer = require('nodemailer');
 
+//TODO
+var emailAddressToSendTo = 'todo@updateThisEmail.com';
+
 //the sendEmail object will do the work to get the email to be send when necessary (I should make this more modular something later in the future)
 var sendEmail = {
-    send: function(toRecipient, subject, messageBody) {
-
-        subject = 'test subject for now';
+    send: function(request) {
 
         var transporter = nodemailer.createTransport({
             service: 'Gmail',
@@ -58,9 +59,9 @@ var sendEmail = {
 
         var mailOptions = {
             from: 'sovereignchickamaugacherokee@gmail.com', // sender address
-            to: toRecipient, // list of receivers
-            subject: subject, // Subject line
-            text: messageBody //, // plaintext body
+            to: emailAddressToSendTo, // list of receivers
+            subject: request.body.subject, // Subject line
+            text: request.body.messageBody //, // plaintext body
             // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
         };
 
@@ -74,19 +75,19 @@ var sendEmail = {
                 // res.json({yo: info.response});
             };
         });
-
-
         
     }
 }
 
+
 app.post('/send', function(req, res) {
+
 	//send the email now
-	sendEmail.send('cotyembry@gmail.com', 'junkSubject', 'fake message body right now');
+	sendEmail.send(req);
 
-
-	//then render the contact us page again
-	res.render('contact', { appTitle: "Sovereign Chickamauga Cherokee" });
+    //then render the contact us page again
+    // res.render('contact', { appTitle: "Sovereign Chickamauga Cherokee" });
+    res.redirect('contact');
 })
 
 

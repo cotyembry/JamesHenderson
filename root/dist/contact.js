@@ -31792,6 +31792,8 @@
 			value: function componentDidMount() {
 				self = this;
 
+				this.window = window;
+
 				var totalWidth = (0, _jquery2.default)('#contact-root').outerWidth();
 				if (styles.mapStyle.width < totalWidth) {
 					var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
@@ -31815,6 +31817,7 @@
 		}, {
 			key: 'resize',
 			value: function resize() {
+				var outerWidth = this.window.document.documentElement.clientWidth;
 				var totalWidth = (0, _jquery2.default)('#contact-root').outerWidth();
 				if (styles.mapStyle.width < totalWidth) {
 					var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
@@ -31837,6 +31840,14 @@
 
 				//end
 
+				var smallestWidthPossible = (0, _jquery2.default)('#container').outerWidth();
+
+				//finally I need to make sure that having the width as 100% doesnt let the element get too small
+				if (outerWidth > smallestWidthPossible) {
+					(0, _jquery2.default)('#contact-root').css({ width: '100%' });
+				} else if (outerWidth <= smallestWidthPossible) {
+					(0, _jquery2.default)('#contact-root').css({ width: smallestWidthPossible });
+				}
 
 				self.setState({ marginLeft: marginLeft });
 			}
@@ -31901,7 +31912,7 @@
 						),
 						_react2.default.createElement(
 							'center',
-							null,
+							{ style: styles.emailFormParent },
 							_react2.default.createElement(
 								'div',
 								{ style: styles.emailCaption },
@@ -31949,10 +31960,11 @@
 	var styles = {
 		contactRoot: (_contactRoot = {
 			width: '100%',
-			height: 1000,
+			// height: 1000,
 			// top: 350,
 			background: 'white',
 			marginTop: 425,
+			paddingBottom: 50,
 			position: 'absolute'
 		}, (0, _defineProperty3.default)(_contactRoot, 'background', '#d9d9d9'), (0, _defineProperty3.default)(_contactRoot, 'background', '-moz-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'background', '-webkit-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'background', '-o-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'background', '-ms-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'background', 'linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_contactRoot, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"), _contactRoot),
 		container: {
@@ -31967,6 +31979,9 @@
 			color: 'white',
 			fontSize: 25,
 			marginBottom: 10
+		},
+		emailFormParent: {
+			width: '100%'
 		},
 		fontSizeHelper: {
 			fontSize: 30
@@ -32002,6 +32017,9 @@
 			padding: 0
 		}
 	};
+
+	//I'll use this to give EmailForm.jsx access to the variable
+	window.mapStyle = styles.mapStyle;
 
 /***/ },
 /* 177 */
@@ -33797,6 +33815,10 @@
 	  value: true
 	});
 
+	var _defineProperty2 = __webpack_require__(177);
+
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
 	var _getPrototypeOf = __webpack_require__(196);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -33827,6 +33849,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	/*
+	  Time to add to timesheet 9:40 - 9:55
+
+	*/
+
 	var self;
 
 	var EmailForm = function (_React$Component) {
@@ -33839,9 +33866,9 @@
 
 	    _this.state = { value: '', sendTo: '', subject: '', message: '' };
 
-	    _this.handleSendToChange = _this.handleSendToChange.bind(_this);
+	    //understanding and figuring out that I needed to bind this was so hard
 	    _this.handleSubjectChange = _this.handleSubjectChange.bind(_this);
-	    _this.handleSubjectChange = _this.handleMessageChange.bind(_this);
+	    _this.handleMessageChange = _this.handleMessageChange.bind(_this);
 	    return _this;
 	  }
 
@@ -33851,16 +33878,15 @@
 	      self = this;
 
 	      // $('#submitButton').click(self.handleClick);
-	    }
-	  }, {
-	    key: 'handleSendToChange',
-	    value: function handleSendToChange(event) {
-	      this.setState({ sendTo: event.target.value });
+
+	      //now I will format the labels and input elements
+	      var widthAvailable = (0, _jquery2.default)('#inputContainer').outerWidth();
+	      (0, _jquery2.default)('#inputContainer').css({ width: widthAvailable });
 	    }
 	  }, {
 	    key: 'handleSubjectChange',
 	    value: function handleSubjectChange(event) {
-	      console.log('in handleSubjectChange');
+	      console.log('in test');
 
 	      this.setState({ subject: event.target.value });
 	    }
@@ -33870,16 +33896,18 @@
 	      this.setState({ message: event.target.value });
 	    }
 	  }, {
-	    key: 'handleClick',
-	    value: function handleClick(event) {
-
-	      console.log(event);
+	    key: 'handleSubmit',
+	    value: function handleSubmit(event) {
 
 	      var messageBody = document.getElementById('messageBody').value;
 	      //sweet, now I have the messageBody next that was typed in the textarea element
 	      //now I need to use it and send it to the server so that an email can be sent
+	      console.log('Email was submitted: ' + messageBody);
 
-	      alert('Email was submitted: ' + messageBody);
+	      var finalObject = {
+	        subject: this.state.subject,
+	        messageBody: messageBody
+	      };
 
 	      //todo - finish this
 	      //What I probably need to do now is create a hidden form for
@@ -33887,7 +33915,7 @@
 	      //email on the node.js side of things rather than sending
 	      //this in the client
 
-	      self.post('/send', { name: 'Johnny Bravo' });
+	      self.post('/send', finalObject);
 
 	      event.preventDefault();
 	    }
@@ -33924,20 +33952,33 @@
 	        { id: 'divFormId' },
 	        _react2.default.createElement(
 	          'label',
-	          { style: styles.labelStyle },
-	          'Send To:',
-	          _react2.default.createElement('input', { style: styles.sendTo, type: 'text', value: this.state.sendTo, onChange: this.handleSendToChange }),
+	          { id: 'inputContainer', style: styles.labelStyle },
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'Subject:'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('input', { style: styles.subject, type: 'text', value: this.state.subject, onChange: this.handleSubjectChange })
+	          ),
 	          _react2.default.createElement('br', null),
-	          'Subject:',
-	          _react2.default.createElement('input', { style: styles.subject, type: 'text', value: this.state.subject, onChange: this.handleSubjectChange }),
-	          _react2.default.createElement('br', null),
-	          'Message Body:',
-	          _react2.default.createElement('textarea', { id: 'messageBody' })
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'Message Body:'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('textarea', { style: styles.messageBody, id: 'messageBody' })
+	          )
 	        ),
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	          'button',
-	          { id: 'submitButton', style: styles.submit, onClick: this.handleClick },
+	          { id: 'submitButton', style: styles.submit, onClick: this.handleSubmit.bind(this) },
 	          'Send'
 	        ),
 	        _react2.default.createElement('br', null)
@@ -33950,7 +33991,7 @@
 	exports.default = EmailForm;
 
 
-	var styles = {
+	var styles = (0, _defineProperty3.default)({
 	  labelStyle: {
 	    fontSize: 20,
 	    color: 'white'
@@ -33967,7 +34008,9 @@
 	  submit: {
 	    cursor: 'pointer'
 	  }
-	};
+	}, 'messageBody', {
+	  // float: 'right'
+	});
 
 /***/ },
 /* 266 */
@@ -34154,34 +34197,47 @@
 		zoomChanged: function zoomChanged() {
 
 			var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
-			var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
 
-			// console.log(totalWidth,  backgroundWidth)
+			// Coty commented out 12_23_2016
+			//
+			// var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
+			// // console.log(totalWidth,  backgroundWidth)
+			// // console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
+			// if(totalWidth > backgroundWidth) {	
+			// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+			// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+			// 	var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
+
+			// 	var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help with error
+
+			// 	// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
+
+			// 	// console.log(document.getElementById('backgroundImage'))
+			// 	document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
+
+			// }
+			// else {
+			// 	document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+			// }
 
 
-			// console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
+			//Coty added 12_23_2016 to make the image position change based on the size of the image
+			if (totalWidth >= 1200) {
+				// backgroundPosition: 'center -100px'
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: 'center -150px' });
+			} else if (totalWidth < 1200) {
 
-			if (totalWidth > backgroundWidth) {
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
-
-				var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help will error
-
-				// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
-
-				// console.log(document.getElementById('backgroundImage'))
-				document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
-			} else {
-				document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: '' });
 			}
 		}
 	};
 
 	var stylesHelper = {
+		backgroundImageWidth: '1200',
 		helperWidth: '100%',
 		helperHeight: '350px',
-		backgroundImageWidth: '1200'
+		imagePositionConstant: 'center -100px',
+		imagePosition: ''
 	};
 
 	var styles = {
@@ -34215,7 +34271,7 @@
 	 */
 		backgroundImage: {
 			// width: stylesHelper.helperWidth, 
-			width: '100%',
+			width: '102%', //because I noticed an issue of the picture not quite making it the full width sometimes 
 			height: '100%',
 			// width: '1000px', 
 			// // height: stylesHelper.helperHeight,
@@ -34229,7 +34285,8 @@
 			// width: stylesHelper.backgroundImageWidth + 'px',
 			// height:'600px',
 			backgroundSize: 'cover',
-			backgroundPosition: 'center -100px', //this pans the photo around
+			// backgroundPosition: 'center -100px',	//this pans the photo around
+			// backgroundPosition: stylesHelper.imagePosition,	//this pans the photo around
 			backgroundRepeat: 'no-repeat',
 			textAlign: 'center',
 			margin: 'auto',
