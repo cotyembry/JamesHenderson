@@ -33849,11 +33849,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/*
-	  Time to add to timesheet 9:40 - 9:55
-
-	*/
-
 	var self;
 
 	var EmailForm = function (_React$Component) {

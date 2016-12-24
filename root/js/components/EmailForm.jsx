@@ -2,11 +2,6 @@ import React from 'react';
 
 import $ from 'jquery';
 
-/*
-  Time to add to timesheet 9:40 - 9:55
-
-*/
-
 var self;
 
 export default class EmailForm extends React.Component {
