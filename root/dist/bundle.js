@@ -31799,7 +31799,26 @@
 			//here I need to add an event to listen if the browser window zoomed
 			//$().someListener(EmblemObject.zoomChanged)
 			(0, _jquery2.default)(window).resize(EmblemObject.zoomChanged);
-			EmblemObject.zoomChanged();
+			//EmblemObject.zoomChanged();
+
+			var fontText1 = document.getElementById('fontText1');
+			var fontText2 = document.getElementById('fontText2');
+			var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+
+			this.startingFontTotalWidth = fontTotalWidth;
+
+			var intervalChecker = function intervalChecker() {
+				var fontText1 = document.getElementById('fontText1');
+				var fontText2 = document.getElementById('fontText2');
+				var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+				//if here then I am satisfied the font element has quit shifiting sizes on the page
+				if (this.startingFontTotalWidth != fontTotalWidth) {
+					EmblemObject.zoomChanged();
+					clearInterval(this.clearInterval);
+				}
+			};
+
+			this.clearInterval = setInterval(intervalChecker.bind(this), 1000);
 
 			//now to expose the EmblemObject globally
 			window.EmblemObject = EmblemObject;
@@ -31898,34 +31917,12 @@
 
 			//EmblemObject.interation++;
 		},
+
 		zoomChanged: function zoomChanged() {
 
 			var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
 
-			// Coty commented out 12_23_2016
-			//
-			// var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
-			// // console.log(totalWidth,  backgroundWidth)
-			// // console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
-			// if(totalWidth > backgroundWidth) {	
-			// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-			// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-			// 	var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
-
-			// 	var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help with error
-
-			// 	// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
-
-			// 	// console.log(document.getElementById('backgroundImage'))
-			// 	document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
-
-			// }
-			// else {
-			// 	document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
-			// }
-
-
-			//Coty added 12_23_2016 to make the image position change based on the size of the image
+			//start Coty added 12-23-2016 to make the image position change based on the size of the image
 			if (totalWidth >= 1200) {
 				// backgroundPosition: 'center -100px'
 				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: 'center -150px' });
@@ -31933,6 +31930,183 @@
 
 				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: '' });
 			}
+			//end
+
+
+			//start Coty added 12-28-2016 to make sure the text header doesn't mess up when the width of the page gets too small
+			//what I need to do is see how much space the font header needs
+			var fontText1 = document.getElementById('fontText1');
+			var fontText2 = document.getElementById('fontText2');
+			var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+
+			if (fontTotalWidth >= totalWidth) {
+				// if here then the total page width is smaller than the needed space of the font header elements
+				(0, _jquery2.default)('.customfont1').each(function () {
+					(0, _jquery2.default)(this).css({ fontSize: '90px' });
+				});
+
+				fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+				if (fontTotalWidth >= totalWidth) {
+					(0, _jquery2.default)('.customfont1').each(function () {
+						(0, _jquery2.default)(this).css({ fontSize: '80px' });
+					});
+
+					fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+					if (fontTotalWidth >= totalWidth) {
+						(0, _jquery2.default)('.customfont1').each(function () {
+							(0, _jquery2.default)(this).css({ fontSize: '70px' });
+						});
+
+						fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+						if (fontTotalWidth >= totalWidth) {
+							(0, _jquery2.default)('.customfont1').each(function () {
+								(0, _jquery2.default)(this).css({ fontSize: '60px' });
+							});
+
+							fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+							if (fontTotalWidth >= totalWidth) {
+								(0, _jquery2.default)('.customfont1').each(function () {
+									(0, _jquery2.default)(this).css({ fontSize: '50px' });
+								});
+
+								fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+								if (fontTotalWidth >= totalWidth) {
+									(0, _jquery2.default)('.customfont1').each(function () {
+										(0, _jquery2.default)(this).css({ fontSize: '40px' });
+									});
+
+									fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+									if (fontTotalWidth >= totalWidth) {
+										(0, _jquery2.default)('.customfont1').each(function () {
+											(0, _jquery2.default)(this).css({ fontSize: '30px' });
+										});
+										fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+										if (fontTotalWidth >= totalWidth) {
+											(0, _jquery2.default)('.customfont1').each(function () {
+												(0, _jquery2.default)(this).css({ fontSize: '20px' });
+											});
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			} else {
+				//I need to see how much width the element takes up when the font size is returned back to 100px
+				//I will create a clone of the font elements
+				var customfont1Clone = document.getElementById('fontText1').cloneNode(true); //true means do a deep copy
+				var customfont2Clone = document.getElementById('fontText2').cloneNode(true); //true means do a deep copy			
+
+				// console.log(customfont1Clone)
+
+				//make the element invisible
+				customfont1Clone.style.visibility = 'hidden';
+				customfont2Clone.style.visibility = 'hidden';
+
+				var bodyElement = document.getElementById('body');
+				bodyElement.appendChild(customfont1Clone);
+				bodyElement.appendChild(customfont2Clone);
+
+				//measure it
+				//set the font sizes back to their defaults so I can measure them
+				customfont1Clone.style.fontSize = '';
+				customfont2Clone.style.fontSize = '';
+
+				var elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+				//then use the values
+
+				//I only want to change the font sizes back if it will not interfere with the whole purpose of making the font smaller
+				if (elementWidthIfChanged < totalWidth) {
+					//I will remove the inline style and allow the css stylesheet take over
+					(0, _jquery2.default)('.customfont1').each(function () {
+						(0, _jquery2.default)(this).css({ fontSize: '' });
+					});
+				} else {
+					customfont1Clone.style.fontSize = '30px';
+					customfont2Clone.style.fontSize = '30px';
+					elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+					if (elementWidthIfChanged < totalWidth) {
+						//I will remove the inline style and allow the css stylesheet take over
+						(0, _jquery2.default)('.customfont1').each(function () {
+							(0, _jquery2.default)(this).css({ fontSize: '30px' });
+						});
+
+						customfont1Clone.style.fontSize = '40px';
+						customfont2Clone.style.fontSize = '40px';
+						elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+						if (elementWidthIfChanged < totalWidth) {
+							//I will remove the inline style and allow the css stylesheet take over
+							(0, _jquery2.default)('.customfont1').each(function () {
+								(0, _jquery2.default)(this).css({ fontSize: '40px' });
+							});
+
+							customfont1Clone.style.fontSize = '50px';
+							customfont2Clone.style.fontSize = '50px';
+							elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+							if (elementWidthIfChanged < totalWidth) {
+								//I will remove the inline style and allow the css stylesheet take over
+								(0, _jquery2.default)('.customfont1').each(function () {
+									(0, _jquery2.default)(this).css({ fontSize: '50px' });
+								});
+
+								customfont1Clone.style.fontSize = '60px';
+								customfont2Clone.style.fontSize = '60px';
+								elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+								if (elementWidthIfChanged < totalWidth) {
+									//I will remove the inline style and allow the css stylesheet take over
+									(0, _jquery2.default)('.customfont1').each(function () {
+										(0, _jquery2.default)(this).css({ fontSize: '60px' });
+									});
+
+									customfont1Clone.style.fontSize = '70px';
+									customfont2Clone.style.fontSize = '70px';
+									elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+									if (elementWidthIfChanged < totalWidth) {
+										//I will remove the inline style and allow the css stylesheet take over
+										(0, _jquery2.default)('.customfont1').each(function () {
+											(0, _jquery2.default)(this).css({ fontSize: '70px' });
+										});
+
+										customfont1Clone.style.fontSize = '80px';
+										customfont2Clone.style.fontSize = '80px';
+										elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+										if (elementWidthIfChanged < totalWidth) {
+											//I will remove the inline style and allow the css stylesheet take over
+											(0, _jquery2.default)('.customfont1').each(function () {
+												(0, _jquery2.default)(this).css({ fontSize: '80px' });
+											});
+
+											customfont1Clone.style.fontSize = '90px';
+											customfont2Clone.style.fontSize = '90px';
+											elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+											if (elementWidthIfChanged < totalWidth) {
+												//I will remove the inline style and allow the css stylesheet take over
+												(0, _jquery2.default)('.customfont1').each(function () {
+													(0, _jquery2.default)(this).css({ fontSize: '90px' });
+												});
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				//delete it
+				//now to clean up the DOM
+				bodyElement.removeChild(customfont1Clone);
+				bodyElement.removeChild(customfont2Clone);
+			}
+			//end
 		}
 	};
 
@@ -32396,58 +32570,21 @@
 			var widthTS = (0, _jquery2.default)('#all-content').width();
 			(0, _jquery2.default)('#pageHeading').css({ width: widthTS });
 
-			// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
-
-			// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
-
-			// 	this.setPageWidth();
-
-			// }
-			// else {
-			// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
-			// 	// //
-			// 	// if(currentWidth > this.lastWidth) {
-
-			// 	// }
-
-			// 	var 
-			// }
+			//start Coty added 12-29-2016
+			var paddingHelperWidth = (0, _jquery2.default)('#paddingHelper').width();
+			if (widthTS > paddingHelper) {
+				//if the width of the content element is larger than what the width provided by the paddingHelper element make enough room for the content
+				//to correct, add the number of pixels difference to the width percentage
 
 
-			// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
-			//
-			// //now I need to position the font element
-			// var fontText1Element = document.getElementById('fontText1');
-			// var fontText2Element = document.getElementById('fontText2');
-			// // var fontText1 = $(fontText1Element).outerWidth();
-			// // var fontText2 = $(fontText2Element).outerWidth();
-			// // var totalFontWidth = fontText1 + fontText2;
+				var amountOfPixelsToAdd = (0, _jquery2.default)('#pageHeading').outerWidth() - (0, _jquery2.default)('#paddingHelper').width();
 
-			// var totalWidth = parseFloat(document.getElementById('page').style.width);
+				console.log(amountOfPixelsToAdd);
 
-			// //sometimes when this resize method runs nothing gets accomplished
-			// //so I need to account for this when the width is '', otherwise I
-			// //can continue with the flow as normal
-			// if(document.getElementById('page').style.width == '') {
-			// 	//for the set timeout option
-			// 	setTimeout(self.resize, 100);
-			// }
-			// else {
-			// 	if(totalWidth < this.totalFontWidth) {
-			// 		$(fontText1Element).css({ display: 'block'});
-			// 		$(fontText2Element).css({ display: 'block'});
-			// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
-			// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
-			// 	}
-			// 	else {
-			// 		$(fontText1Element).css({ display: 'inline-block'});
-			// 		$(fontText2Element).css({ display: 'inline-block'});
-			// 		var fontHeaderHeight = $('#fontText1').outerHeight();
-			// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-			// 	}
-			// }
+				styles.widthPercentage;
+			}
 
-			// this.lastWidth = widthToSet;
+			//end 12-19-2016
 		},
 		render: function render() {
 			var _this = this;
@@ -32674,7 +32811,8 @@
 		},
 		section1: {
 			paddingTop: 30
-		}
+		},
+		widthPercentage: '80%'
 	};
 
 	module.exports = Home;
@@ -32803,6 +32941,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './application.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#4-navbar-item').addClass('active');
+
 			location = './application';
 		},
 		onClickContact: function onClickContact() {
@@ -32816,6 +32962,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './contact.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#6-navbar-item').addClass('active');
+
 			location = './contact';
 		},
 		onClickHome: function onClickHome() {
@@ -32829,6 +32983,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './index.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#1-navbar-item').addClass('active');
+
 			location = '/';
 		},
 		onClickHistory: function onClickHistory() {
@@ -32842,6 +33004,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './history.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#2-navbar-item').addClass('active');
+
 			location = './history';
 		},
 		onClickBeliefs: function onClickBeliefs() {
@@ -32855,6 +33025,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './beliefs.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#5-navbar-item').addClass('active');
+
 			location = './beliefs';
 		},
 		onClickTribalAdministration: function onClickTribalAdministration() {
@@ -32868,6 +33046,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './tribaladministration.html'
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#3-navbar-item').addClass('active');
+
 			location = './tribaladministration';
 		}
 	});

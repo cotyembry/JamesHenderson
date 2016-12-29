@@ -71,60 +71,30 @@ var Home = React.createClass({
 		var widthTS = $('#all-content').width();
 		$('#pageHeading').css({ width: widthTS });
 
-		// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
 
-		// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
+		console.log(widthTS, $('#paddingHelper').width())
+
+		//start Coty added 12-29-2016
+		var paddingHelperWidth = $('#paddingHelper').width();
+		if(widthTS > paddingHelper) {
+			//if the width of the content element is larger than what the width provided by the paddingHelper element make enough room for the content
+			//to correct, add the number of pixels difference to the width percentage
 			
-		// 	this.setPageWidth();
-
-		// }
-		// else {
-		// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
-		// 	// //
-		// 	// if(currentWidth > this.lastWidth) {
-
-		// 	// }
-
-		// 	var 
-		// }
 
 
+			var amountOfPixelsToAdd = $('#pageHeading').outerWidth() - $('#paddingHelper').width();
+
+			console.log(amountOfPixelsToAdd);
+
+			styles.widthPercentage;
+		}
+		else {
+			console.log('here')
+		}
 
 
-		// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
-		//
-		// //now I need to position the font element
-		// var fontText1Element = document.getElementById('fontText1');
-		// var fontText2Element = document.getElementById('fontText2');
-		// // var fontText1 = $(fontText1Element).outerWidth();
-		// // var fontText2 = $(fontText2Element).outerWidth();
-		// // var totalFontWidth = fontText1 + fontText2;
+		//end 12-19-2016
 
-		// var totalWidth = parseFloat(document.getElementById('page').style.width);
-
-		// //sometimes when this resize method runs nothing gets accomplished
-		// //so I need to account for this when the width is '', otherwise I
-		// //can continue with the flow as normal
-		// if(document.getElementById('page').style.width == '') {
-		// 	//for the set timeout option
-		// 	setTimeout(self.resize, 100);
-		// }
-		// else {
-		// 	if(totalWidth < this.totalFontWidth) {
-		// 		$(fontText1Element).css({ display: 'block'});
-		// 		$(fontText2Element).css({ display: 'block'});
-		// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
-		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
-		// 	}
-		// 	else {
-		// 		$(fontText1Element).css({ display: 'inline-block'});
-		// 		$(fontText2Element).css({ display: 'inline-block'});
-		// 		var fontHeaderHeight = $('#fontText1').outerHeight();
-		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-		// 	}
-		// }
-
-		// this.lastWidth = widthToSet;
 	},
 	render: function() {		
 			return (
@@ -227,7 +197,8 @@ var Home = React.createClass({
 const widthHelper = 300; //set the width for the image here to preserver aspect ratio
 var styles = {
 	allContent: {
-		padding: 15,
+		paddingTop: 15,
+		paddingBottom: 15,
 	    marginTop: 20,
 	    marginBottom: 30,
 	    borderRadius: 0,
@@ -235,7 +206,8 @@ var styles = {
 	    boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
 	},
 	container: {
-		padding: 15,
+		paddingTop: 15,
+		paddingBottom: 15,
 	    marginTop: 20,
 	    marginBottom: 30,
 	    borderRadius: 0,
@@ -302,8 +274,11 @@ var styles = {
 		float: 'left'
 	},
 	section1: {
-		paddingTop: 30
-	}
+		paddingTop: 30,
+	    marginLeft: 15,
+	    marginRight: 15
+	},
+	widthPercentage: '80%'
 }
 
 module.exports = Home;
