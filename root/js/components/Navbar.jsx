@@ -17,7 +17,7 @@ var Navbar = React.createClass({
 	},
 	componentDidMount: function(e) {
 
-		$(window).resize(this.adjustSize)
+		$(window).resize(this.adjustSize);
 	},
 	render: function() {
 		$.extend(parentNavbar, {
@@ -54,6 +54,14 @@ var Navbar = React.createClass({
 		//bring back the location = '*.html' code
 
 		// location = './application.html';
+		
+		//TODO: this is going to be harder to implement than I thought...
+		//first remove the class from the element (where ever it is...and then add the class to this particular element)
+		// $('.active').each(function() {
+		// 	$(this).removeClass('active');
+		// });
+		// $('#4-navbar-item').addClass('active');
+
 		location = './application';
 	},
 	onClickContact: function() {
@@ -67,6 +75,14 @@ var Navbar = React.createClass({
 		//bring back the location = '*.html' code
 
 		// location = './contact.html';
+		
+		//TODO: this is going to be harder to implement than I thought...
+		//first remove the class from the element (where ever it is...and then add the class to this particular element)
+		// $('.active').each(function() {
+		// 	$(this).removeClass('active');
+		// });
+		// $('#6-navbar-item').addClass('active');
+
 		location = './contact';
 	},
 	onClickHome: function() {
@@ -80,6 +96,14 @@ var Navbar = React.createClass({
 		//bring back the location = '*.html' code
 
 		// location = './index.html';
+		
+		//TODO: this is going to be harder to implement than I thought...
+		//first remove the class from the element (where ever it is...and then add the class to this particular element)
+		// $('.active').each(function() {
+		// 	$(this).removeClass('active');
+		// });
+		// $('#1-navbar-item').addClass('active');
+
 		location = '/';
 	},
 	onClickHistory: function() {
@@ -93,6 +117,14 @@ var Navbar = React.createClass({
 		//bring back the location = '*.html' code
 
 		// location = './history.html';
+		
+		//TODO: this is going to be harder to implement than I thought...
+		//first remove the class from the element (where ever it is...and then add the class to this particular element)
+		// $('.active').each(function() {
+		// 	$(this).removeClass('active');
+		// });
+		// $('#2-navbar-item').addClass('active');
+
 		location = './history';
 	},
 	onClickBeliefs: function() {
@@ -106,6 +138,14 @@ var Navbar = React.createClass({
 		//bring back the location = '*.html' code
 
 		// location = './beliefs.html';
+		
+		//TODO: this is going to be harder to implement than I thought...
+		//first remove the class from the element (where ever it is...and then add the class to this particular element)
+		// $('.active').each(function() {
+		// 	$(this).removeClass('active');
+		// });
+		// $('#5-navbar-item').addClass('active');
+
 		location = './beliefs';
 	},
 	onClickTribalAdministration: function() {
@@ -119,6 +159,14 @@ var Navbar = React.createClass({
 		//bring back the location = '*.html' code
 
 		// location = './tribaladministration.html'
+		
+		//TODO: this is going to be harder to implement than I thought...
+		//first remove the class from the element (where ever it is...and then add the class to this particular element)
+		// $('.active').each(function() {
+		// 	$(this).removeClass('active');
+		// });
+		// $('#3-navbar-item').addClass('active');
+
 		location = './tribaladministration';
 	}
 });

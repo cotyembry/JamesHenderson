@@ -71,17 +71,8 @@ var History = React.createClass({
 	render: function() {		
 			return (
 				<div style={styles.paddingBottom}>
-					{/*<Emblem />*/}
-					{/*<div id="backgroundDiv"></div> commented out 12-08-2016 to help fix issue with background image */}
 					<div id="page">
-						{/* the font declarations and the size is set in index.html */}
-						{/*}
-						<div style={styles.fontHeaderContainer} id="fontHeader">
-							<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
-						</div>
-						*/}
 
-						{/*<div id="gradientHelper"></div>*/}
 						<div id="paddingHelper">
 							<Header />
 							<Navbar fontSize={20} ref={(elem) => this.elements['Navbar'] = elem } />
