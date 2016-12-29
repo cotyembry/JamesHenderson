@@ -10,6 +10,8 @@ import ReactDOM from 'react-dom';
 import Navbar from './Navbar.jsx';
 import EmailForm from './EmailForm.jsx';
 
+import LoadingIcon from './LoadingIcon1.jsx';
+
 import $ from 'jquery';
 
 var self;
@@ -17,10 +19,21 @@ var self;
 export default class Contact extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { marginLeft: 15 };
+		this.state = {
+			marginLeft: 15,
+			loadingDisplay: {
+				marginTop: 50,
+				display: 'none'
+			},
+			iframeVisibility: {
+				visibility: 'hidden'
+			}
+		}
 	}
 	componentDidMount() {
 		self = this;
+
+		$('#mapiframe').on('load', self.iframeLoaded.bind(self));
 
 		this.window = window;
 
@@ -45,6 +58,17 @@ export default class Contact extends React.Component {
 
 		$(window).resize(self.resize);
 		this.setState({ marginLeft: marginLeft });
+	}
+
+	iframeLoaded() {
+		//hide the loading icon
+		$('#bubblingContainer').css({ display: 'none' });
+
+		this.setState({
+			iframeVisibility: {
+				visibility: 'visible'
+			}
+		});
 	}
 
 	resize() {
@@ -117,8 +141,11 @@ export default class Contact extends React.Component {
 					</div>
 
 
+					<LoadingIcon />
+					
 					<div id="google-map" style={tempStyle}>
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={styles.mapStyle}></iframe>
+						
+						<iframe id="mapiframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={Object.assign(styles.mapStyle, this.state.iframeVisibility)}></iframe>
 					</div>
 
 

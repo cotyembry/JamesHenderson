@@ -31901,34 +31901,47 @@
 		zoomChanged: function zoomChanged() {
 
 			var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
-			var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
 
-			// console.log(totalWidth,  backgroundWidth)
+			// Coty commented out 12_23_2016
+			//
+			// var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
+			// // console.log(totalWidth,  backgroundWidth)
+			// // console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
+			// if(totalWidth > backgroundWidth) {	
+			// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+			// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
+			// 	var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
+
+			// 	var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help with error
+
+			// 	// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
+
+			// 	// console.log(document.getElementById('backgroundImage'))
+			// 	document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
+
+			// }
+			// else {
+			// 	document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+			// }
 
 
-			// console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
+			//Coty added 12_23_2016 to make the image position change based on the size of the image
+			if (totalWidth >= 1200) {
+				// backgroundPosition: 'center -100px'
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: 'center -150px' });
+			} else if (totalWidth < 1200) {
 
-			if (totalWidth > backgroundWidth) {
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
-
-				var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help will error
-
-				// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
-
-				// console.log(document.getElementById('backgroundImage'))
-				document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
-			} else {
-				document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: '' });
 			}
 		}
 	};
 
 	var stylesHelper = {
+		backgroundImageWidth: '1200',
 		helperWidth: '100%',
 		helperHeight: '350px',
-		backgroundImageWidth: '1200'
+		imagePositionConstant: 'center -100px',
+		imagePosition: ''
 	};
 
 	var styles = {
@@ -31962,7 +31975,7 @@
 	 */
 		backgroundImage: {
 			// width: stylesHelper.helperWidth, 
-			width: '100%',
+			width: '102%', //because I noticed an issue of the picture not quite making it the full width sometimes 
 			height: '100%',
 			// width: '1000px', 
 			// // height: stylesHelper.helperHeight,
@@ -31976,7 +31989,8 @@
 			// width: stylesHelper.backgroundImageWidth + 'px',
 			// height:'600px',
 			backgroundSize: 'cover',
-			backgroundPosition: 'center -100px', //this pans the photo around
+			// backgroundPosition: 'center -100px',	//this pans the photo around
+			// backgroundPosition: stylesHelper.imagePosition,	//this pans the photo around
 			backgroundRepeat: 'no-repeat',
 			textAlign: 'center',
 			margin: 'auto',
@@ -32340,6 +32354,10 @@
 			//setting the src attribute the React way in the styles object wasn't working so, jquery it is
 			document.getElementById('jpg1').setAttribute('src', styles.imgSrc.src);
 
+			//now I will set the width of the heading to match the width of the content
+			var widthTS = (0, _jquery2.default)('#all-content').width();
+			(0, _jquery2.default)('#pageHeading').css({ width: widthTS });
+
 			// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
 			//
 			// //added the following lines to set the position of the font header
@@ -32373,6 +32391,10 @@
 			if (widthToSet >= this.smallestWidthPossible) {
 				(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
 			}
+
+			//adjust the header element's width to stay the same as the contents width
+			var widthTS = (0, _jquery2.default)('#all-content').width();
+			(0, _jquery2.default)('#pageHeading').css({ width: widthTS });
 
 			// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
 
@@ -32445,6 +32467,19 @@
 							} }),
 						_react2.default.createElement(
 							'div',
+							{ id: 'pageHeading', style: styles.container },
+							_react2.default.createElement(
+								'center',
+								null,
+								_react2.default.createElement(
+									'h1',
+									null,
+									'Get To Know Albery McKay'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
 							{ style: styles.allContent, id: 'all-content' },
 							_react2.default.createElement(
 								'div',
@@ -32458,6 +32493,11 @@
 										_react2.default.createElement(
 											'center',
 											{ id: 'headerWrapperCenterElement' },
+											_react2.default.createElement(
+												'h2',
+												{ style: styles.removePaddingAndMargin },
+												'Military Hall of Honor Inductee'
+											),
 											_react2.default.createElement('img', { id: 'jpg1', style: styles.img }),
 											_react2.default.createElement(
 												'div',
@@ -32478,7 +32518,7 @@
 									_react2.default.createElement(
 										'p',
 										{ style: styles.paragraphElement, id: 'piece1' },
-										'Albert Mckay was born in Parks, Arkansas on January 20, 1932. He attended Grade School and High School in Heavener, OK. He joined the Oklahoma National Guard on October 13, 1947 at the age of 15. He served in HQ & HQ Company, 279th Infantry, 45th Infantry Division and received an Honorable Discharge on January 15, 1948 to enlist into the Regular Army. He enlisted in the Air Force on January 16, 1948, received his basic training in San Antonio, TX and then was assigned to Wheeler Field, Hawaii. He received an Honorable Discharge on January 5, 1949. He re-enlisted in the U.S. Army on July 16, 1949 at FT. Sill, OK with the 43rd AIB, 2nd Armored Division.'
+										'Albert McKay was born in Parks, Arkansas on January 20, 1932. He attended Grade School and High School in Heavener, OK. He joined the Oklahoma National Guard on October 13, 1947 at the age of 15. He served in HQ & HQ Company, 279th Infantry, 45th Infantry Division and received an Honorable Discharge on January 15, 1948 to enlist into the Regular Army. He enlisted in the Air Force on January 16, 1948, received his basic training in San Antonio, TX and then was assigned to Wheeler Field, Hawaii. He received an Honorable Discharge on January 5, 1949. He re-enlisted in the U.S. Army on July 16, 1949 at FT. Sill, OK with the 43rd AIB, 2nd Armored Division.'
 									),
 									_react2.default.createElement('br', null),
 									_react2.default.createElement(
@@ -32486,22 +32526,23 @@
 										{ style: styles.paragraphElement, id: 'piece2' },
 										'In 1951 he was transferred to Korea with the Second Infantry Division, 38th Infantry Regiment. He returned to the States in 1952. Master Sergeant McKay served in different locations including Ft. Sill and was reassigned to Korea from 1955 to 1957 with the 34th Infantry Regiment. He was assigned as 1st Seargeant at Hunter Liggett Military Reservation, CA until 1958. He was then assigned to Staff and Faculty Battery, USAAMS, 4th U.S. Army at Ft. Sill, OK.'
 									),
+									_react2.default.createElement('br', null),
 									_react2.default.createElement(
 										'p',
 										{ style: styles.paragraphElement },
-										'His awards and docorations include: Silver Start for Gallantry in Action, Combat Infantry Badge, Presidential Unit Citation, Korean Service Medal w/3 bronze service stars, National Defense Service Medal, Good Conduct Medal Bronze Clasp w/3 loops, United Nations service Medal, Korean Distinguished Military Service Medal w/silver star, Republic or Korea Presidential Unit citation, Japanese Occupational Medal, Purple Heart, Expert Carbine (M1), and Expert Pistol (Cal 45).'
+										'His awards and docorations include: Silver Star for Gallantry in Action, Combat Infantry Badge, Presidential Unit Citation, Korean Service Medal with three bronze service stars, National Defense Service Medal, Good Conduct Medal Bronze Clasp with three loops, United Nations service Medal, Korean Distinguished Military Service Medal with silver star, Republic or Korea Presidential Unit citation, Japanese Occupational Medal, Purple Heart, Expert Carbine (M1), and Expert Pistol (Cal 45).'
 									),
 									_react2.default.createElement('br', null),
 									_react2.default.createElement(
 										'p',
 										{ style: styles.paragraphElement },
-										'He received an Honorable Discharge from the U.S. Army on on July 12, 1961 with 13 years, 1 month and 17 days of professional, dedicated and outstanding service to his country.'
+										'He received an Honorable Discharge from the U.S. Army on July 12, 1961 with 13 years, 1 month and 17 days of professional, dedicated and outstanding service to his country.'
 									),
 									_react2.default.createElement('br', null),
 									_react2.default.createElement(
 										'p',
 										{ style: styles.paragraphElement },
-										'After discharge from the Army, he worked for Permanent Company in Lawton and Oklahoma City. After about a year he moved to Poteau, OK and opened his insurance office. He attended teh Auctioneering School in Forth Smith, AR obtaining his License and then obtained his Real Estate License and opened an office in Howe, OK. There was no police in Howe so he became City Marshall. In addition, for 28 years he taught at the Auction School on sub-dividing land and auctioning. He joined the Professional Rodeo Association and the International Rodeo Association and announced about 25 Rodeos a year in several states. He retired from announcing rodeos in 1981 but continued to sell real estate and holding benefit auctions to help people with severe illness pay their medical bills. MSC McKay also started a veteran\'s council group at the Oklahoma Veterans Center in Sulphur, OK to assist veterans in applying for their earned entitlements.'
+										'After discharge from the Army, he worked for Permanent Company in Lawton and Oklahoma City. After about a year he moved to Poteau, OK and opened his insurance office. He attended the Auctioneering School in Forth Smith, AR obtaining his license and then obtained his Real Estate License and opened an office in Howe, OK. There was no police in Howe so he became City Marshall. In addition, for 28 years he taught at the Auction School on sub-dividing land and auctioning. He joined the Professional Rodeo Association and the International Rodeo Association and announced about twenty five Rodeos a year in several states. He retired from announcing rodeos in 1981 but continued to sell real estate and hold benefit auctions to help people with severe illness pay their medical bills. MSC McKay also started a veterans council group at the Oklahoma Veterans Center in Sulphur, OK to assist veterans in applying for their earned entitlements.'
 									),
 									_react2.default.createElement('br', null),
 									_react2.default.createElement(
@@ -32561,7 +32602,20 @@
 	var widthHelper = 300; //set the width for the image here to preserver aspect ratio
 	var styles = {
 		allContent: {
-			marginBottom: 30
+			padding: 15,
+			marginTop: 20,
+			marginBottom: 30,
+			borderRadius: 0,
+			backgroundColor: '#FFF',
+			boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
+		},
+		container: {
+			padding: 15,
+			marginTop: 20,
+			marginBottom: 30,
+			borderRadius: 0,
+			backgroundColor: '#FFF',
+			boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
 		},
 		credits: {
 			fontSize: 14
