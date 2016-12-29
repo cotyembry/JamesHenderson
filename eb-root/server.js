@@ -86,12 +86,18 @@ app.post('/send', function(req, res) {
 
     //then render the contact us page again
     // res.render('contact', { appTitle: "Sovereign Chickamauga Cherokee" });
+    
+    //I changed this to .redirect because it keeps the url in sync. I would like to not respond, but I haven't looked up how to do that yet
     res.redirect('contact');
 })
 
 
+//TODO:    add donation info like the Ouashita has. Maybe paypal or something 
 
 
+
+
+//begin routing section
 
 
 //GET home page.

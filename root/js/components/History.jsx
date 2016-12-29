@@ -37,7 +37,8 @@ var History = React.createClass({
 		// var totalFontWidth = fontText1 + fontText2;
 		// this.totalFontWidth = totalFontWidth;
 
-
+		// alert($(window).outerWidth())
+		// alert($(window).outerHeight())
 		$(window).resize( self.resize )
 		//and so its ran at least one time
 		this.resize();
@@ -127,30 +128,18 @@ var History = React.createClass({
 						<div id="paddingHelper">
 							<Header />
 							<Navbar fontSize={20} ref={(elem) => this.elements['Navbar'] = elem } />
-							{/*<Navbar menuItems, messages/>*/}
-							{/*React.createElement(Navbar, {
-						        menuItems//,
-						        //secondaryMenuItems,
-						        //messages: localeSpecificIcuMessagesForTheWholeAppCompiledOnTheServer
-						    })*/}
+
 							<div style={styles.allContent} id="all-content">
 								
 								<div style={styles.section1} id="section-1" className="section">
-									{/*<div style={styles.headingAndPicture}>
-										
-									</div>*/}
-									
-
 					
 									<div style={styles.paragraphWrapper}>
 										
-									
 										<div style={styles.paragraphHeader}>
 											History of the Sovereign Chickamauga Cherokee Tribe of Cherokee Nation West
 										</div>
 									
 										<div style={styles.container}>
-											
 											
 											<br />
 											
@@ -161,17 +150,12 @@ var History = React.createClass({
 											<br />
 
 											<div style={styles.pageTextContent}>
-												Around 1811 Ooholonteskee half brother of Tahlonteskee known by the whites as "John Jolly", Chief Chickalah migrated to Dardanelle Arkansas now know as <strong>Chickzlah</strong> town bringing a band of Chickamauga Cherokees 1811-1812. Chief Bowles - Chief Dutch with a number of Chickamauga Cherokees in the Danville area. One initial location on the Arkansas was at <strong>point</strong> where the river passed between two samll mountains. They dubbed the site as The Dardanelle. From there the Cherokees spread out up the Arkansas and along inlet creeks such as Illinois, Pine, <strong>Spadnz</strong>, Horsehead, Frog, and Mulberry one sizable group took up residence along Petite Jean River, South of the Arkansas River.
+												Around 1811 Ooholonteskee half brother of Tahlonteskee known by the whites as "John Jolly", Chief Chickalah migrated to Dardanelle Arkansas now know as Chickalah town bringing a band of Chickamauga Cherokees 1811-1812. Chief Bowles - Chief Dutch with a number of Chickamauga Cherokees in the Danville area. One initial location on the Arkansas was at a point where the river passed between two small mountains. They dubbed the site as The Dardanelle. From there the Cherokees spread out up the Arkansas and along inlet creeks such as Illinois, Pine, Spanda, Horsehead, Frog, and Mulberry. One sizable group took up residence along Petite Jean River, South of the Arkansas River.
 											</div>
 
 											<br />
 										
 										</div>
-
-
-										
-
-										
 									</div>
 								</div>
 							</div>

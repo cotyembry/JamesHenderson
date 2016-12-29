@@ -31901,34 +31901,45 @@
 		zoomChanged: function zoomChanged() {
 
 			var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
-			var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
 
-			// console.log(totalWidth,  backgroundWidth)
+			//start Coty added 12-23-2016 to make the image position change based on the size of the image
+			if (totalWidth >= 1200) {
+				// backgroundPosition: 'center -100px'
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: 'center -150px' });
+			} else if (totalWidth < 1200) {
 
-
-			// console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
-
-			if (totalWidth > backgroundWidth) {
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
-
-				var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help will error
-
-				// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
-
-				// console.log(document.getElementById('backgroundImage'))
-				document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
-			} else {
-				document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: '' });
 			}
+			//end
+
+
+			//start Coty added 12-28-2016 to make sure the text header doesn't mess up when the width of the page gets too small
+			//what I need to do is see how much space the font header needs
+			var fontTotalWidth = (0, _jquery2.default)('#fontText1').outerWidth() + (0, _jquery2.default)('#fontText2').outerWidth();
+
+			console.log(fontTotalWidth, totalWidth);
+
+			if (fontTotalWidth >= totalWidth) {
+				//if here then the total page width is smaller than the needed space of the font header elements
+				(0, _jquery2.default)('.customfont1').each(function () {
+					(0, _jquery2.default)(this).css({ fontSize: '80px' });
+				});
+			} else {
+				//I will remove the inline style and allow the css stylesheet take over
+				(0, _jquery2.default)('.customfont1').each(function () {
+					(0, _jquery2.default)(this).css({ fontSize: '' });
+				});
+			}
+			//end
 		}
 	};
 
 	var stylesHelper = {
+		backgroundImageWidth: '1200',
 		helperWidth: '100%',
 		helperHeight: '350px',
-		backgroundImageWidth: '1200'
+		imagePositionConstant: 'center -100px',
+		imagePosition: ''
 	};
 
 	var styles = {
@@ -31962,7 +31973,7 @@
 	 */
 		backgroundImage: {
 			// width: stylesHelper.helperWidth, 
-			width: '100%',
+			width: '102%', //because I noticed an issue of the picture not quite making it the full width sometimes 
 			height: '100%',
 			// width: '1000px', 
 			// // height: stylesHelper.helperHeight,
@@ -31976,7 +31987,8 @@
 			// width: stylesHelper.backgroundImageWidth + 'px',
 			// height:'600px',
 			backgroundSize: 'cover',
-			backgroundPosition: 'center -100px', //this pans the photo around
+			// backgroundPosition: 'center -100px',	//this pans the photo around
+			// backgroundPosition: stylesHelper.imagePosition,	//this pans the photo around
 			backgroundRepeat: 'no-repeat',
 			textAlign: 'center',
 			margin: 'auto',
@@ -32351,7 +32363,8 @@
 			// var totalFontWidth = fontText1 + fontText2;
 			// this.totalFontWidth = totalFontWidth;
 
-
+			// alert($(window).outerWidth())
+			// alert($(window).outerHeight())
 			(0, _jquery2.default)(window).resize(self.resize);
 			//and so its ran at least one time
 			this.resize();
@@ -32459,31 +32472,13 @@
 										_react2.default.createElement(
 											'div',
 											{ style: styles.pageTextContent },
-											'President Thomas Jefferson administration made many treatys with Chickamauga Cherokees. However in 1808, the Compact of 1802 was not needed to effect the migration of some 1,130 Chickamaugans to land West of the Mississippi (today Dardanelle, Arkansas, in Yell County). Jefferson had merely to suggest to Tahlonteskee and other Chickamaugans that if they did not care to remain in the same country with their enemy country men, they could remove to Dardanelle Rock. Thus, in the Spring of 1808, Tahlonteskee fearing assassination notified president Jefferson that his people were ready to migrate. Following their migration, Tahlonteskee\'s band of Cherokees called themselves, "Cherokee West or Old Settlers".'
+											'President Thomas Jefferson administration made many treaties with Chickamauga Cherokees. However in 1808, the Compact of 1802 was not needed to effect the migration of some 1,130 Chickamaugans to land West of the Mississippi (today Dardanelle, Arkansas, in Yell County). Jefferson had merely to suggest to Tahlonteskee and other Chickamaugans that if they did not care to remain in the same country with their enemy country men, they could remove to Dardanelle Rock. Thus, in the Spring of 1808, Tahlonteskee fearing assassination notified president Jefferson that his people were ready to migrate. Following their migration, Tahlonteskee\'s band of Cherokees called themselves, "Cherokee West or Old Settlers".'
 										),
 										_react2.default.createElement('br', null),
 										_react2.default.createElement(
 											'div',
 											{ style: styles.pageTextContent },
-											'Around 1811 Ooholonteskee half brother of Tahlonteskee known by the whites as "John Jolly", Chief Chickalah migrated to Dardanelle Arkansas now know as ',
-											_react2.default.createElement(
-												'strong',
-												null,
-												'Chickzlah'
-											),
-											' town bringing a band of Chickamauga Cherokees 1811-1812. Chief Bowles - Chief Dutch with a number of Chickamauga Cherokees in the Danville area. One initial location on the Arkansas was at ',
-											_react2.default.createElement(
-												'strong',
-												null,
-												'point'
-											),
-											' where the river passed between two samll mountains. They dubbed the site as The Dardanelle. From there the Cherokees spread out up the Arkansas and along inlet creeks such as Illinois, Pine, ',
-											_react2.default.createElement(
-												'strong',
-												null,
-												'Spadnz'
-											),
-											', Horsehead, Frog, and Mulberry one sizable group took up residence along Petite Jean River, South of the Arkansas River.'
+											'Around 1811 Ooholonteskee half brother of Tahlonteskee known by the whites as "John Jolly", Chief Chickalah migrated to Dardanelle Arkansas now know as Chickalah town bringing a band of Chickamauga Cherokees 1811-1812. Chief Bowles - Chief Dutch with a number of Chickamauga Cherokees in the Danville area. One initial location on the Arkansas was at a point where the river passed between two small mountains. They dubbed the site as The Dardanelle. From there the Cherokees spread out up the Arkansas and along inlet creeks such as Illinois, Pine, Spanda, Horsehead, Frog, and Mulberry. One sizable group took up residence along Petite Jean River, South of the Arkansas River.'
 										),
 										_react2.default.createElement('br', null)
 									)

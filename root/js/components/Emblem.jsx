@@ -165,36 +165,10 @@ var EmblemObject = {
 		//EmblemObject.interation++;
 	},
 	zoomChanged: function() {
-		
-
 
 		var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
 		
-		// Coty commented out 12_23_2016
-		//
-		// var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
-		// // console.log(totalWidth,  backgroundWidth)
-		// // console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
-		// if(totalWidth > backgroundWidth) {	
-		// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-		// 	// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-		// 	var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
-
-		// 	var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help with error
-
-		// 	// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
-
-		// 	// console.log(document.getElementById('backgroundImage'))
-		// 	document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
-
-		// }
-		// else {
-		// 	document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
-		// }
-
-
-
-		//Coty added 12_23_2016 to make the image position change based on the size of the image
+		//start Coty added 12-23-2016 to make the image position change based on the size of the image
 		if(totalWidth >= 1200) {
 			// backgroundPosition: 'center -100px'
 			$('#backgroundImage').css({ backgroundPosition: 'center -150px' });
@@ -203,6 +177,29 @@ var EmblemObject = {
 
 			$('#backgroundImage').css({ backgroundPosition: '' });
 		}
+		//end
+
+
+		//start Coty added 12-28-2016 to make sure the text header doesn't mess up when the width of the page gets too small
+		//what I need to do is see how much space the font header needs
+		var fontTotalWidth = $('#fontText1').outerWidth() + $('#fontText2').outerWidth();
+
+		console.log(fontTotalWidth, totalWidth);
+
+
+		if(fontTotalWidth >= totalWidth) {
+			//if here then the total page width is smaller than the needed space of the font header elements
+			$('.customfont1').each(function() {
+				$(this).css({ fontSize: '80px' });
+			})
+		}
+		else {
+			//I will remove the inline style and allow the css stylesheet take over
+			$('.customfont1').each(function() {
+				$(this).css({ fontSize: '' });
+			})
+		}
+		//end
 	},
 }
 

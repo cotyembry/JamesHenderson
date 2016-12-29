@@ -25,7 +25,7 @@ export default class EmailForm extends React.Component {
   }
 
   handleSubjectChange(event) {
-    console.log('in test')
+    // console.log('in test')
 
     this.setState({subject: event.target.value});
   }
@@ -40,7 +40,7 @@ export default class EmailForm extends React.Component {
     var messageBody = document.getElementById('messageBody').value;
     //sweet, now I have the messageBody next that was typed in the textarea element
     //now I need to use it and send it to the server so that an email can be sent
-    console.log('Email was submitted: ' +  messageBody);
+    // console.log('Email was submitted: ' +  messageBody);
 
     var finalObject = {
       subject: this.state.subject,
