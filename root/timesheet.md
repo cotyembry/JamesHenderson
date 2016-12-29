@@ -26,6 +26,7 @@ started development: Wed Dec  22 22:30:00 CST 2016+false
 ended development: Wed Dec  22 23:27:00 CST 2016+false
 started development: Wed Dec  23 14:30:00 CST 2016+false
 ended development: Wed Dec  23 16:43:00 CST 2016+false
-//maybe not all of the next hours... view the commit to better judge how much I should charge. the commit is826d3d3..f7cd279
 started development: Wed Dec  23 21:40:00 CST 2016+false
 ended development: Wed Dec  24 00:15:00 CST 2016+false
+started development: Wed Dec  28 18:00:00 CST 2016+false
+ended development: Wed Dec  28 20:30:00 CST 2016+false
