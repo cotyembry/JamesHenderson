@@ -41,8 +41,7 @@ config = JSON.parse(config);
 //define the modules Ill be using for the email feature
 var nodemailer = require('nodemailer');
 
-//TODO
-var emailAddressToSendTo = 'todo@updateThisEmail.com';
+var emailAddressToSendTo = 'CHIEFAMCKAY@gmail.com';
 
 //the sendEmail object will do the work to get the email to be send when necessary (I should make this more modular something later in the future)
 var sendEmail = {
@@ -69,7 +68,7 @@ var sendEmail = {
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
                 console.log(error);
-                // res.json({yo: 'error'});
+                //todo, add error tracking
             }else{
                 console.log('Message sent: ' + info.response);
                 // res.json({yo: info.response});
