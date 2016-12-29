@@ -17,6 +17,7 @@ var History = React.createClass({
 
 	componentDidMount: function() {
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+		this.minPageWidth = $('#minPageWidthHelper').outerWidth();
 
 		//first I will set the page's width
 		var widthToSet = $(document.documentElement).outerWidth();
@@ -55,8 +56,19 @@ var History = React.createClass({
 
 		// console.log(widthToSet)
 
-		if(widthToSet >= this.smallestWidthPossible) {
-			$('#page').css({ 'width': widthToSet + 'px' });
+
+		if(widthToSet >= this.minPageWidth) {
+			$('#page').css({ width: widthToSet + 'px' });
+
+			// alert(this.minPageWidth + ' : ' + widthToSet);
+
+		}
+		else {
+			// alert(this.minPageWidth)
+			$('#page').css({ width: (this.minPageWidth + 30) + 'px' });
+			$('.container').each(function() {
+				$(this).css({ width: (this.minPageWidth + 200) + 'px' });
+			});
 		}
 
 		// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
@@ -135,7 +147,7 @@ var History = React.createClass({
 					
 									<div style={styles.paragraphWrapper}>
 										
-										<div style={styles.paragraphHeader}>
+										<div className="container" style={styles.paragraphHeader}>
 											History of the Sovereign Chickamauga Cherokee Tribe of Cherokee Nation West
 										</div>
 									
@@ -143,7 +155,7 @@ var History = React.createClass({
 											
 											<br />
 											
-											<div style={styles.pageTextContent}>
+											<div className="container" style={styles.pageTextContent}>
 												President Thomas Jefferson administration made many treaties with Chickamauga Cherokees. However in 1808, the Compact of 1802 was not needed to effect the migration of some 1,130 Chickamaugans to land West of the Mississippi (today Dardanelle, Arkansas, in Yell County). Jefferson had merely to suggest to Tahlonteskee and other Chickamaugans that if they did not care to remain in the same country with their enemy country men, they could remove to Dardanelle Rock. Thus, in the Spring of 1808, Tahlonteskee fearing assassination notified president Jefferson that his people were ready to migrate. Following their migration, Tahlonteskee's band of Cherokees called themselves, "Cherokee West or Old Settlers".
 											</div>
 
@@ -156,6 +168,8 @@ var History = React.createClass({
 											<br />
 										
 										</div>
+
+										<div id="minPageWidthHelper" style={styles.minPageWidthHelper}>Chickamauga</div>
 									</div>
 								</div>
 							</div>
@@ -209,6 +223,18 @@ var styles = {
 	},
 	imgSrc: {
 		src: './assets/AlMcKayPhoto.jpg'
+	},
+	minPageWidthHelper: {
+		visibility: 'hidden',
+		position: 'absolute',
+		top: -1000,
+		textAlign: 'center',
+		fontSize: 50,
+		padding: 15,
+	    marginBottom: 20,
+	    borderRadius: 0,
+	    backgroundColor: '#FFF',
+	    boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
 	},
 	// page: { //added 12-08-2016 to help fix IE issue with the background picture
 	// 	position: 'relative'

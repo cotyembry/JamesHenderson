@@ -30,6 +30,6 @@ started development: Wed Dec  23 21:40:00 CST 2016+false
 ended development: Wed Dec  24 00:15:00 CST 2016+false
 started development: Wed Dec  28 18:00:00 CST 2016+false
 ended development: Wed Dec  28 20:30:00 CST 2016+false
-//fix the below from the 12 hour time format to be the army time format bc the army time is wrong
+//fix the below from the 12 hour time format to be the army time format bc the army time is wrong (if I end up keeping the hours below for working, I at least took a 15 minute break)
 started development: Wed Dec  28 18:00:00|10:07 2016+false
 ended development: Wed Dec  28 18:01:00|11:07 CST 2016+false

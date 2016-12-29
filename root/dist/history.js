@@ -31925,6 +31925,28 @@
 					(0, _jquery2.default)(this).css({ fontSize: '80px' });
 				});
 			} else {
+				//I need to see how much width the element takes up when the font size is returned back to 100px
+				//I will create a clone of the font elements
+				var customfont1Clone = (0, _jquery2.default)('#fontText1').clone();
+				var customfont2Clone = (0, _jquery2.default)('#fontText2').clone();
+
+				var customfont1Clone = (0, _jquery2.default)('#fontText1').css({ visibility: 'hidden' });
+				var customfont2Clone = (0, _jquery2.default)('#fontText2').css({ visibility: 'hidden' });
+
+				alert('here');
+
+				(0, _jquery2.default)(customfont1Clone).append('body');
+				(0, _jquery2.default)(customfont2Clone).append('body');
+
+				//make the element invisible
+
+				//measure it
+
+				//delete it
+
+				//then use the values
+
+
 				//I will remove the inline style and allow the css stylesheet take over
 				(0, _jquery2.default)('.customfont1').each(function () {
 					(0, _jquery2.default)(this).css({ fontSize: '' });

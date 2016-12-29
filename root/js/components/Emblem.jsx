@@ -59,8 +59,27 @@ var Emblem = React.createClass({
 
 		//here I need to add an event to listen if the browser window zoomed
 		//$().someListener(EmblemObject.zoomChanged)
-		$(window).resize( EmblemObject.zoomChanged )
-		EmblemObject.zoomChanged();
+		$(window).resize( EmblemObject.zoomChanged );
+		//EmblemObject.zoomChanged();
+	
+		var fontText1 = document.getElementById('fontText1');
+		var fontText2 = document.getElementById('fontText2');
+		var fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
+
+		this.startingFontTotalWidth = fontTotalWidth;
+
+		var intervalChecker = function() {
+			var fontText1 = document.getElementById('fontText1');
+			var fontText2 = document.getElementById('fontText2');
+			var fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
+			//if here then I am satisfied the font element has quit shifiting sizes on the page
+			if(this.startingFontTotalWidth != fontTotalWidth) {
+				EmblemObject.zoomChanged();
+				clearInterval(this.clearInterval);
+			}
+		}
+
+		this.clearInterval = setInterval(intervalChecker.bind(this), 1000);
 
 		//now to expose the EmblemObject globally
 		window.EmblemObject = EmblemObject;
@@ -164,6 +183,7 @@ var EmblemObject = {
 
 		//EmblemObject.interation++;
 	},
+
 	zoomChanged: function() {
 
 		var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
@@ -182,22 +202,181 @@ var EmblemObject = {
 
 		//start Coty added 12-28-2016 to make sure the text header doesn't mess up when the width of the page gets too small
 		//what I need to do is see how much space the font header needs
-		var fontTotalWidth = $('#fontText1').outerWidth() + $('#fontText2').outerWidth();
-
-		console.log(fontTotalWidth, totalWidth);
-
+		var fontText1 = document.getElementById('fontText1');
+		var fontText2 = document.getElementById('fontText2');
+		var fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 
 		if(fontTotalWidth >= totalWidth) {
-			//if here then the total page width is smaller than the needed space of the font header elements
+			// if here then the total page width is smaller than the needed space of the font header elements
 			$('.customfont1').each(function() {
-				$(this).css({ fontSize: '80px' });
-			})
+				$(this).css({ fontSize: '90px' });
+			});
+
+			fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
+			if(fontTotalWidth >= totalWidth) {
+				$('.customfont1').each(function() {
+					$(this).css({ fontSize: '80px' });
+				});
+
+				fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
+				if(fontTotalWidth >= totalWidth) {
+					$('.customfont1').each(function() {
+						$(this).css({ fontSize: '70px' });
+					});				
+			
+					fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
+					if(fontTotalWidth >= totalWidth) {
+						$('.customfont1').each(function() {
+							$(this).css({ fontSize: '60px' });
+						});
+						
+						fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
+						if(fontTotalWidth >= totalWidth) {
+							$('.customfont1').each(function() {
+								$(this).css({ fontSize: '50px' });
+							});
+							
+							fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
+							if(fontTotalWidth >= totalWidth) {
+								$('.customfont1').each(function() {
+									$(this).css({ fontSize: '40px' });
+								});
+								
+								fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
+								if(fontTotalWidth >= totalWidth) {
+									$('.customfont1').each(function() {
+										$(this).css({ fontSize: '30px' });
+									});
+									fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
+									if(fontTotalWidth >= totalWidth) {
+										$('.customfont1').each(function() {
+											$(this).css({ fontSize: '20px' });
+										});
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		else {
-			//I will remove the inline style and allow the css stylesheet take over
-			$('.customfont1').each(function() {
-				$(this).css({ fontSize: '' });
-			})
+			//I need to see how much width the element takes up when the font size is returned back to 100px
+			//I will create a clone of the font elements
+			var customfont1Clone = document.getElementById('fontText1').cloneNode(true);	//true means do a deep copy
+			var customfont2Clone = document.getElementById('fontText2').cloneNode(true);	//true means do a deep copy			
+
+			// console.log(customfont1Clone)
+
+			//make the element invisible
+			customfont1Clone.style.visibility = 'hidden';
+			customfont2Clone.style.visibility = 'hidden';
+
+			var bodyElement = document.getElementById('body');
+			bodyElement.appendChild(customfont1Clone);
+			bodyElement.appendChild(customfont2Clone);
+
+			//measure it
+			//set the font sizes back to their defaults so I can measure them
+			customfont1Clone.style.fontSize = '';
+			customfont2Clone.style.fontSize = '';
+
+			var elementWidthIfChanged = $(customfont1Clone).outerWidth() + $(customfont2Clone).outerWidth();			
+
+			//then use the values
+
+			//I only want to change the font sizes back if it will not interfere with the whole purpose of making the font smaller
+			if(elementWidthIfChanged < totalWidth) {
+				//I will remove the inline style and allow the css stylesheet take over
+				$('.customfont1').each(function() {
+					$(this).css({ fontSize: '' });
+				})
+			}
+			else {
+				customfont1Clone.style.fontSize = '30px';
+				customfont2Clone.style.fontSize = '30px';
+				elementWidthIfChanged = $(customfont1Clone).outerWidth() + $(customfont2Clone).outerWidth();			
+				if(elementWidthIfChanged < totalWidth) {
+					//I will remove the inline style and allow the css stylesheet take over
+					$('.customfont1').each(function() {
+						$(this).css({ fontSize: '30px' });
+					})
+
+
+					customfont1Clone.style.fontSize = '40px';
+					customfont2Clone.style.fontSize = '40px';
+					elementWidthIfChanged = $(customfont1Clone).outerWidth() + $(customfont2Clone).outerWidth();			
+
+					if(elementWidthIfChanged < totalWidth) {
+						//I will remove the inline style and allow the css stylesheet take over
+						$('.customfont1').each(function() {
+							$(this).css({ fontSize: '40px' });
+						})
+
+						customfont1Clone.style.fontSize = '50px';
+						customfont2Clone.style.fontSize = '50px';
+						elementWidthIfChanged = $(customfont1Clone).outerWidth() + $(customfont2Clone).outerWidth();			
+
+						if(elementWidthIfChanged < totalWidth) {
+							//I will remove the inline style and allow the css stylesheet take over
+							$('.customfont1').each(function() {
+								$(this).css({ fontSize: '50px' });
+							})
+
+							customfont1Clone.style.fontSize = '60px';
+							customfont2Clone.style.fontSize = '60px';
+							elementWidthIfChanged = $(customfont1Clone).outerWidth() + $(customfont2Clone).outerWidth();			
+
+							if(elementWidthIfChanged < totalWidth) {
+								//I will remove the inline style and allow the css stylesheet take over
+								$('.customfont1').each(function() {
+									$(this).css({ fontSize: '60px' });
+								})
+
+								customfont1Clone.style.fontSize = '70px';
+								customfont2Clone.style.fontSize = '70px';
+								elementWidthIfChanged = $(customfont1Clone).outerWidth() + $(customfont2Clone).outerWidth();			
+
+								if(elementWidthIfChanged < totalWidth) {
+									//I will remove the inline style and allow the css stylesheet take over
+									$('.customfont1').each(function() {
+										$(this).css({ fontSize: '70px' });
+									})
+								
+									customfont1Clone.style.fontSize = '80px';
+									customfont2Clone.style.fontSize = '80px';
+									elementWidthIfChanged = $(customfont1Clone).outerWidth() + $(customfont2Clone).outerWidth();			
+
+									if(elementWidthIfChanged < totalWidth) {
+										//I will remove the inline style and allow the css stylesheet take over
+										$('.customfont1').each(function() {
+											$(this).css({ fontSize: '80px' });
+										})
+
+										customfont1Clone.style.fontSize = '90px';
+										customfont2Clone.style.fontSize = '90px';
+										elementWidthIfChanged = $(customfont1Clone).outerWidth() + $(customfont2Clone).outerWidth();			
+
+										if(elementWidthIfChanged < totalWidth) {
+											//I will remove the inline style and allow the css stylesheet take over
+											$('.customfont1').each(function() {
+												$(this).css({ fontSize: '90px' });
+											})
+										}
+									}
+								}								
+							}							
+						}
+					}
+				}
+			}
+			
+
+
+			//delete it
+			//now to clean up the DOM
+			bodyElement.removeChild(customfont1Clone);
+			bodyElement.removeChild(customfont2Clone);
 		}
 		//end
 	},
