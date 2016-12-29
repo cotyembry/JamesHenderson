@@ -17,7 +17,8 @@ var History = React.createClass({
 
 	componentDidMount: function() {
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
-		this.minPageWidth = $('#minPageWidthHelper').outerWidth();
+		// this.minPageWidth = $('#minPageWidthHelper').outerWidth();
+		this.minPageWidth = $('#backgroundImage').outerWidth();
 
 		//first I will set the page's width
 		var widthToSet = $(document.documentElement).outerWidth();
@@ -54,74 +55,18 @@ var History = React.createClass({
 
 		var widthToSet = $(document.documentElement).outerWidth();
 
-		// console.log(widthToSet)
-
-
-		if(widthToSet >= this.minPageWidth) {
+		if(widthToSet >= this.minPageWidth + 20) {	//+20 for error
 			$('#page').css({ width: widthToSet + 'px' });
 
-			// alert(this.minPageWidth + ' : ' + widthToSet);
+			$('#firstContainer').css({ fontSize: '50px' });
 
 		}
 		else {
-			// alert(this.minPageWidth)
-			$('#page').css({ width: (this.minPageWidth + 30) + 'px' });
-			$('.container').each(function() {
-				$(this).css({ width: (this.minPageWidth + 200) + 'px' });
-			});
+			$('#page').css({ width: this.minPageWidth + 'px' });
+			
+			$('#firstContainer').css({ fontSize: '40px' });
 		}
 
-		// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
-
-		// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
-			
-		// 	this.setPageWidth();
-
-		// }
-		// else {
-		// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
-		// 	// //
-		// 	// if(currentWidth > this.lastWidth) {
-
-		// 	// }
-
-		// 	var 
-		// }
-
-		// Coty commented out 12-20_2016 since this History.jsx does not need to know about the text elements
-		//
-		// //now I need to position the font element
-		// var fontText1Element = document.getElementById('fontText1');
-		// var fontText2Element = document.getElementById('fontText2');
-		// // var fontText1 = $(fontText1Element).outerWidth();
-		// // var fontText2 = $(fontText2Element).outerWidth();
-		// // var totalFontWidth = fontText1 + fontText2;
-
-		// var totalWidth = parseFloat(document.getElementById('page').style.width);
-
-		// //sometimes when this resize method runs nothing gets accomplished
-		// //so I need to account for this when the width is '', otherwise I
-		// //can continue with the flow as normal
-		// if(document.getElementById('page').style.width == '') {
-		// 	//for the set timeout option
-		// 	setTimeout(self.resize, 100);
-		// }
-		// else {
-		// 	if(totalWidth < this.totalFontWidth) {
-		// 		$(fontText1Element).css({ display: 'block'});
-		// 		$(fontText2Element).css({ display: 'block'});
-		// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
-		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
-		// 	}
-		// 	else {
-		// 		$(fontText1Element).css({ display: 'inline-block'});
-		// 		$(fontText2Element).css({ display: 'inline-block'});
-		// 		var fontHeaderHeight = $('#fontText1').outerHeight();
-		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-		// 	}
-		// }
-
-		// this.lastWidth = widthToSet;
 	},
 	render: function() {		
 			return (
@@ -147,7 +92,7 @@ var History = React.createClass({
 					
 									<div style={styles.paragraphWrapper}>
 										
-										<div className="container" style={styles.paragraphHeader}>
+										<div id="firstContainer" className="container" style={styles.paragraphHeader}>
 											History of the Sovereign Chickamauga Cherokee Tribe of Cherokee Nation West
 										</div>
 									
@@ -244,8 +189,8 @@ var styles = {
 	},
 	pageTextContent: {
 		fontSize: 30,
-		marginLeft: 50,
-		marginRight: 50
+		marginLeft: 30,
+		marginRight: 30
 	},
 	paragraphHeader: {
 		textAlign: 'center',
