@@ -32611,7 +32611,71 @@
 											{ style: styles.pageTextContent },
 											'Around 1811 Ooholonteskee half brother of Tahlonteskee known by the whites as "John Jolly", Chief Chickalah migrated to Dardanelle Arkansas now know as Chickalah town bringing a band of Chickamauga Cherokees 1811-1812. Chief Bowles - Chief Dutch with a number of Chickamauga Cherokees in the Danville area. One initial location on the Arkansas was at a point where the river passed between two small mountains. They dubbed the site as The Dardanelle. From there the Cherokees spread out up the Arkansas and along inlet creeks such as Illinois, Pine, Spanda, Horsehead, Frog, and Mulberry. One sizable group took up residence along Petite Jean River, South of the Arkansas River.'
 										),
-										_react2.default.createElement('br', null)
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											_react2.default.createElement(
+												'strong',
+												null,
+												'Start of Picture 5'
+											),
+											'The Arkansas (on Western) Cherokees soon began to establish themselves on farms building log cabin homes, planting fields of corn, vegetable gardens, erecting rail fences for their cattle, and tending to their hogs and chickens. The men supported this agrarian produce by trapping and hunting deer, buffalo, and bear that were in plenty among the forested hills south of the Arkansas River. The women continued to weave their baskets and work at their looms as was their Cherokee tradition. Hides and produce were taken down river by canoe and boat four hundred miles to the Arkansas Post to trade for salt, sugar, and other items scarce in the Arkansas wilderness.'
+										),
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											'On June 24, 1823 acting governor Robert Chittenden of Arkansas territory met with a group of Arkansas Cherokee leaders on the south side of the Arkansas River in the vicinity of modern Dardanelle Yell County. The leaders who were present included John Jolly who was likely the most influential member of the group and would soon be elected Principal Chief of the Arkansas Cherokee and Black Fox, ',
+											_react2.default.createElement(
+												'strong',
+												null,
+												'Watwebber'
+											),
+											', ',
+											_react2.default.createElement(
+												'strong',
+												null,
+												'Waterminnow'
+											),
+											', Young Glass, Thomas Graves, and George Morris. Each group came to the meeting with a different agenda, and neither group left the meeting satisfied. Both parties subsequently pressed their cases',
+											_react2.default.createElement(
+												'strong',
+												null,
+												'Start of Picture 4'
+											),
+											'in writing to secretary of war John C ',
+											_react2.default.createElement(
+												'strong',
+												null,
+												'Calhoun'
+											),
+											', who at the time had supervisory authority over Indian affairs.'
+										),
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											'When the Western boundary of Arkansas was finally surveyed, however, a majority of the lovely purchase land remained in Indian territory and fell under Indian control. It is still under full Indian control to this day in 2016.'
+										),
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											'The Western Cherokee are Native Americans who identified themselves as Cherokee, identified with the mountainous areas of Arkansas, Oklahoma, and Missouri. They lived west of the Mississippi before the Trail of Tears, and did not migrate to Indian Territory after the Cherokee Treaty of 1828.',
+											_react2.default.createElement(
+												'strong',
+												null,
+												'Picture 4, start of typed page'
+											),
+											'The Western Cherokee are not a single group but instead are a coalition of groups with various historical backgrounds in Arkansas, southern Missouri, eastern Oklahoma, Kansas, and Texas; they identify as a community with a singular identity. They are a single nation unified by their identity as a Cherokee, in their shared government, and in their recognition by the United States as the Cherokee Nation West under the Treaties of 1817 and 1819. The Cherokee Nation West never ratified or recognized the Treaty of 1828, which removed the Cherokee Nation West lands. The Western Cherokee Delegation who signed that document, which was sent for approval to the United States Congress by President Adams before it was ratified by the Cherokee Nation West Full Council, informed the United States verbally and in writing that the treaty was not valid until it was signed by the Full Council in Arkansas (Royce 1975, 118-120). The Western Cherokee Nation West Council (Sub-Agent Brearly letter Secretary of War, September 27, 1828).'
+										),
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											'        The Western Cherokee constitute a coalition of diverse Cherokee groups each with a unique individual history. The unifying factors that held the Western Cherokee together included (1) an identity separate from other Cherokee based on a common belief that Creator had wished the Cherokee to move West and remove themselves from the "European" influence, (2) a common government, the Full Council of the Cherokee Nation West, and (3) identity with the Sacred Homelands in the Ozarks. Their lands included the hilly and mountainous areas of Arkansas, southern Missouri, eastern Oklahoma, southeastern Kansas, and northeastern Texas. Their core Sacred Homelands were bounded on the north by the Devil\'s Backbone (the north/south water flow break point in southern Missouri), the Mississippi River on the east, the Arkansas River on the south, and the end of the "hill county" in easter Oklahoma and southeastern Kansas. The Sacred Homelands had been lands that were held for at least 1800 years, though they were partially lost to invading "People Eaters" from the south and the "Great Warriors" from the west about 800-900 years ago (Interviews: Lee Brody and Jean Skaggs September 14, 2000, Red Wasp (John Dushanack) May 20, 2001, Rickard Craker November 24, 2001). Their lands, associated with their relationship with the United States government, were those lands outlined in the Treaty of 1819.'
+										)
 									),
 									_react2.default.createElement(
 										'div',
