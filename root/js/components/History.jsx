@@ -17,12 +17,16 @@ var History = React.createClass({
 
 	componentDidMount: function() {
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
-		// this.minPageWidth = $('#minPageWidthHelper').outerWidth();
-		this.minPageWidth = $('#backgroundImage').outerWidth();
+		this.minPageWidth = $('#minPageWidthHelper').outerWidth() > $('#emblem-element').outerWidth() ? $('#emblem-element').outerWidth() : $('#minPageWidthHelper').outerWidth();
+
+		console.log(this.minPageWidth);
+		//this.minPageWidth = $('#backgroundImage').outerWidth();
 
 		//first I will set the page's width
 		var widthToSet = $(document.documentElement).outerWidth();
 		$('#page').css({ 'width': widthToSet + 'px' });
+
+		// console.log('document.documentElement.clientWidth = ', document.documentElement.clientWidth, 'widthToSet = ', widthToSet);
 
 		// Coty commented out 12-20_2016 since this History.jsx does not need to know about the text elements
 		//
@@ -51,11 +55,10 @@ var History = React.createClass({
 	resize: function() {
 		var self = this;
 
-		
 
 		var widthToSet = $(document.documentElement).outerWidth();
 
-		if(widthToSet >= this.minPageWidth + 20) {	//+20 for error
+		if(widthToSet >= this.minPageWidth) {	//+20 for error
 			$('#page').css({ width: widthToSet + 'px' });
 
 			$('#firstContainer').css({ fontSize: '50px' });

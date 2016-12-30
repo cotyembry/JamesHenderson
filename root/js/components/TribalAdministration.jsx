@@ -3,6 +3,18 @@ import React from 'react';
 import $ from 'jquery';
 
 export default class TribalAdministration extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			marginHelper: {
+				marginLeft: 25,
+				marginRight: 25
+			}
+		}
+		this.oldTotalWidth = 0;
+		this.adjustmentHelper = 0;
+		this.hasBeenSet = false;
+	}
 	componentDidMount() {
 		//at first I let the container that gives the shadow effect not have a
 		//width specified, but after everything is done rendering, I want
@@ -25,6 +37,7 @@ export default class TribalAdministration extends React.Component {
 				largestWidth = currentWidth;
 			}
 		})
+		this.largestWidth = largestWidth;	//store this for use later
 		$('.hasContainer').each((index, element) => {
 			$(element).css({ width: largestWidth });
 		})
@@ -38,10 +51,11 @@ export default class TribalAdministration extends React.Component {
 		// else {
 		// 	styles.container.width = '';
 		// }
-		$(window).resize(this.resize)
+		$(window).resize(this.resize.bind(this))
 
 	}
 	resize() {
+
 		//I noticed that when the page gets to be a certain size (very small in width) the #page
 		//element gets smaller than the styles.container elements so this code will change the
 		//#page elements css from the 100% in the stylesheet to an inline style if ever it needs
@@ -64,13 +78,51 @@ export default class TribalAdministration extends React.Component {
 		else {
 			$('#page').css({ width: '' });
 		}
+
+		//Coty added 3161230 to make it where the header element only gets as small as the container elements then when the page allows (i.e. there is enough widht space) it allows the header element to get wider than the #container elements
+		var headerElement = $('#headerElement')[0];
+
+		var leftSide = this.largestWidth + styles.container.padding * 2; 
+		var rightSide = $(headerElement).width() + 2 * styles.pageName.padding;
+
+		if(this.hasBeenSet == false) {
+			// if(this.largestWidth >= ($(headerElement).outerWidth() - (this.state.marginHelper.marginLeft + this.state.marginHelper.marginRight))) {
+			if(leftSide >= rightSide) {	//*2 to account for right and left
+				this.oldTotalWidth = totalWidth;
+				this.hasBeenSet = true;
+
+				$(headerElement).css({ width: this.largestWidth });
+				this.setState({
+					marginHelper: {
+						marginLeft: 0,
+						marginRight: 0
+					}
+				})
+			}
+		}
+		else {
+
+			if(totalWidth > this.oldTotalWidth) {
+				//if here then the page has gotten back big enough to set the margins back to what they were
+				this.setState({
+					marginHelper: {
+						marginLeft: 25,
+						marginRight: 25
+					}
+				})
+				//I can also remove the width on the element now
+				$(headerElement).css({ width: '' });
+				this.hasBeenSet = false;
+			}			
+		}
+		//end 3161230
+
 	}
 	render() {
 		return (
 			<div style={styles.paddingLeftAndTop}>
 				<center>
-					<div style={styles.pageName} className="paddingTop">Tribal Administration of the Soverign Chickamauga Cherokee Tribe</div>
-					{/*<div><div style={styles.div} className="paddingTop10"></div></div>*/}
+					<div id="headerElement" style={Object.assign(styles.pageName, this.state.marginHelper)} className="paddingTop">Tribal Administration of the Soverign Chickamauga Cherokee Tribe</div>
 
 
 					<br />

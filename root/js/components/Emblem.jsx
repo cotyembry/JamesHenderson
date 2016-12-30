@@ -58,9 +58,9 @@ var Emblem = React.createClass({
 		document.getElementById('logo').appendChild(document.getElementById('svg2'));
 
 		//here I need to add an event to listen if the browser window zoomed
-		//$().someListener(EmblemObject.zoomChanged)
-		$(window).resize( EmblemObject.zoomChanged );
-		//EmblemObject.zoomChanged();
+		EmblemObject.bodyElement = document.getElementById('body');
+		$(window).resize( EmblemObject.resize );
+		EmblemObject.resize();
 	
 		var fontText1 = document.getElementById('fontText1');
 		var fontText2 = document.getElementById('fontText2');
@@ -74,7 +74,7 @@ var Emblem = React.createClass({
 			var fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 			//if here then I am satisfied the font element has quit shifiting sizes on the page
 			if(this.startingFontTotalWidth != fontTotalWidth) {
-				EmblemObject.zoomChanged();
+				EmblemObject.resize();
 				clearInterval(this.clearInterval);
 			}
 		}
@@ -184,7 +184,7 @@ var EmblemObject = {
 		//EmblemObject.interation++;
 	},
 
-	zoomChanged: function() {
+	resize: function() {
 
 		var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
 		
@@ -272,7 +272,7 @@ var EmblemObject = {
 			customfont1Clone.style.visibility = 'hidden';
 			customfont2Clone.style.visibility = 'hidden';
 
-			var bodyElement = document.getElementById('body');
+			var bodyElement = EmblemObject.bodyElement;
 			bodyElement.appendChild(customfont1Clone);
 			bodyElement.appendChild(customfont2Clone);
 
