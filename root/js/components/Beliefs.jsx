@@ -75,7 +75,7 @@ export default class Beliefs extends React.Component {
 							<br/>
 							From Egela, Fire, we receive the heat that makes or hearts alive, pulsing with vitality and flickering with vibrancy.
 							From Elohine, Mother Earth, we receive the solid form of our physical being, that which we know as the body, made of all the sam substance that makes up every living thing in our world.
-							From Ama, Water, we receive the life stream of our blood, flowing ever outward’ before returning once again to the source of its beginning, only to flow again outward, giving life to the form.
+							From Ama, Water, we receive the life stream of our blood, flowing ever outward before returning once again to the source of its beginning, only to flow again outward, giving life to the form.
 							From Inole, Wind, we receive our first breath of life and experience the Giveaway of our last sigh.
 							This is why we give thanks always to the Four Directions, they are that which makes us what we are, both in substance and in form. And in the center is our spirit, the ever-changing, every-lasting connection with all that is, all that moves and flows and breaths and flickers. We are one with all that is, and things are connected like the blood that unites on family. We arrive, emerging from the formlessness to separateness, and return once again to the formless, boundless, and undivided realm of the spirit-complete consciousness and forever emerging. We are our Nuwhati. We learn our Nuwhati. We become our Nuwhati, and once again we are our Nuwhati.
 							<br />
