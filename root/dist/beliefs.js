@@ -31776,6 +31776,9 @@
 			};
 		},
 		componentDidMount: function componentDidMount() {
+			//this .locked property will help me know if I need to adjust the font text
+
+			EmblemObject.locked = false;
 
 			//at the end of mounting...I'm still having to clean up with jquery because of the lazy way I'm doing this...
 			//this helps me properly set the height as a perfect percentage
@@ -31792,9 +31795,9 @@
 			document.getElementById('logo').appendChild(document.getElementById('svg2'));
 
 			//here I need to add an event to listen if the browser window zoomed
-			//$().someListener(EmblemObject.zoomChanged)
-			(0, _jquery2.default)(window).resize(EmblemObject.zoomChanged);
-			//EmblemObject.zoomChanged();
+			EmblemObject.bodyElement = document.getElementById('body');
+			(0, _jquery2.default)(window).resize(EmblemObject.resize);
+			EmblemObject.resize();
 
 			var fontText1 = document.getElementById('fontText1');
 			var fontText2 = document.getElementById('fontText2');
@@ -31808,7 +31811,7 @@
 				var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 				//if here then I am satisfied the font element has quit shifiting sizes on the page
 				if (this.startingFontTotalWidth != fontTotalWidth) {
-					EmblemObject.zoomChanged();
+					EmblemObject.resize();
 					clearInterval(this.clearInterval);
 				}
 			};
@@ -31913,7 +31916,7 @@
 			//EmblemObject.interation++;
 		},
 
-		zoomChanged: function zoomChanged() {
+		resize: function resize() {
 
 			var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
 
@@ -31928,164 +31931,59 @@
 			//end
 
 
-			//start Coty added 12-28-2016 to make sure the text header doesn't mess up when the width of the page gets too small
-			//what I need to do is see how much space the font header needs
-			var fontText1 = document.getElementById('fontText1');
-			var fontText2 = document.getElementById('fontText2');
-			var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+			if (EmblemObject.locked == false) {
 
-			if (fontTotalWidth >= totalWidth) {
-				// if here then the total page width is smaller than the needed space of the font header elements
-				(0, _jquery2.default)('.customfont1').each(function () {
-					(0, _jquery2.default)(this).css({ fontSize: '90px' });
-				});
+				//start Coty added 12-28-2016 to make sure the text header doesn't mess up when the width of the page gets too small
+				//what I need to do is see how much space the font header needs
+				var fontText1 = document.getElementById('fontText1');
+				var fontText2 = document.getElementById('fontText2');
+				var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 
-				fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 				if (fontTotalWidth >= totalWidth) {
+					// if here then the total page width is smaller than the needed space of the font header elements
 					(0, _jquery2.default)('.customfont1').each(function () {
-						(0, _jquery2.default)(this).css({ fontSize: '80px' });
+						(0, _jquery2.default)(this).css({ fontSize: '90px' });
 					});
 
 					fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 					if (fontTotalWidth >= totalWidth) {
 						(0, _jquery2.default)('.customfont1').each(function () {
-							(0, _jquery2.default)(this).css({ fontSize: '70px' });
+							(0, _jquery2.default)(this).css({ fontSize: '80px' });
 						});
 
 						fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 						if (fontTotalWidth >= totalWidth) {
 							(0, _jquery2.default)('.customfont1').each(function () {
-								(0, _jquery2.default)(this).css({ fontSize: '60px' });
+								(0, _jquery2.default)(this).css({ fontSize: '70px' });
 							});
 
 							fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 							if (fontTotalWidth >= totalWidth) {
 								(0, _jquery2.default)('.customfont1').each(function () {
-									(0, _jquery2.default)(this).css({ fontSize: '50px' });
+									(0, _jquery2.default)(this).css({ fontSize: '60px' });
 								});
 
 								fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 								if (fontTotalWidth >= totalWidth) {
 									(0, _jquery2.default)('.customfont1').each(function () {
-										(0, _jquery2.default)(this).css({ fontSize: '40px' });
+										(0, _jquery2.default)(this).css({ fontSize: '50px' });
 									});
 
 									fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 									if (fontTotalWidth >= totalWidth) {
 										(0, _jquery2.default)('.customfont1').each(function () {
-											(0, _jquery2.default)(this).css({ fontSize: '30px' });
+											(0, _jquery2.default)(this).css({ fontSize: '40px' });
 										});
+
 										fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 										if (fontTotalWidth >= totalWidth) {
 											(0, _jquery2.default)('.customfont1').each(function () {
-												(0, _jquery2.default)(this).css({ fontSize: '20px' });
+												(0, _jquery2.default)(this).css({ fontSize: '30px' });
 											});
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			} else {
-				//I need to see how much width the element takes up when the font size is returned back to 100px
-				//I will create a clone of the font elements
-				var customfont1Clone = document.getElementById('fontText1').cloneNode(true); //true means do a deep copy
-				var customfont2Clone = document.getElementById('fontText2').cloneNode(true); //true means do a deep copy			
-
-				// console.log(customfont1Clone)
-
-				//make the element invisible
-				customfont1Clone.style.visibility = 'hidden';
-				customfont2Clone.style.visibility = 'hidden';
-
-				var bodyElement = document.getElementById('body');
-				bodyElement.appendChild(customfont1Clone);
-				bodyElement.appendChild(customfont2Clone);
-
-				//measure it
-				//set the font sizes back to their defaults so I can measure them
-				customfont1Clone.style.fontSize = '';
-				customfont2Clone.style.fontSize = '';
-
-				var elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
-
-				//then use the values
-
-				//I only want to change the font sizes back if it will not interfere with the whole purpose of making the font smaller
-				if (elementWidthIfChanged < totalWidth) {
-					//I will remove the inline style and allow the css stylesheet take over
-					(0, _jquery2.default)('.customfont1').each(function () {
-						(0, _jquery2.default)(this).css({ fontSize: '' });
-					});
-				} else {
-					customfont1Clone.style.fontSize = '30px';
-					customfont2Clone.style.fontSize = '30px';
-					elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
-					if (elementWidthIfChanged < totalWidth) {
-						//I will remove the inline style and allow the css stylesheet take over
-						(0, _jquery2.default)('.customfont1').each(function () {
-							(0, _jquery2.default)(this).css({ fontSize: '30px' });
-						});
-
-						customfont1Clone.style.fontSize = '40px';
-						customfont2Clone.style.fontSize = '40px';
-						elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
-
-						if (elementWidthIfChanged < totalWidth) {
-							//I will remove the inline style and allow the css stylesheet take over
-							(0, _jquery2.default)('.customfont1').each(function () {
-								(0, _jquery2.default)(this).css({ fontSize: '40px' });
-							});
-
-							customfont1Clone.style.fontSize = '50px';
-							customfont2Clone.style.fontSize = '50px';
-							elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
-
-							if (elementWidthIfChanged < totalWidth) {
-								//I will remove the inline style and allow the css stylesheet take over
-								(0, _jquery2.default)('.customfont1').each(function () {
-									(0, _jquery2.default)(this).css({ fontSize: '50px' });
-								});
-
-								customfont1Clone.style.fontSize = '60px';
-								customfont2Clone.style.fontSize = '60px';
-								elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
-
-								if (elementWidthIfChanged < totalWidth) {
-									//I will remove the inline style and allow the css stylesheet take over
-									(0, _jquery2.default)('.customfont1').each(function () {
-										(0, _jquery2.default)(this).css({ fontSize: '60px' });
-									});
-
-									customfont1Clone.style.fontSize = '70px';
-									customfont2Clone.style.fontSize = '70px';
-									elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
-
-									if (elementWidthIfChanged < totalWidth) {
-										//I will remove the inline style and allow the css stylesheet take over
-										(0, _jquery2.default)('.customfont1').each(function () {
-											(0, _jquery2.default)(this).css({ fontSize: '70px' });
-										});
-
-										customfont1Clone.style.fontSize = '80px';
-										customfont2Clone.style.fontSize = '80px';
-										elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
-
-										if (elementWidthIfChanged < totalWidth) {
-											//I will remove the inline style and allow the css stylesheet take over
-											(0, _jquery2.default)('.customfont1').each(function () {
-												(0, _jquery2.default)(this).css({ fontSize: '80px' });
-											});
-
-											customfont1Clone.style.fontSize = '90px';
-											customfont2Clone.style.fontSize = '90px';
-											elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
-
-											if (elementWidthIfChanged < totalWidth) {
-												//I will remove the inline style and allow the css stylesheet take over
+											fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+											if (fontTotalWidth >= totalWidth) {
 												(0, _jquery2.default)('.customfont1').each(function () {
-													(0, _jquery2.default)(this).css({ fontSize: '90px' });
+													(0, _jquery2.default)(this).css({ fontSize: '20px' });
 												});
 											}
 										}
@@ -32094,14 +31992,124 @@
 							}
 						}
 					}
-				}
+				} else {
+					//I need to see how much width the element takes up when the font size is returned back to 100px
+					//I will create a clone of the font elements
+					var customfont1Clone = document.getElementById('fontText1').cloneNode(true); //true means do a deep copy
+					var customfont2Clone = document.getElementById('fontText2').cloneNode(true); //true means do a deep copy			
 
-				//delete it
-				//now to clean up the DOM
-				bodyElement.removeChild(customfont1Clone);
-				bodyElement.removeChild(customfont2Clone);
+					// console.log(customfont1Clone)
+
+					//make the element invisible
+					customfont1Clone.style.visibility = 'hidden';
+					customfont2Clone.style.visibility = 'hidden';
+
+					var bodyElement = EmblemObject.bodyElement;
+					bodyElement.appendChild(customfont1Clone);
+					bodyElement.appendChild(customfont2Clone);
+
+					//measure it
+					//set the font sizes back to their defaults so I can measure them
+					customfont1Clone.style.fontSize = '';
+					customfont2Clone.style.fontSize = '';
+
+					var elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+					//then use the values
+
+					//I only want to change the font sizes back if it will not interfere with the whole purpose of making the font smaller
+					if (elementWidthIfChanged < totalWidth) {
+						//I will remove the inline style and allow the css stylesheet take over
+						(0, _jquery2.default)('.customfont1').each(function () {
+							(0, _jquery2.default)(this).css({ fontSize: '' });
+						});
+					} else {
+						customfont1Clone.style.fontSize = '30px';
+						customfont2Clone.style.fontSize = '30px';
+						elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+						if (elementWidthIfChanged < totalWidth) {
+							//I will remove the inline style and allow the css stylesheet take over
+							(0, _jquery2.default)('.customfont1').each(function () {
+								(0, _jquery2.default)(this).css({ fontSize: '30px' });
+							});
+
+							customfont1Clone.style.fontSize = '40px';
+							customfont2Clone.style.fontSize = '40px';
+							elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+							if (elementWidthIfChanged < totalWidth) {
+								//I will remove the inline style and allow the css stylesheet take over
+								(0, _jquery2.default)('.customfont1').each(function () {
+									(0, _jquery2.default)(this).css({ fontSize: '40px' });
+								});
+
+								customfont1Clone.style.fontSize = '50px';
+								customfont2Clone.style.fontSize = '50px';
+								elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+								if (elementWidthIfChanged < totalWidth) {
+									//I will remove the inline style and allow the css stylesheet take over
+									(0, _jquery2.default)('.customfont1').each(function () {
+										(0, _jquery2.default)(this).css({ fontSize: '50px' });
+									});
+
+									customfont1Clone.style.fontSize = '60px';
+									customfont2Clone.style.fontSize = '60px';
+									elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+									if (elementWidthIfChanged < totalWidth) {
+										//I will remove the inline style and allow the css stylesheet take over
+										(0, _jquery2.default)('.customfont1').each(function () {
+											(0, _jquery2.default)(this).css({ fontSize: '60px' });
+										});
+
+										customfont1Clone.style.fontSize = '70px';
+										customfont2Clone.style.fontSize = '70px';
+										elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+										if (elementWidthIfChanged < totalWidth) {
+											//I will remove the inline style and allow the css stylesheet take over
+											(0, _jquery2.default)('.customfont1').each(function () {
+												(0, _jquery2.default)(this).css({ fontSize: '70px' });
+											});
+
+											customfont1Clone.style.fontSize = '80px';
+											customfont2Clone.style.fontSize = '80px';
+											elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+											if (elementWidthIfChanged < totalWidth) {
+												//I will remove the inline style and allow the css stylesheet take over
+												(0, _jquery2.default)('.customfont1').each(function () {
+													(0, _jquery2.default)(this).css({ fontSize: '80px' });
+												});
+
+												customfont1Clone.style.fontSize = '90px';
+												customfont2Clone.style.fontSize = '90px';
+												elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+												if (elementWidthIfChanged < totalWidth) {
+													//I will remove the inline style and allow the css stylesheet take over
+													(0, _jquery2.default)('.customfont1').each(function () {
+														(0, _jquery2.default)(this).css({ fontSize: '90px' });
+													});
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					//delete it
+					//now to clean up the DOM
+					bodyElement.removeChild(customfont1Clone);
+					bodyElement.removeChild(customfont2Clone);
+				}
+				//end Coty 12-28-2016
+			} else {
+				console.log('in false!!!');
 			}
-			//end
 		}
 	};
 
@@ -32509,7 +32517,7 @@
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
-	var _beliefsPage;
+	var _page;
 
 	var _react = __webpack_require__(1);
 
@@ -32542,7 +32550,7 @@
 				(0, _jquery2.default)('#contentParent').css({ top: topTS });
 
 				var heightTS = (0, _jquery2.default)('#contentParent').outerHeight() + topTS;
-				(0, _jquery2.default)('#beliefsPage').css({ height: heightTS });
+				(0, _jquery2.default)('#page').css({ height: heightTS });
 
 				this.window = window; //this will help later in the resize event as far as performance goes
 				(0, _jquery2.default)(window).resize(self.resize);
@@ -32552,14 +32560,21 @@
 			value: function resize() {
 				//start Coty added 12-21-2016
 				var totalWidth = this.window.document.documentElement.clientWidth;
-				if (totalWidth <= stylesHelper.minimumPageWidth + stylesHelper.padding) {
+				// if(totalWidth <= (stylesHelper.minimumPageWidth + stylesHelper.padding)) {
+				if (totalWidth <= stylesHelper.minimumPageWidth) {
 					//this is the minimum width allowed, don't allow the width to get any smaller
-					//in this case the element #beliefsPage is the page element that will keep
+					//in this case the element #page is the page element that will keep
 					//the width state of the page
-					(0, _jquery2.default)('#beliefsPage').css({ width: '800px' });
+					(0, _jquery2.default)('#page').css({ width: '800px' });
+					(0, _jquery2.default)('#emblem-element').css({ width: '800px' });
+					(0, _jquery2.default)('#fontHeader').css({ width: '800px' });
+					EmblemObject.locked = true;
 				} else {
 					//the width needs to stay at 100% if the totalWidth space allows for it
-					(0, _jquery2.default)('#beliefsPage').css({ width: '100%' });
+					(0, _jquery2.default)('#page').css({ width: '100%' });
+					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
+					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
+					EmblemObject.locked = false;
 				}
 				//end
 			}
@@ -32568,7 +32583,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ style: styles.beliefsPage, id: 'beliefsPage' },
+					{ style: styles.page, id: 'page' },
 					_react2.default.createElement(_Navbar2.default, { position: 'absolute', fontSize: 25 }),
 					_react2.default.createElement(
 						'div',
@@ -32614,7 +32629,7 @@
 								),
 								_react2.default.createElement('br', null),
 								_react2.default.createElement('br', null),
-								'From Egela, Fire, we receive the heat that makes or hearts alive, pulsing with vitality and flickering with vibrancy. From Elohine, Mother Earth, we receive the solid form of our physical being, that which we know as the body, made of all the sam substance that makes up every living thing in our world. From Ama, Water, we receive the life stream of our blood, flowing ever outward’ before returning once again to the source of its beginning, only to flow again outward, giving life to the form. From Inole, Wind, we receive our first breath of life and experience the Giveaway of our last sigh. This is why we give thanks always to the Four Directions, they are that which makes us what we are, both in substance and in form. And in the center is our spirit, the ever-changing, every-lasting connection with all that is, all that moves and flows and breaths and flickers. We are one with all that is, and things are connected like the blood that unites on family. We arrive, emerging from the formlessness to separateness, and return once again to the formless, boundless, and undivided realm of the spirit-complete consciousness and forever emerging. We are our Nuwhati. We learn our Nuwhati. We become our Nuwhati, and once again we are our Nuwhati.',
+								'From Egela, Fire, we receive the heat that makes or hearts alive, pulsing with vitality and flickering with vibrancy. From Elohine, Mother Earth, we receive the solid form of our physical being, that which we know as the body, made of all the sam substance that makes up every living thing in our world. From Ama, Water, we receive the life stream of our blood, flowing ever outward before returning once again to the source of its beginning, only to flow again outward, giving life to the form. From Inole, Wind, we receive our first breath of life and experience the Giveaway of our last sigh. This is why we give thanks always to the Four Directions, they are that which makes us what we are, both in substance and in form. And in the center is our spirit, the ever-changing, every-lasting connection with all that is, all that moves and flows and breaths and flickers. We are one with all that is, and things are connected like the blood that unites on family. We arrive, emerging from the formlessness to separateness, and return once again to the formless, boundless, and undivided realm of the spirit-complete consciousness and forever emerging. We are our Nuwhati. We learn our Nuwhati. We become our Nuwhati, and once again we are our Nuwhati.',
 								_react2.default.createElement('br', null),
 								_react2.default.createElement('br', null)
 							),
@@ -32717,12 +32732,12 @@
 			// top: 490,
 			position: 'absolute'
 		},
-		beliefsPage: (_beliefsPage = {
+		page: (_page = {
 			width: '100%',
 			marginTop: 425,
 			position: 'absolute',
 			background: '#d9d9d9'
-		}, (0, _defineProperty3.default)(_beliefsPage, 'background', '-moz-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'background', '-webkit-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'background', '-o-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'background', '-ms-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'background', 'linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_beliefsPage, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"), _beliefsPage),
+		}, (0, _defineProperty3.default)(_page, 'background', '-moz-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'background', '-webkit-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'background', '-o-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'background', '-ms-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'background', 'linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"), _page),
 		content: {
 			width: stylesHelper.minimumPageWidth,
 			marginLeft: 'auto',

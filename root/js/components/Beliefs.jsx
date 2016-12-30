@@ -12,7 +12,7 @@ export default class Beliefs extends React.Component {
 		$('#contentParent').css({ top: topTS });
 
 		var heightTS = $('#contentParent').outerHeight() + topTS;
-		$('#beliefsPage').css({ height: heightTS });
+		$('#page').css({ height: heightTS });
 
 		this.window = window;	//this will help later in the resize event as far as performance goes
 		$(window).resize(self.resize);
@@ -22,22 +22,29 @@ export default class Beliefs extends React.Component {
 	resize() {
 		//start Coty added 12-21-2016
 		var totalWidth = this.window.document.documentElement.clientWidth;
-		if(totalWidth <= (stylesHelper.minimumPageWidth + stylesHelper.padding)) {
+		// if(totalWidth <= (stylesHelper.minimumPageWidth + stylesHelper.padding)) {
+		if(totalWidth <= stylesHelper.minimumPageWidth) {
 			//this is the minimum width allowed, don't allow the width to get any smaller
-			//in this case the element #beliefsPage is the page element that will keep
+			//in this case the element #page is the page element that will keep
 			//the width state of the page
-			$('#beliefsPage').css({ width: '800px' });
+			$('#page').css({ width: '800px' });
+			$('#emblem-element').css({ width: '800px' });
+			$('#fontHeader').css({ width: '800px' });
+			EmblemObject.locked = true;
 		}
 		else {
 			//the width needs to stay at 100% if the totalWidth space allows for it
-			$('#beliefsPage').css({ width: '100%' });
+			$('#page').css({ width: '100%' });
+			$('#emblem-element').css({ width: '100%' });
+			$('#fontHeader').css({ width: '100%' });
+			EmblemObject.locked = false;
 		}
 		//end
 	}
 
 	render() {
 		return (
-			<div style={styles.beliefsPage} id="beliefsPage">
+			<div style={styles.page} id="page">
 				<Navbar position={'absolute'} fontSize={25} />
 				<div id="contentParent" style={styles.beliefsRoot}>
 					<div id="content" style={styles.content}>
@@ -170,7 +177,7 @@ var styles = {
 		position: 'absolute',
 		// background: 'rgba(255, 255, 255, 0.5)'
 	},
-	beliefsPage: {
+	page: {
 		width: '100%',
 		marginTop: 425,
 		position: 'absolute',

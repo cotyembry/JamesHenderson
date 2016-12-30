@@ -37,7 +37,7 @@ export default class Contact extends React.Component {
 
 		this.window = window;
 
-		var totalWidth = $('#contact-root').outerWidth();
+		var totalWidth = $('#page').outerWidth();
 		if(styles.mapStyle.width < totalWidth) {
 			var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
 		}
@@ -73,7 +73,7 @@ export default class Contact extends React.Component {
 
 	resize() {
 		var outerWidth = this.window.document.documentElement.clientWidth;
-		var totalWidth = $('#contact-root').outerWidth();
+		var totalWidth = $('#page').outerWidth();
 		if(styles.mapStyle.width < totalWidth) {
 			var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
 		}
@@ -102,10 +102,10 @@ export default class Contact extends React.Component {
 
 		//finally I need to make sure that having the width as 100% doesnt let the element get too small
 		if(outerWidth > smallestWidthPossible) {
-			$('#contact-root').css({ width: '100%' })
+			$('#page').css({ width: '100%' })
 		}
 		else if(outerWidth <= smallestWidthPossible) {
-			$('#contact-root').css({ width: smallestWidthPossible })
+			$('#page').css({ width: smallestWidthPossible })
 		}
 
 		self.setState({ marginLeft: marginLeft });
@@ -117,7 +117,7 @@ export default class Contact extends React.Component {
 
 		return (
 			<div>
-				<div id="contact-root" style={styles.contactRoot}>
+				<div id="page" style={styles.contactRoot}>
 					
 					<Navbar fontSize={20} />
 					
