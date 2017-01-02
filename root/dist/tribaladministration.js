@@ -32871,6 +32871,7 @@
 				var windowWidth = (0, _jquery2.default)(window).width();
 
 				//this if else logic and adding the inline widths and taking them off is making sure once the content is the smallest size it can be, the other content stops decreasing in size as well
+				//note: the EmblemObject is exposed through the window global and setting the .locked property says to Emblem.jsx 'do not run logic to set the font header elements size'
 				if (totalWidth <= containerWidth) {
 					//if the total width available is less than the container's width this is wrong and
 					//should be changed

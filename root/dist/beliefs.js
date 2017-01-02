@@ -31930,7 +31930,7 @@
 			}
 			//end
 
-
+			//I added this .locked property since the EmblemObject is exposed through the window global
 			if (EmblemObject.locked == false) {
 
 				//start Coty added 12-28-2016 to make sure the text header doesn't mess up when the width of the page gets too small
@@ -32107,8 +32107,6 @@
 					bodyElement.removeChild(customfont2Clone);
 				}
 				//end Coty 12-28-2016
-			} else {
-				console.log('in false!!!');
 			}
 		}
 	};

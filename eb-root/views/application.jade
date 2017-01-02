@@ -1,52 +1,26 @@
-<!DOCTYPE html>
-
+doctype html
 html
-head
-	//<meta name="viewport" content="width=device-width", initial-scale="1", maximum-scale="1">
-	//<meta name="viewport" content="width=device-width", initial-scale="1", maximum-scale="1">
-	meta(name="viewport" content="width=device-width" initial-scale="1" maximum-scale="1")
+  head
+    meta(name='viewport', content='width=device-width', ,='', initial-scale='1', maximum-scale='1')
+    title Sovereign Chickamauga Cherokee
+    link(rel='stylesheet', type='text/css', href='../static/css/index.css')
+    link(rel='stylesheet', type='text/css', href='../static/css/jquery-ui.css')
+    link(rel='stylesheet', type='text/css', href='../static/css/Navbar.css')
+    // I tried to include the below in the index.css file but it wouldnt work right so I decided to keep this css here on the page
+    style(type='text/css').
+      @font-face {
+      font-family: "CustomFont1";
+      src: url(../static/assets/fonts/AlexBrush-Regular.ttf) format("truetype");
+      }
+      .customfont1 {
+      font-family: "CustomFont1", Verdana, Tahoma;
+      /*font-size: 70px;*/
+      font-size: 100px;
+      }
 
-	title
-		Sovereign Chickamauga Cherokee
-
-	//link(rel="stylesheet" type="text/css" href="./css/index.css")
-	link(rel="stylesheet" type="text/css" href="../static/css/index.css")
-	link(rel="stylesheet" type="text/css" href="../static/css/jquery-ui.css")
-
-	//I tried to include the below in the index.css file but it wouldnt work right so I decided to keep this css here on the page
-	style(type="text/css").
-		@font-face {
-		    font-family: "CustomFont1";
-		    src: url(../static/assets/fonts/AlexBrush-Regular.ttf) format("truetype");
-		}
-		.customfont1 { 
-		    font-family: "CustomFont1", Verdana, Tahoma;
-		    /*font-size: 70px;*/
-		    font-size: 100px;
-		}
-
-
-//
-	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-blue-grey.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-
-body(id="body")
-
-
-	center
-		img(id="svg2" src="../static/assets/Seal1.png" alt="")
-
-
-
-
-	div(id="emblem" style="position: fixed;")
-
-	div(id="root" style="position: relative; z-index: 100;")
-
-	//<div><a href="/assets/test.pdf">click me to go to pdf</a></div>
-
-
-	script(type="text/javascript" src="../static/dist/application.js")
-
-	//<button style="position: fixed; width: 100%; top: 0px; z-index: 2" onclick="EmblemObject.zoomChanged()">click me</button>
+  body#body
+    center
+      img#svg2(src='../static/assets/Seal1.png', alt='')
+    #emblem(style='position: fixed;')
+    #root(style='position: relative; z-index: 100;')
+    script(type='text/javascript', src='../static/dist/application.js')

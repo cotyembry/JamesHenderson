@@ -31781,6 +31781,9 @@
 			};
 		},
 		componentDidMount: function componentDidMount() {
+			//this .locked property will help me know if I need to adjust the font text
+
+			EmblemObject.locked = false;
 
 			//at the end of mounting...I'm still having to clean up with jquery because of the lazy way I'm doing this...
 			//this helps me properly set the height as a perfect percentage
@@ -31797,9 +31800,28 @@
 			document.getElementById('logo').appendChild(document.getElementById('svg2'));
 
 			//here I need to add an event to listen if the browser window zoomed
-			//$().someListener(EmblemObject.zoomChanged)
-			(0, _jquery2.default)(window).resize(EmblemObject.zoomChanged);
-			EmblemObject.zoomChanged();
+			EmblemObject.bodyElement = document.getElementById('body');
+			(0, _jquery2.default)(window).resize(EmblemObject.resize);
+			EmblemObject.resize();
+
+			var fontText1 = document.getElementById('fontText1');
+			var fontText2 = document.getElementById('fontText2');
+			var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+
+			this.startingFontTotalWidth = fontTotalWidth;
+
+			var intervalChecker = function intervalChecker() {
+				var fontText1 = document.getElementById('fontText1');
+				var fontText2 = document.getElementById('fontText2');
+				var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+				//if here then I am satisfied the font element has quit shifiting sizes on the page
+				if (this.startingFontTotalWidth != fontTotalWidth) {
+					EmblemObject.resize();
+					clearInterval(this.clearInterval);
+				}
+			};
+
+			this.clearInterval = setInterval(intervalChecker.bind(this), 1000);
 
 			//now to expose the EmblemObject globally
 			window.EmblemObject = EmblemObject;
@@ -31898,37 +31920,208 @@
 
 			//EmblemObject.interation++;
 		},
-		zoomChanged: function zoomChanged() {
+
+		resize: function resize() {
 
 			var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
-			var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
 
-			// console.log(totalWidth,  backgroundWidth)
+			//start Coty added 12-23-2016 to make the image position change based on the size of the image
+			if (totalWidth >= 1200) {
+				// backgroundPosition: 'center -100px'
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: 'center -150px' });
+			} else if (totalWidth < 1200) {
 
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: '' });
+			}
+			//end
 
-			// console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
+			//I added this .locked property since the EmblemObject is exposed through the window global
+			if (EmblemObject.locked == false) {
 
-			if (totalWidth > backgroundWidth) {
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
+				//start Coty added 12-28-2016 to make sure the text header doesn't mess up when the width of the page gets too small
+				//what I need to do is see how much space the font header needs
+				var fontText1 = document.getElementById('fontText1');
+				var fontText2 = document.getElementById('fontText2');
+				var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 
-				var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help will error
+				if (fontTotalWidth >= totalWidth) {
+					// if here then the total page width is smaller than the needed space of the font header elements
+					(0, _jquery2.default)('.customfont1').each(function () {
+						(0, _jquery2.default)(this).css({ fontSize: '90px' });
+					});
 
-				// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
+					fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+					if (fontTotalWidth >= totalWidth) {
+						(0, _jquery2.default)('.customfont1').each(function () {
+							(0, _jquery2.default)(this).css({ fontSize: '80px' });
+						});
 
-				// console.log(document.getElementById('backgroundImage'))
-				document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
-			} else {
-				document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+						fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+						if (fontTotalWidth >= totalWidth) {
+							(0, _jquery2.default)('.customfont1').each(function () {
+								(0, _jquery2.default)(this).css({ fontSize: '70px' });
+							});
+
+							fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+							if (fontTotalWidth >= totalWidth) {
+								(0, _jquery2.default)('.customfont1').each(function () {
+									(0, _jquery2.default)(this).css({ fontSize: '60px' });
+								});
+
+								fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+								if (fontTotalWidth >= totalWidth) {
+									(0, _jquery2.default)('.customfont1').each(function () {
+										(0, _jquery2.default)(this).css({ fontSize: '50px' });
+									});
+
+									fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+									if (fontTotalWidth >= totalWidth) {
+										(0, _jquery2.default)('.customfont1').each(function () {
+											(0, _jquery2.default)(this).css({ fontSize: '40px' });
+										});
+
+										fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+										if (fontTotalWidth >= totalWidth) {
+											(0, _jquery2.default)('.customfont1').each(function () {
+												(0, _jquery2.default)(this).css({ fontSize: '30px' });
+											});
+											fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+											if (fontTotalWidth >= totalWidth) {
+												(0, _jquery2.default)('.customfont1').each(function () {
+													(0, _jquery2.default)(this).css({ fontSize: '20px' });
+												});
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				} else {
+					//I need to see how much width the element takes up when the font size is returned back to 100px
+					//I will create a clone of the font elements
+					var customfont1Clone = document.getElementById('fontText1').cloneNode(true); //true means do a deep copy
+					var customfont2Clone = document.getElementById('fontText2').cloneNode(true); //true means do a deep copy			
+
+					// console.log(customfont1Clone)
+
+					//make the element invisible
+					customfont1Clone.style.visibility = 'hidden';
+					customfont2Clone.style.visibility = 'hidden';
+
+					var bodyElement = EmblemObject.bodyElement;
+					bodyElement.appendChild(customfont1Clone);
+					bodyElement.appendChild(customfont2Clone);
+
+					//measure it
+					//set the font sizes back to their defaults so I can measure them
+					customfont1Clone.style.fontSize = '';
+					customfont2Clone.style.fontSize = '';
+
+					var elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+					//then use the values
+
+					//I only want to change the font sizes back if it will not interfere with the whole purpose of making the font smaller
+					if (elementWidthIfChanged < totalWidth) {
+						//I will remove the inline style and allow the css stylesheet take over
+						(0, _jquery2.default)('.customfont1').each(function () {
+							(0, _jquery2.default)(this).css({ fontSize: '' });
+						});
+					} else {
+						customfont1Clone.style.fontSize = '30px';
+						customfont2Clone.style.fontSize = '30px';
+						elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+						if (elementWidthIfChanged < totalWidth) {
+							//I will remove the inline style and allow the css stylesheet take over
+							(0, _jquery2.default)('.customfont1').each(function () {
+								(0, _jquery2.default)(this).css({ fontSize: '30px' });
+							});
+
+							customfont1Clone.style.fontSize = '40px';
+							customfont2Clone.style.fontSize = '40px';
+							elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+							if (elementWidthIfChanged < totalWidth) {
+								//I will remove the inline style and allow the css stylesheet take over
+								(0, _jquery2.default)('.customfont1').each(function () {
+									(0, _jquery2.default)(this).css({ fontSize: '40px' });
+								});
+
+								customfont1Clone.style.fontSize = '50px';
+								customfont2Clone.style.fontSize = '50px';
+								elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+								if (elementWidthIfChanged < totalWidth) {
+									//I will remove the inline style and allow the css stylesheet take over
+									(0, _jquery2.default)('.customfont1').each(function () {
+										(0, _jquery2.default)(this).css({ fontSize: '50px' });
+									});
+
+									customfont1Clone.style.fontSize = '60px';
+									customfont2Clone.style.fontSize = '60px';
+									elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+									if (elementWidthIfChanged < totalWidth) {
+										//I will remove the inline style and allow the css stylesheet take over
+										(0, _jquery2.default)('.customfont1').each(function () {
+											(0, _jquery2.default)(this).css({ fontSize: '60px' });
+										});
+
+										customfont1Clone.style.fontSize = '70px';
+										customfont2Clone.style.fontSize = '70px';
+										elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+										if (elementWidthIfChanged < totalWidth) {
+											//I will remove the inline style and allow the css stylesheet take over
+											(0, _jquery2.default)('.customfont1').each(function () {
+												(0, _jquery2.default)(this).css({ fontSize: '70px' });
+											});
+
+											customfont1Clone.style.fontSize = '80px';
+											customfont2Clone.style.fontSize = '80px';
+											elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+											if (elementWidthIfChanged < totalWidth) {
+												//I will remove the inline style and allow the css stylesheet take over
+												(0, _jquery2.default)('.customfont1').each(function () {
+													(0, _jquery2.default)(this).css({ fontSize: '80px' });
+												});
+
+												customfont1Clone.style.fontSize = '90px';
+												customfont2Clone.style.fontSize = '90px';
+												elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+												if (elementWidthIfChanged < totalWidth) {
+													//I will remove the inline style and allow the css stylesheet take over
+													(0, _jquery2.default)('.customfont1').each(function () {
+														(0, _jquery2.default)(this).css({ fontSize: '90px' });
+													});
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					//delete it
+					//now to clean up the DOM
+					bodyElement.removeChild(customfont1Clone);
+					bodyElement.removeChild(customfont2Clone);
+				}
+				//end Coty 12-28-2016
 			}
 		}
 	};
 
 	var stylesHelper = {
+		backgroundImageWidth: '1200',
 		helperWidth: '100%',
 		helperHeight: '350px',
-		backgroundImageWidth: '1200'
+		imagePositionConstant: 'center -100px',
+		imagePosition: ''
 	};
 
 	var styles = {
@@ -31962,7 +32155,7 @@
 	 */
 		backgroundImage: {
 			// width: stylesHelper.helperWidth, 
-			width: '100%',
+			width: '102%', //because I noticed an issue of the picture not quite making it the full width sometimes 
 			height: '100%',
 			// width: '1000px', 
 			// // height: stylesHelper.helperHeight,
@@ -31976,7 +32169,8 @@
 			// width: stylesHelper.backgroundImageWidth + 'px',
 			// height:'600px',
 			backgroundSize: 'cover',
-			backgroundPosition: 'center -100px', //this pans the photo around
+			// backgroundPosition: 'center -100px',	//this pans the photo around
+			// backgroundPosition: stylesHelper.imagePosition,	//this pans the photo around
 			backgroundRepeat: 'no-repeat',
 			textAlign: 'center',
 			margin: 'auto',
@@ -32331,10 +32525,16 @@
 
 		componentDidMount: function componentDidMount() {
 			var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+			this.minPageWidth = (0, _jquery2.default)('#minPageWidthHelper').outerWidth() > (0, _jquery2.default)('#emblem-element').outerWidth() ? (0, _jquery2.default)('#emblem-element').outerWidth() : (0, _jquery2.default)('#minPageWidthHelper').outerWidth();
+
+			console.log(this.minPageWidth);
+			//this.minPageWidth = $('#backgroundImage').outerWidth();
 
 			//first I will set the page's width
 			var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
 			(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
+
+			// console.log('document.documentElement.clientWidth = ', document.documentElement.clientWidth, 'widthToSet = ', widthToSet);
 
 			// Coty commented out 12-20_2016 since this History.jsx does not need to know about the text elements
 			//
@@ -32351,7 +32551,8 @@
 			// var totalFontWidth = fontText1 + fontText2;
 			// this.totalFontWidth = totalFontWidth;
 
-
+			// alert($(window).outerWidth())
+			// alert($(window).outerHeight())
 			(0, _jquery2.default)(window).resize(self.resize);
 			//and so its ran at least one time
 			this.resize();
@@ -32364,63 +32565,18 @@
 
 			var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
 
-			// console.log(widthToSet)
+			if (widthToSet >= this.minPageWidth) {
+				//+20 for error
+				(0, _jquery2.default)('#page').css({ width: widthToSet + 'px' });
 
-			if (widthToSet >= this.smallestWidthPossible) {
-				(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
+				(0, _jquery2.default)('#firstContainer').css({ fontSize: '50px' });
+			} else {
+				(0, _jquery2.default)('#page').css({ width: this.minPageWidth + 'px' });
+
+				(0, _jquery2.default)('#firstContainer').css({ fontSize: '40px' });
+
+				this.resize();
 			}
-
-			// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
-
-			// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
-
-			// 	this.setPageWidth();
-
-			// }
-			// else {
-			// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
-			// 	// //
-			// 	// if(currentWidth > this.lastWidth) {
-
-			// 	// }
-
-			// 	var 
-			// }
-
-			// Coty commented out 12-20_2016 since this History.jsx does not need to know about the text elements
-			//
-			// //now I need to position the font element
-			// var fontText1Element = document.getElementById('fontText1');
-			// var fontText2Element = document.getElementById('fontText2');
-			// // var fontText1 = $(fontText1Element).outerWidth();
-			// // var fontText2 = $(fontText2Element).outerWidth();
-			// // var totalFontWidth = fontText1 + fontText2;
-
-			// var totalWidth = parseFloat(document.getElementById('page').style.width);
-
-			// //sometimes when this resize method runs nothing gets accomplished
-			// //so I need to account for this when the width is '', otherwise I
-			// //can continue with the flow as normal
-			// if(document.getElementById('page').style.width == '') {
-			// 	//for the set timeout option
-			// 	setTimeout(self.resize, 100);
-			// }
-			// else {
-			// 	if(totalWidth < this.totalFontWidth) {
-			// 		$(fontText1Element).css({ display: 'block'});
-			// 		$(fontText2Element).css({ display: 'block'});
-			// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
-			// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
-			// 	}
-			// 	else {
-			// 		$(fontText1Element).css({ display: 'inline-block'});
-			// 		$(fontText2Element).css({ display: 'inline-block'});
-			// 		var fontHeaderHeight = $('#fontText1').outerHeight();
-			// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-			// 	}
-			// }
-
-			// this.lastWidth = widthToSet;
 		},
 		render: function render() {
 			var _this = this;
@@ -32449,7 +32605,7 @@
 									{ style: styles.paragraphWrapper },
 									_react2.default.createElement(
 										'div',
-										{ style: styles.paragraphHeader },
+										{ id: 'firstContainer', className: 'container', style: styles.paragraphHeader },
 										'History of the Sovereign Chickamauga Cherokee Tribe of Cherokee Nation West'
 									),
 									_react2.default.createElement(
@@ -32458,34 +32614,50 @@
 										_react2.default.createElement('br', null),
 										_react2.default.createElement(
 											'div',
-											{ style: styles.pageTextContent },
-											'President Thomas Jefferson administration made many treatys with Chickamauga Cherokees. However in 1808, the Compact of 1802 was not needed to effect the migration of some 1,130 Chickamaugans to land West of the Mississippi (today Dardanelle, Arkansas, in Yell County). Jefferson had merely to suggest to Tahlonteskee and other Chickamaugans that if they did not care to remain in the same country with their enemy country men, they could remove to Dardanelle Rock. Thus, in the Spring of 1808, Tahlonteskee fearing assassination notified president Jefferson that his people were ready to migrate. Following their migration, Tahlonteskee\'s band of Cherokees called themselves, "Cherokee West or Old Settlers".'
+											{ className: 'container', style: styles.pageTextContent },
+											'President Thomas Jefferson administration made many treaties with Chickamauga Cherokees. However in 1808, the Compact of 1802 was not needed to effect the migration of some 1,130 Chickamaugans to land West of the Mississippi (today Dardanelle, Arkansas, in Yell County). Jefferson had merely to suggest to Tahlonteskee and other Chickamaugans that if they did not care to remain in the same country with their enemy country men, they could remove to Dardanelle Rock. Thus, in the Spring of 1808, Tahlonteskee fearing assassination notified president Jefferson that his people were ready to migrate. Following their migration, Tahlonteskee\'s band of Cherokees called themselves, "Cherokee West or Old Settlers".'
 										),
 										_react2.default.createElement('br', null),
 										_react2.default.createElement(
 											'div',
 											{ style: styles.pageTextContent },
-											'Around 1811 Ooholonteskee half brother of Tahlonteskee known by the whites as "John Jolly", Chief Chickalah migrated to Dardanelle Arkansas now know as ',
-											_react2.default.createElement(
-												'strong',
-												null,
-												'Chickzlah'
-											),
-											' town bringing a band of Chickamauga Cherokees 1811-1812. Chief Bowles - Chief Dutch with a number of Chickamauga Cherokees in the Danville area. One initial location on the Arkansas was at ',
-											_react2.default.createElement(
-												'strong',
-												null,
-												'point'
-											),
-											' where the river passed between two samll mountains. They dubbed the site as The Dardanelle. From there the Cherokees spread out up the Arkansas and along inlet creeks such as Illinois, Pine, ',
-											_react2.default.createElement(
-												'strong',
-												null,
-												'Spadnz'
-											),
-											', Horsehead, Frog, and Mulberry one sizable group took up residence along Petite Jean River, South of the Arkansas River.'
+											'Around 1811 Ooholonteskee half brother of Tahlonteskee known by the whites as "John Jolly", Chief Chickalah migrated to Dardanelle Arkansas now know as Chickalah town bringing a band of Chickamauga Cherokees 1811-1812. Chief Bowles - Chief Dutch with a number of Chickamauga Cherokees in the Danville area. One initial location on the Arkansas was at a point where the river passed between two small mountains. They dubbed the site as The Dardanelle. From there the Cherokees spread out up the Arkansas and along inlet creeks such as Illinois, Pine, Spanda, Horsehead, Frog, and Mulberry. One sizable group took up residence along Petite Jean River, South of the Arkansas River.'
 										),
-										_react2.default.createElement('br', null)
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											'The Arkansas (on Western) Cherokees soon began to establish themselves on farms building log cabin homes, planting fields of corn, vegetable gardens, erecting rail fences for their cattle, and tending to their hogs and chickens. The men supported this agrarian produce by trapping and hunting deer, buffalo, and bear that were in plenty among the forested hills south of the Arkansas River. The women continued to weave their baskets and work at their looms as was their Cherokee tradition. Hides and produce were taken down river by canoe and boat four hundred miles to the Arkansas Post to trade for salt, sugar, and other items scarce in the Arkansas wilderness.'
+										),
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											'On June 24, 1823 acting governor Robert Chittenden of Arkansas territory met with a group of Arkansas Cherokee leaders on the south side of the Arkansas River in the vicinity of modern Dardanelle Yell County. The leaders who were present included John Jolly who was likely the most influential member of the group and would soon be elected Principal Chief of the Arkansas Cherokee and Black Fox, Watwebber, Watermellon, Young Glass, Thomas Graves, and George Morris. Each group came to the meeting with a different agenda, and neither group left the meeting satisfied. Both parties subsequently pressed their cases in writing to secretary of war John C Calhoun, who at the time had supervisory authority over Indian affairs.'
+										),
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											'When the Western boundary of Arkansas was finally surveyed, however, a majority of the lovely purchase land remained in Indian territory and fell under Indian control. It is still under full Indian control to this day in 2016.'
+										),
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											'The Western Cherokee are Native Americans who identified themselves as Cherokee, identified with the mountainous areas of Arkansas, Oklahoma, and Missouri. They lived west of the Mississippi before the Trail of Tears, and did not migrate to Indian Territory after the Cherokee Treaty of 1828. The Western Cherokee are not a single group but instead are a coalition of groups with various historical backgrounds in Arkansas, southern Missouri, eastern Oklahoma, Kansas, and Texas; they identify as a community with a singular identity. They are a single nation unified by their identity as a Cherokee, in their shared government, and in their recognition by the United States as the Cherokee Nation West under the Treaties of 1817 and 1819. The Cherokee Nation West never ratified or recognized the Treaty of 1828, which removed the Cherokee Nation West lands. The Western Cherokee Delegation who signed that document, which was sent for approval to the United States Congress by President Adams before it was ratified by the Cherokee Nation West Full Council, informed the United States verbally and in writing that the treaty was not valid until it was signed by the Full Council in Arkansas (Royce 1975, 118-120). The Western Cherokee Nation West Council (Sub-Agent Brearly letter Secretary of War, September 27, 1828).'
+										),
+										_react2.default.createElement('br', null),
+										_react2.default.createElement(
+											'div',
+											{ style: styles.pageTextContent },
+											'        The Western Cherokee constitute a coalition of diverse Cherokee groups each with a unique individual history. The unifying factors that held the Western Cherokee together included (1) an identity separate from other Cherokee based on a common belief that Creator had wished the Cherokee to move West and remove themselves from the "European" influence, (2) a common government, the Full Council of the Cherokee Nation West, and (3) identity with the Sacred Homelands in the Ozarks. Their lands included the hilly and mountainous areas of Arkansas, southern Missouri, eastern Oklahoma, southeastern Kansas, and northeastern Texas. Their core Sacred Homelands were bounded on the north by the Devil\'s Backbone (the north/south water flow break point in southern Missouri), the Mississippi River on the east, the Arkansas River on the south, and the end of the "hill county" in easter Oklahoma and southeastern Kansas. The Sacred Homelands had been lands that were held for at least 1800 years, though they were partially lost to invading "People Eaters" from the south and the "Great Warriors" from the west about 800-900 years ago (Interviews: Lee Brody and Jean Skaggs September 14, 2000, Red Wasp (John Dushanack) May 20, 2001, Rickard Craker November 24, 2001). Their lands, associated with their relationship with the United States government, were those lands outlined in the Treaty of 1819.'
+										)
+									),
+									_react2.default.createElement(
+										'div',
+										{ id: 'minPageWidthHelper', style: styles.minPageWidthHelper },
+										'Chickamauga'
 									)
 								)
 							)
@@ -32536,6 +32708,18 @@
 		imgSrc: {
 			src: '../static/assets/AlMcKayPhoto.jpg'
 		},
+		minPageWidthHelper: {
+			visibility: 'hidden',
+			position: 'absolute',
+			top: -1000,
+			textAlign: 'center',
+			fontSize: 50,
+			padding: 15,
+			marginBottom: 20,
+			borderRadius: 0,
+			backgroundColor: '#FFF',
+			boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
+		},
 		// page: { //added 12-08-2016 to help fix IE issue with the background picture
 		// 	position: 'relative'
 		// },
@@ -32544,8 +32728,8 @@
 		},
 		pageTextContent: {
 			fontSize: 30,
-			marginLeft: 50,
-			marginRight: 50
+			marginLeft: 30,
+			marginRight: 30
 		},
 		paragraphHeader: {
 			textAlign: 'center',
@@ -32714,6 +32898,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './application.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#4-navbar-item').addClass('active');
+
 			location = './application';
 		},
 		onClickContact: function onClickContact() {
@@ -32727,6 +32919,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './contact.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#6-navbar-item').addClass('active');
+
 			location = './contact';
 		},
 		onClickHome: function onClickHome() {
@@ -32740,6 +32940,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './index.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#1-navbar-item').addClass('active');
+
 			location = '/';
 		},
 		onClickHistory: function onClickHistory() {
@@ -32753,6 +32961,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './history.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#2-navbar-item').addClass('active');
+
 			location = './history';
 		},
 		onClickBeliefs: function onClickBeliefs() {
@@ -32766,6 +32982,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './beliefs.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#5-navbar-item').addClass('active');
+
 			location = './beliefs';
 		},
 		onClickTribalAdministration: function onClickTribalAdministration() {
@@ -32779,6 +33003,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './tribaladministration.html'
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#3-navbar-item').addClass('active');
+
 			location = './tribaladministration';
 		}
 	});

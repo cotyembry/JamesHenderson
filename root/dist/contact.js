@@ -31876,8 +31876,16 @@
 				//finally I need to make sure that having the width as 100% doesnt let the element get too small
 				if (outerWidth > smallestWidthPossible) {
 					(0, _jquery2.default)('#page').css({ width: '100%' });
+
+					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
+					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
+					EmblemObject.locked = false;
 				} else if (outerWidth <= smallestWidthPossible) {
 					(0, _jquery2.default)('#page').css({ width: smallestWidthPossible });
+
+					(0, _jquery2.default)('#emblem-element').css({ width: smallestWidthPossible });
+					(0, _jquery2.default)('#fontHeader').css({ width: smallestWidthPossible });
+					EmblemObject.locked = true;
 				}
 
 				self.setState({ marginLeft: marginLeft });
@@ -33955,10 +33963,6 @@
 	  value: true
 	});
 
-	var _defineProperty2 = __webpack_require__(177);
-
-	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
 	var _getPrototypeOf = __webpack_require__(218);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -34127,7 +34131,7 @@
 	exports.default = EmailForm;
 
 
-	var styles = (0, _defineProperty3.default)({
+	var styles = {
 	  labelStyle: {
 	    fontSize: 20,
 	    color: 'white'
@@ -34138,20 +34142,20 @@
 	  subject: {
 	    width: 200,
 	    height: 200,
-	    fontSize: 30,
+	    fontSize: 33,
 	    marginBottom: 5
 	  },
 	  messageBody: {
 	    width: 200,
 	    height: 200,
+	    fontSize: 30,
 	    marginBottom: 5
 	  },
 	  submit: {
-	    cursor: 'pointer'
+	    cursor: 'pointer',
+	    fontSize: 18
 	  }
-	}, 'messageBody', {
-	  // float: 'right'
-	});
+	};
 
 /***/ },
 /* 270 */

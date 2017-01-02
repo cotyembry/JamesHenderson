@@ -1,43 +1,25 @@
-<!DOCTYPE html>
+doctype html
 html
-	head
-		title Tribal Administration
-
-		link(rel="stylesheet" type="text/css" href="../static/css/index.css")
-		link(rel="stylesheet" type="text/css" href="../static/css/tribaladministration.css")
-
-
-
-		// use mongodb for my database -->
-
-		style(type="text/css").
-			@font-face {
-			    font-family: "CustomFont1";
-			    src: url(../static/assets/fonts/AlexBrush-Regular.ttf) format("truetype");
-			}
-			.customfont1 { 
-			    font-family: "CustomFont1", Verdana, Tahoma;
-			    /*font-size: 70px;*/
-			    font-size: 100px;
-			}
-
-
-
-
-
-body
-
-	div(id="emblem" style="position: fixed;")
-
-	center
-		img(id="svg2" src="../static/assets/Seal1.png" alt="")
-
-	div(id="page" style="background: #d9d9d9; padding-bottom: 500px; z-index: 100; position: relative;")
-		div(id="navbar" style="background: #d9d9d9;")
-
-		div(id="tribaladministration")
-	
-
-	script(type="text/javascript" src="../static/dist/tribaladministration.js")
-
-
+  head
+    title Tribal Administration
+    link(rel='stylesheet', type='text/css', href='../static/css/index.css')
+    link(rel='stylesheet', type='text/css', href='../static/css/tribaladministration.css')
+    link(rel='stylesheet', type='text/css', href='../static/css/Navbar.css')
+    style(type='text/css').
+      @font-face {
+      font-family: "CustomFont1";
+      src: url(../static/assets/fonts/AlexBrush-Regular.ttf) format("truetype");
+      }
+      .customfont1 {
+      font-family: "CustomFont1", Verdana, Tahoma;
+      /*font-size: 70px;*/
+      font-size: 100px;
+      }
+  body#body
+    #emblem(style='position: fixed;')
+    center
+      img#svg2(src='../static/assets/Seal1.png', alt='')
+    #page(style='background: #d9d9d9; padding-bottom: 500px; z-index: 100; position: relative;')
+      #navbar(style='background: #d9d9d9;')
+      #tribaladministration
+    script(type='text/javascript', src='../static/dist/tribaladministration.js')

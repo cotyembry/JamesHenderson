@@ -41,7 +41,8 @@ config = JSON.parse(config);
 //define the modules Ill be using for the email feature
 var nodemailer = require('nodemailer');
 
-var emailAddressToSendTo = 'CHIEFAMCKAY@gmail.com';
+// var emailAddressToSendTo = 'CHIEFAMCKAY@gmail.com';
+var emailAddressToSendTo = 'cotyembry@gmail.com';
 
 //the sendEmail object will do the work to get the email to be send when necessary (I should make this more modular something later in the future)
 var sendEmail = {

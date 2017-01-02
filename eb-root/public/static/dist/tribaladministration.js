@@ -31776,6 +31776,9 @@
 			};
 		},
 		componentDidMount: function componentDidMount() {
+			//this .locked property will help me know if I need to adjust the font text
+
+			EmblemObject.locked = false;
 
 			//at the end of mounting...I'm still having to clean up with jquery because of the lazy way I'm doing this...
 			//this helps me properly set the height as a perfect percentage
@@ -31792,9 +31795,28 @@
 			document.getElementById('logo').appendChild(document.getElementById('svg2'));
 
 			//here I need to add an event to listen if the browser window zoomed
-			//$().someListener(EmblemObject.zoomChanged)
-			(0, _jquery2.default)(window).resize(EmblemObject.zoomChanged);
-			EmblemObject.zoomChanged();
+			EmblemObject.bodyElement = document.getElementById('body');
+			(0, _jquery2.default)(window).resize(EmblemObject.resize);
+			EmblemObject.resize();
+
+			var fontText1 = document.getElementById('fontText1');
+			var fontText2 = document.getElementById('fontText2');
+			var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+
+			this.startingFontTotalWidth = fontTotalWidth;
+
+			var intervalChecker = function intervalChecker() {
+				var fontText1 = document.getElementById('fontText1');
+				var fontText2 = document.getElementById('fontText2');
+				var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+				//if here then I am satisfied the font element has quit shifiting sizes on the page
+				if (this.startingFontTotalWidth != fontTotalWidth) {
+					EmblemObject.resize();
+					clearInterval(this.clearInterval);
+				}
+			};
+
+			this.clearInterval = setInterval(intervalChecker.bind(this), 1000);
 
 			//now to expose the EmblemObject globally
 			window.EmblemObject = EmblemObject;
@@ -31893,37 +31915,208 @@
 
 			//EmblemObject.interation++;
 		},
-		zoomChanged: function zoomChanged() {
+
+		resize: function resize() {
 
 			var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
-			var backgroundWidth = parseFloat(stylesHelper.backgroundImageWidth);
 
-			// console.log(totalWidth,  backgroundWidth)
+			//start Coty added 12-23-2016 to make the image position change based on the size of the image
+			if (totalWidth >= 1200) {
+				// backgroundPosition: 'center -100px'
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: 'center -150px' });
+			} else if (totalWidth < 1200) {
 
+				(0, _jquery2.default)('#backgroundImage').css({ backgroundPosition: '' });
+			}
+			//end
 
-			// console.log(totalWidth, backgroundWidth, stylesHelper.backgroundImageWidth)
+			//I added this .locked property since the EmblemObject is exposed through the window global
+			if (EmblemObject.locked == false) {
 
-			if (totalWidth > backgroundWidth) {
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				// stylesHelper.backgroundImageWidth * percentNeeded = totalWidth
-				var percentNeeded = (totalWidth - backgroundWidth) / backgroundWidth;
+				//start Coty added 12-28-2016 to make sure the text header doesn't mess up when the width of the page gets too small
+				//what I need to do is see how much space the font header needs
+				var fontText1 = document.getElementById('fontText1');
+				var fontText2 = document.getElementById('fontText2');
+				var fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 
-				var scaleToUse = 1 + percentNeeded + .30; //+ .30 to help will error
+				if (fontTotalWidth >= totalWidth) {
+					// if here then the total page width is smaller than the needed space of the font header elements
+					(0, _jquery2.default)('.customfont1').each(function () {
+						(0, _jquery2.default)(this).css({ fontSize: '90px' });
+					});
 
-				// $.extend(styles.backgroundImage, { transform: 'scale(' + scaleToUse + ',' + scaleToUse + ')' })
+					fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+					if (fontTotalWidth >= totalWidth) {
+						(0, _jquery2.default)('.customfont1').each(function () {
+							(0, _jquery2.default)(this).css({ fontSize: '80px' });
+						});
 
-				// console.log(document.getElementById('backgroundImage'))
-				document.getElementById('backgroundImage').style.transform = 'scale(' + scaleToUse + ',' + scaleToUse + ')';
-			} else {
-				document.getElementById('backgroundImage').style.transform = 'scale(1, 1)';
+						fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+						if (fontTotalWidth >= totalWidth) {
+							(0, _jquery2.default)('.customfont1').each(function () {
+								(0, _jquery2.default)(this).css({ fontSize: '70px' });
+							});
+
+							fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+							if (fontTotalWidth >= totalWidth) {
+								(0, _jquery2.default)('.customfont1').each(function () {
+									(0, _jquery2.default)(this).css({ fontSize: '60px' });
+								});
+
+								fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+								if (fontTotalWidth >= totalWidth) {
+									(0, _jquery2.default)('.customfont1').each(function () {
+										(0, _jquery2.default)(this).css({ fontSize: '50px' });
+									});
+
+									fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+									if (fontTotalWidth >= totalWidth) {
+										(0, _jquery2.default)('.customfont1').each(function () {
+											(0, _jquery2.default)(this).css({ fontSize: '40px' });
+										});
+
+										fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+										if (fontTotalWidth >= totalWidth) {
+											(0, _jquery2.default)('.customfont1').each(function () {
+												(0, _jquery2.default)(this).css({ fontSize: '30px' });
+											});
+											fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
+											if (fontTotalWidth >= totalWidth) {
+												(0, _jquery2.default)('.customfont1').each(function () {
+													(0, _jquery2.default)(this).css({ fontSize: '20px' });
+												});
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				} else {
+					//I need to see how much width the element takes up when the font size is returned back to 100px
+					//I will create a clone of the font elements
+					var customfont1Clone = document.getElementById('fontText1').cloneNode(true); //true means do a deep copy
+					var customfont2Clone = document.getElementById('fontText2').cloneNode(true); //true means do a deep copy			
+
+					// console.log(customfont1Clone)
+
+					//make the element invisible
+					customfont1Clone.style.visibility = 'hidden';
+					customfont2Clone.style.visibility = 'hidden';
+
+					var bodyElement = EmblemObject.bodyElement;
+					bodyElement.appendChild(customfont1Clone);
+					bodyElement.appendChild(customfont2Clone);
+
+					//measure it
+					//set the font sizes back to their defaults so I can measure them
+					customfont1Clone.style.fontSize = '';
+					customfont2Clone.style.fontSize = '';
+
+					var elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+					//then use the values
+
+					//I only want to change the font sizes back if it will not interfere with the whole purpose of making the font smaller
+					if (elementWidthIfChanged < totalWidth) {
+						//I will remove the inline style and allow the css stylesheet take over
+						(0, _jquery2.default)('.customfont1').each(function () {
+							(0, _jquery2.default)(this).css({ fontSize: '' });
+						});
+					} else {
+						customfont1Clone.style.fontSize = '30px';
+						customfont2Clone.style.fontSize = '30px';
+						elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+						if (elementWidthIfChanged < totalWidth) {
+							//I will remove the inline style and allow the css stylesheet take over
+							(0, _jquery2.default)('.customfont1').each(function () {
+								(0, _jquery2.default)(this).css({ fontSize: '30px' });
+							});
+
+							customfont1Clone.style.fontSize = '40px';
+							customfont2Clone.style.fontSize = '40px';
+							elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+							if (elementWidthIfChanged < totalWidth) {
+								//I will remove the inline style and allow the css stylesheet take over
+								(0, _jquery2.default)('.customfont1').each(function () {
+									(0, _jquery2.default)(this).css({ fontSize: '40px' });
+								});
+
+								customfont1Clone.style.fontSize = '50px';
+								customfont2Clone.style.fontSize = '50px';
+								elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+								if (elementWidthIfChanged < totalWidth) {
+									//I will remove the inline style and allow the css stylesheet take over
+									(0, _jquery2.default)('.customfont1').each(function () {
+										(0, _jquery2.default)(this).css({ fontSize: '50px' });
+									});
+
+									customfont1Clone.style.fontSize = '60px';
+									customfont2Clone.style.fontSize = '60px';
+									elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+									if (elementWidthIfChanged < totalWidth) {
+										//I will remove the inline style and allow the css stylesheet take over
+										(0, _jquery2.default)('.customfont1').each(function () {
+											(0, _jquery2.default)(this).css({ fontSize: '60px' });
+										});
+
+										customfont1Clone.style.fontSize = '70px';
+										customfont2Clone.style.fontSize = '70px';
+										elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+										if (elementWidthIfChanged < totalWidth) {
+											//I will remove the inline style and allow the css stylesheet take over
+											(0, _jquery2.default)('.customfont1').each(function () {
+												(0, _jquery2.default)(this).css({ fontSize: '70px' });
+											});
+
+											customfont1Clone.style.fontSize = '80px';
+											customfont2Clone.style.fontSize = '80px';
+											elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+											if (elementWidthIfChanged < totalWidth) {
+												//I will remove the inline style and allow the css stylesheet take over
+												(0, _jquery2.default)('.customfont1').each(function () {
+													(0, _jquery2.default)(this).css({ fontSize: '80px' });
+												});
+
+												customfont1Clone.style.fontSize = '90px';
+												customfont2Clone.style.fontSize = '90px';
+												elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
+
+												if (elementWidthIfChanged < totalWidth) {
+													//I will remove the inline style and allow the css stylesheet take over
+													(0, _jquery2.default)('.customfont1').each(function () {
+														(0, _jquery2.default)(this).css({ fontSize: '90px' });
+													});
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					//delete it
+					//now to clean up the DOM
+					bodyElement.removeChild(customfont1Clone);
+					bodyElement.removeChild(customfont2Clone);
+				}
+				//end Coty 12-28-2016
 			}
 		}
 	};
 
 	var stylesHelper = {
+		backgroundImageWidth: '1200',
 		helperWidth: '100%',
 		helperHeight: '350px',
-		backgroundImageWidth: '1200'
+		imagePositionConstant: 'center -100px',
+		imagePosition: ''
 	};
 
 	var styles = {
@@ -31957,7 +32150,7 @@
 	 */
 		backgroundImage: {
 			// width: stylesHelper.helperWidth, 
-			width: '100%',
+			width: '102%', //because I noticed an issue of the picture not quite making it the full width sometimes 
 			height: '100%',
 			// width: '1000px', 
 			// // height: stylesHelper.helperHeight,
@@ -31971,7 +32164,8 @@
 			// width: stylesHelper.backgroundImageWidth + 'px',
 			// height:'600px',
 			backgroundSize: 'cover',
-			backgroundPosition: 'center -100px', //this pans the photo around
+			// backgroundPosition: 'center -100px',	//this pans the photo around
+			// backgroundPosition: stylesHelper.imagePosition,	//this pans the photo around
 			backgroundRepeat: 'no-repeat',
 			textAlign: 'center',
 			margin: 'auto',
@@ -32384,6 +32578,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './application.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#4-navbar-item').addClass('active');
+
 			location = './application';
 		},
 		onClickContact: function onClickContact() {
@@ -32397,6 +32599,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './contact.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#6-navbar-item').addClass('active');
+
 			location = './contact';
 		},
 		onClickHome: function onClickHome() {
@@ -32410,6 +32620,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './index.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#1-navbar-item').addClass('active');
+
 			location = '/';
 		},
 		onClickHistory: function onClickHistory() {
@@ -32423,6 +32641,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './history.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#2-navbar-item').addClass('active');
+
 			location = './history';
 		},
 		onClickBeliefs: function onClickBeliefs() {
@@ -32436,6 +32662,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './beliefs.html';
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#5-navbar-item').addClass('active');
+
 			location = './beliefs';
 		},
 		onClickTribalAdministration: function onClickTribalAdministration() {
@@ -32449,6 +32683,14 @@
 			//bring back the location = '*.html' code
 
 			// location = './tribaladministration.html'
+
+			//TODO: this is going to be harder to implement than I thought...
+			//first remove the class from the element (where ever it is...and then add the class to this particular element)
+			// $('.active').each(function() {
+			// 	$(this).removeClass('active');
+			// });
+			// $('#3-navbar-item').addClass('active');
+
 			location = './tribaladministration';
 		}
 	});
@@ -32522,23 +32764,27 @@
 		value: true
 	});
 
-	var _getPrototypeOf = __webpack_require__(198);
+	var _assign = __webpack_require__(198);
+
+	var _assign2 = _interopRequireDefault(_assign);
+
+	var _getPrototypeOf = __webpack_require__(220);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-	var _classCallCheck2 = __webpack_require__(209);
+	var _classCallCheck2 = __webpack_require__(225);
 
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-	var _createClass2 = __webpack_require__(210);
+	var _createClass2 = __webpack_require__(226);
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
 
-	var _possibleConstructorReturn2 = __webpack_require__(211);
+	var _possibleConstructorReturn2 = __webpack_require__(227);
 
 	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-	var _inherits2 = __webpack_require__(258);
+	var _inherits2 = __webpack_require__(262);
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
@@ -32555,9 +32801,21 @@
 	var TribalAdministration = function (_React$Component) {
 		(0, _inherits3.default)(TribalAdministration, _React$Component);
 
-		function TribalAdministration() {
+		function TribalAdministration(props) {
 			(0, _classCallCheck3.default)(this, TribalAdministration);
-			return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(TribalAdministration).apply(this, arguments));
+
+			var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(TribalAdministration).call(this, props));
+
+			_this.state = {
+				marginHelper: {
+					marginLeft: 25,
+					marginRight: 25
+				}
+			};
+			_this.oldTotalWidth = 0;
+			_this.adjustmentHelper = 0;
+			_this.hasBeenSet = false;
+			return _this;
 		}
 
 		(0, _createClass3.default)(TribalAdministration, [{
@@ -32584,6 +32842,7 @@
 						largestWidth = currentWidth;
 					}
 				});
+				this.largestWidth = largestWidth; //store this for use later
 				(0, _jquery2.default)('.hasContainer').each(function (index, element) {
 					(0, _jquery2.default)(element).css({ width: largestWidth });
 				});
@@ -32597,11 +32856,12 @@
 				// else {
 				// 	styles.container.width = '';
 				// }
-				(0, _jquery2.default)(window).resize(this.resize);
+				(0, _jquery2.default)(window).resize(this.resize.bind(this));
 			}
 		}, {
 			key: 'resize',
 			value: function resize() {
+
 				//I noticed that when the page gets to be a certain size (very small in width) the #page
 				//element gets smaller than the styles.container elements so this code will change the
 				//#page elements css from the 100% in the stylesheet to an inline style if ever it needs
@@ -32610,17 +32870,67 @@
 				var containerWidth = (0, _jquery2.default)('#lastContainer').outerWidth();
 				var windowWidth = (0, _jquery2.default)(window).width();
 
+				//this if else logic and adding the inline widths and taking them off is making sure once the content is the smallest size it can be, the other content stops decreasing in size as well
+				//note: the EmblemObject is exposed through the window global and setting the .locked property says to Emblem.jsx 'do not run logic to set the font header elements size'
 				if (totalWidth <= containerWidth) {
 					//if the total width available is less than the container's width this is wrong and
 					//should be changed
 					if (windowWidth > containerWidth) {
 						(0, _jquery2.default)('#page').css({ width: '' });
+						(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
+						(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
+						EmblemObject.locked = false;
 					} else {
 						(0, _jquery2.default)('#page').css({ width: containerWidth });
+						(0, _jquery2.default)('#emblem-element').css({ width: containerWidth });
+						(0, _jquery2.default)('#fontHeader').css({ width: containerWidth });
+						EmblemObject.locked = true;
 					}
 				} else {
 					(0, _jquery2.default)('#page').css({ width: '' });
+					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
+					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
+					EmblemObject.locked = false;
 				}
+
+				//Coty added 3161230 to make it where the header element only gets as small as the container elements then when the page allows (i.e. there is enough widht space) it allows the header element to get wider than the #container elements
+				var headerElement = (0, _jquery2.default)('#headerElement')[0];
+
+				var leftSide = this.largestWidth + styles.container.padding * 2;
+				var rightSide = (0, _jquery2.default)(headerElement).width() + 2 * styles.pageName.padding;
+
+				//the if else logic below deals with the id="headerElement"
+				if (this.hasBeenSet == false) {
+					// if(this.largestWidth >= ($(headerElement).outerWidth() - (this.state.marginHelper.marginLeft + this.state.marginHelper.marginRight))) {
+					if (leftSide >= rightSide) {
+						//*2 to account for right and left
+						this.oldTotalWidth = totalWidth;
+						this.hasBeenSet = true;
+
+						(0, _jquery2.default)(headerElement).css({ width: this.largestWidth });
+						this.setState({
+							marginHelper: {
+								marginLeft: 0,
+								marginRight: 0
+							}
+						});
+					}
+				} else {
+
+					if (totalWidth > this.oldTotalWidth) {
+						//if here then the page has gotten back big enough to set the margins back to what they were
+						this.setState({
+							marginHelper: {
+								marginLeft: 25,
+								marginRight: 25
+							}
+						});
+						//I can also remove the width on the element now
+						(0, _jquery2.default)(headerElement).css({ width: '' });
+						this.hasBeenSet = false;
+					}
+				}
+				//end 3161230
 			}
 		}, {
 			key: 'render',
@@ -32633,7 +32943,7 @@
 						null,
 						_react2.default.createElement(
 							'div',
-							{ style: styles.pageName, className: 'paddingTop' },
+							{ id: 'headerElement', style: (0, _assign2.default)(styles.pageName, this.state.marginHelper), className: 'paddingTop' },
 							'Tribal Administration of the Soverign Chickamauga Cherokee Tribe'
 						),
 						_react2.default.createElement('br', null),
@@ -32809,58 +33119,87 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(200);
-	module.exports = __webpack_require__(183).Object.getPrototypeOf;
+	module.exports = __webpack_require__(183).Object.assign;
 
 /***/ },
 /* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.9 Object.getPrototypeOf(O)
-	var toObject        = __webpack_require__(201)
-	  , $getPrototypeOf = __webpack_require__(203);
+	// 19.1.3.1 Object.assign(target, source)
+	var $export = __webpack_require__(181);
 
-	__webpack_require__(208)('getPrototypeOf', function(){
-	  return function getPrototypeOf(it){
-	    return $getPrototypeOf(toObject(it));
-	  };
-	});
+	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(201)});
 
 /***/ },
 /* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 7.1.13 ToObject(argument)
-	var defined = __webpack_require__(202);
-	module.exports = function(it){
-	  return Object(defined(it));
-	};
+	'use strict';
+	// 19.1.2.1 Object.assign(target, source, ...)
+	var getKeys  = __webpack_require__(202)
+	  , gOPS     = __webpack_require__(217)
+	  , pIE      = __webpack_require__(218)
+	  , toObject = __webpack_require__(219)
+	  , IObject  = __webpack_require__(206)
+	  , $assign  = Object.assign;
+
+	// should work with symbols and should have deterministic property order (V8 bug)
+	module.exports = !$assign || __webpack_require__(192)(function(){
+	  var A = {}
+	    , B = {}
+	    , S = Symbol()
+	    , K = 'abcdefghijklmnopqrst';
+	  A[S] = 7;
+	  K.split('').forEach(function(k){ B[k] = k; });
+	  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+	  var T     = toObject(target)
+	    , aLen  = arguments.length
+	    , index = 1
+	    , getSymbols = gOPS.f
+	    , isEnum     = pIE.f;
+	  while(aLen > index){
+	    var S      = IObject(arguments[index++])
+	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+	      , length = keys.length
+	      , j      = 0
+	      , key;
+	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+	  } return T;
+	} : $assign;
 
 /***/ },
 /* 202 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// 7.2.1 RequireObjectCoercible(argument)
-	module.exports = function(it){
-	  if(it == undefined)throw TypeError("Can't call method on  " + it);
-	  return it;
+	// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+	var $keys       = __webpack_require__(203)
+	  , enumBugKeys = __webpack_require__(216);
+
+	module.exports = Object.keys || function keys(O){
+	  return $keys(O, enumBugKeys);
 	};
 
 /***/ },
 /* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-	var has         = __webpack_require__(204)
-	  , toObject    = __webpack_require__(201)
-	  , IE_PROTO    = __webpack_require__(205)('IE_PROTO')
-	  , ObjectProto = Object.prototype;
+	var has          = __webpack_require__(204)
+	  , toIObject    = __webpack_require__(205)
+	  , arrayIndexOf = __webpack_require__(209)(false)
+	  , IE_PROTO     = __webpack_require__(213)('IE_PROTO');
 
-	module.exports = Object.getPrototypeOf || function(O){
-	  O = toObject(O);
-	  if(has(O, IE_PROTO))return O[IE_PROTO];
-	  if(typeof O.constructor == 'function' && O instanceof O.constructor){
-	    return O.constructor.prototype;
-	  } return O instanceof Object ? ObjectProto : null;
+	module.exports = function(object, names){
+	  var O      = toIObject(object)
+	    , i      = 0
+	    , result = []
+	    , key;
+	  for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
+	  // Don't enum bug & hidden keys
+	  while(names.length > i)if(has(O, key = names[i++])){
+	    ~arrayIndexOf(result, key) || result.push(key);
+	  }
+	  return result;
 	};
 
 /***/ },
@@ -32876,14 +33215,115 @@
 /* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var shared = __webpack_require__(206)('keys')
-	  , uid    = __webpack_require__(207);
+	// to indexed object, toObject with fallback for non-array-like ES3 strings
+	var IObject = __webpack_require__(206)
+	  , defined = __webpack_require__(208);
+	module.exports = function(it){
+	  return IObject(defined(it));
+	};
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// fallback for non-array-like ES3 and non-enumerable old V8 strings
+	var cof = __webpack_require__(207);
+	module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
+	  return cof(it) == 'String' ? it.split('') : Object(it);
+	};
+
+/***/ },
+/* 207 */
+/***/ function(module, exports) {
+
+	var toString = {}.toString;
+
+	module.exports = function(it){
+	  return toString.call(it).slice(8, -1);
+	};
+
+/***/ },
+/* 208 */
+/***/ function(module, exports) {
+
+	// 7.2.1 RequireObjectCoercible(argument)
+	module.exports = function(it){
+	  if(it == undefined)throw TypeError("Can't call method on  " + it);
+	  return it;
+	};
+
+/***/ },
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// false -> Array#indexOf
+	// true  -> Array#includes
+	var toIObject = __webpack_require__(205)
+	  , toLength  = __webpack_require__(210)
+	  , toIndex   = __webpack_require__(212);
+	module.exports = function(IS_INCLUDES){
+	  return function($this, el, fromIndex){
+	    var O      = toIObject($this)
+	      , length = toLength(O.length)
+	      , index  = toIndex(fromIndex, length)
+	      , value;
+	    // Array#includes uses SameValueZero equality algorithm
+	    if(IS_INCLUDES && el != el)while(length > index){
+	      value = O[index++];
+	      if(value != value)return true;
+	    // Array#toIndex ignores holes, Array#includes - not
+	    } else for(;length > index; index++)if(IS_INCLUDES || index in O){
+	      if(O[index] === el)return IS_INCLUDES || index || 0;
+	    } return !IS_INCLUDES && -1;
+	  };
+	};
+
+/***/ },
+/* 210 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.15 ToLength
+	var toInteger = __webpack_require__(211)
+	  , min       = Math.min;
+	module.exports = function(it){
+	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+	};
+
+/***/ },
+/* 211 */
+/***/ function(module, exports) {
+
+	// 7.1.4 ToInteger
+	var ceil  = Math.ceil
+	  , floor = Math.floor;
+	module.exports = function(it){
+	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+	};
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var toInteger = __webpack_require__(211)
+	  , max       = Math.max
+	  , min       = Math.min;
+	module.exports = function(index, length){
+	  index = toInteger(index);
+	  return index < 0 ? max(index + length, 0) : min(index, length);
+	};
+
+/***/ },
+/* 213 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var shared = __webpack_require__(214)('keys')
+	  , uid    = __webpack_require__(215);
 	module.exports = function(key){
 	  return shared[key] || (shared[key] = uid(key));
 	};
 
 /***/ },
-/* 206 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global = __webpack_require__(182)
@@ -32894,7 +33334,7 @@
 	};
 
 /***/ },
-/* 207 */
+/* 215 */
 /***/ function(module, exports) {
 
 	var id = 0
@@ -32904,7 +33344,83 @@
 	};
 
 /***/ },
-/* 208 */
+/* 216 */
+/***/ function(module, exports) {
+
+	// IE 8- don't enum bug keys
+	module.exports = (
+	  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+	).split(',');
+
+/***/ },
+/* 217 */
+/***/ function(module, exports) {
+
+	exports.f = Object.getOwnPropertySymbols;
+
+/***/ },
+/* 218 */
+/***/ function(module, exports) {
+
+	exports.f = {}.propertyIsEnumerable;
+
+/***/ },
+/* 219 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.13 ToObject(argument)
+	var defined = __webpack_require__(208);
+	module.exports = function(it){
+	  return Object(defined(it));
+	};
+
+/***/ },
+/* 220 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(221), __esModule: true };
+
+/***/ },
+/* 221 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(222);
+	module.exports = __webpack_require__(183).Object.getPrototypeOf;
+
+/***/ },
+/* 222 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.9 Object.getPrototypeOf(O)
+	var toObject        = __webpack_require__(219)
+	  , $getPrototypeOf = __webpack_require__(223);
+
+	__webpack_require__(224)('getPrototypeOf', function(){
+	  return function getPrototypeOf(it){
+	    return $getPrototypeOf(toObject(it));
+	  };
+	});
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+	var has         = __webpack_require__(204)
+	  , toObject    = __webpack_require__(219)
+	  , IE_PROTO    = __webpack_require__(213)('IE_PROTO')
+	  , ObjectProto = Object.prototype;
+
+	module.exports = Object.getPrototypeOf || function(O){
+	  O = toObject(O);
+	  if(has(O, IE_PROTO))return O[IE_PROTO];
+	  if(typeof O.constructor == 'function' && O instanceof O.constructor){
+	    return O.constructor.prototype;
+	  } return O instanceof Object ? ObjectProto : null;
+	};
+
+/***/ },
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// most Object methods by ES6 should accept primitives
@@ -32919,7 +33435,7 @@
 	};
 
 /***/ },
-/* 209 */
+/* 225 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32933,7 +33449,7 @@
 	};
 
 /***/ },
-/* 210 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -32965,14 +33481,14 @@
 	}();
 
 /***/ },
-/* 211 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	exports.__esModule = true;
 
-	var _typeof2 = __webpack_require__(212);
+	var _typeof2 = __webpack_require__(228);
 
 	var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -32987,18 +33503,18 @@
 	};
 
 /***/ },
-/* 212 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	exports.__esModule = true;
 
-	var _iterator = __webpack_require__(213);
+	var _iterator = __webpack_require__(229);
 
 	var _iterator2 = _interopRequireDefault(_iterator);
 
-	var _symbol = __webpack_require__(242);
+	var _symbol = __webpack_require__(248);
 
 	var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -33013,28 +33529,28 @@
 	};
 
 /***/ },
-/* 213 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(214), __esModule: true };
+	module.exports = { "default": __webpack_require__(230), __esModule: true };
 
 /***/ },
-/* 214 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(215);
-	__webpack_require__(237);
-	module.exports = __webpack_require__(241).f('iterator');
+	__webpack_require__(231);
+	__webpack_require__(243);
+	module.exports = __webpack_require__(247).f('iterator');
 
 /***/ },
-/* 215 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $at  = __webpack_require__(216)(true);
+	var $at  = __webpack_require__(232)(true);
 
 	// 21.1.3.27 String.prototype[@@iterator]()
-	__webpack_require__(218)(String, 'String', function(iterated){
+	__webpack_require__(233)(String, 'String', function(iterated){
 	  this._t = String(iterated); // target
 	  this._i = 0;                // next index
 	// 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -33049,11 +33565,11 @@
 	});
 
 /***/ },
-/* 216 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var toInteger = __webpack_require__(217)
-	  , defined   = __webpack_require__(202);
+	var toInteger = __webpack_require__(211)
+	  , defined   = __webpack_require__(208);
 	// true  -> String#at
 	// false -> String#codePointAt
 	module.exports = function(TO_STRING){
@@ -33071,31 +33587,20 @@
 	};
 
 /***/ },
-/* 217 */
-/***/ function(module, exports) {
-
-	// 7.1.4 ToInteger
-	var ceil  = Math.ceil
-	  , floor = Math.floor;
-	module.exports = function(it){
-	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-	};
-
-/***/ },
-/* 218 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var LIBRARY        = __webpack_require__(219)
+	var LIBRARY        = __webpack_require__(234)
 	  , $export        = __webpack_require__(181)
-	  , redefine       = __webpack_require__(220)
+	  , redefine       = __webpack_require__(235)
 	  , hide           = __webpack_require__(186)
 	  , has            = __webpack_require__(204)
-	  , Iterators      = __webpack_require__(221)
-	  , $iterCreate    = __webpack_require__(222)
-	  , setToStringTag = __webpack_require__(235)
-	  , getPrototypeOf = __webpack_require__(203)
-	  , ITERATOR       = __webpack_require__(236)('iterator')
+	  , Iterators      = __webpack_require__(236)
+	  , $iterCreate    = __webpack_require__(237)
+	  , setToStringTag = __webpack_require__(241)
+	  , getPrototypeOf = __webpack_require__(223)
+	  , ITERATOR       = __webpack_require__(242)('iterator')
 	  , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
 	  , FF_ITERATOR    = '@@iterator'
 	  , KEYS           = 'keys'
@@ -33157,35 +33662,35 @@
 	};
 
 /***/ },
-/* 219 */
+/* 234 */
 /***/ function(module, exports) {
 
 	module.exports = true;
 
 /***/ },
-/* 220 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(186);
 
 /***/ },
-/* 221 */
+/* 236 */
 /***/ function(module, exports) {
 
 	module.exports = {};
 
 /***/ },
-/* 222 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var create         = __webpack_require__(223)
+	var create         = __webpack_require__(238)
 	  , descriptor     = __webpack_require__(195)
-	  , setToStringTag = __webpack_require__(235)
+	  , setToStringTag = __webpack_require__(241)
 	  , IteratorPrototype = {};
 
 	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-	__webpack_require__(186)(IteratorPrototype, __webpack_require__(236)('iterator'), function(){ return this; });
+	__webpack_require__(186)(IteratorPrototype, __webpack_require__(242)('iterator'), function(){ return this; });
 
 	module.exports = function(Constructor, NAME, next){
 	  Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -33193,14 +33698,14 @@
 	};
 
 /***/ },
-/* 223 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 	var anObject    = __webpack_require__(188)
-	  , dPs         = __webpack_require__(224)
-	  , enumBugKeys = __webpack_require__(233)
-	  , IE_PROTO    = __webpack_require__(205)('IE_PROTO')
+	  , dPs         = __webpack_require__(239)
+	  , enumBugKeys = __webpack_require__(216)
+	  , IE_PROTO    = __webpack_require__(213)('IE_PROTO')
 	  , Empty       = function(){ /* empty */ }
 	  , PROTOTYPE   = 'prototype';
 
@@ -33213,7 +33718,7 @@
 	    , gt     = '>'
 	    , iframeDocument;
 	  iframe.style.display = 'none';
-	  __webpack_require__(234).appendChild(iframe);
+	  __webpack_require__(240).appendChild(iframe);
 	  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
 	  // createDict = iframe.contentWindow.Object;
 	  // html.removeChild(iframe);
@@ -33240,12 +33745,12 @@
 
 
 /***/ },
-/* 224 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var dP       = __webpack_require__(187)
 	  , anObject = __webpack_require__(188)
-	  , getKeys  = __webpack_require__(225);
+	  , getKeys  = __webpack_require__(202);
 
 	module.exports = __webpack_require__(191) ? Object.defineProperties : function defineProperties(O, Properties){
 	  anObject(O);
@@ -33258,152 +33763,29 @@
 	};
 
 /***/ },
-/* 225 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-	var $keys       = __webpack_require__(226)
-	  , enumBugKeys = __webpack_require__(233);
-
-	module.exports = Object.keys || function keys(O){
-	  return $keys(O, enumBugKeys);
-	};
-
-/***/ },
-/* 226 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var has          = __webpack_require__(204)
-	  , toIObject    = __webpack_require__(227)
-	  , arrayIndexOf = __webpack_require__(230)(false)
-	  , IE_PROTO     = __webpack_require__(205)('IE_PROTO');
-
-	module.exports = function(object, names){
-	  var O      = toIObject(object)
-	    , i      = 0
-	    , result = []
-	    , key;
-	  for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
-	  // Don't enum bug & hidden keys
-	  while(names.length > i)if(has(O, key = names[i++])){
-	    ~arrayIndexOf(result, key) || result.push(key);
-	  }
-	  return result;
-	};
-
-/***/ },
-/* 227 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// to indexed object, toObject with fallback for non-array-like ES3 strings
-	var IObject = __webpack_require__(228)
-	  , defined = __webpack_require__(202);
-	module.exports = function(it){
-	  return IObject(defined(it));
-	};
-
-/***/ },
-/* 228 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// fallback for non-array-like ES3 and non-enumerable old V8 strings
-	var cof = __webpack_require__(229);
-	module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
-	  return cof(it) == 'String' ? it.split('') : Object(it);
-	};
-
-/***/ },
-/* 229 */
-/***/ function(module, exports) {
-
-	var toString = {}.toString;
-
-	module.exports = function(it){
-	  return toString.call(it).slice(8, -1);
-	};
-
-/***/ },
-/* 230 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// false -> Array#indexOf
-	// true  -> Array#includes
-	var toIObject = __webpack_require__(227)
-	  , toLength  = __webpack_require__(231)
-	  , toIndex   = __webpack_require__(232);
-	module.exports = function(IS_INCLUDES){
-	  return function($this, el, fromIndex){
-	    var O      = toIObject($this)
-	      , length = toLength(O.length)
-	      , index  = toIndex(fromIndex, length)
-	      , value;
-	    // Array#includes uses SameValueZero equality algorithm
-	    if(IS_INCLUDES && el != el)while(length > index){
-	      value = O[index++];
-	      if(value != value)return true;
-	    // Array#toIndex ignores holes, Array#includes - not
-	    } else for(;length > index; index++)if(IS_INCLUDES || index in O){
-	      if(O[index] === el)return IS_INCLUDES || index || 0;
-	    } return !IS_INCLUDES && -1;
-	  };
-	};
-
-/***/ },
-/* 231 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 7.1.15 ToLength
-	var toInteger = __webpack_require__(217)
-	  , min       = Math.min;
-	module.exports = function(it){
-	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-	};
-
-/***/ },
-/* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var toInteger = __webpack_require__(217)
-	  , max       = Math.max
-	  , min       = Math.min;
-	module.exports = function(index, length){
-	  index = toInteger(index);
-	  return index < 0 ? max(index + length, 0) : min(index, length);
-	};
-
-/***/ },
-/* 233 */
-/***/ function(module, exports) {
-
-	// IE 8- don't enum bug keys
-	module.exports = (
-	  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-	).split(',');
-
-/***/ },
-/* 234 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(182).document && document.documentElement;
 
 /***/ },
-/* 235 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var def = __webpack_require__(187).f
 	  , has = __webpack_require__(204)
-	  , TAG = __webpack_require__(236)('toStringTag');
+	  , TAG = __webpack_require__(242)('toStringTag');
 
 	module.exports = function(it, tag, stat){
 	  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
 	};
 
 /***/ },
-/* 236 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var store      = __webpack_require__(206)('wks')
-	  , uid        = __webpack_require__(207)
+	var store      = __webpack_require__(214)('wks')
+	  , uid        = __webpack_require__(215)
 	  , Symbol     = __webpack_require__(182).Symbol
 	  , USE_SYMBOL = typeof Symbol == 'function';
 
@@ -33415,14 +33797,14 @@
 	$exports.store = store;
 
 /***/ },
-/* 237 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(238);
+	__webpack_require__(244);
 	var global        = __webpack_require__(182)
 	  , hide          = __webpack_require__(186)
-	  , Iterators     = __webpack_require__(221)
-	  , TO_STRING_TAG = __webpack_require__(236)('toStringTag');
+	  , Iterators     = __webpack_require__(236)
+	  , TO_STRING_TAG = __webpack_require__(242)('toStringTag');
 
 	for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
 	  var NAME       = collections[i]
@@ -33433,20 +33815,20 @@
 	}
 
 /***/ },
-/* 238 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var addToUnscopables = __webpack_require__(239)
-	  , step             = __webpack_require__(240)
-	  , Iterators        = __webpack_require__(221)
-	  , toIObject        = __webpack_require__(227);
+	var addToUnscopables = __webpack_require__(245)
+	  , step             = __webpack_require__(246)
+	  , Iterators        = __webpack_require__(236)
+	  , toIObject        = __webpack_require__(205);
 
 	// 22.1.3.4 Array.prototype.entries()
 	// 22.1.3.13 Array.prototype.keys()
 	// 22.1.3.29 Array.prototype.values()
 	// 22.1.3.30 Array.prototype[@@iterator]()
-	module.exports = __webpack_require__(218)(Array, 'Array', function(iterated, kind){
+	module.exports = __webpack_require__(233)(Array, 'Array', function(iterated, kind){
 	  this._t = toIObject(iterated); // target
 	  this._i = 0;                   // next index
 	  this._k = kind;                // kind
@@ -33472,13 +33854,13 @@
 	addToUnscopables('entries');
 
 /***/ },
-/* 239 */
+/* 245 */
 /***/ function(module, exports) {
 
 	module.exports = function(){ /* empty */ };
 
 /***/ },
-/* 240 */
+/* 246 */
 /***/ function(module, exports) {
 
 	module.exports = function(done, value){
@@ -33486,29 +33868,29 @@
 	};
 
 /***/ },
-/* 241 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports.f = __webpack_require__(236);
+	exports.f = __webpack_require__(242);
 
 /***/ },
-/* 242 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(243), __esModule: true };
+	module.exports = { "default": __webpack_require__(249), __esModule: true };
 
 /***/ },
-/* 243 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(244);
-	__webpack_require__(255);
-	__webpack_require__(256);
-	__webpack_require__(257);
+	__webpack_require__(250);
+	__webpack_require__(259);
+	__webpack_require__(260);
+	__webpack_require__(261);
 	module.exports = __webpack_require__(183).Symbol;
 
 /***/ },
-/* 244 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33517,27 +33899,27 @@
 	  , has            = __webpack_require__(204)
 	  , DESCRIPTORS    = __webpack_require__(191)
 	  , $export        = __webpack_require__(181)
-	  , redefine       = __webpack_require__(220)
-	  , META           = __webpack_require__(245).KEY
+	  , redefine       = __webpack_require__(235)
+	  , META           = __webpack_require__(251).KEY
 	  , $fails         = __webpack_require__(192)
-	  , shared         = __webpack_require__(206)
-	  , setToStringTag = __webpack_require__(235)
-	  , uid            = __webpack_require__(207)
-	  , wks            = __webpack_require__(236)
-	  , wksExt         = __webpack_require__(241)
-	  , wksDefine      = __webpack_require__(246)
-	  , keyOf          = __webpack_require__(247)
-	  , enumKeys       = __webpack_require__(248)
-	  , isArray        = __webpack_require__(251)
+	  , shared         = __webpack_require__(214)
+	  , setToStringTag = __webpack_require__(241)
+	  , uid            = __webpack_require__(215)
+	  , wks            = __webpack_require__(242)
+	  , wksExt         = __webpack_require__(247)
+	  , wksDefine      = __webpack_require__(252)
+	  , keyOf          = __webpack_require__(253)
+	  , enumKeys       = __webpack_require__(254)
+	  , isArray        = __webpack_require__(255)
 	  , anObject       = __webpack_require__(188)
-	  , toIObject      = __webpack_require__(227)
+	  , toIObject      = __webpack_require__(205)
 	  , toPrimitive    = __webpack_require__(194)
 	  , createDesc     = __webpack_require__(195)
-	  , _create        = __webpack_require__(223)
-	  , gOPNExt        = __webpack_require__(252)
-	  , $GOPD          = __webpack_require__(254)
+	  , _create        = __webpack_require__(238)
+	  , gOPNExt        = __webpack_require__(256)
+	  , $GOPD          = __webpack_require__(258)
 	  , $DP            = __webpack_require__(187)
-	  , $keys          = __webpack_require__(225)
+	  , $keys          = __webpack_require__(202)
 	  , gOPD           = $GOPD.f
 	  , dP             = $DP.f
 	  , gOPN           = gOPNExt.f
@@ -33660,11 +34042,11 @@
 
 	  $GOPD.f = $getOwnPropertyDescriptor;
 	  $DP.f   = $defineProperty;
-	  __webpack_require__(253).f = gOPNExt.f = $getOwnPropertyNames;
-	  __webpack_require__(250).f  = $propertyIsEnumerable;
-	  __webpack_require__(249).f = $getOwnPropertySymbols;
+	  __webpack_require__(257).f = gOPNExt.f = $getOwnPropertyNames;
+	  __webpack_require__(218).f  = $propertyIsEnumerable;
+	  __webpack_require__(217).f = $getOwnPropertySymbols;
 
-	  if(DESCRIPTORS && !__webpack_require__(219)){
+	  if(DESCRIPTORS && !__webpack_require__(234)){
 	    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
 	  }
 
@@ -33748,10 +34130,10 @@
 	setToStringTag(global.JSON, 'JSON', true);
 
 /***/ },
-/* 245 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var META     = __webpack_require__(207)('meta')
+	var META     = __webpack_require__(215)('meta')
 	  , isObject = __webpack_require__(189)
 	  , has      = __webpack_require__(204)
 	  , setDesc  = __webpack_require__(187).f
@@ -33806,13 +34188,13 @@
 	};
 
 /***/ },
-/* 246 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var global         = __webpack_require__(182)
 	  , core           = __webpack_require__(183)
-	  , LIBRARY        = __webpack_require__(219)
-	  , wksExt         = __webpack_require__(241)
+	  , LIBRARY        = __webpack_require__(234)
+	  , wksExt         = __webpack_require__(247)
 	  , defineProperty = __webpack_require__(187).f;
 	module.exports = function(name){
 	  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
@@ -33820,11 +34202,11 @@
 	};
 
 /***/ },
-/* 247 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getKeys   = __webpack_require__(225)
-	  , toIObject = __webpack_require__(227);
+	var getKeys   = __webpack_require__(202)
+	  , toIObject = __webpack_require__(205);
 	module.exports = function(object, el){
 	  var O      = toIObject(object)
 	    , keys   = getKeys(O)
@@ -33835,13 +34217,13 @@
 	};
 
 /***/ },
-/* 248 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// all enumerable object keys, includes symbols
-	var getKeys = __webpack_require__(225)
-	  , gOPS    = __webpack_require__(249)
-	  , pIE     = __webpack_require__(250);
+	var getKeys = __webpack_require__(202)
+	  , gOPS    = __webpack_require__(217)
+	  , pIE     = __webpack_require__(218);
 	module.exports = function(it){
 	  var result     = getKeys(it)
 	    , getSymbols = gOPS.f;
@@ -33855,34 +34237,22 @@
 	};
 
 /***/ },
-/* 249 */
-/***/ function(module, exports) {
-
-	exports.f = Object.getOwnPropertySymbols;
-
-/***/ },
-/* 250 */
-/***/ function(module, exports) {
-
-	exports.f = {}.propertyIsEnumerable;
-
-/***/ },
-/* 251 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.2.2 IsArray(argument)
-	var cof = __webpack_require__(229);
+	var cof = __webpack_require__(207);
 	module.exports = Array.isArray || function isArray(arg){
 	  return cof(arg) == 'Array';
 	};
 
 /***/ },
-/* 252 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-	var toIObject = __webpack_require__(227)
-	  , gOPN      = __webpack_require__(253).f
+	var toIObject = __webpack_require__(205)
+	  , gOPN      = __webpack_require__(257).f
 	  , toString  = {}.toString;
 
 	var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -33902,24 +34272,24 @@
 
 
 /***/ },
-/* 253 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-	var $keys      = __webpack_require__(226)
-	  , hiddenKeys = __webpack_require__(233).concat('length', 'prototype');
+	var $keys      = __webpack_require__(203)
+	  , hiddenKeys = __webpack_require__(216).concat('length', 'prototype');
 
 	exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
 	  return $keys(O, hiddenKeys);
 	};
 
 /***/ },
-/* 254 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var pIE            = __webpack_require__(250)
+	var pIE            = __webpack_require__(218)
 	  , createDesc     = __webpack_require__(195)
-	  , toIObject      = __webpack_require__(227)
+	  , toIObject      = __webpack_require__(205)
 	  , toPrimitive    = __webpack_require__(194)
 	  , has            = __webpack_require__(204)
 	  , IE8_DOM_DEFINE = __webpack_require__(190)
@@ -33935,40 +34305,40 @@
 	};
 
 /***/ },
-/* 255 */
+/* 259 */
 /***/ function(module, exports) {
 
 	
 
 /***/ },
-/* 256 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(246)('asyncIterator');
+	__webpack_require__(252)('asyncIterator');
 
 /***/ },
-/* 257 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(246)('observable');
+	__webpack_require__(252)('observable');
 
 /***/ },
-/* 258 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	exports.__esModule = true;
 
-	var _setPrototypeOf = __webpack_require__(259);
+	var _setPrototypeOf = __webpack_require__(263);
 
 	var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
 
-	var _create = __webpack_require__(263);
+	var _create = __webpack_require__(267);
 
 	var _create2 = _interopRequireDefault(_create);
 
-	var _typeof2 = __webpack_require__(212);
+	var _typeof2 = __webpack_require__(228);
 
 	var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -33991,28 +34361,28 @@
 	};
 
 /***/ },
-/* 259 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(260), __esModule: true };
+	module.exports = { "default": __webpack_require__(264), __esModule: true };
 
 /***/ },
-/* 260 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(261);
+	__webpack_require__(265);
 	module.exports = __webpack_require__(183).Object.setPrototypeOf;
 
 /***/ },
-/* 261 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.3.19 Object.setPrototypeOf(O, proto)
 	var $export = __webpack_require__(181);
-	$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(262).set});
+	$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(266).set});
 
 /***/ },
-/* 262 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Works with __proto__ only. Old v8 can't work with null proto objects.
@@ -34027,7 +34397,7 @@
 	  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
 	    function(test, buggy, set){
 	      try {
-	        set = __webpack_require__(184)(Function.call, __webpack_require__(254).f(Object.prototype, '__proto__').set, 2);
+	        set = __webpack_require__(184)(Function.call, __webpack_require__(258).f(Object.prototype, '__proto__').set, 2);
 	        set(test, []);
 	        buggy = !(test instanceof Array);
 	      } catch(e){ buggy = true; }
@@ -34042,28 +34412,28 @@
 	};
 
 /***/ },
-/* 263 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(264), __esModule: true };
+	module.exports = { "default": __webpack_require__(268), __esModule: true };
 
 /***/ },
-/* 264 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(265);
+	__webpack_require__(269);
 	var $Object = __webpack_require__(183).Object;
 	module.exports = function create(P, D){
 	  return $Object.create(P, D);
 	};
 
 /***/ },
-/* 265 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(181)
 	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-	$export($export.S, 'Object', {create: __webpack_require__(223)});
+	$export($export.S, 'Object', {create: __webpack_require__(238)});
 
 /***/ }
 /******/ ]);
