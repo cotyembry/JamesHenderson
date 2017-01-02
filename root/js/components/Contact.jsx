@@ -102,10 +102,18 @@ export default class Contact extends React.Component {
 
 		//finally I need to make sure that having the width as 100% doesnt let the element get too small
 		if(outerWidth > smallestWidthPossible) {
-			$('#page').css({ width: '100%' })
+			$('#page').css({ width: '100%' });
+
+			$('#emblem-element').css({ width: '100%' });
+			$('#fontHeader').css({ width: '100%' });
+			EmblemObject.locked = false;
 		}
 		else if(outerWidth <= smallestWidthPossible) {
-			$('#page').css({ width: smallestWidthPossible })
+			$('#page').css({ width: smallestWidthPossible });
+
+			$('#emblem-element').css({ width: smallestWidthPossible });
+			$('#fontHeader').css({ width: smallestWidthPossible });
+			EmblemObject.locked = true;
 		}
 
 		self.setState({ marginLeft: marginLeft });

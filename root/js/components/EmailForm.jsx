@@ -55,6 +55,7 @@ export default class EmailForm extends React.Component {
     //email on the node.js side of things rather than sending
     //this in the client
 
+
     self.post('/send', finalObject);
 
 
@@ -94,7 +95,7 @@ export default class EmailForm extends React.Component {
             Subject:
           </div>
           <div>
-            <input style={styles.subject} type="text" value={this.state.subject} onChange={this.handleSubjectChange} />
+            <textarea style={styles.subject} type="text" value={this.state.subject} onChange={this.handleSubjectChange} />
           </div>
 
           <br />
@@ -131,16 +132,20 @@ var styles = {
     marginBottom: 5
   },
   subject: {
+    width: 200,
+    height: 200,
+    fontSize: 33,
     marginBottom: 5,
     // float: 'right'
   },
   messageBody: {
+    width: 200,
+    height: 200,
+    fontSize: 30,
     marginBottom: 5
   },
   submit: {
-    cursor: 'pointer'
-  },
-  messageBody: {
-    // float: 'right'
+    cursor: 'pointer',
+    fontSize: 18
   }
 }
