@@ -110,17 +110,13 @@ var History = React.createClass({
 											<br />
 
 											<div style={styles.pageTextContent}>
-												<strong>Start of Picture 5</strong>
 												The Arkansas (on Western) Cherokees soon began to establish themselves on farms building log cabin homes, planting fields of corn, vegetable gardens, erecting rail fences for their cattle, and tending to their hogs and chickens. The men supported this agrarian produce by trapping and hunting deer, buffalo, and bear that were in plenty among the forested hills south of the Arkansas River. The women continued to weave their baskets and work at their looms as was their Cherokee tradition. Hides and produce were taken down river by canoe and boat four hundred miles to the Arkansas Post to trade for salt, sugar, and other items scarce in the Arkansas wilderness.
 											</div>
 
 											<br />
 
 											<div style={styles.pageTextContent}>
-												On June 24, 1823 acting governor Robert Chittenden of Arkansas territory met with a group of Arkansas Cherokee leaders on the south side of the Arkansas River in the vicinity of modern Dardanelle Yell County. The leaders who were present included John Jolly who was likely the most influential member of the group and would soon be elected Principal Chief of the Arkansas Cherokee and Black Fox, <strong>Watwebber</strong>, <strong>Waterminnow</strong>, Young Glass, Thomas Graves, and George Morris. Each group came to the meeting with a different agenda, and neither group left the meeting satisfied. Both parties subsequently pressed their cases
-
-													<strong>Start of Picture 4</strong>
-													in writing to secretary of war John C <strong>Calhoun</strong>, who at the time had supervisory authority over Indian affairs.
+												On June 24, 1823 acting governor Robert Chittenden of Arkansas territory met with a group of Arkansas Cherokee leaders on the south side of the Arkansas River in the vicinity of modern Dardanelle Yell County. The leaders who were present included John Jolly who was likely the most influential member of the group and would soon be elected Principal Chief of the Arkansas Cherokee and Black Fox, Watwebber, Watermellon, Young Glass, Thomas Graves, and George Morris. Each group came to the meeting with a different agenda, and neither group left the meeting satisfied. Both parties subsequently pressed their cases in writing to secretary of war John C Calhoun, who at the time had supervisory authority over Indian affairs.
 											</div>
 
 											<br />
@@ -132,9 +128,7 @@ var History = React.createClass({
 											<br />
 
 											<div style={styles.pageTextContent}>
-												The Western Cherokee are Native Americans who identified themselves as Cherokee, identified with the mountainous areas of Arkansas, Oklahoma, and Missouri. They lived west of the Mississippi before the Trail of Tears, and did not migrate to Indian Territory after the Cherokee Treaty of 1828.
-												<strong>Picture 4, start of typed page</strong>
-												The Western Cherokee are not a single group but instead are a coalition of groups with various historical backgrounds in Arkansas, southern Missouri, eastern Oklahoma, Kansas, and Texas; they identify as a community with a singular identity. They are a single nation unified by their identity as a Cherokee, in their shared government, and in their recognition by the United States as the Cherokee Nation West under the Treaties of 1817 and 1819. The Cherokee Nation West never ratified or recognized the Treaty of 1828, which removed the Cherokee Nation West lands. The Western Cherokee Delegation who signed that document, which was sent for approval to the United States Congress by President Adams before it was ratified by the Cherokee Nation West Full Council, informed the United States verbally and in writing that the treaty was not valid until it was signed by the Full Council in Arkansas (Royce 1975, 118-120). The Western Cherokee Nation West Council (Sub-Agent Brearly letter Secretary of War, September 27, 1828).
+												The Western Cherokee are Native Americans who identified themselves as Cherokee, identified with the mountainous areas of Arkansas, Oklahoma, and Missouri. They lived west of the Mississippi before the Trail of Tears, and did not migrate to Indian Territory after the Cherokee Treaty of 1828. The Western Cherokee are not a single group but instead are a coalition of groups with various historical backgrounds in Arkansas, southern Missouri, eastern Oklahoma, Kansas, and Texas; they identify as a community with a singular identity. They are a single nation unified by their identity as a Cherokee, in their shared government, and in their recognition by the United States as the Cherokee Nation West under the Treaties of 1817 and 1819. The Cherokee Nation West never ratified or recognized the Treaty of 1828, which removed the Cherokee Nation West lands. The Western Cherokee Delegation who signed that document, which was sent for approval to the United States Congress by President Adams before it was ratified by the Cherokee Nation West Full Council, informed the United States verbally and in writing that the treaty was not valid until it was signed by the Full Council in Arkansas (Royce 1975, 118-120). The Western Cherokee Nation West Council (Sub-Agent Brearly letter Secretary of War, September 27, 1828).
 											</div>											
 
 											<br />
