@@ -64,19 +64,29 @@ export default class TribalAdministration extends React.Component {
 		var containerWidth = $('#lastContainer').outerWidth();
 		var windowWidth = $(window).width();
 
-
+		//this if else logic and adding the inline widths and taking them off is making sure once the content is the smallest size it can be, the other content stops decreasing in size as well
+		//note: the EmblemObject is exposed through the window global and setting the .locked property says to Emblem.jsx 'do not run logic to set the font header elements size'
 		if(totalWidth <= containerWidth) {
 			//if the total width available is less than the container's width this is wrong and
 			//should be changed
 			if(windowWidth > containerWidth) {
 				$('#page').css({ width: '' });
+				$('#emblem-element').css({ width: '100%' });
+				$('#fontHeader').css({ width: '100%' });
+				EmblemObject.locked = false;				
 			}
 			else {
 				$('#page').css({ width: containerWidth });
+				$('#emblem-element').css({ width: containerWidth });
+				$('#fontHeader').css({ width: containerWidth });
+				EmblemObject.locked = true;
 			}
 		}
 		else {
 			$('#page').css({ width: '' });
+			$('#emblem-element').css({ width: '100%' });
+			$('#fontHeader').css({ width: '100%' });
+			EmblemObject.locked	= false;		
 		}
 
 		//Coty added 3161230 to make it where the header element only gets as small as the container elements then when the page allows (i.e. there is enough widht space) it allows the header element to get wider than the #container elements
@@ -85,6 +95,7 @@ export default class TribalAdministration extends React.Component {
 		var leftSide = this.largestWidth + styles.container.padding * 2; 
 		var rightSide = $(headerElement).width() + 2 * styles.pageName.padding;
 
+		//the if else logic below deals with the id="headerElement"
 		if(this.hasBeenSet == false) {
 			// if(this.largestWidth >= ($(headerElement).outerWidth() - (this.state.marginHelper.marginLeft + this.state.marginHelper.marginRight))) {
 			if(leftSide >= rightSide) {	//*2 to account for right and left
