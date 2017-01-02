@@ -68,7 +68,10 @@ var History = React.createClass({
 			$('#page').css({ width: this.minPageWidth + 'px' });
 			
 			$('#firstContainer').css({ fontSize: '40px' });
+
+			this.resize();
 		}
+
 
 	},
 	render: function() {		
