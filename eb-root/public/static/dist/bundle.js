@@ -32621,7 +32621,7 @@
 								_react2.default.createElement(
 									'h1',
 									null,
-									'Get To Know Albery McKay'
+									'Get To Know Albert McKay'
 								)
 							)
 						),

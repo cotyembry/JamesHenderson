@@ -106,7 +106,7 @@ var Home = React.createClass({
 							<Navbar fontSize={20} ref={(elem) => this.elements['Navbar'] = elem } />
 	
 							<div id="pageHeading" style={styles.container}>
-								<center><h1>Get To Know Albery McKay</h1></center>
+								<center><h1>Get To Know Albert McKay</h1></center>
 							</div>
 
 							<div style={styles.allContent} id="all-content">
