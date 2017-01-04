@@ -32568,15 +32568,31 @@
 
 			// console.log(widthToSet)
 
+
+			// alert(widthToSet);
+
+			// alert(this.smallestWidthPossible);
+
+
 			if (widthToSet >= this.smallestWidthPossible) {
 				(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
+
+				(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
+				(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
+				EmblemObject.locked = false;
+			} else {
+				(0, _jquery2.default)('#page').css({ 'width': this.smallestWidthPossible + 'px' });
+
+				(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
+				(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
+				EmblemObject.locked = false;
 			}
 
 			//adjust the header element's width to stay the same as the contents width
 			var widthTS = (0, _jquery2.default)('#all-content').width();
 			(0, _jquery2.default)('#pageHeading').css({ width: widthTS });
 
-			console.log(widthTS, (0, _jquery2.default)('#paddingHelper').width());
+			// console.log(widthTS, $('#paddingHelper').width())
 
 			//start Coty added 12-29-2016
 			var paddingHelperWidth = (0, _jquery2.default)('#paddingHelper').width();
@@ -32587,7 +32603,7 @@
 
 				var amountOfPixelsToAdd = (0, _jquery2.default)('#pageHeading').outerWidth() - (0, _jquery2.default)('#paddingHelper').width();
 
-				console.log(amountOfPixelsToAdd);
+				// console.log(amountOfPixelsToAdd);
 
 				styles.widthPercentage;
 			} else {

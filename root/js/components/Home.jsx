@@ -62,8 +62,26 @@ var Home = React.createClass({
 
 		// console.log(widthToSet)
 
+
+		// alert(widthToSet);
+
+		// alert(this.smallestWidthPossible);
+
+
 		if(widthToSet >= this.smallestWidthPossible) {
 			$('#page').css({ 'width': widthToSet + 'px' });
+
+
+			$('#emblem-element').css({ width: '100%' });
+			$('#fontHeader').css({ width: '100%' });
+			EmblemObject.locked = false;
+		}
+		else {
+			$('#page').css({ 'width': this.smallestWidthPossible + 'px' });
+
+			$('#emblem-element').css({ width: '100%' });
+			$('#fontHeader').css({ width: '100%' });
+			EmblemObject.locked = false;
 		}
 
 
@@ -72,7 +90,7 @@ var Home = React.createClass({
 		$('#pageHeading').css({ width: widthTS });
 
 
-		console.log(widthTS, $('#paddingHelper').width())
+		// console.log(widthTS, $('#paddingHelper').width())
 
 		//start Coty added 12-29-2016
 		var paddingHelperWidth = $('#paddingHelper').width();
@@ -84,7 +102,7 @@ var Home = React.createClass({
 
 			var amountOfPixelsToAdd = $('#pageHeading').outerWidth() - $('#paddingHelper').width();
 
-			console.log(amountOfPixelsToAdd);
+			// console.log(amountOfPixelsToAdd);
 
 			styles.widthPercentage;
 		}

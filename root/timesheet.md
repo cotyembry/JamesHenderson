@@ -44,9 +44,9 @@ ended development: Wed Dec  30 18:01:00|04:20pm CST 2016+false
 //fix the below from the 12 hour time format to be the army time format bc the army time is wrong 
 started development: Wed Jan  02 00:00:00|12:51am 2017+false
 ended development: Wed Jan  02 00:01:00|02:15am CST 2017+false
-//fix the below from the 12 hour time format to be the army time format bc the army time is wrong 
+//fix the below from the 12 hour time format to be the army time format bc the army time is wrong (I worked on getting the domain name set up)
 started development: Wed Jan  02 00:00:00|01:54pm 2017+false
 ended development: Wed Jan  02 00:01:00|02:03pm CST 2017+false
-//fix the below from the 12 hour time format to be the army time format bc the army time is wrong 
-started development: Wed Jan  02 00:00:00|10:10pm 2017+false
-ended development: Wed Jan  02 00:01:00|10:11pm CST 2017+false
+//fix the below from the 12 hour time format to be the army time format bc the army time is wrong (I worked on getting the domain name set up)
+started development: Wed Jan  03 00:00:00|06:00pm 2017+false
+ended development: Wed Jan  03 00:01:00|06:01pm CST 2017+false

@@ -19,7 +19,7 @@ var History = React.createClass({
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 		this.minPageWidth = $('#minPageWidthHelper').outerWidth() > $('#emblem-element').outerWidth() ? $('#emblem-element').outerWidth() : $('#minPageWidthHelper').outerWidth();
 
-		console.log(this.minPageWidth);
+		// console.log(this.minPageWidth);
 		//this.minPageWidth = $('#backgroundImage').outerWidth();
 
 		//first I will set the page's width
@@ -58,18 +58,22 @@ var History = React.createClass({
 
 		var widthToSet = $(document.documentElement).outerWidth();
 
-		if(widthToSet >= this.minPageWidth) {	//+20 for error
+		// console.log('here ->', widthToSet, this.minPageWidth)
+
+		// if(widthToSet >= this.minPageWidth) {
+		if(widthToSet >= 450) {
 			$('#page').css({ width: widthToSet + 'px' });
 
 			$('#firstContainer').css({ fontSize: '50px' });
 
 		}
 		else {
-			$('#page').css({ width: this.minPageWidth + 'px' });
+			// $('#page').css({ width: this.minPageWidth + 'px' });
+			$('#page').css({ width: '450px' });
 			
 			$('#firstContainer').css({ fontSize: '40px' });
 
-			this.resize();
+			// this.resize();
 		}
 
 
