@@ -32527,7 +32527,7 @@
 			var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 			this.minPageWidth = (0, _jquery2.default)('#minPageWidthHelper').outerWidth() > (0, _jquery2.default)('#emblem-element').outerWidth() ? (0, _jquery2.default)('#emblem-element').outerWidth() : (0, _jquery2.default)('#minPageWidthHelper').outerWidth();
 
-			console.log(this.minPageWidth);
+			// console.log(this.minPageWidth);
 			//this.minPageWidth = $('#backgroundImage').outerWidth();
 
 			//first I will set the page's width
@@ -32565,17 +32565,20 @@
 
 			var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
 
-			if (widthToSet >= this.minPageWidth) {
-				//+20 for error
+			console.log('here ->', widthToSet, this.minPageWidth);
+
+			// if(widthToSet >= this.minPageWidth) {
+			if (widthToSet >= 450) {
 				(0, _jquery2.default)('#page').css({ width: widthToSet + 'px' });
 
 				(0, _jquery2.default)('#firstContainer').css({ fontSize: '50px' });
 			} else {
-				(0, _jquery2.default)('#page').css({ width: this.minPageWidth + 'px' });
+				// $('#page').css({ width: this.minPageWidth + 'px' });
+				(0, _jquery2.default)('#page').css({ width: '450px' });
 
 				(0, _jquery2.default)('#firstContainer').css({ fontSize: '40px' });
 
-				this.resize();
+				// this.resize();
 			}
 		},
 		render: function render() {
