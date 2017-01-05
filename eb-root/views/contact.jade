@@ -1,6 +1,10 @@
 doctype html
 html
   head
+    script(type="text/javascript").
+      (function() {
+        history.pushState(null, "Sovereign Chickamauga Cherokee", "/contact")
+      })();    
     title Contact Us
     link(rel='stylesheet', type='text/css', href='../static/css/index.css')
     link(rel='stylesheet', type='text/css', href='../static/css/contact.css')

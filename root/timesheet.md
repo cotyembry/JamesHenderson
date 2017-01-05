@@ -50,3 +50,6 @@ ended development: Wed Jan  02 00:01:00|02:03pm CST 2017+false
 //fix the below from the 12 hour time format to be the army time format bc the army time is wrong (I worked on getting the domain name set up)
 started development: Wed Jan  03 00:00:00|06:00pm 2017+false
 ended development: Wed Jan  03 00:01:00|09:01pm CST 2017+false
+//fix the below from the 12 hour time format to be the army time format bc the army time is wrong (I worked on getting the domain name set up)
+started development: Wed Jan  04 00:00:00|06:46pm 2017+false
+ended development: Wed Jan  04 00:01:00|06:47pm CST 2017+false
