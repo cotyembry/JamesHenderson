@@ -31824,9 +31824,12 @@
 			//and to keep things consistent:
 			EmblemObject.backgroundImageWidth = stylesHelper.backgroundImageWidth;
 
+			//Coty 01-05-2017 added a new Seal.png file and I need to change some of the calculations for the topShift
+			//the height was increased by 20px but the fontHeader didnt need to move at all
+
 			//now I will set the logo's position up in the correct position on the screen
-			var topToShift = (0, _jquery2.default)('#logo').outerHeight() - 10; //-10 to not cut off the bottom of the fancy font heading
-			(0, _jquery2.default)('#fontHeader').css({ top: topToShift });
+			EmblemObject.topShift = (0, _jquery2.default)('#logo').outerHeight() - 40; //-10 to not cut off the bottom of the fancy font heading
+			(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift });
 		},
 		render: function render() {
 			return _react2.default.createElement(
@@ -31879,6 +31882,9 @@
 		backgroundImageWidth: '',
 		prior_scrollTop: 0,
 		increment: 1,
+
+		topShift: 0,
+
 		start: function start() {
 			window.addEventListener('scroll', EmblemObject.pageDidScroll);
 
@@ -31944,6 +31950,7 @@
 					(0, _jquery2.default)('.customfont1').each(function () {
 						(0, _jquery2.default)(this).css({ fontSize: '90px' });
 					});
+					(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 10 });
 
 					fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 					if (fontTotalWidth >= totalWidth) {
@@ -31951,11 +31958,17 @@
 							(0, _jquery2.default)(this).css({ fontSize: '80px' });
 						});
 
+						// alert(EmblemObject.topShift)
+
+						(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+
 						fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 						if (fontTotalWidth >= totalWidth) {
 							(0, _jquery2.default)('.customfont1').each(function () {
 								(0, _jquery2.default)(this).css({ fontSize: '70px' });
 							});
+
+							(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 20 });
 
 							fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 							if (fontTotalWidth >= totalWidth) {
@@ -31963,11 +31976,15 @@
 									(0, _jquery2.default)(this).css({ fontSize: '60px' });
 								});
 
+								(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 30 });
+
 								fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 								if (fontTotalWidth >= totalWidth) {
 									(0, _jquery2.default)('.customfont1').each(function () {
 										(0, _jquery2.default)(this).css({ fontSize: '50px' });
 									});
+
+									(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 40 });
 
 									fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 									if (fontTotalWidth >= totalWidth) {
@@ -31975,16 +31992,23 @@
 											(0, _jquery2.default)(this).css({ fontSize: '40px' });
 										});
 
+										(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 50 });
+
 										fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 										if (fontTotalWidth >= totalWidth) {
 											(0, _jquery2.default)('.customfont1').each(function () {
 												(0, _jquery2.default)(this).css({ fontSize: '30px' });
 											});
+
+											(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 60 });
+
 											fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 											if (fontTotalWidth >= totalWidth) {
 												(0, _jquery2.default)('.customfont1').each(function () {
 													(0, _jquery2.default)(this).css({ fontSize: '20px' });
 												});
+
+												(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 70 });
 											}
 										}
 									}
@@ -32023,6 +32047,7 @@
 						(0, _jquery2.default)('.customfont1').each(function () {
 							(0, _jquery2.default)(this).css({ fontSize: '' });
 						});
+						(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift });
 					} else {
 						customfont1Clone.style.fontSize = '30px';
 						customfont2Clone.style.fontSize = '30px';
@@ -32032,6 +32057,8 @@
 							(0, _jquery2.default)('.customfont1').each(function () {
 								(0, _jquery2.default)(this).css({ fontSize: '30px' });
 							});
+
+							(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 60 });
 
 							customfont1Clone.style.fontSize = '40px';
 							customfont2Clone.style.fontSize = '40px';
@@ -32043,6 +32070,8 @@
 									(0, _jquery2.default)(this).css({ fontSize: '40px' });
 								});
 
+								(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 50 });
+
 								customfont1Clone.style.fontSize = '50px';
 								customfont2Clone.style.fontSize = '50px';
 								elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
@@ -32052,6 +32081,8 @@
 									(0, _jquery2.default)('.customfont1').each(function () {
 										(0, _jquery2.default)(this).css({ fontSize: '50px' });
 									});
+
+									(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 40 });
 
 									customfont1Clone.style.fontSize = '60px';
 									customfont2Clone.style.fontSize = '60px';
@@ -32063,6 +32094,8 @@
 											(0, _jquery2.default)(this).css({ fontSize: '60px' });
 										});
 
+										(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 30 });
+
 										customfont1Clone.style.fontSize = '70px';
 										customfont2Clone.style.fontSize = '70px';
 										elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
@@ -32072,6 +32105,8 @@
 											(0, _jquery2.default)('.customfont1').each(function () {
 												(0, _jquery2.default)(this).css({ fontSize: '70px' });
 											});
+
+											(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 20 });
 
 											customfont1Clone.style.fontSize = '80px';
 											customfont2Clone.style.fontSize = '80px';
@@ -32083,6 +32118,8 @@
 													(0, _jquery2.default)(this).css({ fontSize: '80px' });
 												});
 
+												(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+
 												customfont1Clone.style.fontSize = '90px';
 												customfont2Clone.style.fontSize = '90px';
 												elementWidthIfChanged = (0, _jquery2.default)(customfont1Clone).outerWidth() + (0, _jquery2.default)(customfont2Clone).outerWidth();
@@ -32092,6 +32129,8 @@
 													(0, _jquery2.default)('.customfont1').each(function () {
 														(0, _jquery2.default)(this).css({ fontSize: '90px' });
 													});
+
+													(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 10 });
 												}
 											}
 										}
