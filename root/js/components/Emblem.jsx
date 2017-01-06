@@ -91,9 +91,12 @@ var Emblem = React.createClass({
 		EmblemObject.backgroundImageWidth = stylesHelper.backgroundImageWidth;
 
 
+		//Coty 01-05-2017 added a new Seal.png file and I need to change some of the calculations for the topShift
+		//the height was increased by 20px but the fontHeader didnt need to move at all
+
 		//now I will set the logo's position up in the correct position on the screen
-		var topToShift = $('#logo').outerHeight() - 10;	//-10 to not cut off the bottom of the fancy font heading
-		$('#fontHeader').css({ top: topToShift });
+		EmblemObject.topShift = $('#logo').outerHeight() - 40;	//-10 to not cut off the bottom of the fancy font heading
+		$('#fontHeader').css({ top: EmblemObject.topShift });
 
 	},
 	render: function() {
@@ -143,6 +146,11 @@ var EmblemObject = {
 	backgroundImageWidth: '',
 	prior_scrollTop: 0,
 	increment: 1,
+
+	topShift: 0,
+
+
+
 	start: function() {
 		window.addEventListener('scroll', EmblemObject.pageDidScroll)
 
@@ -216,6 +224,7 @@ var EmblemObject = {
 				$('.customfont1').each(function() {
 					$(this).css({ fontSize: '90px' });
 				});
+				$('#fontHeader').css({ top: EmblemObject.topShift + 10 });
 
 				fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 				if(fontTotalWidth >= totalWidth) {
@@ -223,40 +232,57 @@ var EmblemObject = {
 						$(this).css({ fontSize: '80px' });
 					});
 
+					// alert(EmblemObject.topShift)
+
+					$('#fontHeader').css({ top: EmblemObject.topShift + 10 });					
+
 					fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 					if(fontTotalWidth >= totalWidth) {
 						$('.customfont1').each(function() {
 							$(this).css({ fontSize: '70px' });
-						});				
+						});
+
+						$('#fontHeader').css({ top: EmblemObject.topShift + 20 });			
 				
 						fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 						if(fontTotalWidth >= totalWidth) {
 							$('.customfont1').each(function() {
 								$(this).css({ fontSize: '60px' });
 							});
+
+							$('#fontHeader').css({ top: EmblemObject.topShift + 30 });
 							
 							fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 							if(fontTotalWidth >= totalWidth) {
 								$('.customfont1').each(function() {
 									$(this).css({ fontSize: '50px' });
 								});
+
+								$('#fontHeader').css({ top: EmblemObject.topShift + 40 });
 								
 								fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 								if(fontTotalWidth >= totalWidth) {
 									$('.customfont1').each(function() {
 										$(this).css({ fontSize: '40px' });
 									});
+
+									$('#fontHeader').css({ top: EmblemObject.topShift + 50 });
 									
 									fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 									if(fontTotalWidth >= totalWidth) {
 										$('.customfont1').each(function() {
 											$(this).css({ fontSize: '30px' });
 										});
+
+										$('#fontHeader').css({ top: EmblemObject.topShift + 60 });
+
 										fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 										if(fontTotalWidth >= totalWidth) {
 											$('.customfont1').each(function() {
 												$(this).css({ fontSize: '20px' });
 											});
+
+											$('#fontHeader').css({ top: EmblemObject.topShift + 70 });
 										}
 									}
 								}
@@ -295,7 +321,8 @@ var EmblemObject = {
 					//I will remove the inline style and allow the css stylesheet take over
 					$('.customfont1').each(function() {
 						$(this).css({ fontSize: '' });
-					})
+					});
+					$('#fontHeader').css({ top: EmblemObject.topShift });
 				}
 				else {
 					customfont1Clone.style.fontSize = '30px';
@@ -305,8 +332,9 @@ var EmblemObject = {
 						//I will remove the inline style and allow the css stylesheet take over
 						$('.customfont1').each(function() {
 							$(this).css({ fontSize: '30px' });
-						})
+						});
 
+						$('#fontHeader').css({ top: EmblemObject.topShift + 60 });
 
 						customfont1Clone.style.fontSize = '40px';
 						customfont2Clone.style.fontSize = '40px';
@@ -316,7 +344,9 @@ var EmblemObject = {
 							//I will remove the inline style and allow the css stylesheet take over
 							$('.customfont1').each(function() {
 								$(this).css({ fontSize: '40px' });
-							})
+							});
+
+							$('#fontHeader').css({ top: EmblemObject.topShift + 50 });
 
 							customfont1Clone.style.fontSize = '50px';
 							customfont2Clone.style.fontSize = '50px';
@@ -326,7 +356,9 @@ var EmblemObject = {
 								//I will remove the inline style and allow the css stylesheet take over
 								$('.customfont1').each(function() {
 									$(this).css({ fontSize: '50px' });
-								})
+								});
+
+								$('#fontHeader').css({ top: EmblemObject.topShift + 40 });
 
 								customfont1Clone.style.fontSize = '60px';
 								customfont2Clone.style.fontSize = '60px';
@@ -336,7 +368,9 @@ var EmblemObject = {
 									//I will remove the inline style and allow the css stylesheet take over
 									$('.customfont1').each(function() {
 										$(this).css({ fontSize: '60px' });
-									})
+									});
+
+									$('#fontHeader').css({ top: EmblemObject.topShift + 30 });
 
 									customfont1Clone.style.fontSize = '70px';
 									customfont2Clone.style.fontSize = '70px';
@@ -346,7 +380,9 @@ var EmblemObject = {
 										//I will remove the inline style and allow the css stylesheet take over
 										$('.customfont1').each(function() {
 											$(this).css({ fontSize: '70px' });
-										})
+										});
+
+										$('#fontHeader').css({ top: EmblemObject.topShift + 20 });
 									
 										customfont1Clone.style.fontSize = '80px';
 										customfont2Clone.style.fontSize = '80px';
@@ -356,7 +392,9 @@ var EmblemObject = {
 											//I will remove the inline style and allow the css stylesheet take over
 											$('.customfont1').each(function() {
 												$(this).css({ fontSize: '80px' });
-											})
+											});
+
+											$('#fontHeader').css({ top: EmblemObject.topShift + 10 });
 
 											customfont1Clone.style.fontSize = '90px';
 											customfont2Clone.style.fontSize = '90px';
@@ -366,7 +404,9 @@ var EmblemObject = {
 												//I will remove the inline style and allow the css stylesheet take over
 												$('.customfont1').each(function() {
 													$(this).css({ fontSize: '90px' });
-												})
+												});
+
+												$('#fontHeader').css({ top: EmblemObject.topShift + 10 });
 											}
 										}
 									}								

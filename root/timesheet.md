@@ -55,4 +55,4 @@ started development: Wed Jan  04 00:00:00|06:46pm 2017+false
 ended development: Wed Jan  04 00:01:00|07:20pm CST 2017+false
 //fix the below from the 12 hour time format to be the army time format bc the army time is wrong (I set up the domain name to direct to the correct domain name rather than the elastic beanstalk url and added the new Seal)
 started development: Wed Jan  05 00:00:00|07:10pm 2017+false
-ended development: Wed Jan  05 00:01:00|07:10pm CST 2017+false
+ended development: Wed Jan  05 00:01:00|08:48pm CST 2017+false

@@ -160,13 +160,13 @@ html, body {
 	background: orange;
 }
 #logo { /* logo is #svg2's parent element */
-	width: 325px;
+	width: 355px;
 	margin-right: auto;
 	margin-left: auto;
 }
 #svg2 {
-	width: 325px;
-	height: 325px;
+	width: 355px;
+	height: 355px;
 }
 
 /*

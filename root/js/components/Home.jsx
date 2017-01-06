@@ -106,11 +106,6 @@ var Home = React.createClass({
 
 			styles.widthPercentage;
 		}
-		else {
-			console.log('here')
-		}
-
-
 		//end 12-19-2016
 
 	},
