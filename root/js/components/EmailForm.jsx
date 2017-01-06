@@ -95,7 +95,7 @@ export default class EmailForm extends React.Component {
             Subject:
           </div>
           <div>
-            <textarea style={styles.subject} type="text" value={this.state.subject} onChange={this.handleSubjectChange} />
+            <input style={styles.subject} type="text" value={this.state.subject} onChange={this.handleSubjectChange} />
           </div>
 
           <br />
@@ -132,8 +132,8 @@ var styles = {
     marginBottom: 5
   },
   subject: {
-    width: 200,
-    height: 200,
+    width: 280,
+    height: 50,
     fontSize: 33,
     marginBottom: 5,
     // float: 'right'

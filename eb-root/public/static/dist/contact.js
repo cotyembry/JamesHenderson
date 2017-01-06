@@ -34101,7 +34101,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement('textarea', { style: styles.subject, type: 'text', value: this.state.subject, onChange: this.handleSubjectChange })
+	            _react2.default.createElement('input', { style: styles.subject, type: 'text', value: this.state.subject, onChange: this.handleSubjectChange })
 	          ),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
@@ -34140,8 +34140,8 @@
 	    marginBottom: 5
 	  },
 	  subject: {
-	    width: 200,
-	    height: 200,
+	    width: 280,
+	    height: 50,
 	    fontSize: 33,
 	    marginBottom: 5
 	  },
