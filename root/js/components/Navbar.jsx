@@ -18,6 +18,43 @@ var Navbar = React.createClass({
 	componentDidMount: function(e) {
 
 		$(window).resize(this.adjustSize);
+
+		// I will finish this logic later when I have more time
+		//
+		// //Coty added 01-13-2017
+		// //now to add a style to the background
+		// //styles.navbarItemActive
+		// //depending on the page is going to depend on what element has the inline style for the backgroundColor
+		// //1. figure out the path
+		// var path = location.toString().split('/')[3];	//if home this should equal '' to be true
+		// //2. remove all inline-styles
+		// $('.navbar-item').each(function() {
+		// 	//let the css stylesheet take over for the css style by removing the inline-style
+		// 	$(this).css({backgroundColor: ''}).removeClass('activeItem');
+		// });
+
+		// //3. add the class back to the appropriate navbar-item and also add the inline-style
+		// if(path == '') {
+		// 	$('#1-navbar-item').css(styles.navbarItemActive)
+		// 	$(this).hover(function() {
+		// 		// alert("hakjf")
+		// 	})
+		// }
+		// else {
+		// 	alert('write some more code')
+		// }
+
+		// // if(path == '') {
+		// // 	//add the style
+		// // 	styles.navbarItemActive
+		// // }
+
+		// // if(location.path.search(/\/|''/gi)) {
+		// // 	alert('true');
+		// // }
+		// // else {
+		// // 	alert('false')
+		// // }
 	},
 	render: function() {
 		$.extend(parentNavbar, {
@@ -217,6 +254,12 @@ var navbarItem = {
 var lastChild = {
 	width: (100/6) + '%',
 	height: '100%'
+}
+
+var styles = {
+	navbarItemActive: {
+		backgroundColor: '#e69500'
+	}
 }
 
 // var divStyle = {
