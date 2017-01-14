@@ -38,7 +38,9 @@ height - not very intrusive at all)
 var Emblem = React.createClass({
 	getInitialState: function() {
 		return {
-			gradientHelperTopShift: 350
+			gradientHelperTopShift: 350,
+			displayForFontHeader: 'block',
+			visibilityForFontHeader: 'hidden'
 		}
 	},
 	componentDidMount: function() {
@@ -64,21 +66,30 @@ var Emblem = React.createClass({
 		EmblemObject.bodyElement = document.getElementById('body');
 		$(window).resize( EmblemObject.resize );
 		EmblemObject.resize();
-	
+
 		var fontText1 = document.getElementById('fontText1');
 		var fontText2 = document.getElementById('fontText2');
 		var fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 
 		this.startingFontTotalWidth = fontTotalWidth;
 
+		//I added this intervalChecker logic because I was having a difficult time getting the size of the font element; the sizes would come up differently at different times so I figured out some logic that is sort of an assertion to make sure the correct sizes are being set
 		var intervalChecker = function() {
 			var fontText1 = document.getElementById('fontText1');
 			var fontText2 = document.getElementById('fontText2');
 			var fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 			//if here then I am satisfied the font element has quit shifiting sizes on the page
 			if(this.startingFontTotalWidth != fontTotalWidth) {
-				EmblemObject.resize();
 				clearInterval(this.clearInterval);
+				//this if statement should be ran every single time or there is going to be a problem with how the page looks
+				EmblemObject.resize();
+				this.setState({							//Coty added 01-13-2017 to make sure to show the element
+					displayForFontHeader: 'none',		//I set this to none because I am about to do a jquery animation
+					visibilityForFontHeader: 'visible'
+				});	
+				//now that the display is set to none I will do the animation
+				$('#fontHeader').fadeIn(2000);
+				this.setState({displayForFontHeader: 'block'})
 			}
 		}
 
@@ -100,6 +111,11 @@ var Emblem = React.createClass({
 
 	},
 	render: function() {
+		//Coty added 01-13-2017 next three lines to add a fade in effect on the font header
+		var fontHeaderContainerTempClone = {};
+		Object.assign(fontHeaderContainerTempClone, styles.fontHeaderContainer);
+		fontHeaderContainerTempClone.visibility = this.state.visibilityForFontHeader;
+		fontHeaderContainerTempClone.display = this.state.displayForFontHeader;
 		return (
 			<div>
 				{/*<div style={styles.backgroundImage}></div>*/}
@@ -112,7 +128,7 @@ var Emblem = React.createClass({
 				
 
 				{/* the font declarations and the size is set in index.html */}
-				<div style={styles.fontHeaderContainer} id="fontHeader">
+				<div style={fontHeaderContainerTempClone} id="fontHeader">
 					<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
 				</div>
 				
@@ -196,7 +212,6 @@ var EmblemObject = {
 	},
 
 	resize: function() {
-
 		var totalWidth = parseFloat(window.top.document.documentElement.clientWidth);
 		
 		//start Coty added 12-23-2016 to make the image position change based on the size of the image
@@ -506,6 +521,7 @@ var styles = {
 	},
 	fontHeaderContainer: {
 		width: '100%',
+		visibility: 'hidden',
 		textAlign: 'center',
 		position: 'fixed',
 		zIndex: 3
