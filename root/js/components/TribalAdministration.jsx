@@ -52,6 +52,8 @@ export default class TribalAdministration extends React.Component {
 		// 	styles.container.width = '';
 		// }
 		$(window).resize(this.resize.bind(this))
+		this.priorWidth = $('#page').outerWidth();	//save this for the resize event
+
 
 	}
 	resize() {
@@ -128,6 +130,16 @@ export default class TribalAdministration extends React.Component {
 		}
 		//end 3161230
 
+
+		//Coty added 01-15-2017
+		//now to add logic to be able to properly set the <img> elements parent width (i.e. the <center> element)
+		//everytime the page size changes, with respect to width, change the center element's width to match
+		var currentWidth = $('#page').outerWidth();
+		if(currentWidth !== this.priorWidth) {
+			//the width has changed and needs to be set
+			$('#imgParent').css({ width: currentWidth });
+		}
+		this.priorWidth = currentWidth;	//make sure to save this for the next iteration
 	}
 	render() {
 		return (
@@ -178,6 +190,9 @@ export default class TribalAdministration extends React.Component {
 						</div>
 					</div>
 				</center>
+				<center id="imgParent" style={styles.imgParent}>
+					<img id="districtMap" src={styles.districtMap.src}></img>
+				</center>
 			</div>
 		)
 	}
@@ -203,6 +218,12 @@ var styles = {
 	div: {
 		paddingBottom: 5,
 		fontSize: 40
+	},
+	districtMap: {
+		src: '../../assets/districtMapOriginal.png'
+	},
+	imgParent: {
+		overflowX: 'scroll'
 	},
 	paddingLeft: {
 		// paddingLeft: 25
