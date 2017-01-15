@@ -10,6 +10,18 @@ import $ from 'jquery';
 //todo: make the nav bars change colors for a few seconds when tapped on to make the website more touchscreen friendly
 
 var Navbar = React.createClass({
+	addHoverEvent: function(navbarItem) {
+		$(navbarItem).hover(
+			//handlerIn
+			function() {
+				$(this).css({ backgroundColor: '#cc8500' });
+			},
+			//handlerOut
+			function() {
+				$(this).css({ backgroundColor: 'rgb(230, 149, 0)' });
+			}
+		)		
+	},
 	getInitialState: function() {
 		return {
 			default: 'default'
@@ -20,41 +32,81 @@ var Navbar = React.createClass({
 		$(window).resize(this.adjustSize);
 
 		// I will finish this logic later when I have more time
-		//
-		// //Coty added 01-13-2017
-		// //now to add a style to the background
-		// //styles.navbarItemActive
-		// //depending on the page is going to depend on what element has the inline style for the backgroundColor
-		// //1. figure out the path
-		// var path = location.toString().split('/')[3];	//if home this should equal '' to be true
-		// //2. remove all inline-styles
-		// $('.navbar-item').each(function() {
-		// 	//let the css stylesheet take over for the css style by removing the inline-style
-		// 	$(this).css({backgroundColor: ''}).removeClass('activeItem');
-		// });
+		
+		//Coty added 01-13-2017
+		//now to add a style to the background
+		//styles.navbarItemActive
+		//depending on the page is going to depend on what element has the inline style for the backgroundColor
+		//1. figure out the path
+		var path = location.toString().split('/')[3];	//if home this should equal '' to be true
+		//2. remove all inline-styles
+		$('.navbar-item').each(function() {
+			//let the css stylesheet take over for the css style by removing the inline-style
+			$(this).css({backgroundColor: ''}).removeClass('activeItem');
+		});
 
-		// //3. add the class back to the appropriate navbar-item and also add the inline-style
+		//3. add the class back to the appropriate navbar-item and also add the inline-style
+		if(path == '') {
+			var navbarItem = $('#1-navbar-item')[0];
+			$(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+			this.addHoverEvent(navbarItem);
+		}
+		else if(path.search(/history/gi) != -1) {
+			var navbarItem = $('#2-navbar-item')[0];
+			$(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+			this.addHoverEvent(navbarItem);
+		}
+		else if(path.search(/tribaladministration/gi) != -1) {
+			var navbarItem = $('#3-navbar-item')[0];
+			$(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+			this.addHoverEvent(navbarItem);
+		}
+		else if(path.search(/application/gi) != -1) {
+			var navbarItem = $('#4-navbar-item')[0];
+			$(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+			this.addHoverEvent(navbarItem);
+		}
+		else if(path.search(/beliefs/gi) != -1) {
+			var navbarItem = $('#5-navbar-item')[0];
+			$(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+			this.addHoverEvent(navbarItem);
+		}
+		else if(path.search(/contact/gi) != -1) {
+			var navbarItem = $('#6-navbar-item')[0];
+			$(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+			this.addHoverEvent(navbarItem);
+		}
+		else {
+			alert('issues will occur if the code gets here')
+		}
+
+
+
+
 		// if(path == '') {
-		// 	$('#1-navbar-item').css(styles.navbarItemActive)
-		// 	$(this).hover(function() {
-		// 		// alert("hakjf")
-		// 	})
+		// 	//add the style
+		// 	styles.navbarItemActive
+		// }
+
+		// if(location.path.search(/\/|''/gi)) {
+		// 	alert('true');
 		// }
 		// else {
-		// 	alert('write some more code')
+		// 	alert('false')
 		// }
 
-		// // if(path == '') {
-		// // 	//add the style
-		// // 	styles.navbarItemActive
-		// // }
 
-		// // if(location.path.search(/\/|''/gi)) {
-		// // 	alert('true');
-		// // }
-		// // else {
-		// // 	alert('false')
-		// // }
+
+
+
+		//after the above logic is written I need to make sure to have the styling work correctly
+		//i.e. for the mousedown I want the color of the element to change to give the feel of pressing a button
+		// $()
+
+
+
+
+
 	},
 	render: function() {
 		$.extend(parentNavbar, {

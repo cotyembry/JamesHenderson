@@ -33137,6 +33137,17 @@
 	var Navbar = _react2.default.createClass({
 		displayName: 'Navbar',
 
+		addHoverEvent: function addHoverEvent(navbarItem) {
+			(0, _jquery2.default)(navbarItem).hover(
+			//handlerIn
+			function () {
+				(0, _jquery2.default)(this).css({ backgroundColor: '#cc8500' });
+			},
+			//handlerOut
+			function () {
+				(0, _jquery2.default)(this).css({ backgroundColor: 'rgb(230, 149, 0)' });
+			});
+		},
 		getInitialState: function getInitialState() {
 			return {
 				default: 'default'
@@ -33145,6 +33156,67 @@
 		componentDidMount: function componentDidMount(e) {
 
 			(0, _jquery2.default)(window).resize(this.adjustSize);
+
+			// I will finish this logic later when I have more time
+
+			//Coty added 01-13-2017
+			//now to add a style to the background
+			//styles.navbarItemActive
+			//depending on the page is going to depend on what element has the inline style for the backgroundColor
+			//1. figure out the path
+			var path = location.toString().split('/')[3]; //if home this should equal '' to be true
+			//2. remove all inline-styles
+			(0, _jquery2.default)('.navbar-item').each(function () {
+				//let the css stylesheet take over for the css style by removing the inline-style
+				(0, _jquery2.default)(this).css({ backgroundColor: '' }).removeClass('activeItem');
+			});
+
+			//3. add the class back to the appropriate navbar-item and also add the inline-style
+			if (path == '') {
+				var navbarItem = (0, _jquery2.default)('#1-navbar-item')[0];
+				(0, _jquery2.default)(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+				this.addHoverEvent(navbarItem);
+			} else if (path.search(/history/gi) != -1) {
+				var navbarItem = (0, _jquery2.default)('#2-navbar-item')[0];
+				(0, _jquery2.default)(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+				this.addHoverEvent(navbarItem);
+			} else if (path.search(/tribaladministration/gi) != -1) {
+				var navbarItem = (0, _jquery2.default)('#3-navbar-item')[0];
+				(0, _jquery2.default)(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+				this.addHoverEvent(navbarItem);
+			} else if (path.search(/application/gi) != -1) {
+				var navbarItem = (0, _jquery2.default)('#4-navbar-item')[0];
+				(0, _jquery2.default)(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+				this.addHoverEvent(navbarItem);
+			} else if (path.search(/beliefs/gi) != -1) {
+				var navbarItem = (0, _jquery2.default)('#5-navbar-item')[0];
+				(0, _jquery2.default)(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+				this.addHoverEvent(navbarItem);
+			} else if (path.search(/contact/gi) != -1) {
+				var navbarItem = (0, _jquery2.default)('#6-navbar-item')[0];
+				(0, _jquery2.default)(navbarItem).css(styles.navbarItemActive).addClass('activeItem');
+				this.addHoverEvent(navbarItem);
+			} else {
+				alert('issues will occur if the code gets here');
+			}
+
+			// if(path == '') {
+			// 	//add the style
+			// 	styles.navbarItemActive
+			// }
+
+			// if(location.path.search(/\/|''/gi)) {
+			// 	alert('true');
+			// }
+			// else {
+			// 	alert('false')
+			// }
+
+
+			//after the above logic is written I need to make sure to have the styling work correctly
+			//i.e. for the mousedown I want the color of the element to change to give the feel of pressing a button
+			// $()
+
 		},
 		render: function render() {
 			_jquery2.default.extend(parentNavbar, {
@@ -33370,6 +33442,12 @@
 	var lastChild = {
 		width: 100 / 6 + '%',
 		height: '100%'
+	};
+
+	var styles = {
+		navbarItemActive: {
+			backgroundColor: '#e69500'
+		}
 	};
 
 	// var divStyle = {
