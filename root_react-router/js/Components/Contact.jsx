@@ -10,6 +10,13 @@ import ReactDOM from 'react-dom';
 import Navbar from './Navbar.jsx';
 import EmailForm from './EmailForm.jsx';
 
+
+
+import StaticEmailForm from './StaticEmailForm.jsx';
+
+
+
+
 import LoadingIcon from './LoadingIcon1.jsx';
 
 import $ from 'jquery';
@@ -163,10 +170,16 @@ export default class Contact extends React.Component {
 
 					<center style={styles.emailFormParent}>
 						<div style={styles.emailCaption}>
-							Send us an email below
+							To send us an email
 						</div>
 
-						<EmailForm />
+						{/*<StaticEmailForm /><EmailForm /> Coty commented out 02-17-2017 */}
+						<a style={styles.a} href = 'mailto:cotyembry@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
+
+						<div style={styles.emailCaptionEnding}>
+							Or send it directly at <span style={styles.span}>CHIEFAMCKAY@gmail.com</span>
+						</div>
+
 
 					</center>
 
@@ -207,6 +220,11 @@ export default class Contact extends React.Component {
 
 
 var styles = {
+	a: {
+		color: 'white',
+		cursor: 'pointer',
+		fontSize: 20
+	},
 	page: {
 		width: '100%',
 		// height: 1000,
@@ -237,11 +255,20 @@ var styles = {
 		fontSize: 25,
 		marginBottom: 10
 	},
+	emailCaptionEnding: {
+		color: 'white',
+		fontSize: 18,
+		marginTop: 10,
+		marginBottom: 10
+	},
 	emailFormParent: {
 		width: '100%'
 	},
 	fontSizeHelper: {
 		fontSize: 30
+	},
+	link: {
+		color: '#4db8ff'
 	},
 	mapParent: {
 		display: 'inline-block'//,
@@ -272,6 +299,9 @@ var styles = {
 		margin: 0,
 		marginTop: 30,
 		padding: 0
+	},
+	span: {
+		// color: '#4db8ff'
 	}
 }
 
