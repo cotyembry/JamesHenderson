@@ -16,14 +16,35 @@ export default class StaticEmailForm extends React.Component {
   render() {
     return (
       <div id="divFormId">
+        {/*
         <form action="https://formspree.io/cotyembry@gmail.com" method="POST">
             <input type="text" name="subject" />
             <input type="email" name="message" />
             <input type="submit" value="Send" />
         </form>
-        
+        */}
+
       </div>
     )
+  }
+
+  send() {
+    //TODO: get this working
+
+    // var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
+    // var domain = 'www.mydomain.com';
+    // var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+     
+    // var data = {
+    //   from: 'Excited User <me@samples.mailgun.org>',
+    //   to: 'serobnic@mail.ru',
+    //   subject: 'Hello',
+    //   text: 'Testing some Mailgun awesomness!'
+    // };
+     
+    // mailgun.messages().send(data, function (error, body) {
+    //   console.log(body);
+    // });
   }
 }
 
