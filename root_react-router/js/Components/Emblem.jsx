@@ -480,7 +480,7 @@ var EmblemObject = {
 			//end Coty 12-28-2016
 
 		}
-	},
+	}
 }
 
 var stylesHelper = {
