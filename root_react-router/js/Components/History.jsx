@@ -23,7 +23,10 @@ var History = React.createClass({
 
 		//first I will set the page's width
 		var widthToSet = $(document.documentElement).outerWidth();
-		$('#page').css({ 'width': widthToSet + 'px' });
+//		$('#page').css({ 'width': widthToSet + 'px' });	//coty 03-08-2017 commented out since this was causing a verticle scroll bar
+
+
+
 
 		// console.log('document.documentElement.clientWidth = ', document.documentElement.clientWidth, 'widthToSet = ', widthToSet);
 
@@ -42,11 +45,13 @@ var History = React.createClass({
 		// var totalFontWidth = fontText1 + fontText2;
 		// this.totalFontWidth = totalFontWidth;
 
-		// alert($(window).outerWidth())
-		// alert($(window).outerHeight())
-		$(window).resize( self.resize )
+
+
+//		$(window).resize( self.resize )			coty commented out 03-08-2017 since I am just setting the width to be 100%
 		//and so its ran at least one time
-		this.resize();
+//		this.resize();
+
+
 
 		// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 		// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })

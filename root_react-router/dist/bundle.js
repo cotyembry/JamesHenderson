@@ -72,19 +72,19 @@
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Emblem = __webpack_require__(332);
+	var _Emblem = __webpack_require__(333);
 
 	var _Emblem2 = _interopRequireDefault(_Emblem);
 
-	var _History = __webpack_require__(333);
+	var _History = __webpack_require__(334);
 
 	var _History2 = _interopRequireDefault(_History);
 
-	var _Home = __webpack_require__(334);
+	var _Home = __webpack_require__(335);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _TribalAdministration = __webpack_require__(335);
+	var _TribalAdministration = __webpack_require__(336);
 
 	var _TribalAdministration2 = _interopRequireDefault(_TribalAdministration);
 
@@ -39372,7 +39372,11 @@
 
 	var _EmailForm2 = _interopRequireDefault(_EmailForm);
 
-	var _LoadingIcon = __webpack_require__(331);
+	var _StaticEmailForm = __webpack_require__(331);
+
+	var _StaticEmailForm2 = _interopRequireDefault(_StaticEmailForm);
+
+	var _LoadingIcon = __webpack_require__(332);
 
 	var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
 
@@ -39557,9 +39561,28 @@
 							_react2.default.createElement(
 								'div',
 								{ style: styles.emailCaption },
-								'Send us an email below'
+								'To send us an email'
 							),
-							_react2.default.createElement(_EmailForm2.default, null)
+							_react2.default.createElement(
+								'a',
+								{ style: styles.a, href: 'mailto:cotyembry@gmail.com?subject=Contact Sovereign Chickamauga Cherokee' },
+								_react2.default.createElement(
+									'span',
+									{ style: styles.link },
+									'Click Here'
+								),
+								' (this opens your mail app)'
+							),
+							_react2.default.createElement(
+								'div',
+								{ style: styles.emailCaptionEnding },
+								'Or send it directly at ',
+								_react2.default.createElement(
+									'span',
+									{ style: styles.span },
+									'CHIEFAMCKAY@gmail.com'
+								)
+							)
 						)
 					)
 				);
@@ -39599,6 +39622,11 @@
 
 	exports.default = Contact;
 	var styles = {
+		a: {
+			color: 'white',
+			cursor: 'pointer',
+			fontSize: 20
+		},
 		page: (_page = {
 			width: '100%',
 			// height: 1000,
@@ -39622,11 +39650,20 @@
 			fontSize: 25,
 			marginBottom: 10
 		},
+		emailCaptionEnding: {
+			color: 'white',
+			fontSize: 18,
+			marginTop: 10,
+			marginBottom: 10
+		},
 		emailFormParent: {
 			width: '100%'
 		},
 		fontSizeHelper: {
 			fontSize: 30
+		},
+		link: {
+			color: '#4db8ff'
 		},
 		mapParent: {
 			display: 'inline-block' //,
@@ -39657,6 +39694,9 @@
 			margin: 0,
 			marginTop: 30,
 			padding: 0
+		},
+		span: {
+			// color: '#4db8ff'
 		}
 	};
 
@@ -39934,6 +39974,121 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(235);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(261);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(262);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(266);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(313);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _jquery = __webpack_require__(233);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var self;
+
+	var StaticEmailForm = function (_React$Component) {
+	  (0, _inherits3.default)(StaticEmailForm, _React$Component);
+
+	  function StaticEmailForm() {
+	    (0, _classCallCheck3.default)(this, StaticEmailForm);
+	    return (0, _possibleConstructorReturn3.default)(this, (StaticEmailForm.__proto__ || (0, _getPrototypeOf2.default)(StaticEmailForm)).apply(this, arguments));
+	  }
+
+	  (0, _createClass3.default)(StaticEmailForm, [{
+	    key: 'componentDidMount',
+
+	    // constructor(props) {
+	    // }
+
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', { id: 'divFormId' });
+	    }
+	  }, {
+	    key: 'send',
+	    value: function send() {
+	      //TODO: get this working
+
+	      // var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
+	      // var domain = 'www.mydomain.com';
+	      // var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+
+	      // var data = {
+	      //   from: 'Excited User <me@samples.mailgun.org>',
+	      //   to: 'serobnic@mail.ru',
+	      //   subject: 'Hello',
+	      //   text: 'Testing some Mailgun awesomness!'
+	      // };
+
+	      // mailgun.messages().send(data, function (error, body) {
+	      //   console.log(body);
+	      // });
+	    }
+	  }]);
+	  return StaticEmailForm;
+	}(_react2.default.Component);
+
+	exports.default = StaticEmailForm;
+
+
+	var styles = {
+	  labelStyle: {
+	    fontSize: 20,
+	    color: 'white'
+	  },
+	  sendTo: {
+	    marginBottom: 5
+	  },
+	  subject: {
+	    width: 280,
+	    height: 50,
+	    fontSize: 33,
+	    marginBottom: 5
+	  },
+	  messageBody: {
+	    width: 200,
+	    height: 200,
+	    fontSize: 30,
+	    marginBottom: 5
+	  },
+	  submit: {
+	    cursor: 'pointer',
+	    fontSize: 18
+	  }
+	};
+
+/***/ },
+/* 332 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
@@ -40018,7 +40173,7 @@
 	exports.default = LoadingIcon;
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40629,7 +40784,7 @@
 	module.exports = Emblem;
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40671,7 +40826,8 @@
 
 			//first I will set the page's width
 			var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
-			(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
+			//		$('#page').css({ 'width': widthToSet + 'px' });	//coty 03-08-2017 commented out since this was causing a verticle scroll bar
+
 
 			// console.log('document.documentElement.clientWidth = ', document.documentElement.clientWidth, 'widthToSet = ', widthToSet);
 
@@ -40690,11 +40846,11 @@
 			// var totalFontWidth = fontText1 + fontText2;
 			// this.totalFontWidth = totalFontWidth;
 
-			// alert($(window).outerWidth())
-			// alert($(window).outerHeight())
-			(0, _jquery2.default)(window).resize(self.resize);
+
+			//		$(window).resize( self.resize )			coty commented out 03-08-2017 since I am just setting the width to be 100%
 			//and so its ran at least one time
-			this.resize();
+			//		this.resize();
+
 
 			// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 			// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
@@ -40916,7 +41072,7 @@
 	module.exports = History;
 
 /***/ },
-/* 334 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40957,7 +41113,7 @@
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Emblem = __webpack_require__(332);
+	var _Emblem = __webpack_require__(333);
 
 	var _Emblem2 = _interopRequireDefault(_Emblem);
 
@@ -40977,7 +41133,10 @@
 
 			_this.elements = [];
 			_this.totalFontWidth = 0;
-			_this.smallestWidthPossible = 445;
+			_this.state = {
+				pElementDisplay: {},
+				smallestWidthPossible: 445
+			};
 			return _this;
 		}
 
@@ -40985,13 +41144,26 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+				var emblemElementOuterWidth = (0, _jquery2.default)('#backgroundImage').outerWidth(true);
 
+				if (this.state.smallestWidthPossible > emblemElementOuterWidth) {
+					this.setState({ smallestWidthPossible: emblemElementOuterWidth });
+				}
 				//TODO: in Emblem.jsx add logical to dynamically add the css stylesheet for the
 
 
+				// if
+				// this.state.pElementDisplay display: 'inline-block'
+
+
 				//first I will set the page's width
-				var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
-				(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
+				var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth(true);
+				var backgroundImageWidth = (0, _jquery2.default)('#backgroundImage').outerWidth(true);
+				if (backgroundImageWidth > widthToSet) {
+					widthToSet = backgroundImageWidth;
+				}
+
+				//$('#page').css({ 'width': widthToSet + 'px' });					//coty commented out 03-08-2017 since I am just setting the width to be 100%
 
 				//this is for Al's photo:
 				//setting the src attribute the React way in the styles object wasn't working so, jquery it is
@@ -41017,9 +41189,9 @@
 				// this.totalFontWidth = totalFontWidth;
 
 
-				(0, _jquery2.default)(window).resize(self.resize.bind(self));
+				//$(window).resize( self.resize.bind(self) )						//coty commented out 03-08-2017 since I am just setting the width to be 100%
 				//and so its ran at least one time
-				this.resize();
+				//this.resize();													//coty commented out 03-08-2017 since I am just setting the width to be 100%
 
 				// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 				// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
@@ -41030,10 +41202,16 @@
 				var self = this;
 
 				var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
+				var backgroundImageWidth = (0, _jquery2.default)('#backgroundImage').outerWidth(true);
+				var callResizeAgain = false; //this does nothing for messing
+				if (backgroundImageWidth > widthToSet) {
+					widthToSet = backgroundImageWidth;
+					callResizeAgain = true;
+				}
 
 				// console.log(widthToSet)
 
-				if (widthToSet >= this.smallestWidthPossible) {
+				if (widthToSet >= this.state.smallestWidthPossible) {
 					(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
 
 					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
@@ -41041,7 +41219,7 @@
 					EmblemObject.locked = false;
 				} else {
 					// console.log('two')
-					(0, _jquery2.default)('#page').css({ 'width': this.smallestWidthPossible + 'px' });
+					(0, _jquery2.default)('#page').css({ 'width': this.state.smallestWidthPossible + 'px' });
 
 					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
 					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
@@ -41054,21 +41232,26 @@
 
 				// console.log(widthTS, $('#paddingHelper').width())
 
-				//start Coty added 12-29-2016
-				var paddingHelperWidth = (0, _jquery2.default)('#paddingHelper').width();
-				if (widthTS > paddingHelper) {
-					//if the width of the content element is larger than what the width provided by the paddingHelper element make enough room for the content
-					//to correct, add the number of pixels difference to the width percentage
+				// //start Coty added 12-29-2016
+				// var paddingHelperWidth = $('#paddingHelper').width();
+				// if(widthTS > paddingHelper) {
+				// 	//if the width of the content element is larger than what the width provided by the paddingHelper element make enough room for the content
+				// 	//to correct, add the number of pixels difference to the width percentage
 
-					var amountOfPixelsToAdd = (0, _jquery2.default)('#pageHeading').outerWidth() - (0, _jquery2.default)('#paddingHelper').width();
+				// 	var amountOfPixelsToAdd = $('#pageHeading').outerWidth() - $('#paddingHelper').width();
 
-					styles.widthPercentage;
-				}
-				//end 12-19-2016
+
+				// }
+				// //end 12-19-2016
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+
+				// if(Object.keys(this.state.pElementDisplay).length === 0) {
+				// 	styles.paragraphElement = {...styles.paragraphElement, display: this.state.pElementDisplay }
+				// }
+
 				return _react2.default.createElement(
 					'div',
 					{ style: styles.paddingBottom },
@@ -41104,28 +41287,32 @@
 										{ style: styles.paragraphWrapper },
 										_react2.default.createElement(
 											'div',
-											{ style: styles.section1Heading, id: 'headerAndPictureWrapper' },
+											{ style: { display: 'block' } },
 											_react2.default.createElement(
-												'center',
-												{ id: 'headerWrapperCenterElement' },
+												'div',
+												{ style: styles.section1Heading, id: 'headerAndPictureWrapper' },
 												_react2.default.createElement(
-													'h2',
-													{ style: styles.removePaddingAndMargin },
-													'Military Hall of Honor Inductee'
-												),
-												_react2.default.createElement('img', { id: 'jpg1', style: styles.img }),
-												_react2.default.createElement(
-													'div',
-													{ id: 'headerWrapper' },
+													'center',
+													{ id: 'headerWrapperCenterElement' },
 													_react2.default.createElement(
 														'h2',
 														{ style: styles.removePaddingAndMargin },
-														'MSG ALBERT McKAY'
+														'Military Hall of Honor Inductee'
 													),
+													_react2.default.createElement('img', { id: 'jpg1', style: styles.img }),
 													_react2.default.createElement(
-														'h2',
-														{ style: styles.removePaddingAndMargin },
-														'U.S. Army'
+														'div',
+														{ id: 'headerWrapper' },
+														_react2.default.createElement(
+															'h2',
+															{ style: styles.removePaddingAndMargin },
+															'MSG ALBERT McKAY'
+														),
+														_react2.default.createElement(
+															'h2',
+															{ style: styles.removePaddingAndMargin },
+															'U.S. Army'
+														)
 													)
 												)
 											)
@@ -41267,6 +41454,7 @@
 			paddingBottom: 15
 		},
 		page: {
+			overflow: 'hidden',
 			zIndex: 2 //the Emblem.jsx Component returns the logo and all set with zIndex: 1 so to keep that Component from overlapping over the top of the content, this zIndex: 2 is needed
 		},
 		paragraphOne: {
@@ -41274,8 +41462,9 @@
 			float: 'right'
 		},
 		paragraphWrapper: {
-			paddingLeft: 15,
-			paddingRight: 15
+			marginLeft: 15,
+			marginRight: 15,
+			width: 'calc(100% - 30px)' //-30px to account for the margin's on the left and right side
 			// width: 500,
 			// marginLeft: 'auto',
 			// marginRight: 'auto'
@@ -41292,11 +41481,13 @@
 		},
 		section1Heading: {
 			width: 300, //that's what the picture's width is so this heading text will center perfectly above the picture
-
+			marginLeft: 'auto',
+			marginRight: 'auto',
 			// display: 'inline-block'
 			float: 'left'
 		},
 		section1: {
+			width: 'calc(100% - 30px)', //-30px to account for the left and right margins
 			paddingTop: 30,
 			marginLeft: 15,
 			marginRight: 15
@@ -41307,7 +41498,7 @@
 	module.exports = Home;
 
 /***/ },
-/* 335 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

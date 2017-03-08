@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server  --inline --content-base .",
+    "start": "webpack-dev-server --port=8080 --host=192.168.0.11 --inline --content-base .",
     "webpack": "webpack",
     "webpack-watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"

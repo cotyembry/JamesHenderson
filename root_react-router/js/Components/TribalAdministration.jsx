@@ -34,6 +34,9 @@ export default class TribalAdministration extends React.Component {
 		// $('.hasContainer').each(() => {
 		// 	this.style.width = largestWidth;
 		// })
+		
+
+
 		$('.hasContainer').each((index, element) => {
 			currentWidth = $(element).outerWidth();
 			if(currentWidth > largestWidth) {
@@ -42,7 +45,7 @@ export default class TribalAdministration extends React.Component {
 		})
 		this.largestWidth = largestWidth;	//store this for use later
 		$('.hasContainer').each((index, element) => {
-			$(element).css({ width: largestWidth });
+			$(element).css({ width: '100%', maxWidth: largestWidth });		//coty changed 3170308
 		})
 
 		// if I ever use this logic, it needs to be moved to a resize event handler and converted to use jquery instead
@@ -54,8 +57,11 @@ export default class TribalAdministration extends React.Component {
 		// else {
 		// 	styles.container.width = '';
 		// }
-		$(window).resize(this.resize.bind(this))
-		this.priorWidth = $('#page').outerWidth();	//save this for the resize event
+		
+
+		//coty commented out 3170308
+		//$(window).resize(this.resize.bind(this))
+		//this.priorWidth = $('#page').outerWidth();	//save this for the resize event
 
 
 	}
@@ -211,10 +217,13 @@ var styles = {
 	},
 	container: {
 		// width: 800,
+		boxSizing: 'border-box',
+		padding: '25px 25px 20px 25px',
+		margin: '25px 25px 20px 25px',
 		display: 'inline-block',
 		fontSize: 20,
-		padding: 20,
-	    marginBottom: 20,
+		// padding: 20,
+	    // marginBottom: 20,
 	    borderRadius: 0,
 	    backgroundColor: '#FFF',
 	    boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
@@ -233,6 +242,7 @@ var styles = {
 		// paddingLeft: 25
 	},
 	page: {
+		width: '100%',
 		// paddingLeft: 25,
 		// paddingTop: 20,
 		zIndex: 2 //the Emblem.jsx Component returns the logo and all set with zIndex: 1 so to keep that Component from overlapping over the top of the content, this zIndex: 2 is needed
