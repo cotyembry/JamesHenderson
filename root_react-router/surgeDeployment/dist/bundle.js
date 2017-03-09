@@ -68,23 +68,23 @@
 
 	var _Beliefs2 = _interopRequireDefault(_Beliefs);
 
-	var _Contact = __webpack_require__(325);
+	var _Contact = __webpack_require__(330);
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Emblem = __webpack_require__(332);
+	var _Emblem = __webpack_require__(334);
 
 	var _Emblem2 = _interopRequireDefault(_Emblem);
 
-	var _History = __webpack_require__(333);
+	var _History = __webpack_require__(335);
 
 	var _History2 = _interopRequireDefault(_History);
 
-	var _Home = __webpack_require__(334);
+	var _Home = __webpack_require__(336);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _TribalAdministration = __webpack_require__(335);
+	var _TribalAdministration = __webpack_require__(337);
 
 	var _TribalAdministration2 = _interopRequireDefault(_TribalAdministration);
 
@@ -38669,6 +38669,8 @@
 		displayName: 'Navbar',
 
 		addHoverEvent: function addHoverEvent(navbarItem) {
+
+			//TODO: maybe change the color of the narbar Item to be #F9EF1A (its yellowish) since it goes more with the Emblem.jsx theme
 			(0, _jquery2.default)(navbarItem).hover(
 			//handlerIn
 			function () {
@@ -39022,6 +39024,10 @@
 
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
+	var _extends2 = __webpack_require__(325);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
 	var _getPrototypeOf = __webpack_require__(235);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -39044,13 +39050,11 @@
 
 	var _page;
 
+	// import $ from 'jquery';
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _jquery = __webpack_require__(233);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
 
 	var _Navbar = __webpack_require__(322);
 
@@ -39061,64 +39065,129 @@
 	var Beliefs = function (_React$Component) {
 		(0, _inherits3.default)(Beliefs, _React$Component);
 
-		function Beliefs() {
+		function Beliefs(props) {
 			(0, _classCallCheck3.default)(this, Beliefs);
-			return (0, _possibleConstructorReturn3.default)(this, (Beliefs.__proto__ || (0, _getPrototypeOf2.default)(Beliefs)).apply(this, arguments));
+
+			var _this = (0, _possibleConstructorReturn3.default)(this, (Beliefs.__proto__ || (0, _getPrototypeOf2.default)(Beliefs)).call(this, props));
+
+			_this.state = {
+				height: ''
+			};
+			return _this;
 		}
 
 		(0, _createClass3.default)(Beliefs, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				this.refs = [];
+				this.refs['headers'] = []; //this will be used to expose the DOM element so I can use jquery.fittext.js on the elements
+				//TODO: finish this
+				//$(this.refs['header']).fitText(1.1, { minFontSize: '16px', maxFontSize: '60px' });
+			}
+		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				var self = this;
 
-				var topTS = (0, _jquery2.default)('#parent-navbar-item').outerHeight();
-				(0, _jquery2.default)('#contentParent').css({ top: topTS });
+				//this resets the css style in case it was changed by another component
+				$('#emblem-element').css({ width: '100%', height: 350 });
 
-				var heightTS = (0, _jquery2.default)('#contentParent').outerHeight() + topTS;
-				(0, _jquery2.default)('#page').css({ height: heightTS });
+				//TODO: convert this to use this.setState(...) 
+				// var topTS = $('#parent-navbar-item').outerHeight(true);
+				// $('#contentParent').css({ top: topTS });
+				// //these next two lines are needed to set the height of the #page element because since the navbar item is in position absolute, it causes the content to have to be position absolute
+				// //which doesnt control the height of the page element
+				// var heightTS = $('#contentParent').outerHeight(true) + topTS;
+				// // $('#page').css({ height: heightTS });
+				// this.setState({
+				// 	height: heightTS	//this.state.height will be used on the #page element
+				// })
 
-				this.window = window; //this will help later in the resize event as far as performance goes
-				(0, _jquery2.default)(window).resize(self.resize);
+				// this.window = window;	//this will help later in the resize event as far as performance goes
+				// $(window).resize(self.resize.bind(self));
+
+				this.refs['headers'].map(function (header) {
+					$(header).fitText(1.1, { minFontSize: '21px', maxFontSize: '35px' });
+				});
 			}
 		}, {
 			key: 'resize',
 			value: function resize() {
-				//start Coty added 12-21-2016
-				var totalWidth = this.window.document.documentElement.clientWidth;
-				// if(totalWidth <= (stylesHelper.minimumPageWidth + stylesHelper.padding)) {
-				if (totalWidth <= stylesHelper.minimumPageWidth) {
-					//this is the minimum width allowed, don't allow the width to get any smaller
-					//in this case the element #page is the page element that will keep
-					//the width state of the page
-					(0, _jquery2.default)('#page').css({ width: '800px' });
-					(0, _jquery2.default)('#emblem-element').css({ width: '800px' });
-					(0, _jquery2.default)('#fontHeader').css({ width: '800px' });
-					EmblemObject.locked = true;
-				} else {
-					//the width needs to stay at 100% if the totalWidth space allows for it
-					(0, _jquery2.default)('#page').css({ width: '100%' });
-					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
-					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
-					EmblemObject.locked = false;
+				var topTS = $('#parent-navbar-item').outerHeight(true);
+				var heightTS = $(this.refs['contentParent']).outerHeight(true) + topTS;
+				// $('#page').css({ height: heightTS });
+				try {
+					this.setState({
+						height: heightTS //this.state.height is used by the #page component
+					});
+				} catch (error) {
+					//do nothing
+					//I noticed an issue where setting the state in the resize event might throw an error if the component is currently not mounted when I call this so I wrapped it in a try catch
+					// console.error("ahh...")
 				}
-				//end
 			}
+
+			// coty commented out 03-09-2017 since I am making this website also mobile friendly
+			//
+			// resize() {
+			// 	//start Coty added 12-21-2016
+			// 	var totalWidth = this.window.document.documentElement.clientWidth;
+			// 	// if(totalWidth <= (stylesHelper.minimumPageWidth + stylesHelper.padding)) {
+			// 	if(totalWidth <= stylesHelper.minimumPageWidth) {
+			// 		//this is the minimum width allowed, don't allow the width to get any smaller
+			// 		//in this case the element #page is the page element that will keep
+			// 		//the width state of the page
+			// 		$('#page').css({ width: '800px' });
+			// 		$('#emblem-element').css({ width: '800px' });
+			// 		$('#fontHeader').css({ width: '800px' });
+			// 		EmblemObject.locked = true;
+			// 	}
+			// 	else {
+			// 		//the width needs to stay at 100% if the totalWidth space allows for it
+			// 		$('#page').css({ width: '100%' });
+			// 		$('#emblem-element').css({ width: '100%' });
+			// 		$('#fontHeader').css({ width: '100%' });
+			// 		EmblemObject.locked = false;
+			// 	}
+			// 	//end
+			// }
+
 		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+
+				var _styles = {};
+
+				if (document.documentElement.clientWidth < 400) {
+					_styles.container = (0, _extends3.default)({}, styles.container, { width: 'calc(100% - 70px)', marginLeft: 35, marginRight: 35 }); //-20px to account for the margin on the left and right side
+				} else {
+					_styles.container = (0, _extends3.default)({}, styles.container);
+				}
+
+				if (this.state.height !== '') {
+					_styles.page = (0, _extends3.default)({}, styles.page, { height: this.state.height });
+				} else {
+					_styles.page = (0, _extends3.default)({}, styles.page);
+				}
+
 				return _react2.default.createElement(
 					'div',
-					{ style: styles.page, id: 'page' },
+					{ style: _styles.page, id: 'page' },
 					_react2.default.createElement(_Navbar2.default, { fontSize: 20 }),
 					_react2.default.createElement(
 						'div',
-						{ id: 'contentParent', style: styles.beliefsRoot },
+						{ id: 'contentParent', ref: function ref(_ref4) {
+								_this2.refs['contentParent'] = _ref4;
+							}, style: styles.beliefsRoot },
 						_react2.default.createElement(
 							'div',
 							{ id: 'content', style: styles.content },
 							_react2.default.createElement(
 								'center',
-								{ style: styles.container },
+								{ ref: function ref(_ref) {
+										_this2.refs['headers'].push(_ref);
+									}, style: _styles.container },
 								_react2.default.createElement(
 									'h1',
 									{ style: styles.removePaddingAndMargin },
@@ -39127,11 +39196,13 @@
 							),
 							_react2.default.createElement(
 								'div',
-								{ style: styles.container },
+								{ style: _styles.container },
 								_react2.default.createElement('br', null),
 								_react2.default.createElement(
 									'center',
-									null,
+									{ ref: function ref(_ref2) {
+											_this2.refs['headers'].push(_ref2);
+										} },
 									_react2.default.createElement(
 										'h3',
 										{ style: styles.removePaddingAndMargin },
@@ -39160,7 +39231,9 @@
 							),
 							_react2.default.createElement(
 								'center',
-								{ style: styles.container },
+								{ ref: function ref(_ref3) {
+										_this2.refs['headers'].push(_ref3);
+									}, style: _styles.container },
 								_react2.default.createElement(
 									'h2',
 									{ style: styles.removePaddingAndMargin },
@@ -39169,7 +39242,7 @@
 							),
 							_react2.default.createElement(
 								'div',
-								{ style: styles.container },
+								{ style: _styles.container },
 								_react2.default.createElement('br', null),
 								'O Great One',
 								_react2.default.createElement('br', null),
@@ -39253,25 +39326,27 @@
 	var styles = {
 		beliefsRoot: {
 			width: '100%',
-			paddingTop: 10,
-			// top: 490,
-			position: 'absolute'
+			paddingTop: 10
 		},
 		page: (_page = {
 			width: '100%',
+			// height: '100%',
 			marginTop: 425,
 			zIndex: 2,
-			position: 'absolute',
+			// position: 'absolute',
 			background: '#d9d9d9'
 		}, (0, _defineProperty3.default)(_page, 'background', '-moz-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'background', '-webkit-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'background', '-o-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'background', '-ms-linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'background', 'linear-gradient(#d9d9d9, #000)'), (0, _defineProperty3.default)(_page, 'filter', "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"), _page),
 		content: {
-			width: stylesHelper.minimumPageWidth,
-			marginLeft: 'auto',
-			marginRight: 'auto'
+			// width: stylesHelper.minimumPageWidth,
+			// marginLeft: 'auto',
+			// marginRight: 'auto'
 		},
 		container: {
+			boxSizing: 'border-box',
 			fontSize: 35,
 			padding: stylesHelper.padding,
+			marginLeft: 50,
+			marginRight: 50,
 			marginBottom: 20,
 			borderRadius: 0,
 			backgroundColor: '#FFF',
@@ -39314,6 +39389,94 @@
 
 /***/ },
 /* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	exports.__esModule = true;
+
+	var _assign = __webpack_require__(326);
+
+	var _assign2 = _interopRequireDefault(_assign);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _assign2.default || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];
+
+	    for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }
+
+	  return target;
+	};
+
+/***/ },
+/* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(327), __esModule: true };
+
+/***/ },
+/* 327 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(328);
+	module.exports = __webpack_require__(248).Object.assign;
+
+/***/ },
+/* 328 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.1 Object.assign(target, source)
+	var $export = __webpack_require__(247);
+
+	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(329)});
+
+/***/ },
+/* 329 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 19.1.2.1 Object.assign(target, source, ...)
+	var getKeys  = __webpack_require__(280)
+	  , gOPS     = __webpack_require__(304)
+	  , pIE      = __webpack_require__(305)
+	  , toObject = __webpack_require__(238)
+	  , IObject  = __webpack_require__(283)
+	  , $assign  = Object.assign;
+
+	// should work with symbols and should have deterministic property order (V8 bug)
+	module.exports = !$assign || __webpack_require__(257)(function(){
+	  var A = {}
+	    , B = {}
+	    , S = Symbol()
+	    , K = 'abcdefghijklmnopqrst';
+	  A[S] = 7;
+	  K.split('').forEach(function(k){ B[k] = k; });
+	  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+	  var T     = toObject(target)
+	    , aLen  = arguments.length
+	    , index = 1
+	    , getSymbols = gOPS.f
+	    , isEnum     = pIE.f;
+	  while(aLen > index){
+	    var S      = IObject(arguments[index++])
+	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+	      , length = keys.length
+	      , j      = 0
+	      , key;
+	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+	  } return T;
+	} : $assign;
+
+/***/ },
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39368,11 +39531,15 @@
 
 	var _Navbar2 = _interopRequireDefault(_Navbar);
 
-	var _EmailForm = __webpack_require__(330);
+	var _EmailForm = __webpack_require__(331);
 
 	var _EmailForm2 = _interopRequireDefault(_EmailForm);
 
-	var _LoadingIcon = __webpack_require__(331);
+	var _StaticEmailForm = __webpack_require__(332);
+
+	var _StaticEmailForm2 = _interopRequireDefault(_StaticEmailForm);
+
+	var _LoadingIcon = __webpack_require__(333);
 
 	var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
 
@@ -39431,8 +39598,10 @@
 				//end
 
 
-				(0, _jquery2.default)(window).resize(self.resize);
+				(0, _jquery2.default)(window).resize(self.resize.bind(self));
 				this.setState({ marginLeft: marginLeft });
+
+				this.resize();
 			}
 		}, {
 			key: 'iframeLoaded',
@@ -39449,7 +39618,7 @@
 		}, {
 			key: 'resize',
 			value: function resize() {
-				var outerWidth = this.window.document.documentElement.clientWidth;
+				var outerWidth = window.document.documentElement.clientWidth;
 				var totalWidth = (0, _jquery2.default)('#page').outerWidth();
 				if (styles.mapStyle.width < totalWidth) {
 					var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
@@ -39557,9 +39726,28 @@
 							_react2.default.createElement(
 								'div',
 								{ style: styles.emailCaption },
-								'Send us an email below'
+								'To send us an email'
 							),
-							_react2.default.createElement(_EmailForm2.default, null)
+							_react2.default.createElement(
+								'a',
+								{ style: styles.a, href: 'mailto:CHIEFAMCKAY@gmail.com?subject=Contact Sovereign Chickamauga Cherokee' },
+								_react2.default.createElement(
+									'span',
+									{ style: styles.link },
+									'Click Here'
+								),
+								' (this opens your mail app)'
+							),
+							_react2.default.createElement(
+								'div',
+								{ style: styles.emailCaptionEnding },
+								'Or send it directly at ',
+								_react2.default.createElement(
+									'span',
+									{ style: styles.span },
+									'CHIEFAMCKAY@gmail.com'
+								)
+							)
 						)
 					)
 				);
@@ -39599,6 +39787,11 @@
 
 	exports.default = Contact;
 	var styles = {
+		a: {
+			color: 'white',
+			cursor: 'pointer',
+			fontSize: 20
+		},
 		page: (_page = {
 			width: '100%',
 			// height: 1000,
@@ -39622,11 +39815,20 @@
 			fontSize: 25,
 			marginBottom: 10
 		},
+		emailCaptionEnding: {
+			color: 'white',
+			fontSize: 18,
+			marginTop: 10,
+			marginBottom: 10
+		},
 		emailFormParent: {
 			width: '100%'
 		},
 		fontSizeHelper: {
 			fontSize: 30
+		},
+		link: {
+			color: '#4db8ff'
 		},
 		mapParent: {
 			display: 'inline-block' //,
@@ -39657,6 +39859,9 @@
 			margin: 0,
 			marginTop: 30,
 			padding: 0
+		},
+		span: {
+			// color: '#4db8ff'
 		}
 	};
 
@@ -39664,67 +39869,7 @@
 	window.mapStyle = styles.mapStyle;
 
 /***/ },
-/* 326 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(327), __esModule: true };
-
-/***/ },
-/* 327 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(328);
-	module.exports = __webpack_require__(248).Object.assign;
-
-/***/ },
-/* 328 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.3.1 Object.assign(target, source)
-	var $export = __webpack_require__(247);
-
-	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(329)});
-
-/***/ },
-/* 329 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	// 19.1.2.1 Object.assign(target, source, ...)
-	var getKeys  = __webpack_require__(280)
-	  , gOPS     = __webpack_require__(304)
-	  , pIE      = __webpack_require__(305)
-	  , toObject = __webpack_require__(238)
-	  , IObject  = __webpack_require__(283)
-	  , $assign  = Object.assign;
-
-	// should work with symbols and should have deterministic property order (V8 bug)
-	module.exports = !$assign || __webpack_require__(257)(function(){
-	  var A = {}
-	    , B = {}
-	    , S = Symbol()
-	    , K = 'abcdefghijklmnopqrst';
-	  A[S] = 7;
-	  K.split('').forEach(function(k){ B[k] = k; });
-	  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
-	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
-	  var T     = toObject(target)
-	    , aLen  = arguments.length
-	    , index = 1
-	    , getSymbols = gOPS.f
-	    , isEnum     = pIE.f;
-	  while(aLen > index){
-	    var S      = IObject(arguments[index++])
-	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
-	      , length = keys.length
-	      , j      = 0
-	      , key;
-	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
-	  } return T;
-	} : $assign;
-
-/***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39928,7 +40073,122 @@
 	};
 
 /***/ },
-/* 331 */
+/* 332 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(235);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(261);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(262);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(266);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(313);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _jquery = __webpack_require__(233);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var self;
+
+	var StaticEmailForm = function (_React$Component) {
+	  (0, _inherits3.default)(StaticEmailForm, _React$Component);
+
+	  function StaticEmailForm() {
+	    (0, _classCallCheck3.default)(this, StaticEmailForm);
+	    return (0, _possibleConstructorReturn3.default)(this, (StaticEmailForm.__proto__ || (0, _getPrototypeOf2.default)(StaticEmailForm)).apply(this, arguments));
+	  }
+
+	  (0, _createClass3.default)(StaticEmailForm, [{
+	    key: 'componentDidMount',
+
+	    // constructor(props) {
+	    // }
+
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', { id: 'divFormId' });
+	    }
+	  }, {
+	    key: 'send',
+	    value: function send() {
+	      //TODO: get this working
+
+	      // var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
+	      // var domain = 'www.mydomain.com';
+	      // var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+
+	      // var data = {
+	      //   from: 'Excited User <me@samples.mailgun.org>',
+	      //   to: 'serobnic@mail.ru',
+	      //   subject: 'Hello',
+	      //   text: 'Testing some Mailgun awesomness!'
+	      // };
+
+	      // mailgun.messages().send(data, function (error, body) {
+	      //   console.log(body);
+	      // });
+	    }
+	  }]);
+	  return StaticEmailForm;
+	}(_react2.default.Component);
+
+	exports.default = StaticEmailForm;
+
+
+	var styles = {
+	  labelStyle: {
+	    fontSize: 20,
+	    color: 'white'
+	  },
+	  sendTo: {
+	    marginBottom: 5
+	  },
+	  subject: {
+	    width: 280,
+	    height: 50,
+	    fontSize: 33,
+	    marginBottom: 5
+	  },
+	  messageBody: {
+	    width: 200,
+	    height: 200,
+	    fontSize: 30,
+	    marginBottom: 5
+	  },
+	  submit: {
+	    cursor: 'pointer',
+	    fontSize: 18
+	  }
+	};
+
+/***/ },
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40018,7 +40278,7 @@
 	exports.default = LoadingIcon;
 
 /***/ },
-/* 332 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40191,7 +40451,7 @@
 						});
 
 						//now that the display is set to none I will do the animation
-						(0, _jquery2.default)('#fontHeader').fadeIn(2000);
+						(0, _jquery2.default)('#fontHeaderFix').fadeIn(2000);
 						this.setState({ displayForFontHeader: 'block' });
 					}
 				};
@@ -40209,7 +40469,7 @@
 
 				//now I will set the logo's position up in the correct position on the screen
 				EmblemObject.topShift = (0, _jquery2.default)('#logo').outerHeight() - 40; //-10 to not cut off the bottom of the fancy font heading
-				(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift });
+				(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift });
 			}
 		}, {
 			key: 'render',
@@ -40219,6 +40479,9 @@
 				(0, _assign2.default)(fontHeaderContainerTempClone, styles.fontHeaderContainer);
 				fontHeaderContainerTempClone.visibility = this.state.visibilityForFontHeader;
 				fontHeaderContainerTempClone.display = this.state.displayForFontHeader;
+
+				fontHeaderContainerTempClone.width = '100%';
+
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -40230,17 +40493,21 @@
 						_react2.default.createElement('div', { id: 'emblem-background-image' })
 					),
 					_react2.default.createElement(
-						'div',
-						{ style: fontHeaderContainerTempClone, id: 'fontHeader' },
+						'center',
+						null,
 						_react2.default.createElement(
 							'div',
-							{ style: styles.fontHeader, className: 'customfont1', id: 'fontText1' },
-							'Chickamauga'
-						),
-						_react2.default.createElement(
-							'div',
-							{ style: styles.fontHeader, className: 'customfont1', id: 'fontText2' },
-							'Cherokee'
+							{ style: fontHeaderContainerTempClone, id: 'fontHeaderFix' },
+							_react2.default.createElement(
+								'div',
+								{ style: styles.fontHeader, className: 'customfont1', id: 'fontText1' },
+								'Chickamauga'
+							),
+							_react2.default.createElement(
+								'div',
+								{ style: styles.fontHeader, className: 'customfont1', id: 'fontText2' },
+								'Cherokee'
+							)
 						)
 					),
 					_react2.default.createElement('div', { id: 'gradientHelper', style: styles.gradientHelper })
@@ -40339,7 +40606,7 @@
 					(0, _jquery2.default)('.customfont1').each(function () {
 						(0, _jquery2.default)(this).css({ fontSize: '90px' });
 					});
-					(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+					(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 
 					fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 					if (fontTotalWidth >= totalWidth) {
@@ -40349,7 +40616,7 @@
 
 						// alert(EmblemObject.topShift)
 
-						(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+						(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 
 						fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 						if (fontTotalWidth >= totalWidth) {
@@ -40357,7 +40624,7 @@
 								(0, _jquery2.default)(this).css({ fontSize: '70px' });
 							});
 
-							(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 20 });
+							(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 20 });
 
 							fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 							if (fontTotalWidth >= totalWidth) {
@@ -40365,7 +40632,7 @@
 									(0, _jquery2.default)(this).css({ fontSize: '60px' });
 								});
 
-								(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 30 });
+								(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 30 });
 
 								fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 								if (fontTotalWidth >= totalWidth) {
@@ -40373,7 +40640,7 @@
 										(0, _jquery2.default)(this).css({ fontSize: '50px' });
 									});
 
-									(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 40 });
+									(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 40 });
 
 									fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 									if (fontTotalWidth >= totalWidth) {
@@ -40381,7 +40648,7 @@
 											(0, _jquery2.default)(this).css({ fontSize: '40px' });
 										});
 
-										(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 50 });
+										(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 50 });
 
 										fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 										if (fontTotalWidth >= totalWidth) {
@@ -40389,7 +40656,7 @@
 												(0, _jquery2.default)(this).css({ fontSize: '30px' });
 											});
 
-											(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 60 });
+											(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 60 });
 
 											fontTotalWidth = (0, _jquery2.default)(fontText1).outerWidth() + (0, _jquery2.default)(fontText2).outerWidth();
 											if (fontTotalWidth >= totalWidth) {
@@ -40397,7 +40664,7 @@
 													(0, _jquery2.default)(this).css({ fontSize: '20px' });
 												});
 
-												(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 70 });
+												(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 70 });
 											}
 										}
 									}
@@ -40436,7 +40703,7 @@
 						(0, _jquery2.default)('.customfont1').each(function () {
 							(0, _jquery2.default)(this).css({ fontSize: '' });
 						});
-						(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift });
+						(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift });
 					} else {
 						customfont1Clone.style.fontSize = '30px';
 						customfont2Clone.style.fontSize = '30px';
@@ -40447,7 +40714,7 @@
 								(0, _jquery2.default)(this).css({ fontSize: '30px' });
 							});
 
-							(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 60 });
+							(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 60 });
 
 							customfont1Clone.style.fontSize = '40px';
 							customfont2Clone.style.fontSize = '40px';
@@ -40459,7 +40726,7 @@
 									(0, _jquery2.default)(this).css({ fontSize: '40px' });
 								});
 
-								(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 50 });
+								(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 50 });
 
 								customfont1Clone.style.fontSize = '50px';
 								customfont2Clone.style.fontSize = '50px';
@@ -40471,7 +40738,7 @@
 										(0, _jquery2.default)(this).css({ fontSize: '50px' });
 									});
 
-									(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 40 });
+									(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 40 });
 
 									customfont1Clone.style.fontSize = '60px';
 									customfont2Clone.style.fontSize = '60px';
@@ -40483,7 +40750,7 @@
 											(0, _jquery2.default)(this).css({ fontSize: '60px' });
 										});
 
-										(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 30 });
+										(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 30 });
 
 										customfont1Clone.style.fontSize = '70px';
 										customfont2Clone.style.fontSize = '70px';
@@ -40495,7 +40762,7 @@
 												(0, _jquery2.default)(this).css({ fontSize: '70px' });
 											});
 
-											(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 20 });
+											(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 20 });
 
 											customfont1Clone.style.fontSize = '80px';
 											customfont2Clone.style.fontSize = '80px';
@@ -40507,7 +40774,7 @@
 													(0, _jquery2.default)(this).css({ fontSize: '80px' });
 												});
 
-												(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+												(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 
 												customfont1Clone.style.fontSize = '90px';
 												customfont2Clone.style.fontSize = '90px';
@@ -40519,7 +40786,7 @@
 														(0, _jquery2.default)(this).css({ fontSize: '90px' });
 													});
 
-													(0, _jquery2.default)('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+													(0, _jquery2.default)('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 												}
 											}
 										}
@@ -40629,7 +40896,7 @@
 	module.exports = Emblem;
 
 /***/ },
-/* 333 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40671,7 +40938,8 @@
 
 			//first I will set the page's width
 			var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
-			(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
+			//		$('#page').css({ 'width': widthToSet + 'px' });	//coty 03-08-2017 commented out since this was causing a verticle scroll bar
+
 
 			// console.log('document.documentElement.clientWidth = ', document.documentElement.clientWidth, 'widthToSet = ', widthToSet);
 
@@ -40690,11 +40958,11 @@
 			// var totalFontWidth = fontText1 + fontText2;
 			// this.totalFontWidth = totalFontWidth;
 
-			// alert($(window).outerWidth())
-			// alert($(window).outerHeight())
-			(0, _jquery2.default)(window).resize(self.resize);
+
+			//		$(window).resize( self.resize )			coty commented out 03-08-2017 since I am just setting the width to be 100%
 			//and so its ran at least one time
-			this.resize();
+			//		this.resize();
+
 
 			// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 			// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
@@ -40916,7 +41184,7 @@
 	module.exports = History;
 
 /***/ },
-/* 334 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40924,6 +41192,10 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+
+	var _extends2 = __webpack_require__(325);
+
+	var _extends3 = _interopRequireDefault(_extends2);
 
 	var _getPrototypeOf = __webpack_require__(235);
 
@@ -40957,7 +41229,7 @@
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Emblem = __webpack_require__(332);
+	var _Emblem = __webpack_require__(334);
 
 	var _Emblem2 = _interopRequireDefault(_Emblem);
 
@@ -40977,7 +41249,10 @@
 
 			_this.elements = [];
 			_this.totalFontWidth = 0;
-			_this.smallestWidthPossible = 445;
+			_this.state = {
+				pElementDisplay: {},
+				smallestWidthPossible: 445
+			};
 			return _this;
 		}
 
@@ -40985,13 +41260,19 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+				var emblemElementOuterWidth = (0, _jquery2.default)('#backgroundImage').outerWidth(true);
 
-				//TODO: in Emblem.jsx add logical to dynamically add the css stylesheet for the
-
-
+				if (this.state.smallestWidthPossible > emblemElementOuterWidth) {
+					this.setState({ smallestWidthPossible: emblemElementOuterWidth });
+				}
 				//first I will set the page's width
-				var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
-				(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
+				var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth(true);
+				var backgroundImageWidth = (0, _jquery2.default)('#backgroundImage').outerWidth(true);
+				if (backgroundImageWidth > widthToSet) {
+					widthToSet = backgroundImageWidth;
+				}
+
+				//$('#page').css({ 'width': widthToSet + 'px' });					//coty commented out 03-08-2017 since I am just setting the width to be 100%
 
 				//this is for Al's photo:
 				//setting the src attribute the React way in the styles object wasn't working so, jquery it is
@@ -40999,30 +41280,12 @@
 
 				//now I will set the width of the heading to match the width of the content
 				var widthTS = (0, _jquery2.default)('#all-content').width();
-				(0, _jquery2.default)('#pageHeading').css({ width: widthTS });
-
-				// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
-				//
-				// //added the following lines to set the position of the font header
-				// var fontHeaderHeight = $('#fontText1').outerHeight();
-				// $('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-				//
-				// //this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
-				// var fontText1 = $('#fontText1').outerWidth();
-				// var fontText2 = $('#fontText2').outerWidth();
-				//
-				// // console.log(fontText1, fontText2)
-				//
-				// var totalFontWidth = fontText1 + fontText2;
-				// this.totalFontWidth = totalFontWidth;
+				//$('#pageHeading').css({ width: widthTS });						//coty commented out 03-08-2017 since I am just setting the width to be 100%
 
 
-				(0, _jquery2.default)(window).resize(self.resize.bind(self));
+				//$(window).resize( self.resize.bind(self) )						//coty commented out 03-08-2017 since I am just setting the width to be 100%
 				//and so its ran at least one time
-				this.resize();
-
-				// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
-				// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
+				//this.resize();													//coty commented out 03-08-2017 since I am just setting the width to be 100%
 			}
 		}, {
 			key: 'resize',
@@ -41030,10 +41293,16 @@
 				var self = this;
 
 				var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
+				var backgroundImageWidth = (0, _jquery2.default)('#backgroundImage').outerWidth(true);
+				var callResizeAgain = false; //this does nothing for messing
+				if (backgroundImageWidth > widthToSet) {
+					widthToSet = backgroundImageWidth;
+					callResizeAgain = true;
+				}
 
 				// console.log(widthToSet)
 
-				if (widthToSet >= this.smallestWidthPossible) {
+				if (widthToSet >= this.state.smallestWidthPossible) {
 					(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
 
 					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
@@ -41041,7 +41310,7 @@
 					EmblemObject.locked = false;
 				} else {
 					// console.log('two')
-					(0, _jquery2.default)('#page').css({ 'width': this.smallestWidthPossible + 'px' });
+					(0, _jquery2.default)('#page').css({ 'width': this.state.smallestWidthPossible + 'px' });
 
 					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
 					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
@@ -41054,54 +41323,63 @@
 
 				// console.log(widthTS, $('#paddingHelper').width())
 
-				//start Coty added 12-29-2016
-				var paddingHelperWidth = (0, _jquery2.default)('#paddingHelper').width();
-				if (widthTS > paddingHelper) {
-					//if the width of the content element is larger than what the width provided by the paddingHelper element make enough room for the content
-					//to correct, add the number of pixels difference to the width percentage
+				// //start Coty added 12-29-2016
+				// var paddingHelperWidth = $('#paddingHelper').width();
+				// if(widthTS > paddingHelper) {
+				// 	//if the width of the content element is larger than what the width provided by the paddingHelper element make enough room for the content
+				// 	//to correct, add the number of pixels difference to the width percentage
 
-					var amountOfPixelsToAdd = (0, _jquery2.default)('#pageHeading').outerWidth() - (0, _jquery2.default)('#paddingHelper').width();
+				// 	var amountOfPixelsToAdd = $('#pageHeading').outerWidth() - $('#paddingHelper').width();
 
-					styles.widthPercentage;
-				}
-				//end 12-19-2016
+
+				// }
+				// //end 12-19-2016
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var _styles = {};
+				// if(Object.keys(this.state.pElementDisplay).length === 0) {
+				// 	styles.paragraphElement = {...styles.paragraphElement, display: this.state.pElementDisplay }
+				// }
+
+				_styles.allContent = (0, _extends3.default)({}, styles.allContent); //, minWidth: styles.pageHeading.minWidth
+				_styles.pageHeading = (0, _extends3.default)({}, styles.container, { width: styles.pageHeading.width }); //minWidth: styles.pageHeading.minWidth
+
+
 				return _react2.default.createElement(
 					'div',
 					{ style: styles.paddingBottom },
 					_react2.default.createElement(
 						'div',
 						{ id: 'page', style: styles.page },
+						_react2.default.createElement(_Header2.default, null),
+						_react2.default.createElement(_Navbar2.default, { fontSize: 20 }),
 						_react2.default.createElement(
 							'div',
-							{ id: 'paddingHelper' },
-							_react2.default.createElement(_Header2.default, null),
-							_react2.default.createElement(_Navbar2.default, { fontSize: 20 }),
+							{ id: 'pageHeading', style: _styles.pageHeading },
 							_react2.default.createElement(
-								'div',
-								{ id: 'pageHeading', style: styles.container },
+								'center',
+								null,
 								_react2.default.createElement(
-									'center',
+									'h1',
 									null,
-									_react2.default.createElement(
-										'h1',
-										null,
-										'Get To Know Albert McKay'
-									)
+									'Get To Know Albert McKay'
 								)
-							),
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ style: _styles.allContent, id: 'all-content' },
 							_react2.default.createElement(
 								'div',
-								{ style: styles.allContent, id: 'all-content' },
+								{ style: styles.section1, id: 'section-1', className: 'section' },
 								_react2.default.createElement(
 									'div',
-									{ style: styles.section1, id: 'section-1', className: 'section' },
+									{ style: styles.paragraphWrapper },
 									_react2.default.createElement(
 										'div',
-										{ style: styles.paragraphWrapper },
+										{ style: { display: 'block' } },
 										_react2.default.createElement(
 											'div',
 											{ style: styles.section1Heading, id: 'headerAndPictureWrapper' },
@@ -41129,75 +41407,75 @@
 													)
 												)
 											)
-										),
+										)
+									),
+									_react2.default.createElement(
+										'p',
+										{ style: styles.paragraphElement, id: 'piece1' },
+										'Albert McKay was born in Parks, Arkansas on January 20, 1932. He attended Grade School and High School in Heavener, OK. He joined the Oklahoma National Guard on October 13, 1947 at the age of 15. He served in HQ & HQ Company, 279th Infantry, 45th Infantry Division and received an Honorable Discharge on January 15, 1948 to enlist into the Regular Army. He enlisted in the Air Force on January 16, 1948, received his basic training in San Antonio, TX and then was assigned to Wheeler Field, Hawaii. He received an Honorable Discharge on January 5, 1949. He re-enlisted in the U.S. Army on July 16, 1949 at FT. Sill, OK with the 43rd AIB, 2nd Armored Division.'
+									),
+									_react2.default.createElement('br', null),
+									_react2.default.createElement(
+										'p',
+										{ style: styles.paragraphElement, id: 'piece2' },
+										'In 1951 he was transferred to Korea with the Second Infantry Division, 38th Infantry Regiment. He returned to the States in 1952. Master Sergeant McKay served in different locations including Ft. Sill and was reassigned to Korea from 1955 to 1957 with the 34th Infantry Regiment. He was assigned as 1st Seargeant at Hunter Liggett Military Reservation, CA until 1958. He was then assigned to Staff and Faculty Battery, USAAMS, 4th U.S. Army at Ft. Sill, OK.'
+									),
+									_react2.default.createElement('br', null),
+									_react2.default.createElement(
+										'p',
+										{ style: styles.paragraphElement },
+										'His awards and docorations include: Silver Star for Gallantry in Action, Combat Infantry Badge, Presidential Unit Citation, Korean Service Medal with three bronze service stars, National Defense Service Medal, Good Conduct Medal Bronze Clasp with three loops, United Nations service Medal, Korean Distinguished Military Service Medal with silver star, Republic or Korea Presidential Unit citation, Japanese Occupational Medal, Purple Heart, Expert Carbine (M1), and Expert Pistol (Cal 45).'
+									),
+									_react2.default.createElement('br', null),
+									_react2.default.createElement(
+										'p',
+										{ style: styles.paragraphElement },
+										'He received an Honorable Discharge from the U.S. Army on July 12, 1961 with 13 years, 1 month and 17 days of professional, dedicated and outstanding service to his country.'
+									),
+									_react2.default.createElement('br', null),
+									_react2.default.createElement(
+										'p',
+										{ style: styles.paragraphElement },
+										'After discharge from the Army, he worked for Permanent Company in Lawton and Oklahoma City. After about a year he moved to Poteau, OK and opened his insurance office. He attended the Auctioneering School in Forth Smith, AR obtaining his license and then obtained his Real Estate License and opened an office in Howe, OK. There was no police in Howe so he became City Marshall. In addition, for 28 years he taught at the Auction School on sub-dividing land and auctioning. He joined the Professional Rodeo Association and the International Rodeo Association and announced about twenty five Rodeos a year in several states. He retired from announcing rodeos in 1981 but continued to sell real estate and hold benefit auctions to help people with severe illness pay their medical bills. MSC McKay also started a veterans council group at the Oklahoma Veterans Center in Sulphur, OK to assist veterans in applying for their earned entitlements.'
+									),
+									_react2.default.createElement('br', null),
+									_react2.default.createElement(
+										'p',
+										{ style: styles.paragraphElement },
+										'In addition to the many activities MSC McKay has undertaken, he served as a Councilman of the ',
 										_react2.default.createElement(
-											'p',
-											{ style: styles.paragraphElement, id: 'piece1' },
-											'Albert McKay was born in Parks, Arkansas on January 20, 1932. He attended Grade School and High School in Heavener, OK. He joined the Oklahoma National Guard on October 13, 1947 at the age of 15. He served in HQ & HQ Company, 279th Infantry, 45th Infantry Division and received an Honorable Discharge on January 15, 1948 to enlist into the Regular Army. He enlisted in the Air Force on January 16, 1948, received his basic training in San Antonio, TX and then was assigned to Wheeler Field, Hawaii. He received an Honorable Discharge on January 5, 1949. He re-enlisted in the U.S. Army on July 16, 1949 at FT. Sill, OK with the 43rd AIB, 2nd Armored Division.'
-										),
-										_react2.default.createElement('br', null),
-										_react2.default.createElement(
-											'p',
-											{ style: styles.paragraphElement, id: 'piece2' },
-											'In 1951 he was transferred to Korea with the Second Infantry Division, 38th Infantry Regiment. He returned to the States in 1952. Master Sergeant McKay served in different locations including Ft. Sill and was reassigned to Korea from 1955 to 1957 with the 34th Infantry Regiment. He was assigned as 1st Seargeant at Hunter Liggett Military Reservation, CA until 1958. He was then assigned to Staff and Faculty Battery, USAAMS, 4th U.S. Army at Ft. Sill, OK.'
-										),
-										_react2.default.createElement('br', null),
-										_react2.default.createElement(
-											'p',
-											{ style: styles.paragraphElement },
-											'His awards and docorations include: Silver Star for Gallantry in Action, Combat Infantry Badge, Presidential Unit Citation, Korean Service Medal with three bronze service stars, National Defense Service Medal, Good Conduct Medal Bronze Clasp with three loops, United Nations service Medal, Korean Distinguished Military Service Medal with silver star, Republic or Korea Presidential Unit citation, Japanese Occupational Medal, Purple Heart, Expert Carbine (M1), and Expert Pistol (Cal 45).'
-										),
-										_react2.default.createElement('br', null),
-										_react2.default.createElement(
-											'p',
-											{ style: styles.paragraphElement },
-											'He received an Honorable Discharge from the U.S. Army on July 12, 1961 with 13 years, 1 month and 17 days of professional, dedicated and outstanding service to his country.'
-										),
-										_react2.default.createElement('br', null),
-										_react2.default.createElement(
-											'p',
-											{ style: styles.paragraphElement },
-											'After discharge from the Army, he worked for Permanent Company in Lawton and Oklahoma City. After about a year he moved to Poteau, OK and opened his insurance office. He attended the Auctioneering School in Forth Smith, AR obtaining his license and then obtained his Real Estate License and opened an office in Howe, OK. There was no police in Howe so he became City Marshall. In addition, for 28 years he taught at the Auction School on sub-dividing land and auctioning. He joined the Professional Rodeo Association and the International Rodeo Association and announced about twenty five Rodeos a year in several states. He retired from announcing rodeos in 1981 but continued to sell real estate and hold benefit auctions to help people with severe illness pay their medical bills. MSC McKay also started a veterans council group at the Oklahoma Veterans Center in Sulphur, OK to assist veterans in applying for their earned entitlements.'
-										),
-										_react2.default.createElement('br', null),
-										_react2.default.createElement(
-											'p',
-											{ style: styles.paragraphElement },
-											'In addition to the many activities MSC McKay has undertaken, he served as a Councilman of the ',
-											_react2.default.createElement(
-												'i',
-												null,
-												'Sovereign Nation of the Chickamauga Cherokee Tribe'
-											),
-											' in Dardanelle, AR. In 2014 Albert McKay was elected ',
-											_react2.default.createElement(
-												'strong',
-												null,
-												'Principal Chief of the Tribe'
-											),
-											'. He continues to work to build the Chickamauga Cherokee Tribe and it continues to grow.'
-										),
-										_react2.default.createElement('br', null),
-										_react2.default.createElement(
-											'p',
-											{ style: styles.paragraphElement },
-											'He is a member of the Veterans of Foreign Wars, The American Legion and the Disabled American Veterans.'
-										),
-										_react2.default.createElement('br', null),
-										_react2.default.createElement(
-											'p',
-											{ style: styles.paragraphElement },
-											'The professional ability and outstanding accomplishments of Master Sergeant Albert McKay brings great credit upon himself, the United States Army, the State of Oklahoma and the Nation.'
-										),
-										_react2.default.createElement('br', null),
-										_react2.default.createElement(
-											'center',
+											'i',
 											null,
-											_react2.default.createElement(
-												'div',
-												{ style: styles.credits },
-												'Presented by the Board of Trustees on June 15, 2015'
-											)
+											'Sovereign Nation of the Chickamauga Cherokee Tribe'
+										),
+										' in Dardanelle, AR. In 2014 Albert McKay was elected ',
+										_react2.default.createElement(
+											'strong',
+											null,
+											'Principal Chief of the Tribe'
+										),
+										'. He continues to work to build the Chickamauga Cherokee Tribe and it continues to grow.'
+									),
+									_react2.default.createElement('br', null),
+									_react2.default.createElement(
+										'p',
+										{ style: styles.paragraphElement },
+										'He is a member of the Veterans of Foreign Wars, The American Legion and the Disabled American Veterans.'
+									),
+									_react2.default.createElement('br', null),
+									_react2.default.createElement(
+										'p',
+										{ style: styles.paragraphElement },
+										'The professional ability and outstanding accomplishments of Master Sergeant Albert McKay brings great credit upon himself, the United States Army, the State of Oklahoma and the Nation.'
+									),
+									_react2.default.createElement('br', null),
+									_react2.default.createElement(
+										'center',
+										null,
+										_react2.default.createElement(
+											'div',
+											{ style: styles.credits },
+											'Presented by the Board of Trustees on June 15, 2015'
 										)
 									)
 								)
@@ -41221,6 +41499,9 @@
 	var widthHelper = 300; //set the width for the image here to preserver aspect ratio
 	var styles = {
 		allContent: {
+			width: 'calc(100% - 50px)',
+			marginLeft: 25,
+			marginRight: 25,
 			paddingTop: 15,
 			paddingBottom: 15,
 			marginTop: 20,
@@ -41230,8 +41511,12 @@
 			boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
 		},
 		container: {
+			boxSizing: 'border-box',
+			width: 'calc(100% - 50px)',
 			paddingTop: 15,
 			paddingBottom: 15,
+			marginLeft: 25,
+			marginRight: 25,
 			marginTop: 20,
 			marginBottom: 30,
 			borderRadius: 0,
@@ -41256,7 +41541,12 @@
 		},
 		img: {
 			width: widthHelper,
-			height: widthHelper * 2388 / 3144 },
+			height: widthHelper * 2388 / 3144, //to preserver aspect ratio
+			maxWidth: '100%',
+			maxHeight: '100%'
+
+			// position: 'absolute'
+		},
 		imgSrc: {
 			src: './assets/AlMcKayPhoto.jpg'
 		},
@@ -41267,6 +41557,8 @@
 			paddingBottom: 15
 		},
 		page: {
+			minWidth: 420,
+			overflow: 'hidden',
 			zIndex: 2 //the Emblem.jsx Component returns the logo and all set with zIndex: 1 so to keep that Component from overlapping over the top of the content, this zIndex: 2 is needed
 		},
 		paragraphOne: {
@@ -41274,8 +41566,9 @@
 			float: 'right'
 		},
 		paragraphWrapper: {
-			paddingLeft: 15,
-			paddingRight: 15
+			marginLeft: 15,
+			marginRight: 15,
+			width: 'calc(100% - 30px)' //-30px to account for the margin's on the left and right side
 			// width: 500,
 			// marginLeft: 'auto',
 			// marginRight: 'auto'
@@ -41286,17 +41579,24 @@
 			fontSize: 30,
 			margin: 0
 		},
+		pageHeading: {
+			boxSizing: 'border-box',
+			width: 'calc(100% - 50px)',
+			minWidth: 375
+		},
 		removePaddingAndMargin: {
 			margin: 0,
 			padding: 0
 		},
 		section1Heading: {
 			width: 300, //that's what the picture's width is so this heading text will center perfectly above the picture
-
+			marginLeft: 'auto',
+			marginRight: 'auto',
 			// display: 'inline-block'
 			float: 'left'
 		},
 		section1: {
+			width: 'calc(100% - 30px)', //-30px to account for the left and right margins
 			paddingTop: 30,
 			marginLeft: 15,
 			marginRight: 15
@@ -41307,7 +41607,7 @@
 	module.exports = Home;
 
 /***/ },
-/* 335 */
+/* 337 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41319,6 +41619,10 @@
 	var _assign = __webpack_require__(326);
 
 	var _assign2 = _interopRequireDefault(_assign);
+
+	var _extends2 = __webpack_require__(325);
+
+	var _extends3 = _interopRequireDefault(_extends2);
 
 	var _getPrototypeOf = __webpack_require__(235);
 
@@ -41344,15 +41648,18 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(32);
+
 	var _Navbar = __webpack_require__(322);
 
 	var _Navbar2 = _interopRequireDefault(_Navbar);
 
-	var _jquery = __webpack_require__(233);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// import $ from 'jquery';
+
+	// var ReactFitText = require('../../node_modules/react-fittext/lib/ReactFitText');
+
 
 	var TribalAdministration = function (_React$Component) {
 		(0, _inherits3.default)(TribalAdministration, _React$Component);
@@ -41375,33 +41682,37 @@
 		}
 
 		(0, _createClass3.default)(TribalAdministration, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				this.refs = [];
+			}
+		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				//now I will add the sizing api for the header
+				$(this.refs['header']).fitText(1.1, { minFontSize: '16px', maxFontSize: '60px' });
+
 				//at first I let the container that gives the shadow effect not have a
 				//width specified, but after everything is done rendering, I want
 				//all of the container boxes to have the same width so I get the
 				//largest one, then set all of them to the that width
-				var largestWidth = 0,
-				    currentWidth = 0;
-				// $('.hasContainer').each(() => {
-				// 	currentWidth = $(this).outerWidth();
+
+				// coty commented out 03-09-2017 since I am going to try to just have margin helpers on both sides of the element
+				//
+				//TODO: convert this to use this.setState(...) rather than setting the DOM directly with jquery
+				// var largestWidth = 0,
+				// currentWidth = 0;
+				// $('.hasContainer').each((index, element) => {
+				// 	currentWidth = $(element).outerWidth();
 				// 	if(currentWidth > largestWidth) {
 				// 		largestWidth = currentWidth;
 				// 	}
 				// })
-				// $('.hasContainer').each(() => {
-				// 	this.style.width = largestWidth;
+				// this.largestWidth = largestWidth;	//store this for use later
+				// $('.hasContainer').each((index, element) => {
+				// 	$(element).css({ width: largestWidth });
 				// })
-				(0, _jquery2.default)('.hasContainer').each(function (index, element) {
-					currentWidth = (0, _jquery2.default)(element).outerWidth();
-					if (currentWidth > largestWidth) {
-						largestWidth = currentWidth;
-					}
-				});
-				this.largestWidth = largestWidth; //store this for use later
-				(0, _jquery2.default)('.hasContainer').each(function (index, element) {
-					(0, _jquery2.default)(element).css({ width: largestWidth });
-				});
+
 
 				// if I ever use this logic, it needs to be moved to a resize event handler and converted to use jquery instead
 				// var totalWidth = $('#page').outerWidth();
@@ -41412,115 +41723,140 @@
 				// else {
 				// 	styles.container.width = '';
 				// }
-				(0, _jquery2.default)(window).resize(this.resize.bind(this));
-				this.priorWidth = (0, _jquery2.default)('#page').outerWidth(); //save this for the resize event
 
+
+				//coty commented out 3170308
+				//$(window).resize(this.resize.bind(this))
+				//this.priorWidth = $('#page').outerWidth();	//save this for the resize event
+
+				// coty commented out 03-08-2017
+				//
+				// $(window).resize(this.resize.bind(this))
+				// this.priorWidth = $('#page').outerWidth();	//save this for the resize event
+
+				// $(window).resize(this.resizetwo.bind(this));
 			}
-		}, {
-			key: 'resize',
-			value: function resize() {
 
-				//I noticed that when the page gets to be a certain size (very small in width) the #page
-				//element gets smaller than the styles.container elements so this code will change the
-				//#page elements css from the 100% in the stylesheet to an inline style if ever it needs
-				//to then change it back to width = '' and let the css stylesheet take over again
-				var totalWidth = (0, _jquery2.default)('#page').outerWidth(); //this is the current width of the page
-				var containerWidth = (0, _jquery2.default)('#lastContainer').outerWidth();
-				var windowWidth = (0, _jquery2.default)(window).width();
+			// resize() {
 
-				//this if else logic and adding the inline widths and taking them off is making sure once the content is the smallest size it can be, the other content stops decreasing in size as well
-				//note: the EmblemObject is exposed through the window global and setting the .locked property says to Emblem.jsx 'do not run logic to set the font header elements size'
-				if (totalWidth <= containerWidth) {
-					//if the total width available is less than the container's width this is wrong and
-					//should be changed
-					if (windowWidth > containerWidth) {
-						(0, _jquery2.default)('#page').css({ width: '' });
-						(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
-						(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
-						EmblemObject.locked = false;
-					} else {
-						(0, _jquery2.default)('#page').css({ width: containerWidth });
-						(0, _jquery2.default)('#emblem-element').css({ width: containerWidth });
-						(0, _jquery2.default)('#fontHeader').css({ width: containerWidth });
-						EmblemObject.locked = true;
-					}
-				} else {
-					(0, _jquery2.default)('#page').css({ width: '' });
-					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
-					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
-					EmblemObject.locked = false;
-				}
+			// 	//I noticed that when the page gets to be a certain size (very small in width) the #page
+			// 	//element gets smaller than the styles.container elements so this code will change the
+			// 	//#page elements css from the 100% in the stylesheet to an inline style if ever it needs
+			// 	//to then change it back to width = '' and let the css stylesheet take over again
+			// 	var totalWidth = $('#page').outerWidth();				//this is the current width of the page
+			// 	var containerWidth = $('#lastContainer').outerWidth();
+			// 	var windowWidth = $(window).width();
 
-				//Coty added 3161230 to make it where the header element only gets as small as the container elements then when the page allows (i.e. there is enough widht space) it allows the header element to get wider than the #container elements
-				var headerElement = (0, _jquery2.default)('#headerElement')[0];
+			// 	//this if else logic and adding the inline widths and taking them off is making sure once the content is the smallest size it can be, the other content stops decreasing in size as well
+			// 	//note: the EmblemObject is exposed through the window global and setting the .locked property says to Emblem.jsx 'do not run logic to set the font header elements size'
+			// 	if(totalWidth <= containerWidth) {
+			// 		//if the total width available is less than the container's width this is wrong and
+			// 		//should be changed
+			// 		if(windowWidth > containerWidth) {
+			// 			$('#page').css({ width: '' });
+			// 			$('#emblem-element').css({ width: '100%' });
+			// 			$('#fontHeader').css({ width: '100%' });
+			// 			EmblemObject.locked = false;				
+			// 		}
+			// 		else {
+			// 			$('#page').css({ width: containerWidth });
+			// 			$('#emblem-element').css({ width: containerWidth });
+			// 			$('#fontHeader').css({ width: containerWidth });
+			// 			EmblemObject.locked = true;
+			// 		}
+			// 	}
+			// 	else {
+			// 		$('#page').css({ width: '' });
+			// 		$('#emblem-element').css({ width: '100%' });
+			// 		$('#fontHeader').css({ width: '100%' });
+			// 		EmblemObject.locked	= false;		
+			// 	}
 
-				var leftSide = this.largestWidth + styles.container.padding * 2;
-				var rightSide = (0, _jquery2.default)(headerElement).width() + 2 * styles.pageName.padding;
+			// 	//Coty added 3161230 to make it where the header element only gets as small as the container elements then when the page allows (i.e. there is enough widht space) it allows the header element to get wider than the #container elements
+			// 	var headerElement = $('#headerElement')[0];
 
-				//the if else logic below deals with the id="headerElement"
-				if (this.hasBeenSet == false) {
-					// if(this.largestWidth >= ($(headerElement).outerWidth() - (this.state.marginHelper.marginLeft + this.state.marginHelper.marginRight))) {
-					if (leftSide >= rightSide) {
-						//*2 to account for right and left
-						this.oldTotalWidth = totalWidth;
-						this.hasBeenSet = true;
+			// 	var leftSide = this.largestWidth + styles.container.padding * 2; 
+			// 	var rightSide = $(headerElement).width() + 2 * styles.pageName.padding;
 
-						(0, _jquery2.default)(headerElement).css({ width: this.largestWidth });
-						this.setState({
-							marginHelper: {
-								marginLeft: 0,
-								marginRight: 0
-							}
-						});
-					}
-				} else {
+			// 	//the if else logic below deals with the id="headerElement"
+			// 	if(this.hasBeenSet == false) {
+			// 		// if(this.largestWidth >= ($(headerElement).outerWidth() - (this.state.marginHelper.marginLeft + this.state.marginHelper.marginRight))) {
+			// 		if(leftSide >= rightSide) {	//*2 to account for right and left
+			// 			this.oldTotalWidth = totalWidth;
+			// 			this.hasBeenSet = true;
 
-					if (totalWidth > this.oldTotalWidth) {
-						//if here then the page has gotten back big enough to set the margins back to what they were
-						this.setState({
-							marginHelper: {
-								marginLeft: 25,
-								marginRight: 25
-							}
-						});
-						//I can also remove the width on the element now
-						(0, _jquery2.default)(headerElement).css({ width: '' });
-						this.hasBeenSet = false;
-					}
-				}
-				//end 3161230
+			// 			$(headerElement).css({ width: this.largestWidth });
+			// 			this.setState({
+			// 				marginHelper: {
+			// 					marginLeft: 0,
+			// 					marginRight: 0
+			// 				}
+			// 			})
+			// 		}
+			// 	}
+			// 	else {
+
+			// 		if(totalWidth > this.oldTotalWidth) {
+			// 			//if here then the page has gotten back big enough to set the margins back to what they were
+			// 			this.setState({
+			// 				marginHelper: {
+			// 					marginLeft: 25,
+			// 					marginRight: 25
+			// 				}
+			// 			})
+			// 			//I can also remove the width on the element now
+			// 			$(headerElement).css({ width: '' });
+			// 			this.hasBeenSet = false;
+			// 		}			
+			// 	}
+			// 	//end 3161230
 
 
-				//Coty added 01-15-2017
-				//now to add logic to be able to properly set the <img> elements parent width (i.e. the <center> element)
-				//everytime the page size changes, with respect to width, change the center element's width to match
-				var currentWidth = (0, _jquery2.default)('#page').outerWidth();
-				if (currentWidth !== this.priorWidth) {
-					//the width has changed and needs to be set
-					(0, _jquery2.default)('#imgParent').css({ width: currentWidth });
-				}
-				this.priorWidth = currentWidth; //make sure to save this for the next iteration
-			}
+			// 	//Coty added 01-15-2017
+			// 	//now to add logic to be able to properly set the <img> elements parent width (i.e. the <center> element)
+			// 	//everytime the page size changes, with respect to width, change the center element's width to match
+			// 	var currentWidth = $('#page').outerWidth();
+			// 	if(currentWidth !== this.priorWidth) {
+			// 		//the width has changed and needs to be set
+			// 		$('#imgParent').css({ width: currentWidth });
+			// 	}
+			// 	this.priorWidth = currentWidth;	//make sure to save this for the next iteration
+			// }
+
 		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+
+				var _styles = {};
+
+				if (document.documentElement.clientWidth < 400) {
+					_styles.container = (0, _extends3.default)({}, styles.container, { width: 'calc(100% - 70px)', marginLeft: 35, marginRight: 35 }); //-20px to account for the margin on the left and right side
+				} else {
+					_styles.container = (0, _extends3.default)({}, styles.container);
+				}
+
 				return _react2.default.createElement(
 					'div',
-					{ id: 'page', style: styles.page },
+					{ id: 'page', ref: function ref(_ref2) {
+							_this2.refs['page'] = _ref2;
+						}, style: styles.page },
 					_react2.default.createElement(_Navbar2.default, { fontSize: 20 }),
 					_react2.default.createElement(
 						'center',
 						null,
 						_react2.default.createElement(
 							'div',
-							{ id: 'headerElement', style: (0, _assign2.default)(styles.pageName, this.state.marginHelper), className: 'paddingTop' },
+							{ id: 'headerElement', ref: function ref(_ref) {
+									_this2.refs['header'] = _ref;
+								}, style: (0, _assign2.default)(styles.pageName, this.state.marginHelper), className: 'paddingTop' },
 							'Tribal Administration of the Soverign Chickamauga Cherokee Tribe'
 						),
 						_react2.default.createElement('br', null),
 						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'div',
-							{ style: styles.container, className: 'hasContainer' },
+							{ style: _styles.container, className: 'hasContainer' },
 							_react2.default.createElement(
 								'div',
 								{ style: styles.positionFontSize, className: 'paddingBottom15' },
@@ -41540,7 +41876,7 @@
 						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'div',
-							{ style: styles.container, className: 'hasContainer' },
+							{ style: _styles.container, className: 'hasContainer' },
 							_react2.default.createElement(
 								'div',
 								{ style: styles.positionFontSize, className: 'paddingBottom15' },
@@ -41560,7 +41896,7 @@
 						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'div',
-							{ style: styles.container, className: 'hasContainer', id: 'lastContainer' },
+							{ style: _styles.container, className: 'hasContainer', id: 'lastContainer' },
 							_react2.default.createElement(
 								'div',
 								{ style: styles.positionFontSize, className: 'paddingBottom15' },
@@ -41619,8 +41955,17 @@
 					),
 					_react2.default.createElement(
 						'center',
+						{ style: styles.imgCaptionTransition },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Below is a district map of the state of Arizona outlining the administrations district regions.'
+						)
+					),
+					_react2.default.createElement(
+						'center',
 						{ id: 'imgParent', style: styles.imgParent },
-						_react2.default.createElement('img', { id: 'districtMap', src: styles.districtMap.src })
+						_react2.default.createElement('img', { id: 'districtMap', style: styles.districtMap.img, src: styles.districtMap.src })
 					)
 				);
 			}
@@ -41639,13 +41984,17 @@
 			width: 225
 		},
 		container: {
-			// width: 800,
+			boxSizing: 'border-box',
+			width: 'calc(100% - 200px)', //-200px to account for the margin on both sides
+			maxWidth: 800,
 			display: 'inline-block',
 			fontSize: 20,
 			padding: 20,
+			marginLeft: 100,
+			marginRight: 100,
 			marginBottom: 20,
 			borderRadius: 0,
-			backgroundColor: '#FFF',
+			backgroundColor: '#FFFFFF',
 			boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
 		},
 		div: {
@@ -41653,20 +42002,33 @@
 			fontSize: 40
 		},
 		districtMap: {
-			src: '../../assets/districtMapOriginal.png'
+			src: '../../assets/districtMapOriginal.png',
+			img: {
+				transform: 'rotate(-90deg) translateY(120px)', //translateY because I rotate the Image first of all, second the left side of the picture gets cut out of view if I don't do the translation
+				width: '100%'
+			}
+		},
+		imgCaptionTransition: {
+			color: 'white',
+			fontSize: 20
 		},
 		imgParent: {
-			overflowX: 'auto'
+			width: '100%',
+			overflowX: 'auto',
+			backgroundColor: 'white'
 		},
 		paddingLeft: {
 			// paddingLeft: 25
 		},
 		page: {
+			width: '100%',
 			// paddingLeft: 25,
 			// paddingTop: 20,
 			zIndex: 2 //the Emblem.jsx Component returns the logo and all set with zIndex: 1 so to keep that Component from overlapping over the top of the content, this zIndex: 2 is needed
 		},
 		pageName: {
+			boxSizing: 'border-box',
+			width: 'calc(100% - 50px)',
 			fontSize: 60,
 			display: 'inline-block',
 			padding: 20,

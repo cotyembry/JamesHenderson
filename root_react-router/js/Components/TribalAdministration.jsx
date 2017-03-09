@@ -261,7 +261,7 @@ var styles = {
 	districtMap: {
 		src: '../../assets/districtMapOriginal.png',
 		img: {
-			transform: 'rotate(-90deg) translateY(100px)',	//translateY because I rotate the Image first of all, second the left side of the picture gets cut out of view if I don't do the translation
+			transform: 'rotate(-90deg) translateY(120px)',	//translateY because I rotate the Image first of all, second the left side of the picture gets cut out of view if I don't do the translation
 			width: '100%',
 		}
 	},
