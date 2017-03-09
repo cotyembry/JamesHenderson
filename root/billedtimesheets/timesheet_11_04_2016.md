@@ -71,3 +71,5 @@ which is 12 hours 15 minutes
 15 minutes at $35/hr = $8.75
 $420 + $8.75 = $428.75
 billed on 11-04-2016
+
+$455.00 09/21/2016 it was deposited into my account
