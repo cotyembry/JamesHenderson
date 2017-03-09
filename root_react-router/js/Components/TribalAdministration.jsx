@@ -25,7 +25,8 @@ export default class TribalAdministration extends React.Component {
 		this.refs = [];
 	}
 	componentDidMount() {
-		$(this.refs['header']).fitText(1.1, { minFontSize: '12px', maxFontSize: '60px' });
+		//now I will add the sizing api for the header
+		$(this.refs['header']).fitText(1.1, { minFontSize: '16px', maxFontSize: '60px' });
 
 
 
@@ -73,13 +74,6 @@ export default class TribalAdministration extends React.Component {
 
 		// $(window).resize(this.resizetwo.bind(this));
 
-	}
-	resizetwo() {
-		console.log(this.refs['header'], this.refs['page'])
-		var headerWidth = $(this.refs['header']).outerWidth(true);
-		var pageWidth = $(this.refs['page']).width();
-
-		console.log('headerWidth =' + headerWidth, 'pageWidth = ' + pageWidth)
 	}
 
 	// resize() {
@@ -168,6 +162,15 @@ export default class TribalAdministration extends React.Component {
 	// 	this.priorWidth = currentWidth;	//make sure to save this for the next iteration
 	// }
 	render() {
+		var _styles = {}
+
+		if(document.documentElement.clientWidth < 400) {
+			_styles.container = { ...styles.container, width: 'calc(100% - 70px)', marginLeft: 35, marginRight: 35 }	//-20px to account for the margin on the left and right side
+		}
+		else {
+			_styles.container = { ...styles.container }
+		}
+
 		return (
 			<div id="page" ref={(ref) => { this.refs['page'] = ref }} style={styles.page}>
 				<Navbar fontSize={20} />
@@ -178,7 +181,7 @@ export default class TribalAdministration extends React.Component {
 					<br />
 					<br />
 
-					<div style={styles.container} className="hasContainer">
+					<div style={_styles.container} className="hasContainer">
 							<div style={styles.positionFontSize} className="paddingBottom15"><b>Tribal Chief</b></div>
 							<br />
 							<div style={styles.fontSize}>Albert McKay</div>
@@ -186,7 +189,7 @@ export default class TribalAdministration extends React.Component {
 
 					<br />
 
-					<div style={styles.container} className="hasContainer">
+					<div style={_styles.container} className="hasContainer">
 						<div style={styles.positionFontSize} className="paddingBottom15"><b>Assistant Chief</b></div>
 						<br />
 						<div style={styles.fontSize}>Dwight Vincent</div>
@@ -194,7 +197,7 @@ export default class TribalAdministration extends React.Component {
 
 					<br />
 
-					<div style={styles.container} className="hasContainer" id="lastContainer">
+					<div style={_styles.container} className="hasContainer" id="lastContainer">
 						<div style={styles.positionFontSize} className="paddingBottom15"><b>Council Members</b></div>{/* I added a style to tribaladministration.css for this element*/}
 						<br />
 						<div style={styles.paddingLeft}>
@@ -217,8 +220,13 @@ export default class TribalAdministration extends React.Component {
 						</div>
 					</div>
 				</center>
+
+				<center style={styles.imgCaptionTransition}>
+					<h3>Below is a district map of the state of Arizona outlining the administrations district regions.</h3>
+				</center>
+
 				<center id="imgParent" style={styles.imgParent}>
-					<img id="districtMap" src={styles.districtMap.src}></img>
+					<img id="districtMap" style={styles.districtMap.img} src={styles.districtMap.src}></img>
 				</center>
 			</div>
 		)
@@ -233,9 +241,8 @@ var styles = {
 		width: 225
 	},
 	container: {
-<<<<<<< HEAD
 		boxSizing: 'border-box',
-		width: 'calc(100% - 200px)',
+		width: 'calc(100% - 200px)',		//-200px to account for the margin on both sides
 		maxWidth: 800,
 		display: 'inline-block',
 		fontSize: 20,
@@ -243,18 +250,8 @@ var styles = {
 		marginLeft: 100,
 		marginRight: 100,
 	    marginBottom: 20,
-=======
-		// width: 800,
-		boxSizing: 'border-box',
-		padding: '25px 25px 20px 25px',
-		margin: '25px 25px 20px 25px',
-		display: 'inline-block',
-		fontSize: 20,
-		// padding: 20,
-	    // marginBottom: 20,
->>>>>>> ba22f55d7767e63e00da3e3c522ff8e90abb798c
 	    borderRadius: 0,
-	    backgroundColor: '#FFF',
+	    backgroundColor: '#FFFFFF',
 	    boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
 	},
 	div: {
@@ -262,11 +259,20 @@ var styles = {
 		fontSize: 40
 	},
 	districtMap: {
-		src: '../../assets/districtMapOriginal.png'
+		src: '../../assets/districtMapOriginal.png',
+		img: {
+			transform: 'rotate(-90deg) translateY(100px)',	//translateY because I rotate the Image first of all, second the left side of the picture gets cut out of view if I don't do the translation
+			width: '100%',
+		}
+	},
+	imgCaptionTransition: {
+		color: 'white',
+		fontSize: 20
 	},
 	imgParent: {
 		width: '100%',
-		overflowX: 'auto'
+		overflowX: 'auto',
+		backgroundColor: 'white'
 	},
 	paddingLeft: {
 		// paddingLeft: 25
