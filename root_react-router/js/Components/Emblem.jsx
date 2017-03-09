@@ -127,7 +127,7 @@ export default class Emblem extends React.Component {
 				});
 
 				//now that the display is set to none I will do the animation
-				$('#fontHeader').fadeIn(2000);
+				$('#fontHeaderFix').fadeIn(2000);
 				this.setState({displayForFontHeader: 'block'})
 			}
 		}
@@ -146,7 +146,7 @@ export default class Emblem extends React.Component {
 
 		//now I will set the logo's position up in the correct position on the screen
 		EmblemObject.topShift = $('#logo').outerHeight() - 40;	//-10 to not cut off the bottom of the fancy font heading
-		$('#fontHeader').css({ top: EmblemObject.topShift });
+		$('#fontHeaderFix').css({ top: EmblemObject.topShift });
 
 	}
 	render() {
@@ -155,6 +155,9 @@ export default class Emblem extends React.Component {
 		Object.assign(fontHeaderContainerTempClone, styles.fontHeaderContainer);
 		fontHeaderContainerTempClone.visibility = this.state.visibilityForFontHeader;
 		fontHeaderContainerTempClone.display = this.state.displayForFontHeader;
+		
+		fontHeaderContainerTempClone.width = '100%';
+
 		return (
 			<div>
 				{/*<div style={styles.backgroundImage}></div>*/}
@@ -166,11 +169,12 @@ export default class Emblem extends React.Component {
 				</div>
 				
 
-				{/* the font declarations and the size is set in index.html */}
-				<div style={fontHeaderContainerTempClone} id="fontHeader">
-					<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
-				</div>
-				
+				{/* the font declarations and the size is set in index.html - id="fontHeader"*/}
+				<center>
+					<div style={fontHeaderContainerTempClone} id='fontHeaderFix'>
+						<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
+					</div>
+				</center>
 
 
 				<div id="gradientHelper" style={styles.gradientHelper}></div>
@@ -278,7 +282,7 @@ var EmblemObject = {
 				$('.customfont1').each(function() {
 					$(this).css({ fontSize: '90px' });
 				});
-				$('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+				$('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 
 				fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 				if(fontTotalWidth >= totalWidth) {
@@ -288,7 +292,7 @@ var EmblemObject = {
 
 					// alert(EmblemObject.topShift)
 
-					$('#fontHeader').css({ top: EmblemObject.topShift + 10 });					
+					$('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });					
 
 					fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 					if(fontTotalWidth >= totalWidth) {
@@ -296,7 +300,7 @@ var EmblemObject = {
 							$(this).css({ fontSize: '70px' });
 						});
 
-						$('#fontHeader').css({ top: EmblemObject.topShift + 20 });			
+						$('#fontHeaderFix').css({ top: EmblemObject.topShift + 20 });			
 				
 						fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 						if(fontTotalWidth >= totalWidth) {
@@ -304,7 +308,7 @@ var EmblemObject = {
 								$(this).css({ fontSize: '60px' });
 							});
 
-							$('#fontHeader').css({ top: EmblemObject.topShift + 30 });
+							$('#fontHeaderFix').css({ top: EmblemObject.topShift + 30 });
 							
 							fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 							if(fontTotalWidth >= totalWidth) {
@@ -312,7 +316,7 @@ var EmblemObject = {
 									$(this).css({ fontSize: '50px' });
 								});
 
-								$('#fontHeader').css({ top: EmblemObject.topShift + 40 });
+								$('#fontHeaderFix').css({ top: EmblemObject.topShift + 40 });
 								
 								fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 								if(fontTotalWidth >= totalWidth) {
@@ -320,7 +324,7 @@ var EmblemObject = {
 										$(this).css({ fontSize: '40px' });
 									});
 
-									$('#fontHeader').css({ top: EmblemObject.topShift + 50 });
+									$('#fontHeaderFix').css({ top: EmblemObject.topShift + 50 });
 									
 									fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 									if(fontTotalWidth >= totalWidth) {
@@ -328,7 +332,7 @@ var EmblemObject = {
 											$(this).css({ fontSize: '30px' });
 										});
 
-										$('#fontHeader').css({ top: EmblemObject.topShift + 60 });
+										$('#fontHeaderFix').css({ top: EmblemObject.topShift + 60 });
 
 										fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 										if(fontTotalWidth >= totalWidth) {
@@ -336,7 +340,7 @@ var EmblemObject = {
 												$(this).css({ fontSize: '20px' });
 											});
 
-											$('#fontHeader').css({ top: EmblemObject.topShift + 70 });
+											$('#fontHeaderFix').css({ top: EmblemObject.topShift + 70 });
 										}
 									}
 								}
@@ -376,7 +380,7 @@ var EmblemObject = {
 					$('.customfont1').each(function() {
 						$(this).css({ fontSize: '' });
 					});
-					$('#fontHeader').css({ top: EmblemObject.topShift });
+					$('#fontHeaderFix').css({ top: EmblemObject.topShift });
 				}
 				else {
 					customfont1Clone.style.fontSize = '30px';
@@ -388,7 +392,7 @@ var EmblemObject = {
 							$(this).css({ fontSize: '30px' });
 						});
 
-						$('#fontHeader').css({ top: EmblemObject.topShift + 60 });
+						$('#fontHeaderFix').css({ top: EmblemObject.topShift + 60 });
 
 						customfont1Clone.style.fontSize = '40px';
 						customfont2Clone.style.fontSize = '40px';
@@ -400,7 +404,7 @@ var EmblemObject = {
 								$(this).css({ fontSize: '40px' });
 							});
 
-							$('#fontHeader').css({ top: EmblemObject.topShift + 50 });
+							$('#fontHeaderFix').css({ top: EmblemObject.topShift + 50 });
 
 							customfont1Clone.style.fontSize = '50px';
 							customfont2Clone.style.fontSize = '50px';
@@ -412,7 +416,7 @@ var EmblemObject = {
 									$(this).css({ fontSize: '50px' });
 								});
 
-								$('#fontHeader').css({ top: EmblemObject.topShift + 40 });
+								$('#fontHeaderFix').css({ top: EmblemObject.topShift + 40 });
 
 								customfont1Clone.style.fontSize = '60px';
 								customfont2Clone.style.fontSize = '60px';
@@ -424,7 +428,7 @@ var EmblemObject = {
 										$(this).css({ fontSize: '60px' });
 									});
 
-									$('#fontHeader').css({ top: EmblemObject.topShift + 30 });
+									$('#fontHeaderFix').css({ top: EmblemObject.topShift + 30 });
 
 									customfont1Clone.style.fontSize = '70px';
 									customfont2Clone.style.fontSize = '70px';
@@ -436,7 +440,7 @@ var EmblemObject = {
 											$(this).css({ fontSize: '70px' });
 										});
 
-										$('#fontHeader').css({ top: EmblemObject.topShift + 20 });
+										$('#fontHeaderFix').css({ top: EmblemObject.topShift + 20 });
 									
 										customfont1Clone.style.fontSize = '80px';
 										customfont2Clone.style.fontSize = '80px';
@@ -448,7 +452,7 @@ var EmblemObject = {
 												$(this).css({ fontSize: '80px' });
 											});
 
-											$('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+											$('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 
 											customfont1Clone.style.fontSize = '90px';
 											customfont2Clone.style.fontSize = '90px';
@@ -460,7 +464,7 @@ var EmblemObject = {
 													$(this).css({ fontSize: '90px' });
 												});
 
-												$('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+												$('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 											}
 										}
 									}								

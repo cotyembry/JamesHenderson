@@ -14,6 +14,8 @@ import $ from 'jquery';
 
 var Navbar = React.createClass({
 	addHoverEvent: function(navbarItem) {
+
+		//TODO: maybe change the color of the narbar Item to be #F9EF1A (its yellowish) since it goes more with the Emblem.jsx theme
 		$(navbarItem).hover(
 			//handlerIn
 			function() {

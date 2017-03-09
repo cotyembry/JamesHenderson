@@ -1,63 +1,121 @@
 import React from 'react';
 
-import $ from 'jquery';
+// import $ from 'jquery';
 
 import Navbar from './Navbar.jsx';
 
 export default class Beliefs extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			height: ''
+		}
+	}
+	componentWillMount() {
+		this.refs = [];
+		this.refs['headers'] = [];	//this will be used to expose the DOM element so I can use jquery.fittext.js on the elements
+		//TODO: finish this
+		//$(this.refs['header']).fitText(1.1, { minFontSize: '16px', maxFontSize: '60px' });
+	}
 	componentDidMount() {
 		var self = this;
 
-		var topTS = $('#parent-navbar-item').outerHeight();
-		$('#contentParent').css({ top: topTS });
+		//this resets the css style in case it was changed by another component
+		$('#emblem-element').css({ width: '100%', height: 350 });
 
-		var heightTS = $('#contentParent').outerHeight() + topTS;
-		$('#page').css({ height: heightTS });
+		//TODO: convert this to use this.setState(...) 
+		// var topTS = $('#parent-navbar-item').outerHeight(true);
+		// $('#contentParent').css({ top: topTS });
+		// //these next two lines are needed to set the height of the #page element because since the navbar item is in position absolute, it causes the content to have to be position absolute
+		// //which doesnt control the height of the page element
+		// var heightTS = $('#contentParent').outerHeight(true) + topTS;
+		// // $('#page').css({ height: heightTS });
+		// this.setState({
+		// 	height: heightTS	//this.state.height will be used on the #page element
+		// })
 
-		this.window = window;	//this will help later in the resize event as far as performance goes
-		$(window).resize(self.resize);
+		// this.window = window;	//this will help later in the resize event as far as performance goes
+		// $(window).resize(self.resize.bind(self));
 
+		this.refs['headers'].map((header) => {
+			$(header).fitText(1.1, { minFontSize: '21px', maxFontSize: '35px' });
+		})
 	}
 
 	resize() {
-		//start Coty added 12-21-2016
-		var totalWidth = this.window.document.documentElement.clientWidth;
-		// if(totalWidth <= (stylesHelper.minimumPageWidth + stylesHelper.padding)) {
-		if(totalWidth <= stylesHelper.minimumPageWidth) {
-			//this is the minimum width allowed, don't allow the width to get any smaller
-			//in this case the element #page is the page element that will keep
-			//the width state of the page
-			$('#page').css({ width: '800px' });
-			$('#emblem-element').css({ width: '800px' });
-			$('#fontHeader').css({ width: '800px' });
-			EmblemObject.locked = true;
+		var topTS = $('#parent-navbar-item').outerHeight(true);
+		var heightTS = $(this.refs['contentParent']).outerHeight(true) + topTS;
+		// $('#page').css({ height: heightTS });
+		try {
+			this.setState({
+				height: heightTS	//this.state.height is used by the #page component
+			})
 		}
-		else {
-			//the width needs to stay at 100% if the totalWidth space allows for it
-			$('#page').css({ width: '100%' });
-			$('#emblem-element').css({ width: '100%' });
-			$('#fontHeader').css({ width: '100%' });
-			EmblemObject.locked = false;
-		}
-		//end
+		catch(error) {
+			//do nothing
+			//I noticed an issue where setting the state in the resize event might throw an error if the component is currently not mounted when I call this so I wrapped it in a try catch
+			// console.error("ahh...")
+		}		
 	}
 
+	// coty commented out 03-09-2017 since I am making this website also mobile friendly
+	//
+	// resize() {
+	// 	//start Coty added 12-21-2016
+	// 	var totalWidth = this.window.document.documentElement.clientWidth;
+	// 	// if(totalWidth <= (stylesHelper.minimumPageWidth + stylesHelper.padding)) {
+	// 	if(totalWidth <= stylesHelper.minimumPageWidth) {
+	// 		//this is the minimum width allowed, don't allow the width to get any smaller
+	// 		//in this case the element #page is the page element that will keep
+	// 		//the width state of the page
+	// 		$('#page').css({ width: '800px' });
+	// 		$('#emblem-element').css({ width: '800px' });
+	// 		$('#fontHeader').css({ width: '800px' });
+	// 		EmblemObject.locked = true;
+	// 	}
+	// 	else {
+	// 		//the width needs to stay at 100% if the totalWidth space allows for it
+	// 		$('#page').css({ width: '100%' });
+	// 		$('#emblem-element').css({ width: '100%' });
+	// 		$('#fontHeader').css({ width: '100%' });
+	// 		EmblemObject.locked = false;
+	// 	}
+	// 	//end
+	// }
+
 	render() {
+		var _styles = {}
+
+		if(document.documentElement.clientWidth < 400) {
+			_styles.container = { ...styles.container, width: 'calc(100% - 70px)', marginLeft: 35, marginRight: 35 }	//-20px to account for the margin on the left and right side
+		}
+		else {
+			_styles.container = { ...styles.container }
+		}
+
+		if(this.state.height !== '') {
+			_styles.page = { ...styles.page, height: this.state.height }	
+		}
+		else {
+			_styles.page = { ...styles.page }
+		}
+		
 		return (
-			<div style={styles.page} id="page">
+			<div style={_styles.page} id="page">
 				
 				<Navbar fontSize={20} />
 				
-				<div id="contentParent" style={styles.beliefsRoot}>
+				<div id="contentParent" ref={(ref) => { this.refs['contentParent'] = ref }} style={styles.beliefsRoot}>
 					<div id="content" style={styles.content}>
 						
-						<center style={styles.container}><h1 style={styles.removePaddingAndMargin}>Beliefs</h1></center>
+						<center ref={(ref) => { this.refs['headers'].push(ref) }} style={_styles.container}><h1 style={styles.removePaddingAndMargin}>Beliefs</h1></center>
 
-						<div style={styles.container}>
+						<div style={_styles.container}>
 							
 							<br />
 
-							<center><h3 style={styles.removePaddingAndMargin}>Traditional Cherokee Beliefs</h3></center>
+							<center ref={(ref) => { this.refs['headers'].push(ref) }}><h3 style={styles.removePaddingAndMargin}>Traditional Cherokee Beliefs</h3></center>
 							
 							<br />
 							In the Cherokee language there was no word for “religion” because spiritual practices are an integral part of every aspect of daily life; they are necessary for the harmony and balance or wellness of the individual, family, clan and community. Healing and worship are considered one and the same.
@@ -92,10 +150,10 @@ export default class Beliefs extends React.Component {
 						</div>
 						
 
-							<center style={styles.container}><h2 style={styles.removePaddingAndMargin}>A CHEROKEE PRAYER</h2></center>
+						<center ref={(ref) => { this.refs['headers'].push(ref) }} style={_styles.container}><h2 style={styles.removePaddingAndMargin}>A CHEROKEE PRAYER</h2></center>
 						
 
-						<div style={styles.container}>
+						<div style={_styles.container}>
 							<br/>
 							O Great One
 							<br/>
@@ -176,14 +234,15 @@ var styles = {
 		width: '100%',
 		paddingTop: 10,
 		// top: 490,
-		position: 'absolute',
+		// position: 'absolute',
 		// background: 'rgba(255, 255, 255, 0.5)'
 	},
 	page: {
 		width: '100%',
+		// height: '100%',
 		marginTop: 425,
 		zIndex: 2,
-		position: 'absolute',
+		// position: 'absolute',
 		background: '#d9d9d9',
 		background: '-moz-linear-gradient(#d9d9d9, #000)',
 		background: '-webkit-linear-gradient(#d9d9d9, #000)',
@@ -193,13 +252,16 @@ var styles = {
 		filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000')"/*For IE7-8-9*/
 	},
 	content: {
-		width: stylesHelper.minimumPageWidth,
-		marginLeft: 'auto',
-		marginRight: 'auto'
+		// width: stylesHelper.minimumPageWidth,
+		// marginLeft: 'auto',
+		// marginRight: 'auto'
 	},
 	container: {
+		boxSizing: 'border-box',
 		fontSize: 35,
 		padding: stylesHelper.padding,
+		marginLeft: 50,
+		marginRight: 50,
 	    marginBottom: 20,
 	    borderRadius: 0,
 	    backgroundColor: '#FFF',

@@ -115,6 +115,7 @@ html, body {
 }
 #page {
 	width: 100%;
+	min-height: 100%;
 	min-width: 375px;	/* coty added 03-08-2017 to not allow the page to get smaller than Al's picture width size */
 	margin-top: 425px;
 	position: absolute;

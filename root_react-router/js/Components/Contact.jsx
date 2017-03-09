@@ -63,8 +63,10 @@ export default class Contact extends React.Component {
 		//end
 
 
-		$(window).resize(self.resize);
+		$(window).resize(self.resize.bind(self));
 		this.setState({ marginLeft: marginLeft });
+
+		this.resize();
 	}
 
 	iframeLoaded() {
@@ -79,7 +81,7 @@ export default class Contact extends React.Component {
 	}
 
 	resize() {
-		var outerWidth = this.window.document.documentElement.clientWidth;
+		var outerWidth = window.document.documentElement.clientWidth;
 		var totalWidth = $('#page').outerWidth();
 		if(styles.mapStyle.width < totalWidth) {
 			var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
@@ -174,7 +176,8 @@ export default class Contact extends React.Component {
 						</div>
 
 						{/*<StaticEmailForm /><EmailForm /> Coty commented out 02-17-2017 */}
-						<a style={styles.a} href = 'mailto:cotyembry@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
+						{/*<a style={styles.a} href = 'mailto:cotyembry@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>*/}
+						<a style={styles.a} href = 'mailto:CHIEFAMCKAY@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
 
 						<div style={styles.emailCaptionEnding}>
 							Or send it directly at <span style={styles.span}>CHIEFAMCKAY@gmail.com</span>
