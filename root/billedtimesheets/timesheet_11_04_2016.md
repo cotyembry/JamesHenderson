@@ -72,4 +72,5 @@ which is 12 hours 15 minutes
 $420 + $8.75 = $428.75
 billed on 11-04-2016
 
-$455.00 09/21/2016 it was deposited into my account
+
+the first time I charged for this was in the amount of $455.00 09/21/2016 it was deposited into my account
