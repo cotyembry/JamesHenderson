@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server  --inline --content-base .",
+    "start": "webpack-dev-server --port=8080 --host=192.168.0.11 --inline --content-base .",
     "webpack": "webpack",
     "webpack-watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,7 +23,6 @@
     "react": "^15.3.0",
     "react-bootstrap-navbar": "^1.1.0",
     "react-dom": "^15.3.0",
-    "react-fittext": "0.0.7",
     "react-nav-bar": "^0.6.4",
     "react-navbar": "^1.0.0",
     "webpack": "^1.14.0",

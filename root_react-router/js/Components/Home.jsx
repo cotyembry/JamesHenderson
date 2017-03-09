@@ -23,19 +23,10 @@ export default class Home extends React.Component {
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 		var emblemElementOuterWidth = $('#backgroundImage').outerWidth(true);
 
-		console.log(emblemElementOuterWidth)
 
 		if(this.state.smallestWidthPossible > emblemElementOuterWidth) {
 			this.setState({ smallestWidthPossible: emblemElementOuterWidth })
 		}
-		//TODO: in Emblem.jsx add logical to dynamically add the css stylesheet for the
-
-
-
-		// if
-		// this.state.pElementDisplay display: 'inline-block'
-
-
 		//first I will set the page's width
 		var widthToSet = $(document.documentElement).outerWidth(true);
 		var backgroundImageWidth = $('#backgroundImage').outerWidth(true);
@@ -43,7 +34,7 @@ export default class Home extends React.Component {
 			widthToSet = backgroundImageWidth;
 		}
 
-		$('#page').css({ 'width': widthToSet + 'px' });
+		//$('#page').css({ 'width': widthToSet + 'px' });					//coty commented out 03-08-2017 since I am just setting the width to be 100%
 
 		//this is for Al's photo:
 		//setting the src attribute the React way in the styles object wasn't working so, jquery it is
@@ -51,30 +42,13 @@ export default class Home extends React.Component {
 
 		//now I will set the width of the heading to match the width of the content
 		var widthTS = $('#all-content').width();
-		$('#pageHeading').css({ width: widthTS });
-
-		// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
-		//
-		// //added the following lines to set the position of the font header
-		// var fontHeaderHeight = $('#fontText1').outerHeight();
-		// $('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-		//
-		// //this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
-		// var fontText1 = $('#fontText1').outerWidth();
-		// var fontText2 = $('#fontText2').outerWidth();
-		//
-		// // console.log(fontText1, fontText2)
-		//
-		// var totalFontWidth = fontText1 + fontText2;
-		// this.totalFontWidth = totalFontWidth;
+		//$('#pageHeading').css({ width: widthTS });						//coty commented out 03-08-2017 since I am just setting the width to be 100%
 
 
-		$(window).resize( self.resize.bind(self) )
+		//$(window).resize( self.resize.bind(self) )						//coty commented out 03-08-2017 since I am just setting the width to be 100%
 		//and so its ran at least one time
-		this.resize();
+		//this.resize();													//coty commented out 03-08-2017 since I am just setting the width to be 100%
 
-		// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
-		// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 	}
 	resize() {
 		var self = this;
@@ -130,10 +104,14 @@ export default class Home extends React.Component {
 
 	}
 	render() {
-
+		var _styles = {}
 		// if(Object.keys(this.state.pElementDisplay).length === 0) {
 		// 	styles.paragraphElement = {...styles.paragraphElement, display: this.state.pElementDisplay }
 		// }
+
+		_styles.allContent = { ...styles.allContent, minWidth: styles.pageHeading.minWidth }
+		_styles.pageHeading = { ...styles.container, width: styles.pageHeading.width, minWidth: styles.pageHeading.minWidth }
+
 
 		return (
 			<div style={styles.paddingBottom}>
@@ -143,11 +121,11 @@ export default class Home extends React.Component {
 						<Header />
 						<Navbar fontSize={20} />
 
-						<div id="pageHeading" style={styles.container}>
+						<div id="pageHeading" style={ _styles.pageHeading }>
 							<center><h1>Get To Know Albert McKay</h1></center>
 						</div>
 
-						<div style={styles.allContent} id="all-content">
+						<div style={ _styles.allContent } id="all-content">
 							
 							<div style={styles.section1} id="section-1" className="section">
 				
@@ -303,6 +281,10 @@ var styles = {
 		paddingLeft: 25,
 		fontSize: 30,
 		margin: 0
+	},
+	pageHeading: {
+		width: '100%',
+		minWidth: 375
 	},
 	removePaddingAndMargin: {
 		margin: 0,
