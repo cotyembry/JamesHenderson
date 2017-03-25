@@ -36870,108 +36870,121 @@
 
 		(0, _createClass3.default)(Home, [{
 			key: 'componentDidMount',
-			value: function componentDidMount() {
-				var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+			value: function componentDidMount() {}
 
-				//first I will set the page's width
-				var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
-				(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
+			// let self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 
-				// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
-				//
-				// //added the following lines to set the position of the font header
-				// var fontHeaderHeight = $('#fontText1').outerHeight();
-				// $('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-				//
-				// //this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
-				// var fontText1 = $('#fontText1').outerWidth();
-				// var fontText2 = $('#fontText2').outerWidth();
-				//
-				// // console.log(fontText1, fontText2)
-				//
-				// var totalFontWidth = fontText1 + fontText2;
-				// this.totalFontWidth = totalFontWidth;
+			// //this resets the css style in case it was changed by another component
+			// $('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
 
 
-				(0, _jquery2.default)(window).resize(self.resize);
-				//and so its ran at least one time
-				this.resize();
-
-				// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
-				// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
-			}
-		}, {
-			key: 'resize',
-			value: function resize() {
-				var self = this;
-
-				var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
-
-				// console.log(widthToSet)
-
-				if (widthToSet >= this.smallestWidthPossible) {
-					(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
-				}
-
-				// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
-
-				// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
-
-				// 	this.setPageWidth();
-
-				// }
-				// else {
-				// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
-				// 	// //
-				// 	// if(currentWidth > this.lastWidth) {
-
-				// 	// }
-
-				// 	var 
-				// }
+			// $('#emblem-element').css({ width: '100%', height: 350 });
 
 
-				// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
-				//
-				// //now I need to position the font element
-				// var fontText1Element = document.getElementById('fontText1');
-				// var fontText2Element = document.getElementById('fontText2');
-				// // var fontText1 = $(fontText1Element).outerWidth();
-				// // var fontText2 = $(fontText2Element).outerWidth();
-				// // var totalFontWidth = fontText1 + fontText2;
+			//here I will set the page's width (TODO: convert this to use strictly this.state)
+			// var widthToSet = $(document.documentElement).outerWidth();
+			// $('#page').css({ 'width': widthToSet + 'px' });
 
-				// var totalWidth = parseFloat(document.getElementById('page').style.width);
 
-				// //sometimes when this resize method runs nothing gets accomplished
-				// //so I need to account for this when the width is '', otherwise I
-				// //can continue with the flow as normal
-				// if(document.getElementById('page').style.width == '') {
-				// 	//for the set timeout option
-				// 	setTimeout(self.resize, 100);
-				// }
-				// else {
-				// 	if(totalWidth < this.totalFontWidth) {
-				// 		$(fontText1Element).css({ display: 'block'});
-				// 		$(fontText2Element).css({ display: 'block'});
-				// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
-				// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
-				// 	}
-				// 	else {
-				// 		$(fontText1Element).css({ display: 'inline-block'});
-				// 		$(fontText2Element).css({ display: 'inline-block'});
-				// 		var fontHeaderHeight = $('#fontText1').outerHeight();
-				// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-				// 	}
-				// }
+			// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
+			//
+			// //added the following lines to set the position of the font header
+			// var fontHeaderHeight = $('#fontText1').outerHeight();
+			// $('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+			//
+			// //this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
+			// var fontText1 = $('#fontText1').outerWidth();
+			// var fontText2 = $('#fontText2').outerWidth();
+			//
+			// // console.log(fontText1, fontText2)
+			//
+			// var totalFontWidth = fontText1 + fontText2;
+			// this.totalFontWidth = totalFontWidth;
 
-				// this.lastWidth = widthToSet;
-			}
+
+			// $(window).resize( self.resize )
+			// //and so its ran at least one time
+			// this.resize();
+
+			// // Listen for orientation changes
+			// window.addEventListener("orientationchange", this.resize);
+
+			// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
+			// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
+
+			// resize() {
+			// 	var self = this;
+
+
+			// 	// var widthToSet = $(document.documentElement).outerWidth();
+
+			// 	// console.log(widthToSet)
+
+			// 	// if(widthToSet >= this.smallestWidthPossible) {
+			// 	// 	$('#page').css({ 'width': widthToSet + 'px' });
+			// 	// 	$('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
+			// 	// }
+
+			// 	// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
+
+			// 	// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
+
+			// 	// 	this.setPageWidth();
+
+			// 	// }
+			// 	// else {
+			// 	// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
+			// 	// 	// //
+			// 	// 	// if(currentWidth > this.lastWidth) {
+
+			// 	// 	// }
+
+			// 	// 	var 
+			// 	// }
+
+
+			// 	// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
+			// 	//
+			// 	// //now I need to position the font element
+			// 	// var fontText1Element = document.getElementById('fontText1');
+			// 	// var fontText2Element = document.getElementById('fontText2');
+			// 	// // var fontText1 = $(fontText1Element).outerWidth();
+			// 	// // var fontText2 = $(fontText2Element).outerWidth();
+			// 	// // var totalFontWidth = fontText1 + fontText2;
+
+			// 	// var totalWidth = parseFloat(document.getElementById('page').style.width);
+
+			// 	// //sometimes when this resize method runs nothing gets accomplished
+			// 	// //so I need to account for this when the width is '', otherwise I
+			// 	// //can continue with the flow as normal
+			// 	// if(document.getElementById('page').style.width == '') {
+			// 	// 	//for the set timeout option
+			// 	// 	setTimeout(self.resize, 100);
+			// 	// }
+			// 	// else {
+			// 	// 	if(totalWidth < this.totalFontWidth) {
+			// 	// 		$(fontText1Element).css({ display: 'block'});
+			// 	// 		$(fontText2Element).css({ display: 'block'});
+			// 	// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
+			// 	// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
+			// 	// 	}
+			// 	// 	else {
+			// 	// 		$(fontText1Element).css({ display: 'inline-block'});
+			// 	// 		$(fontText2Element).css({ display: 'inline-block'});
+			// 	// 		var fontHeaderHeight = $('#fontText1').outerHeight();
+			// 	// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+			// 	// 	}
+			// 	// }
+
+			// 	// this.lastWidth = widthToSet;
+			// }
+
 		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ style: styles.paddingBottom },
+					{ style: styles.root },
 					_react2.default.createElement(
 						'div',
 						{ id: 'page', style: styles.page },
@@ -37005,6 +37018,10 @@
 	exports.default = Home;
 	var widthHelper = 300; //set the width for the image here to preserver aspect ratio
 	var styles = {
+		root: {
+			width: '100%',
+			paddingBottom: 15
+		},
 		a: {
 			cursor: 'pointer'
 		},
@@ -39106,6 +39123,7 @@
 				// this.window = window;	//this will help later in the resize event as far as performance goes
 				// $(window).resize(self.resize.bind(self));
 
+				//this sets the size of the text to make sure that the text never overflows
 				this.refs['headers'].map(function (header) {
 					$(header).fitText(1.1, { minFontSize: '21px', maxFontSize: '35px' });
 				});
@@ -39519,6 +39537,10 @@
 	           *	Last Modified:  8/11/16
 	           */
 
+	// import EmailForm from './EmailForm.jsx';							//coty commented out 03-24-2017
+	// import EmailForm from './EmailForm_staticWebpageVersion.jsx';	//coty added but kept commented for reference 03-24-2017
+
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -39531,9 +39553,9 @@
 
 	var _Navbar2 = _interopRequireDefault(_Navbar);
 
-	var _EmailForm = __webpack_require__(331);
+	var _EmailForm_serverSideLogicRequired = __webpack_require__(331);
 
-	var _EmailForm2 = _interopRequireDefault(_EmailForm);
+	var _EmailForm_serverSideLogicRequired2 = _interopRequireDefault(_EmailForm_serverSideLogicRequired);
 
 	var _StaticEmailForm = __webpack_require__(332);
 
@@ -39647,15 +39669,15 @@
 				if (outerWidth > smallestWidthPossible) {
 					(0, _jquery2.default)('#page').css({ width: '100%' });
 
-					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
+					// $('#emblem-element').css({ width: '100%' });
 					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
-					EmblemObject.locked = false;
+					// EmblemObject.locked = false;
 				} else if (outerWidth <= smallestWidthPossible) {
 					(0, _jquery2.default)('#page').css({ width: smallestWidthPossible });
 
-					(0, _jquery2.default)('#emblem-element').css({ width: smallestWidthPossible });
+					// $('#emblem-element').css({ width: smallestWidthPossible });
 					(0, _jquery2.default)('#fontHeader').css({ width: smallestWidthPossible });
-					EmblemObject.locked = true;
+					// EmblemObject.locked = true;
 				}
 
 				self.setState({ marginLeft: marginLeft });
@@ -39726,18 +39748,10 @@
 							_react2.default.createElement(
 								'div',
 								{ style: styles.emailCaption },
-								'To send us an email'
+								'To send us an email, enter in the subject and write your message below:'
 							),
-							_react2.default.createElement(
-								'a',
-								{ style: styles.a, href: 'mailto:CHIEFAMCKAY@gmail.com?subject=Contact Sovereign Chickamauga Cherokee' },
-								_react2.default.createElement(
-									'span',
-									{ style: styles.link },
-									'Click Here'
-								),
-								' (this opens your mail app)'
-							),
+							_react2.default.createElement(_EmailForm_serverSideLogicRequired2.default, null),
+							' ',
 							_react2.default.createElement(
 								'div',
 								{ style: styles.emailCaptionEnding },
@@ -40063,7 +40077,7 @@
 	  messageBody: {
 	    width: 200,
 	    height: 200,
-	    fontSize: 30,
+	    fontSize: 21,
 	    marginBottom: 5
 	  },
 	  submit: {
@@ -40405,6 +40419,7 @@
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				//I do this because I want the user to be able to see the animation of the font header when it fades in
 				(0, _jquery2.default)("html, body").animate({ scrollTop: 0 }, "slow");
 				//this .locked property will help me know if I need to adjust the font text
 
@@ -40484,7 +40499,7 @@
 
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ className: 'emblemElementParent', style: styles.emblemElement },
 					_react2.default.createElement('div', { id: 'backgroundImage', style: styles.backgroundImage }),
 					_react2.default.createElement(
 						'div',
@@ -40815,6 +40830,9 @@
 	};
 
 	var styles = {
+		emblemElement: {
+			width: '100%'
+		},
 		one: {
 			width: stylesHelper.helperWidth,
 			height: stylesHelper.helperHeight,
@@ -41260,6 +41278,11 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+
+				//this resets the css style in case it was changed by another component
+				// $('#emblem-element').css({ width: '100%', height: 350 });
+
+
 				var emblemElementOuterWidth = (0, _jquery2.default)('#backgroundImage').outerWidth(true);
 
 				if (this.state.smallestWidthPossible > emblemElementOuterWidth) {
@@ -41294,7 +41317,7 @@
 
 				var widthToSet = (0, _jquery2.default)(document.documentElement).outerWidth();
 				var backgroundImageWidth = (0, _jquery2.default)('#backgroundImage').outerWidth(true);
-				var callResizeAgain = false; //this does nothing for messing
+				var callResizeAgain = false;
 				if (backgroundImageWidth > widthToSet) {
 					widthToSet = backgroundImageWidth;
 					callResizeAgain = true;
@@ -41305,16 +41328,16 @@
 				if (widthToSet >= this.state.smallestWidthPossible) {
 					(0, _jquery2.default)('#page').css({ 'width': widthToSet + 'px' });
 
-					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
-					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
-					EmblemObject.locked = false;
+					// $('#emblem-element').css({ width: '100%' });
+					// $('#fontHeader').css({ width: '100%' });
+					// EmblemObject.locked = false;
 				} else {
 					// console.log('two')
 					(0, _jquery2.default)('#page').css({ 'width': this.state.smallestWidthPossible + 'px' });
 
-					(0, _jquery2.default)('#emblem-element').css({ width: '100%' });
-					(0, _jquery2.default)('#fontHeader').css({ width: '100%' });
-					EmblemObject.locked = false;
+					// $('#emblem-element').css({ width: '100%' });
+					// $('#fontHeader').css({ width: '100%' });
+					// EmblemObject.locked = false;
 				}
 
 				//adjust the header element's width to stay the same as the contents width

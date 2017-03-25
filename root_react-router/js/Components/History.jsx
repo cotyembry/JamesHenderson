@@ -15,6 +15,9 @@ var History = React.createClass({
 	smallestWidthPossible: 445,
 
 	componentDidMount: function() {
+		//this is exposed in index.js
+		window.store.pageLocation = 'history';
+
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 		this.minPageWidth = $('#minPageWidthHelper').outerWidth() > $('#emblem-element').outerWidth() ? $('#emblem-element').outerWidth() : $('#minPageWidthHelper').outerWidth();
 

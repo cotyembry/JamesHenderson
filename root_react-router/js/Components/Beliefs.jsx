@@ -19,6 +19,9 @@ export default class Beliefs extends React.Component {
 		//$(this.refs['header']).fitText(1.1, { minFontSize: '16px', maxFontSize: '60px' });
 	}
 	componentDidMount() {
+		//this is exposed in index.js
+		window.store.pageLocation = 'beliefs';
+
 		var self = this;
 
 		//this resets the css style in case it was changed by another component

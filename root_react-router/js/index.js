@@ -14,27 +14,32 @@ import Home from './Components/Home.jsx';
 import TribalAdministration from './Components/TribalAdministration.jsx';
 
 
-	// ReactDOM.render(<Emblem />, document.getElementById('emblem'));
-	// ReactDOM.render(<Home />, document.getElementById('root'));
-
-
-// import Navbar from './Components/Navbar.jsx';
-
-// ReactDOM.render(<Navbar />, document.getElementById('navbar'))
 $(document).ready(function() {
+	window.store = {
+		_pageLocation: '',
+		set pageLocation(locationThatWasJustSet) {		//coty added pageLocation 03-24-2017. Every single component (that is a main page i.e. Home.jsx, Beliefs.jsx) will set this state property in their componentDidMount method
+			console.log(locationThatWasJustSet)
+			
+			//update the value inside the store so that I can get it later
+			window.store._pageLocation = locationThatWasJustSet;
+			//window.updatePageLocation is defined in Navbar.jsx - it exposes this method to allow its internal state to be updated
+			window.updatePageLocation(locationThatWasJustSet);
+		}
+	}
+
 	ReactDOM.render(<Emblem />, document.getElementById('emblem'))
 
 	ReactDOM.render(
 	  <Router history={hashHistory}>
-	    <Route path="/" component={Home}/>
-	    <Route path="/history" component={History}/>
-	    <Route path="/administration" component={TribalAdministration}/>
-	    <Route path="/application" component={Application}/>
-	    <Route path="/beliefs" component={Beliefs}/>
-	    <Route path="/contact" component={Contact}/>
+	    <Route path="/" component={Home} />
+	    <Route path="/history" component={History} />
+	    <Route path="/administration" component={TribalAdministration} />
+	    <Route path="/application" component={Application} />
+	    <Route path="/beliefs" component={Beliefs} />
+	    <Route path="/contact" component={Contact} />
+	    <Route path="*" component={Home} />
 	  </Router>,
 	  document.getElementById('app')
 	)
 })
-	    // <Route path="/about" component={About}/>
 	    

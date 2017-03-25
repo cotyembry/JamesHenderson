@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 
 import { Link } from 'react-router';
 
@@ -13,8 +14,14 @@ import $ from 'jquery';
 //todo: make the nav bars change colors for a few seconds when tapped on to make the website more touchscreen friendly
 
 var Navbar = React.createClass({
+	pageLocationHelper: function(pageLocationThatWasJustSet) {
+		// //first I will erase the current state
+		// let keys = Object.keys(this.state.pageLocation);
+		this.setState({
+			pageLocation: pageLocationThatWasJustSet
+		})
+	},
 	addHoverEvent: function(navbarItem) {
-
 		//TODO: maybe change the color of the narbar Item to be #F9EF1A (its yellowish) since it goes more with the Emblem.jsx theme
 		$(navbarItem).hover(
 			//handlerIn
@@ -25,14 +32,26 @@ var Navbar = React.createClass({
 			function() {
 				$(this).css({ backgroundColor: 'rgb(230, 149, 0)' });
 			}
-		)		
+		)	
 	},
 	getInitialState: function() {
 		return {
 			default: 'default'
 		}
 	},
+	componentWillMount: function() {
+		this.refs = [];
+		this.refs['navbarItem'] = [];
+
+		this.refs['home'] = '';
+		this.refs['history'] = '';
+		this.refs['administration'] = '';
+		this.refs['application'] = '';
+		this.refs['beliefs'] = '';
+		this.refs['contact'] = '';
+	},
 	componentDidMount: function(e) {
+		window.updatePageLocation = this.pageLocationHelper;
 
 		$(window).resize(this.adjustSize);
 
@@ -117,24 +136,49 @@ var Navbar = React.createClass({
 
 	},
 	render: function() {
-		$.extend(parentNavbar, {
-			position: this.props.position === 'absolute' ? 'absolute' : '',		//for application.html
+		// $.extend(parentNavbar, {
+		// 	position: this.props.position === 'absolute' ? 'absolute' : '',		//for application.html
+		// 	marginTop: typeof this.props.marginTop !== 'undefined' ? this.props.marginTop : '',	
+		// 	paddingTop: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingTop,												//for application.html
+		// 	paddingBottom: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingBottom,											//for application.html
+		// 	fontSize: typeof this.props.fontSize === 'undefined' ? '' : this.props.fontSize												//for application.html
+		// });
+
+
+		var _styles = {}
+
+		//here I override the default styles of parentNavbar
+		_styles.parentNavbar = {
+			...parentNavbar,
+			position: this.props.position === 'absolute' ? 'absolute' : '',
 			marginTop: typeof this.props.marginTop !== 'undefined' ? this.props.marginTop : '',	
 			paddingTop: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingTop,												//for application.html
 			paddingBottom: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingBottom,											//for application.html
-			fontSize: typeof this.props.fontSize === 'undefined' ? '' : this.props.fontSize												//for application.html
-		});
+			fontSize: typeof this.props.fontSize === 'undefined' ? '' : this.props.fontSize
+		}
 
-		 // onClick={this.onClickTribalAdministration} onClick={this.onClickHistory} onClick={this.onClickHome}onClick={this.onClickContact} onClick={this.onClickApplication} onClick={this.onClickBeliefs}
+		//now to override the styles for the pageLocation
+		let keys = Object.keys(this.refs);
+		keys.map((key) => {
+			if(key !== 'navbarItem') {
+				if(key === window.store._pageLocation) {
+					_styles[key] = { backgroundColor: '#BB1C23' }
+				}
+				else {
+					_styles[key] = { backgroundColor: '' }
+				}
+			}
+		})
+
 		return ( 
-			<div id="parent-navbar-item" style={parentNavbar}>
+			<div id="parent-navbar-item" style={_styles.parentNavbar}>
 				<center>
-					<Link className="navbar-item" id="1-navbar-item"  style={navbarItem.one} to="/">Home</Link>
-					<Link className="navbar-item" id="2-navbar-item"  style={navbarItem.one} to="/history">History</Link>
-					<Link className="navbar-item" id="3-navbar-item"  style={navbarItem.one} to="/administration">Tribal Administration</Link>
-					<Link className="navbar-item" id="4-navbar-item"  style={navbarItem.one} to="/application">Application</Link>
-					<Link className="navbar-item" id="5-navbar-item"  style={navbarItem.one} to="/beliefs">Beliefs</Link>
-					<Link className="navbar-item" id="6-navbar-item"  style={navbarItem.oneA} to="/contact">Contact Us</Link>
+					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['home'] = ref; }} className="navbar-item home" id="1-navbar-item"  style={{...navbarItem.one, ..._styles.home}} to="/">Home</Link>
+					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['history'] = ref; }} className="navbar-item history" id="2-navbar-item"  style={{...navbarItem.one, ..._styles.history}} to="/history">History</Link>
+					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['administration'] = ref; }} className="navbar-item administration" id="3-navbar-item"  style={{...navbarItem.one, ..._styles.administration}} to="/administration">Tribal Administration</Link>
+					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['application'] = ref; }} className="navbar-item application" id="4-navbar-item"  style={{...navbarItem.one, ..._styles.application}} to="/application">Application</Link>
+					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['beliefs'] = ref; }} className="navbar-item beliefs" id="5-navbar-item"  style={{...navbarItem.one, ..._styles.beliefs}} to="/beliefs">Beliefs</Link>
+					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['contact'] = ref; }} className="navbar-item contact" id="6-navbar-item"  style={{...navbarItem.one, ..._styles.contact}} to="/contact">Contact Us</Link>
 				</center>
 			</div>
 		)
@@ -143,129 +187,21 @@ var Navbar = React.createClass({
 		this.setState({ default: 'default' })
 	},
 	onClickApplication: function() {
-		//Coty commented out the line below and removed the .html part from it on 12_23_2016
-		//I'm converting this webpack-dev-server to be used as an express app so the .html
-		//is no longer needed. Instead the express router will handle this routing on the
-		//server side
-
-		//note: in the future when you want to develop on this code base again on the
-		//webpack-dev-server you will need to flip the comment of these statements to
-		//bring back the location = '*.html' code
-
-		// location = './application.html';
-		
-		//TODO: this is going to be harder to implement than I thought...
-		//first remove the class from the element (where ever it is...and then add the class to this particular element)
-		// $('.active').each(function() {
-		// 	$(this).removeClass('active');
-		// });
-		// $('#4-navbar-item').addClass('active');
-
 		location = './application';
 	},
 	onClickContact: function() {
-		//Coty commented out the line below and removed the .html part from it on 12_23_2016
-		//I'm converting this webpack-dev-server to be used as an express app so the .html
-		//is no longer needed. Instead the express router will handle this routing on the
-		//server side
-
-		//note: in the future when you want to develop on this code base again on the
-		//webpack-dev-server you will need to flip the comment of these statements to
-		//bring back the location = '*.html' code
-
-		// location = './contact.html';
-		
-		//TODO: this is going to be harder to implement than I thought...
-		//first remove the class from the element (where ever it is...and then add the class to this particular element)
-		// $('.active').each(function() {
-		// 	$(this).removeClass('active');
-		// });
-		// $('#6-navbar-item').addClass('active');
-
 		location = './contact';
 	},
 	onClickHome: function() {
-		//Coty commented out the line below and removed the .html part from it on 12_23_2016
-		//I'm converting this webpack-dev-server to be used as an express app so the .html
-		//is no longer needed. Instead the express router will handle this routing on the
-		//server side
-
-		//note: in the future when you want to develop on this code base again on the
-		//webpack-dev-server you will need to flip the comment of these statements to
-		//bring back the location = '*.html' code
-
-		// location = './index.html';
-		
-		//TODO: this is going to be harder to implement than I thought...
-		//first remove the class from the element (where ever it is...and then add the class to this particular element)
-		// $('.active').each(function() {
-		// 	$(this).removeClass('active');
-		// });
-		// $('#1-navbar-item').addClass('active');
-
 		location = '/';
 	},
 	onClickHistory: function() {
-		//Coty commented out the line below and removed the .html part from it on 12_23_2016
-		//I'm converting this webpack-dev-server to be used as an express app so the .html
-		//is no longer needed. Instead the express router will handle this routing on the
-		//server side
-
-		//note: in the future when you want to develop on this code base again on the
-		//webpack-dev-server you will need to flip the comment of these statements to
-		//bring back the location = '*.html' code
-
-		// location = './history.html';
-		
-		//TODO: this is going to be harder to implement than I thought...
-		//first remove the class from the element (where ever it is...and then add the class to this particular element)
-		// $('.active').each(function() {
-		// 	$(this).removeClass('active');
-		// });
-		// $('#2-navbar-item').addClass('active');
-
 		location = './history';
 	},
 	onClickBeliefs: function() {
-		//Coty commented out the line below and removed the .html part from it on 12_23_2016
-		//I'm converting this webpack-dev-server to be used as an express app so the .html
-		//is no longer needed. Instead the express router will handle this routing on the
-		//server side
-
-		//note: in the future when you want to develop on this code base again on the
-		//webpack-dev-server you will need to flip the comment of these statements to
-		//bring back the location = '*.html' code
-
-		// location = './beliefs.html';
-		
-		//TODO: this is going to be harder to implement than I thought...
-		//first remove the class from the element (where ever it is...and then add the class to this particular element)
-		// $('.active').each(function() {
-		// 	$(this).removeClass('active');
-		// });
-		// $('#5-navbar-item').addClass('active');
-
 		location = './beliefs';
 	},
 	onClickTribalAdministration: function() {
-		//Coty commented out the line below and removed the .html part from it on 12_23_2016
-		//I'm converting this webpack-dev-server to be used as an express app so the .html
-		//is no longer needed. Instead the express router will handle this routing on the
-		//server side
-
-		//note: in the future when you want to develop on this code base again on the
-		//webpack-dev-server you will need to flip the comment of these statements to
-		//bring back the location = '*.html' code
-
-		// location = './tribaladministration.html'
-		
-		//TODO: this is going to be harder to implement than I thought...
-		//first remove the class from the element (where ever it is...and then add the class to this particular element)
-		// $('.active').each(function() {
-		// 	$(this).removeClass('active');
-		// });
-		// $('#3-navbar-item').addClass('active');
-
 		location = './tribaladministration';
 	}
 });
@@ -324,13 +260,5 @@ var styles = {
 	}
 }
 
-// var divStyle = {
-//   color: 'white',
-//   backgroundImage: 'url(' + imgUrl + ')',
-//   WebkitTransition: 'all', // note the capital 'W' here
-//   msTransition: 'all' // 'ms' is the only lowercase vendor prefix
-// };
-
-// ReactDOM.render(<div style={divStyle}>Hello World!</div>, mountNode);
 
 module.exports = Navbar;

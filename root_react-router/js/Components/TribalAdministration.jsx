@@ -25,6 +25,8 @@ export default class TribalAdministration extends React.Component {
 		this.refs = [];
 	}
 	componentDidMount() {
+		//this is exposed in index.js
+		window.store.pageLocation = 'administration';
 		//now I will add the sizing api for the header
 		$(this.refs['header']).fitText(1.1, { minFontSize: '16px', maxFontSize: '60px' });
 

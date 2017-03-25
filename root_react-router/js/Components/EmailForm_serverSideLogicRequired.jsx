@@ -141,7 +141,7 @@ var styles = {
   messageBody: {
     width: 200,
     height: 200,
-    fontSize: 30,
+    fontSize: 21,
     marginBottom: 5
   },
   submit: {

@@ -20,6 +20,9 @@ export default class Home extends React.Component {
 	}
 
 	componentDidMount() {
+		//this is exposed in index.js
+		window.store.pageLocation = 'home';
+
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 		
 		//this resets the css style in case it was changed by another component

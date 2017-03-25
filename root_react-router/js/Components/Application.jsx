@@ -15,6 +15,9 @@ export default class Home extends React.Component {
 		this.smallestWidthPossible= 445;
 	}
 	componentDidMount() {
+		//this is exposed in index.js
+		window.store.pageLocation = 'application';
+
 		
 		// let self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 

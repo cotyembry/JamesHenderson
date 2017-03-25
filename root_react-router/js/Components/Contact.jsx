@@ -40,6 +40,9 @@ export default class Contact extends React.Component {
 		}
 	}
 	componentDidMount() {
+		//this is exposed in index.js
+		window.store.pageLocation = 'contact';
+
 		self = this;
 
 		$('#mapiframe').on('load', self.iframeLoaded.bind(self));
@@ -178,9 +181,12 @@ export default class Contact extends React.Component {
 						</div>
 
 						{/*<StaticEmailForm /><EmailForm /> Coty commented out 02-17-2017 */}
-						{/*<a style={styles.a} href = 'mailto:cotyembry@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
-						<a style={styles.a} href = 'mailto:CHIEFAMCKAY@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
+						{/*
+							coty commented out 03-24-2017
+							As a temporary workaround for dealing with a static webpage, the following code would (when clicking on the link) popup the users native email client (a problem that I dont like about this is if the user doesnt have an email account setup then this method will fail for the user...and thats not a good user experience. If they do have the email set up it works perfectly though!)
 
+						<a style={styles.a} href = 'mailto:cotyembry@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
+						<a style={styles.a} href = 'mailto:CHIEFAMCKAY@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
 
 						*/}
 						<EmailForm /> {/* coty added 03-24-2017 */}
