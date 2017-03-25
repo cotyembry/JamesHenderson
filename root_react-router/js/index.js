@@ -18,7 +18,7 @@ $(document).ready(function() {
 	window.store = {
 		_pageLocation: '',
 		set pageLocation(locationThatWasJustSet) {		//coty added pageLocation 03-24-2017. Every single component (that is a main page i.e. Home.jsx, Beliefs.jsx) will set this state property in their componentDidMount method
-			console.log(locationThatWasJustSet)
+			// console.log(locationThatWasJustSet)
 			
 			//update the value inside the store so that I can get it later
 			window.store._pageLocation = locationThatWasJustSet;

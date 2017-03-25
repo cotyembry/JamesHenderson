@@ -170,15 +170,18 @@ var Navbar = React.createClass({
 			}
 		})
 
+
 		return ( 
 			<div id="parent-navbar-item" style={_styles.parentNavbar}>
 				<center>
-					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['home'] = ref; }} className="navbar-item home" id="1-navbar-item"  style={{...navbarItem.one, ..._styles.home}} to="/">Home</Link>
-					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['history'] = ref; }} className="navbar-item history" id="2-navbar-item"  style={{...navbarItem.one, ..._styles.history}} to="/history">History</Link>
-					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['administration'] = ref; }} className="navbar-item administration" id="3-navbar-item"  style={{...navbarItem.one, ..._styles.administration}} to="/administration">Tribal Administration</Link>
-					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['application'] = ref; }} className="navbar-item application" id="4-navbar-item"  style={{...navbarItem.one, ..._styles.application}} to="/application">Application</Link>
-					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['beliefs'] = ref; }} className="navbar-item beliefs" id="5-navbar-item"  style={{...navbarItem.one, ..._styles.beliefs}} to="/beliefs">Beliefs</Link>
-					<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['contact'] = ref; }} className="navbar-item contact" id="6-navbar-item"  style={{...navbarItem.one, ..._styles.contact}} to="/contact">Contact Us</Link>
+					<div style={styles.navbarWrapper}>
+						<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['home'] = ref; }} className="navbar-item home" id="1-navbar-item"  style={{...navbarItem.one, ..._styles.home}} to="/">Home</Link>
+						<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['history'] = ref; }} className="navbar-item history" id="2-navbar-item"  style={{...navbarItem.one, ..._styles.history}} to="/history">History</Link>
+						<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['administration'] = ref; }} className="navbar-item administration" id="3-navbar-item"  style={{...navbarItem.one, ..._styles.administration}} to="/administration">Tribal Administration</Link>
+						<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['application'] = ref; }} className="navbar-item application" id="4-navbar-item"  style={{...navbarItem.one, ..._styles.application}} to="/application">Application</Link>
+						<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['beliefs'] = ref; }} className="navbar-item beliefs" id="5-navbar-item"  style={{...navbarItem.one, ..._styles.beliefs}} to="/beliefs">Beliefs</Link>
+						<Link ref={(ref) => { this.refs['navbarItem'].push(ref); this.refs['contact'] = ref; }} className="navbar-item contact" id="6-navbar-item"  style={{...navbarItem.one, ..._styles.contact}} to="/contact">Contact Us</Link>
+					</div>
 				</center>
 			</div>
 		)
@@ -257,6 +260,10 @@ var lastChild = {
 var styles = {
 	navbarItemActive: {
 		backgroundColor: '#e69500'
+	},
+	navbarWrapper: {
+		display: 'inline-block',
+		boxShadow: '1px 1px 10px white, 7px 7px 10px black'
 	}
 }
 

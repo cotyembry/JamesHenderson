@@ -64,40 +64,46 @@
 
 	var _Application2 = _interopRequireDefault(_Application);
 
-	var _Beliefs = __webpack_require__(323);
+	var _Beliefs = __webpack_require__(331);
 
 	var _Beliefs2 = _interopRequireDefault(_Beliefs);
 
-	var _Contact = __webpack_require__(330);
+	var _Contact = __webpack_require__(333);
 
 	var _Contact2 = _interopRequireDefault(_Contact);
 
-	var _Emblem = __webpack_require__(334);
+	var _Emblem = __webpack_require__(337);
 
 	var _Emblem2 = _interopRequireDefault(_Emblem);
 
-	var _History = __webpack_require__(335);
+	var _History = __webpack_require__(338);
 
 	var _History2 = _interopRequireDefault(_History);
 
-	var _Home = __webpack_require__(336);
+	var _Home = __webpack_require__(339);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _TribalAdministration = __webpack_require__(337);
+	var _TribalAdministration = __webpack_require__(340);
 
 	var _TribalAdministration2 = _interopRequireDefault(_TribalAdministration);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// ReactDOM.render(<Emblem />, document.getElementById('emblem'));
-	// ReactDOM.render(<Home />, document.getElementById('root'));
-
-
-	// import Navbar from './Components/Navbar.jsx';
-
-	// ReactDOM.render(<Navbar />, document.getElementById('navbar'))
 	(0, _jquery2.default)(document).ready(function () {
+		window.store = {
+			_pageLocation: '',
+			set pageLocation(locationThatWasJustSet) {
+				//coty added pageLocation 03-24-2017. Every single component (that is a main page i.e. Home.jsx, Beliefs.jsx) will set this state property in their componentDidMount method
+				// console.log(locationThatWasJustSet)
+
+				//update the value inside the store so that I can get it later
+				window.store._pageLocation = locationThatWasJustSet;
+				//window.updatePageLocation is defined in Navbar.jsx - it exposes this method to allow its internal state to be updated
+				window.updatePageLocation(locationThatWasJustSet);
+			}
+		};
+
 		_reactDom2.default.render(_react2.default.createElement(_Emblem2.default, null), document.getElementById('emblem'));
 
 		_reactDom2.default.render(_react2.default.createElement(
@@ -108,10 +114,10 @@
 			_react2.default.createElement(_reactRouter.Route, { path: '/administration', component: _TribalAdministration2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/application', component: _Application2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/beliefs', component: _Beliefs2.default }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default })
+			_react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '*', component: _Home2.default })
 		), document.getElementById('app'));
 	});
-	// <Route path="/about" component={About}/>
 
 /***/ },
 /* 1 */
@@ -36870,48 +36876,50 @@
 
 		(0, _createClass3.default)(Home, [{
 			key: 'componentDidMount',
-			value: function componentDidMount() {}
+			value: function componentDidMount() {
+				//this is exposed in index.js
+				window.store.pageLocation = 'application';
 
-			// let self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+				// let self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 
-			// //this resets the css style in case it was changed by another component
-			// $('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
-
-
-			// $('#emblem-element').css({ width: '100%', height: 350 });
-
-
-			//here I will set the page's width (TODO: convert this to use strictly this.state)
-			// var widthToSet = $(document.documentElement).outerWidth();
-			// $('#page').css({ 'width': widthToSet + 'px' });
+				// //this resets the css style in case it was changed by another component
+				// $('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
 
 
-			// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
-			//
-			// //added the following lines to set the position of the font header
-			// var fontHeaderHeight = $('#fontText1').outerHeight();
-			// $('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-			//
-			// //this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
-			// var fontText1 = $('#fontText1').outerWidth();
-			// var fontText2 = $('#fontText2').outerWidth();
-			//
-			// // console.log(fontText1, fontText2)
-			//
-			// var totalFontWidth = fontText1 + fontText2;
-			// this.totalFontWidth = totalFontWidth;
+				// $('#emblem-element').css({ width: '100%', height: 350 });
 
 
-			// $(window).resize( self.resize )
-			// //and so its ran at least one time
-			// this.resize();
+				//here I will set the page's width (TODO: convert this to use strictly this.state)
+				// var widthToSet = $(document.documentElement).outerWidth();
+				// $('#page').css({ 'width': widthToSet + 'px' });
 
-			// // Listen for orientation changes
-			// window.addEventListener("orientationchange", this.resize);
 
-			// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
-			// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
+				// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
+				//
+				// //added the following lines to set the position of the font header
+				// var fontHeaderHeight = $('#fontText1').outerHeight();
+				// $('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+				//
+				// //this helps me know what the total width of the font header is before its changed to display: block messing with the width values later
+				// var fontText1 = $('#fontText1').outerWidth();
+				// var fontText2 = $('#fontText2').outerWidth();
+				//
+				// // console.log(fontText1, fontText2)
+				//
+				// var totalFontWidth = fontText1 + fontText2;
+				// this.totalFontWidth = totalFontWidth;
 
+
+				// $(window).resize( self.resize )
+				// //and so its ran at least one time
+				// this.resize();
+
+				// // Listen for orientation changes
+				// window.addEventListener("orientationchange", this.resize);
+
+				// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
+				// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
+			}
 			// resize() {
 			// 	var self = this;
 
@@ -38668,9 +38676,19 @@
 
 	'use strict';
 
+	var _keys = __webpack_require__(323);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _extends2 = __webpack_require__(326);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
 
 	var _reactRouter = __webpack_require__(178);
 
@@ -38682,11 +38700,23 @@
 
 	//todo: make the nav bars change colors for a few seconds when tapped on to make the website more touchscreen friendly
 
+	/*
+	*		   Author:  	John Coty Embry
+	*	Last Modified:  	08/11/2016
+	*	 Date Created:  	08/09/2016
+	*/
+
 	var Navbar = _react2.default.createClass({
 		displayName: 'Navbar',
 
+		pageLocationHelper: function pageLocationHelper(pageLocationThatWasJustSet) {
+			// //first I will erase the current state
+			// let keys = Object.keys(this.state.pageLocation);
+			this.setState({
+				pageLocation: pageLocationThatWasJustSet
+			});
+		},
 		addHoverEvent: function addHoverEvent(navbarItem) {
-
 			//TODO: maybe change the color of the narbar Item to be #F9EF1A (its yellowish) since it goes more with the Emblem.jsx theme
 			(0, _jquery2.default)(navbarItem).hover(
 			//handlerIn
@@ -38703,7 +38733,19 @@
 				default: 'default'
 			};
 		},
+		componentWillMount: function componentWillMount() {
+			this.refs = [];
+			this.refs['navbarItem'] = [];
+
+			this.refs['home'] = '';
+			this.refs['history'] = '';
+			this.refs['administration'] = '';
+			this.refs['application'] = '';
+			this.refs['beliefs'] = '';
+			this.refs['contact'] = '';
+		},
 		componentDidMount: function componentDidMount(e) {
+			window.updatePageLocation = this.pageLocationHelper;
 
 			(0, _jquery2.default)(window).resize(this.adjustSize);
 
@@ -38777,50 +38819,91 @@
 
 		},
 		render: function render() {
-			_jquery2.default.extend(parentNavbar, {
-				position: this.props.position === 'absolute' ? 'absolute' : '', //for application.html
+			var _this = this;
+
+			// $.extend(parentNavbar, {
+			// 	position: this.props.position === 'absolute' ? 'absolute' : '',		//for application.html
+			// 	marginTop: typeof this.props.marginTop !== 'undefined' ? this.props.marginTop : '',	
+			// 	paddingTop: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingTop,												//for application.html
+			// 	paddingBottom: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingBottom,											//for application.html
+			// 	fontSize: typeof this.props.fontSize === 'undefined' ? '' : this.props.fontSize												//for application.html
+			// });
+
+
+			var _styles = {};
+
+			//here I override the default styles of parentNavbar
+			_styles.parentNavbar = (0, _extends3.default)({}, parentNavbar, {
+				position: this.props.position === 'absolute' ? 'absolute' : '',
 				marginTop: typeof this.props.marginTop !== 'undefined' ? this.props.marginTop : '',
 				paddingTop: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingTop, //for application.html
 				paddingBottom: this.props.doNotSetPadding === true ? '' : parentNavbar.paddingBottom, //for application.html
-				fontSize: typeof this.props.fontSize === 'undefined' ? '' : this.props.fontSize //for application.html
+				fontSize: typeof this.props.fontSize === 'undefined' ? '' : this.props.fontSize
 			});
 
-			// onClick={this.onClickTribalAdministration} onClick={this.onClickHistory} onClick={this.onClickHome}onClick={this.onClickContact} onClick={this.onClickApplication} onClick={this.onClickBeliefs}
+			//now to override the styles for the pageLocation
+			var keys = (0, _keys2.default)(this.refs);
+			keys.map(function (key) {
+				if (key !== 'navbarItem') {
+					if (key === window.store._pageLocation) {
+						_styles[key] = { backgroundColor: '#BB1C23' };
+					} else {
+						_styles[key] = { backgroundColor: '' };
+					}
+				}
+			});
+
 			return _react2.default.createElement(
 				'div',
-				{ id: 'parent-navbar-item', style: parentNavbar },
+				{ id: 'parent-navbar-item', style: _styles.parentNavbar },
 				_react2.default.createElement(
 					'center',
 					null,
 					_react2.default.createElement(
-						_reactRouter.Link,
-						{ className: 'navbar-item', id: '1-navbar-item', style: navbarItem.one, to: '/' },
-						'Home'
-					),
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ className: 'navbar-item', id: '2-navbar-item', style: navbarItem.one, to: '/history' },
-						'History'
-					),
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ className: 'navbar-item', id: '3-navbar-item', style: navbarItem.one, to: '/administration' },
-						'Tribal Administration'
-					),
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ className: 'navbar-item', id: '4-navbar-item', style: navbarItem.one, to: '/application' },
-						'Application'
-					),
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ className: 'navbar-item', id: '5-navbar-item', style: navbarItem.one, to: '/beliefs' },
-						'Beliefs'
-					),
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ className: 'navbar-item', id: '6-navbar-item', style: navbarItem.oneA, to: '/contact' },
-						'Contact Us'
+						'div',
+						{ style: styles.navbarWrapper },
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ ref: function ref(_ref) {
+									_this.refs['navbarItem'].push(_ref);_this.refs['home'] = _ref;
+								}, className: 'navbar-item home', id: '1-navbar-item', style: (0, _extends3.default)({}, navbarItem.one, _styles.home), to: '/' },
+							'Home'
+						),
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ ref: function ref(_ref2) {
+									_this.refs['navbarItem'].push(_ref2);_this.refs['history'] = _ref2;
+								}, className: 'navbar-item history', id: '2-navbar-item', style: (0, _extends3.default)({}, navbarItem.one, _styles.history), to: '/history' },
+							'History'
+						),
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ ref: function ref(_ref3) {
+									_this.refs['navbarItem'].push(_ref3);_this.refs['administration'] = _ref3;
+								}, className: 'navbar-item administration', id: '3-navbar-item', style: (0, _extends3.default)({}, navbarItem.one, _styles.administration), to: '/administration' },
+							'Tribal Administration'
+						),
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ ref: function ref(_ref4) {
+									_this.refs['navbarItem'].push(_ref4);_this.refs['application'] = _ref4;
+								}, className: 'navbar-item application', id: '4-navbar-item', style: (0, _extends3.default)({}, navbarItem.one, _styles.application), to: '/application' },
+							'Application'
+						),
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ ref: function ref(_ref5) {
+									_this.refs['navbarItem'].push(_ref5);_this.refs['beliefs'] = _ref5;
+								}, className: 'navbar-item beliefs', id: '5-navbar-item', style: (0, _extends3.default)({}, navbarItem.one, _styles.beliefs), to: '/beliefs' },
+							'Beliefs'
+						),
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ ref: function ref(_ref6) {
+									_this.refs['navbarItem'].push(_ref6);_this.refs['contact'] = _ref6;
+								}, className: 'navbar-item contact', id: '6-navbar-item', style: (0, _extends3.default)({}, navbarItem.one, _styles.contact), to: '/contact' },
+							'Contact Us'
+						)
 					)
 				)
 			);
@@ -38829,129 +38912,21 @@
 			this.setState({ default: 'default' });
 		},
 		onClickApplication: function onClickApplication() {
-			//Coty commented out the line below and removed the .html part from it on 12_23_2016
-			//I'm converting this webpack-dev-server to be used as an express app so the .html
-			//is no longer needed. Instead the express router will handle this routing on the
-			//server side
-
-			//note: in the future when you want to develop on this code base again on the
-			//webpack-dev-server you will need to flip the comment of these statements to
-			//bring back the location = '*.html' code
-
-			// location = './application.html';
-
-			//TODO: this is going to be harder to implement than I thought...
-			//first remove the class from the element (where ever it is...and then add the class to this particular element)
-			// $('.active').each(function() {
-			// 	$(this).removeClass('active');
-			// });
-			// $('#4-navbar-item').addClass('active');
-
 			location = './application';
 		},
 		onClickContact: function onClickContact() {
-			//Coty commented out the line below and removed the .html part from it on 12_23_2016
-			//I'm converting this webpack-dev-server to be used as an express app so the .html
-			//is no longer needed. Instead the express router will handle this routing on the
-			//server side
-
-			//note: in the future when you want to develop on this code base again on the
-			//webpack-dev-server you will need to flip the comment of these statements to
-			//bring back the location = '*.html' code
-
-			// location = './contact.html';
-
-			//TODO: this is going to be harder to implement than I thought...
-			//first remove the class from the element (where ever it is...and then add the class to this particular element)
-			// $('.active').each(function() {
-			// 	$(this).removeClass('active');
-			// });
-			// $('#6-navbar-item').addClass('active');
-
 			location = './contact';
 		},
 		onClickHome: function onClickHome() {
-			//Coty commented out the line below and removed the .html part from it on 12_23_2016
-			//I'm converting this webpack-dev-server to be used as an express app so the .html
-			//is no longer needed. Instead the express router will handle this routing on the
-			//server side
-
-			//note: in the future when you want to develop on this code base again on the
-			//webpack-dev-server you will need to flip the comment of these statements to
-			//bring back the location = '*.html' code
-
-			// location = './index.html';
-
-			//TODO: this is going to be harder to implement than I thought...
-			//first remove the class from the element (where ever it is...and then add the class to this particular element)
-			// $('.active').each(function() {
-			// 	$(this).removeClass('active');
-			// });
-			// $('#1-navbar-item').addClass('active');
-
 			location = '/';
 		},
 		onClickHistory: function onClickHistory() {
-			//Coty commented out the line below and removed the .html part from it on 12_23_2016
-			//I'm converting this webpack-dev-server to be used as an express app so the .html
-			//is no longer needed. Instead the express router will handle this routing on the
-			//server side
-
-			//note: in the future when you want to develop on this code base again on the
-			//webpack-dev-server you will need to flip the comment of these statements to
-			//bring back the location = '*.html' code
-
-			// location = './history.html';
-
-			//TODO: this is going to be harder to implement than I thought...
-			//first remove the class from the element (where ever it is...and then add the class to this particular element)
-			// $('.active').each(function() {
-			// 	$(this).removeClass('active');
-			// });
-			// $('#2-navbar-item').addClass('active');
-
 			location = './history';
 		},
 		onClickBeliefs: function onClickBeliefs() {
-			//Coty commented out the line below and removed the .html part from it on 12_23_2016
-			//I'm converting this webpack-dev-server to be used as an express app so the .html
-			//is no longer needed. Instead the express router will handle this routing on the
-			//server side
-
-			//note: in the future when you want to develop on this code base again on the
-			//webpack-dev-server you will need to flip the comment of these statements to
-			//bring back the location = '*.html' code
-
-			// location = './beliefs.html';
-
-			//TODO: this is going to be harder to implement than I thought...
-			//first remove the class from the element (where ever it is...and then add the class to this particular element)
-			// $('.active').each(function() {
-			// 	$(this).removeClass('active');
-			// });
-			// $('#5-navbar-item').addClass('active');
-
 			location = './beliefs';
 		},
 		onClickTribalAdministration: function onClickTribalAdministration() {
-			//Coty commented out the line below and removed the .html part from it on 12_23_2016
-			//I'm converting this webpack-dev-server to be used as an express app so the .html
-			//is no longer needed. Instead the express router will handle this routing on the
-			//server side
-
-			//note: in the future when you want to develop on this code base again on the
-			//webpack-dev-server you will need to flip the comment of these statements to
-			//bring back the location = '*.html' code
-
-			// location = './tribaladministration.html'
-
-			//TODO: this is going to be harder to implement than I thought...
-			//first remove the class from the element (where ever it is...and then add the class to this particular element)
-			// $('.active').each(function() {
-			// 	$(this).removeClass('active');
-			// });
-			// $('#3-navbar-item').addClass('active');
-
 			location = './tribaladministration';
 		}
 	});
@@ -38959,12 +38934,6 @@
 	*	todo: write a utility function that will convert back and forth
 	*	between percentages and pixels
 	*/
-	/*
-	*		   Author:  	John Coty Embry
-	*	Last Modified:  	08/11/2016
-	*	 Date Created:  	08/09/2016
-	*/
-
 	var parentNavbar = {
 		//I'm going to assume that the browser is above - I suppose - 500px in width?? (apparently 1024 is the average number, so I'll try my best to include tablets)
 		width: '100%',
@@ -39013,22 +38982,132 @@
 	var styles = {
 		navbarItemActive: {
 			backgroundColor: '#e69500'
+		},
+		navbarWrapper: {
+			display: 'inline-block',
+			boxShadow: '1px 1px 10px white, 7px 7px 10px black'
 		}
 	};
-
-	// var divStyle = {
-	//   color: 'white',
-	//   backgroundImage: 'url(' + imgUrl + ')',
-	//   WebkitTransition: 'all', // note the capital 'W' here
-	//   msTransition: 'all' // 'ms' is the only lowercase vendor prefix
-	// };
-
-	// ReactDOM.render(<div style={divStyle}>Hello World!</div>, mountNode);
 
 	module.exports = Navbar;
 
 /***/ },
 /* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(324), __esModule: true };
+
+/***/ },
+/* 324 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(325);
+	module.exports = __webpack_require__(248).Object.keys;
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.14 Object.keys(O)
+	var toObject = __webpack_require__(238)
+	  , $keys    = __webpack_require__(280);
+
+	__webpack_require__(246)('keys', function(){
+	  return function keys(it){
+	    return $keys(toObject(it));
+	  };
+	});
+
+/***/ },
+/* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	exports.__esModule = true;
+
+	var _assign = __webpack_require__(327);
+
+	var _assign2 = _interopRequireDefault(_assign);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _assign2.default || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];
+
+	    for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }
+
+	  return target;
+	};
+
+/***/ },
+/* 327 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(328), __esModule: true };
+
+/***/ },
+/* 328 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(329);
+	module.exports = __webpack_require__(248).Object.assign;
+
+/***/ },
+/* 329 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.1 Object.assign(target, source)
+	var $export = __webpack_require__(247);
+
+	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(330)});
+
+/***/ },
+/* 330 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 19.1.2.1 Object.assign(target, source, ...)
+	var getKeys  = __webpack_require__(280)
+	  , gOPS     = __webpack_require__(304)
+	  , pIE      = __webpack_require__(305)
+	  , toObject = __webpack_require__(238)
+	  , IObject  = __webpack_require__(283)
+	  , $assign  = Object.assign;
+
+	// should work with symbols and should have deterministic property order (V8 bug)
+	module.exports = !$assign || __webpack_require__(257)(function(){
+	  var A = {}
+	    , B = {}
+	    , S = Symbol()
+	    , K = 'abcdefghijklmnopqrst';
+	  A[S] = 7;
+	  K.split('').forEach(function(k){ B[k] = k; });
+	  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+	  var T     = toObject(target)
+	    , aLen  = arguments.length
+	    , index = 1
+	    , getSymbols = gOPS.f
+	    , isEnum     = pIE.f;
+	  while(aLen > index){
+	    var S      = IObject(arguments[index++])
+	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+	      , length = keys.length
+	      , j      = 0
+	      , key;
+	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+	  } return T;
+	} : $assign;
+
+/***/ },
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39037,11 +39116,11 @@
 		value: true
 	});
 
-	var _defineProperty2 = __webpack_require__(324);
+	var _defineProperty2 = __webpack_require__(332);
 
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-	var _extends2 = __webpack_require__(325);
+	var _extends2 = __webpack_require__(326);
 
 	var _extends3 = _interopRequireDefault(_extends2);
 
@@ -39104,6 +39183,9 @@
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				//this is exposed in index.js
+				window.store.pageLocation = 'beliefs';
+
 				var self = this;
 
 				//this resets the css style in case it was changed by another component
@@ -39377,7 +39459,7 @@
 	};
 
 /***/ },
-/* 324 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -39406,95 +39488,7 @@
 	};
 
 /***/ },
-/* 325 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	exports.__esModule = true;
-
-	var _assign = __webpack_require__(326);
-
-	var _assign2 = _interopRequireDefault(_assign);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _assign2.default || function (target) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    var source = arguments[i];
-
-	    for (var key in source) {
-	      if (Object.prototype.hasOwnProperty.call(source, key)) {
-	        target[key] = source[key];
-	      }
-	    }
-	  }
-
-	  return target;
-	};
-
-/***/ },
-/* 326 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(327), __esModule: true };
-
-/***/ },
-/* 327 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(328);
-	module.exports = __webpack_require__(248).Object.assign;
-
-/***/ },
-/* 328 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.3.1 Object.assign(target, source)
-	var $export = __webpack_require__(247);
-
-	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(329)});
-
-/***/ },
-/* 329 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	// 19.1.2.1 Object.assign(target, source, ...)
-	var getKeys  = __webpack_require__(280)
-	  , gOPS     = __webpack_require__(304)
-	  , pIE      = __webpack_require__(305)
-	  , toObject = __webpack_require__(238)
-	  , IObject  = __webpack_require__(283)
-	  , $assign  = Object.assign;
-
-	// should work with symbols and should have deterministic property order (V8 bug)
-	module.exports = !$assign || __webpack_require__(257)(function(){
-	  var A = {}
-	    , B = {}
-	    , S = Symbol()
-	    , K = 'abcdefghijklmnopqrst';
-	  A[S] = 7;
-	  K.split('').forEach(function(k){ B[k] = k; });
-	  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
-	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
-	  var T     = toObject(target)
-	    , aLen  = arguments.length
-	    , index = 1
-	    , getSymbols = gOPS.f
-	    , isEnum     = pIE.f;
-	  while(aLen > index){
-	    var S      = IObject(arguments[index++])
-	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
-	      , length = keys.length
-	      , j      = 0
-	      , key;
-	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
-	  } return T;
-	} : $assign;
-
-/***/ },
-/* 330 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39503,11 +39497,11 @@
 		value: true
 	});
 
-	var _defineProperty2 = __webpack_require__(324);
+	var _defineProperty2 = __webpack_require__(332);
 
 	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-	var _assign = __webpack_require__(326);
+	var _assign = __webpack_require__(327);
 
 	var _assign2 = _interopRequireDefault(_assign);
 
@@ -39553,15 +39547,15 @@
 
 	var _Navbar2 = _interopRequireDefault(_Navbar);
 
-	var _EmailForm_serverSideLogicRequired = __webpack_require__(331);
+	var _EmailForm_serverSideLogicRequired = __webpack_require__(334);
 
 	var _EmailForm_serverSideLogicRequired2 = _interopRequireDefault(_EmailForm_serverSideLogicRequired);
 
-	var _StaticEmailForm = __webpack_require__(332);
+	var _StaticEmailForm = __webpack_require__(335);
 
 	var _StaticEmailForm2 = _interopRequireDefault(_StaticEmailForm);
 
-	var _LoadingIcon = __webpack_require__(333);
+	var _LoadingIcon = __webpack_require__(336);
 
 	var _LoadingIcon2 = _interopRequireDefault(_LoadingIcon);
 
@@ -39597,6 +39591,9 @@
 		(0, _createClass3.default)(Contact, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				//this is exposed in index.js
+				window.store.pageLocation = 'contact';
+
 				self = this;
 
 				(0, _jquery2.default)('#mapiframe').on('load', self.iframeLoaded.bind(self));
@@ -39883,7 +39880,7 @@
 	window.mapStyle = styles.mapStyle;
 
 /***/ },
-/* 331 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40087,7 +40084,7 @@
 	};
 
 /***/ },
-/* 332 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40202,7 +40199,7 @@
 	};
 
 /***/ },
-/* 333 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40292,7 +40289,7 @@
 	exports.default = LoadingIcon;
 
 /***/ },
-/* 334 */
+/* 337 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40301,7 +40298,7 @@
 		value: true
 	});
 
-	var _assign = __webpack_require__(326);
+	var _assign = __webpack_require__(327);
 
 	var _assign2 = _interopRequireDefault(_assign);
 
@@ -40914,7 +40911,7 @@
 	module.exports = Emblem;
 
 /***/ },
-/* 335 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40948,6 +40945,9 @@
 		smallestWidthPossible: 445,
 
 		componentDidMount: function componentDidMount() {
+			//this is exposed in index.js
+			window.store.pageLocation = 'history';
+
 			var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 			this.minPageWidth = (0, _jquery2.default)('#minPageWidthHelper').outerWidth() > (0, _jquery2.default)('#emblem-element').outerWidth() ? (0, _jquery2.default)('#emblem-element').outerWidth() : (0, _jquery2.default)('#minPageWidthHelper').outerWidth();
 
@@ -41202,7 +41202,7 @@
 	module.exports = History;
 
 /***/ },
-/* 336 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41211,7 +41211,7 @@
 		value: true
 	});
 
-	var _extends2 = __webpack_require__(325);
+	var _extends2 = __webpack_require__(326);
 
 	var _extends3 = _interopRequireDefault(_extends2);
 
@@ -41247,7 +41247,7 @@
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _Emblem = __webpack_require__(334);
+	var _Emblem = __webpack_require__(337);
 
 	var _Emblem2 = _interopRequireDefault(_Emblem);
 
@@ -41277,6 +41277,9 @@
 		(0, _createClass3.default)(Home, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				//this is exposed in index.js
+				window.store.pageLocation = 'home';
+
 				var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 
 				//this resets the css style in case it was changed by another component
@@ -41630,7 +41633,7 @@
 	module.exports = Home;
 
 /***/ },
-/* 337 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41639,11 +41642,11 @@
 		value: true
 	});
 
-	var _assign = __webpack_require__(326);
+	var _assign = __webpack_require__(327);
 
 	var _assign2 = _interopRequireDefault(_assign);
 
-	var _extends2 = __webpack_require__(325);
+	var _extends2 = __webpack_require__(326);
 
 	var _extends3 = _interopRequireDefault(_extends2);
 
@@ -41712,6 +41715,8 @@
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				//this is exposed in index.js
+				window.store.pageLocation = 'administration';
 				//now I will add the sizing api for the header
 				$(this.refs['header']).fitText(1.1, { minFontSize: '16px', maxFontSize: '60px' });
 

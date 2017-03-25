@@ -1,63 +1,73 @@
+// const WebpackShellPlugin = require('webpack-shell-plugin');
+// //Current build path represents where the file needs to go to
+// var MOVE_FILE_TO = 'Y:/marsjs/js/build/distribute';
+// var RECOMPILE_ON_THIS_FILE = MOVE_FILE_TO + '/bundle.js';
+// var shellCommand2 = 'mv ./dist/bundle.js ' + MOVE_FILE_TO;
+// var _onBuildEnd = shellCommand2;
+
 module.exports = {
-  // entry: './js/indexToCreateHome.js',
-  // entry: './js/indexToCreateContact.js',
   entry: './js/index.js',
-  // entry: './js/indexToCreateHistory.js',
-  // entry: './js/indexToCreateBeliefs.js',
-  // entry: './js/indexToCreateApplication.js',
   output: {
     path: __dirname,
-    // filename: './dist/bundle.js'
-    // filename: './dist/contact.js'
     filename: './dist/bundle.js'
-    // filename: './dist/history.js'
-    // filename: './dist/beliefs.js'
-    // filename: './dist/application.js'
   },
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      query: {
-        plugins: ['transform-runtime'],
-        presets: ['es2015', 'stage-0', 'react'],
-      }
-    }]
+    loaders: [
+        {
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader',
+            query: {
+              plugins: ['transform-runtime'],
+              presets: ['es2015', 'stage-0', 'react'],
+            }
+        },
+        {
+            test: /\.css$/,
+            loader: 'style-loader'
+        },
+        {
+            test: /\.css$/,
+            loader: 'css-loader',
+            query: {
+              modules: true,
+              localIdentName: '[name]__[local]__[hash:base64:5]'
+            }
+        }
+    ]
   }
+  // plugins: [
+  //   // new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:['echo "Webpack End"']})
+  //   new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:[_onBuildEnd]})
+  // ]
 }
-// {
-//       loader: "babel-loader",
 
-//       // Skip any files outside of your project's `src` directory
-//       include: [
-//         path.resolve(__dirname, "src"),
-//       ],
 
-//       // Only run `.js` and `.jsx` files through Babel
+// module.exports = {
+//   // entry: './js/indexToCreateHome.js',
+//   // entry: './js/indexToCreateContact.js',
+//   entry: './js/index.js',
+//   // entry: './js/indexToCreateHistory.js',
+//   // entry: './js/indexToCreateBeliefs.js',
+//   // entry: './js/indexToCreateApplication.js',
+//   output: {
+//     path: __dirname,
+//     // filename: './dist/bundle.js'
+//     // filename: './dist/contact.js'
+//     filename: './dist/bundle.js'
+//     // filename: './dist/history.js'
+//     // filename: './dist/beliefs.js'
+//     // filename: './dist/application.js'
+//   },
+//   module: {
+//     loaders: [{
 //       test: /\.jsx?$/,
-
-//       // Options to configure babel with
+//       exclude: /node_modules/,
+//       loader: 'babel-loader',
 //       query: {
 //         plugins: ['transform-runtime'],
 //         presets: ['es2015', 'stage-0', 'react'],
 //       }
-//     },
-
-
-// module.exports = {
-//   entry: './ts/index.ts',
-//   output: {
-//     filename: 'bundle.js'
-//   },
-//   resolve: {
-//     // Add `.ts` and `.tsx` as a resolvable extension.
-//     extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
-//   },
-//   module: {
-//     loaders: [
-//       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-//       { test: /\.tsx?$/, loader: 'ts-loader' }
-//     ]
+//     }]
 //   }
 // }
