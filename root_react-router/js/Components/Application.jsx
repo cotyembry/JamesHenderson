@@ -14,13 +14,18 @@ export default class Home extends React.Component {
 		this.totalFontWidth= 0;
 		this.smallestWidthPossible= 445;
 	}
-
 	componentDidMount() {
-		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+		
+		let self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 
-		//first I will set the page's width
-		var widthToSet = $(document.documentElement).outerWidth();
-		$('#page').css({ 'width': widthToSet + 'px' });
+		//this resets the css style in case it was changed by another component
+		$('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
+		// $('#emblem-element').css({ width: '100%', height: 350 });
+
+
+		//here I will set the page's width (TODO: convert this to use strictly this.state)
+		// var widthToSet = $(document.documentElement).outerWidth();
+		// $('#page').css({ 'width': widthToSet + 'px' });
 
 		
 
@@ -40,9 +45,13 @@ export default class Home extends React.Component {
 		// this.totalFontWidth = totalFontWidth;
 
 
+
 		$(window).resize( self.resize )
 		//and so its ran at least one time
 		this.resize();
+
+		// Listen for orientation changes
+		window.addEventListener("orientationchange", this.resize);
 
 		// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 		// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
@@ -53,13 +62,14 @@ export default class Home extends React.Component {
 
 		
 
-		var widthToSet = $(document.documentElement).outerWidth();
+		// var widthToSet = $(document.documentElement).outerWidth();
 
 		// console.log(widthToSet)
 
-		if(widthToSet >= this.smallestWidthPossible) {
-			$('#page').css({ 'width': widthToSet + 'px' });
-		}
+		// if(widthToSet >= this.smallestWidthPossible) {
+		// 	$('#page').css({ 'width': widthToSet + 'px' });
+		// 	$('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
+		// }
 
 		// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
 
@@ -118,7 +128,7 @@ export default class Home extends React.Component {
 	}
 	render() {		
 			return (
-				<div style={styles.paddingBottom}>
+				<div style={styles.root}>
 					{/*<Emblem />*/}
 					{/*<div id="backgroundDiv"></div> commented out 12-08-2016 to help fix issue with background image */}
 					<div id="page" style={styles.page}>
@@ -140,6 +150,10 @@ export default class Home extends React.Component {
 
 const widthHelper = 300; //set the width for the image here to preserver aspect ratio
 var styles = {
+	root: {
+		width: '100%',
+		paddingBottom: 15
+	},
 	a: {
 		cursor: 'pointer'
 	},

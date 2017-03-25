@@ -81,6 +81,7 @@ export default class Emblem extends React.Component {
 		this.addCSSStyleSheet();		
 	}
 	componentDidMount() {
+		//I do this because I want the user to be able to see the animation of the font header when it fades in
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 		//this .locked property will help me know if I need to adjust the font text
 
@@ -159,7 +160,7 @@ export default class Emblem extends React.Component {
 		fontHeaderContainerTempClone.width = '100%';
 
 		return (
-			<div>
+			<div className="emblemElementParent" style={styles.emblemElement}>
 				{/*<div style={styles.backgroundImage}></div>*/}
 				<div id="backgroundImage"style={styles.backgroundImage}></div>
 				<div id="emblem-element" style={styles.one}>
@@ -496,6 +497,9 @@ var stylesHelper = {
 }
 
 var styles = {
+	emblemElement: {
+		width: '100%'
+	},
 	one: {
 		width: stylesHelper.helperWidth, 
 		height: stylesHelper.helperHeight,

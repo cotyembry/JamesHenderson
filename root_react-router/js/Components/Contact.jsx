@@ -113,16 +113,16 @@ export default class Contact extends React.Component {
 		if(outerWidth > smallestWidthPossible) {
 			$('#page').css({ width: '100%' });
 
-			$('#emblem-element').css({ width: '100%' });
+			// $('#emblem-element').css({ width: '100%' });
 			$('#fontHeader').css({ width: '100%' });
-			EmblemObject.locked = false;
+			// EmblemObject.locked = false;
 		}
 		else if(outerWidth <= smallestWidthPossible) {
 			$('#page').css({ width: smallestWidthPossible });
 
-			$('#emblem-element').css({ width: smallestWidthPossible });
+			// $('#emblem-element').css({ width: smallestWidthPossible });
 			$('#fontHeader').css({ width: smallestWidthPossible });
-			EmblemObject.locked = true;
+			// EmblemObject.locked = true;
 		}
 
 		self.setState({ marginLeft: marginLeft });

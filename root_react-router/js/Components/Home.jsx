@@ -21,6 +21,11 @@ export default class Home extends React.Component {
 
 	componentDidMount() {
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+		
+		//this resets the css style in case it was changed by another component
+		$('#emblem-element').css({ width: '100%', height: 350 });
+
+
 		var emblemElementOuterWidth = $('#backgroundImage').outerWidth(true);
 
 

@@ -38,6 +38,7 @@ export default class Beliefs extends React.Component {
 		// this.window = window;	//this will help later in the resize event as far as performance goes
 		// $(window).resize(self.resize.bind(self));
 
+		//this sets the size of the text to make sure that the text never overflows
 		this.refs['headers'].map((header) => {
 			$(header).fitText(1.1, { minFontSize: '21px', maxFontSize: '35px' });
 		})
