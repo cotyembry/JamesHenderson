@@ -39745,14 +39745,14 @@
 							_react2.default.createElement(
 								'div',
 								{ style: styles.emailCaption },
-								'To send us an email, enter in the subject and write your message below:'
+								'To send us an email, add a subject (if you want) and type your message to send below:'
 							),
 							_react2.default.createElement(_EmailForm_serverSideLogicRequired2.default, null),
 							' ',
 							_react2.default.createElement(
 								'div',
 								{ style: styles.emailCaptionEnding },
-								'Or send it directly at ',
+								'Or send it directly at: ',
 								_react2.default.createElement(
 									'span',
 									{ style: styles.span },

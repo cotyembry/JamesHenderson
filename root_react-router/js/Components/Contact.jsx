@@ -177,7 +177,7 @@ export default class Contact extends React.Component {
 
 					<center style={styles.emailFormParent}>
 						<div style={styles.emailCaption}>
-							To send us an email, enter in the subject and write your message below:
+							To send us an email, add a subject (if you want) and type your message to send below:
 						</div>
 
 						{/*<StaticEmailForm /><EmailForm /> Coty commented out 02-17-2017 */}
@@ -192,7 +192,7 @@ export default class Contact extends React.Component {
 						<EmailForm /> {/* coty added 03-24-2017 */}
 
 						<div style={styles.emailCaptionEnding}>
-							Or send it directly at <span style={styles.span}>CHIEFAMCKAY@gmail.com</span>
+							Or send it directly at: <span style={styles.span}>CHIEFAMCKAY@gmail.com</span>
 						</div>
 					</center>
 
