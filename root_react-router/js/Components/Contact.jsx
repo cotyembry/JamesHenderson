@@ -8,7 +8,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Navbar from './Navbar.jsx';
-import EmailForm from './EmailForm.jsx';
+// import EmailForm from './EmailForm.jsx';							//coty commented out 03-24-2017
+// import EmailForm from './EmailForm_staticWebpageVersion.jsx';	//coty added but kept commented for reference 03-24-2017
+import EmailForm from './EmailForm_serverSideLogicRequired.jsx';
 
 
 
@@ -172,18 +174,20 @@ export default class Contact extends React.Component {
 
 					<center style={styles.emailFormParent}>
 						<div style={styles.emailCaption}>
-							To send us an email
+							To send us an email, enter in the subject and write your message below:
 						</div>
 
 						{/*<StaticEmailForm /><EmailForm /> Coty commented out 02-17-2017 */}
-						{/*<a style={styles.a} href = 'mailto:cotyembry@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>*/}
+						{/*<a style={styles.a} href = 'mailto:cotyembry@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
 						<a style={styles.a} href = 'mailto:CHIEFAMCKAY@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
+
+
+						*/}
+						<EmailForm /> {/* coty added 03-24-2017 */}
 
 						<div style={styles.emailCaptionEnding}>
 							Or send it directly at <span style={styles.span}>CHIEFAMCKAY@gmail.com</span>
 						</div>
-
-
 					</center>
 
 
