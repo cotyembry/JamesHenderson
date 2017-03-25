@@ -3,22 +3,12 @@ html
   head
     meta(name='viewport', content='width=device-width', ,='', initial-scale='1', maximum-scale='1')
     title Sovereign Chickamauga Cherokee
-    link(rel='stylesheet', type='text/css', href='../static/css/index.css')
-    link(rel='stylesheet', type='text/css', href='../static/css/jquery-ui.css')
-    link(rel='stylesheet', type='text/css', href='../static/css/Navbar.css')
-    style(type='text/css').
-      @font-face {
-      font-family: "CustomFont1";
-      src: url(../static/assets/fonts/AlexBrush-Regular.ttf) format("truetype");
-      }
-      .customfont1 {
-      font-family: "CustomFont1", Verdana, Tahoma;
-      /*font-size: 70px;*/
-      font-size: 100px;
-      }
-  body#body
+    script(type='text/javascript', src='./static/js/jquery.js')
+    script(type='text/javascript', src='./static/js/jquery.fittext.js')
+    link(type='text/css', rel='stylesheet', href='./static/css/index.css')
+  body
     center
-      img#svg2(src='../static/assets/Seal1.png', alt='')
-    #emblem(style='position: fixed;')
-    #root(style='position: relative; z-index: 100;')
-    script(type='text/javascript', src='../static/dist/bundle.js')
+      img#svg2(src='./static/assets/Seal1.png', alt='')
+    #emblem
+    #app
+    script(type='text/javascript', src='./static/dist/bundle.js')

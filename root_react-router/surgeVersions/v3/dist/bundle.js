@@ -37006,7 +37006,7 @@
 								'Click ',
 								_react2.default.createElement(
 									'a',
-									{ id: 'pdfLink', target: '_blank', href: './static/assets/application_final.pdf', style: styles.a },
+									{ id: 'pdfLink', target: '_blank', href: '../../assets/application_final.pdf', style: styles.a },
 									'here'
 								),
 								' for an application (opens in a new tab).'
@@ -37061,7 +37061,7 @@
 			width: widthHelper,
 			height: widthHelper * 2388 / 3144 },
 		imgSrc: {
-			src: './static/assets/AlMcKayPhoto.jpg'
+			src: './assets/AlMcKayPhoto.jpg'
 		},
 		// page: { //added 12-08-2016 to help fix IE issue with the background picture
 		// 	position: 'relative'
@@ -40378,7 +40378,7 @@
 					cssDynamicStyleElement.className = 'dynamicStyleDefinitionEmblemClass';
 					cssDynamicStyleElement.id = 'dynamicStyleDefinitionEmblem';
 
-					var dynamicStyleDefinitionEmblem = '@font-face {\n    font-family: "CustomFont1";\n    src: url(./static/assets/fonts/AlexBrush-Regular.ttf) format("truetype");\n}\n.customfont1 { \n    font-family: "CustomFont1", Verdana, Tahoma;\n    /*font-size: 70px;*/\n    font-size: 100px;\n}';
+					var dynamicStyleDefinitionEmblem = '@font-face {\n    font-family: "CustomFont1";\n    src: url(./assets/fonts/AlexBrush-Regular.ttf) format("truetype");\n}\n.customfont1 { \n    font-family: "CustomFont1", Verdana, Tahoma;\n    /*font-size: 70px;*/\n    font-size: 100px;\n}';
 
 					//finally, now that the element has been created, insert the css into it
 					cssDynamicStyleElement.innerHTML = dynamicStyleDefinitionEmblem;
@@ -40875,7 +40875,7 @@
 			// width: '1000px', 
 			// // height: stylesHelper.helperHeight,
 			// height: '1000px',
-			backgroundImage: 'url("./static/assets/main-background.jpg")',
+			backgroundImage: 'url("../../assets/main-background.jpg")',
 			// transform: 'scale(1.25, 1.25)',
 			position: 'fixed',
 			top: '0px',
@@ -41133,7 +41133,7 @@
 			width: widthHelper,
 			height: widthHelper * 2388 / 3144 },
 		imgSrc: {
-			src: './static/assets/AlMcKayPhoto.jpg'
+			src: './assets/AlMcKayPhoto.jpg'
 		},
 		minPageWidthHelper: {
 			visibility: 'hidden',
@@ -41574,7 +41574,7 @@
 			// position: 'absolute'
 		},
 		imgSrc: {
-			src: './static/assets/AlMcKayPhoto.jpg'
+			src: './assets/AlMcKayPhoto.jpg'
 		},
 		// page: { //added 12-08-2016 to help fix IE issue with the background picture
 		// 	position: 'relative'
@@ -42030,7 +42030,7 @@
 			fontSize: 40
 		},
 		districtMap: {
-			src: './static/assets/districtMapOriginal.png',
+			src: '../../assets/districtMapOriginal.png',
 			img: {
 				transform: 'rotate(-90deg) translateY(120px)', //translateY because I rotate the Image first of all, second the left side of the picture gets cut out of view if I don't do the translation
 				width: '100%'

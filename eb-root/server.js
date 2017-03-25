@@ -12,6 +12,9 @@
 
 //Get modules.
 var express = require('express');
+express.static.mime.define({
+    'text/css': ['css']
+});
 
 var routes = require('./routes');
 
@@ -41,7 +44,7 @@ config = JSON.parse(config);
 //define the modules Ill be using for the email feature
 var nodemailer = require('nodemailer');
 
-var emailAddressToSendTo = '5802351563@sms.att.net';
+var emailAddressToSendTo = 'cotyembry@gmail.com';
 // var emailAddressToSendTo = 'CHIEFAMCKAY@gmail.com';
 
 //the sendEmail object will do the work to get the email to be send when necessary (I should make this more modular something later in the future)
@@ -89,7 +92,7 @@ app.post('/send', function(req, res) {
     // res.render('contact', { appTitle: "Sovereign Chickamauga Cherokee" });
     
     //I changed this to .redirect because it keeps the url in sync. I would like to not respond, but I haven't looked up how to do that yet
-    res.redirect('contact');
+    res.redirect('/#/contact');
 })
 
 
@@ -102,15 +105,15 @@ app.post('/send', function(req, res) {
 
 
 //GET home page.
-app.get('/', routes.home);
+// app.get('/', routes.home);
 
 //start Coty added 12-22-2016
-app.get('/application', routes.application);
-app.get('/beliefs', routes.beliefs);
-app.get('/contact', routes.contact);
-app.get('/history', routes.history);
-app.get('/home', routes.home);
-app.get('/tribaladministration', routes.tribaladministration);
+// app.get('/application', routes.application);
+// app.get('/beliefs', routes.beliefs);
+// app.get('/contact', routes.contact);
+// app.get('/history', routes.history);
+app.get('/', routes.home);
+// app.get('/tribaladministration', routes.tribaladministration);
 //end
 
 
