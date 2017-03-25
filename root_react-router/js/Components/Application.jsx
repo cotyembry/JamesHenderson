@@ -16,10 +16,12 @@ export default class Home extends React.Component {
 	}
 	componentDidMount() {
 		
-		let self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+		// let self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 
-		//this resets the css style in case it was changed by another component
-		$('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
+		// //this resets the css style in case it was changed by another component
+		// $('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
+		
+
 		// $('#emblem-element').css({ width: '100%', height: 350 });
 
 
@@ -46,86 +48,86 @@ export default class Home extends React.Component {
 
 
 
-		$(window).resize( self.resize )
-		//and so its ran at least one time
-		this.resize();
+		// $(window).resize( self.resize )
+		// //and so its ran at least one time
+		// this.resize();
 
-		// Listen for orientation changes
-		window.addEventListener("orientationchange", this.resize);
+		// // Listen for orientation changes
+		// window.addEventListener("orientationchange", this.resize);
 
 		// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 		// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 
 	}
-	resize() {
-		var self = this;
+	// resize() {
+	// 	var self = this;
 
 		
 
-		// var widthToSet = $(document.documentElement).outerWidth();
+	// 	// var widthToSet = $(document.documentElement).outerWidth();
 
-		// console.log(widthToSet)
+	// 	// console.log(widthToSet)
 
-		// if(widthToSet >= this.smallestWidthPossible) {
-		// 	$('#page').css({ 'width': widthToSet + 'px' });
-		// 	$('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
-		// }
+	// 	// if(widthToSet >= this.smallestWidthPossible) {
+	// 	// 	$('#page').css({ 'width': widthToSet + 'px' });
+	// 	// 	$('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
+	// 	// }
 
-		// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
+	// 	// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
 
-		// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
+	// 	// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
 			
-		// 	this.setPageWidth();
+	// 	// 	this.setPageWidth();
 
-		// }
-		// else {
-		// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
-		// 	// //
-		// 	// if(currentWidth > this.lastWidth) {
+	// 	// }
+	// 	// else {
+	// 	// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
+	// 	// 	// //
+	// 	// 	// if(currentWidth > this.lastWidth) {
 
-		// 	// }
+	// 	// 	// }
 
-		// 	var 
-		// }
-
-
+	// 	// 	var 
+	// 	// }
 
 
-		// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
-		//
-		// //now I need to position the font element
-		// var fontText1Element = document.getElementById('fontText1');
-		// var fontText2Element = document.getElementById('fontText2');
-		// // var fontText1 = $(fontText1Element).outerWidth();
-		// // var fontText2 = $(fontText2Element).outerWidth();
-		// // var totalFontWidth = fontText1 + fontText2;
 
-		// var totalWidth = parseFloat(document.getElementById('page').style.width);
 
-		// //sometimes when this resize method runs nothing gets accomplished
-		// //so I need to account for this when the width is '', otherwise I
-		// //can continue with the flow as normal
-		// if(document.getElementById('page').style.width == '') {
-		// 	//for the set timeout option
-		// 	setTimeout(self.resize, 100);
-		// }
-		// else {
-		// 	if(totalWidth < this.totalFontWidth) {
-		// 		$(fontText1Element).css({ display: 'block'});
-		// 		$(fontText2Element).css({ display: 'block'});
-		// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
-		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
-		// 	}
-		// 	else {
-		// 		$(fontText1Element).css({ display: 'inline-block'});
-		// 		$(fontText2Element).css({ display: 'inline-block'});
-		// 		var fontHeaderHeight = $('#fontText1').outerHeight();
-		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-		// 	}
-		// }
+	// 	// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
+	// 	//
+	// 	// //now I need to position the font element
+	// 	// var fontText1Element = document.getElementById('fontText1');
+	// 	// var fontText2Element = document.getElementById('fontText2');
+	// 	// // var fontText1 = $(fontText1Element).outerWidth();
+	// 	// // var fontText2 = $(fontText2Element).outerWidth();
+	// 	// // var totalFontWidth = fontText1 + fontText2;
 
-		// this.lastWidth = widthToSet;
-	}
+	// 	// var totalWidth = parseFloat(document.getElementById('page').style.width);
+
+	// 	// //sometimes when this resize method runs nothing gets accomplished
+	// 	// //so I need to account for this when the width is '', otherwise I
+	// 	// //can continue with the flow as normal
+	// 	// if(document.getElementById('page').style.width == '') {
+	// 	// 	//for the set timeout option
+	// 	// 	setTimeout(self.resize, 100);
+	// 	// }
+	// 	// else {
+	// 	// 	if(totalWidth < this.totalFontWidth) {
+	// 	// 		$(fontText1Element).css({ display: 'block'});
+	// 	// 		$(fontText2Element).css({ display: 'block'});
+	// 	// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
+	// 	// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
+	// 	// 	}
+	// 	// 	else {
+	// 	// 		$(fontText1Element).css({ display: 'inline-block'});
+	// 	// 		$(fontText2Element).css({ display: 'inline-block'});
+	// 	// 		var fontHeaderHeight = $('#fontText1').outerHeight();
+	// 	// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+	// 	// 	}
+	// 	// }
+
+	// 	// this.lastWidth = widthToSet;
+	// }
 	render() {		
 			return (
 				<div style={styles.root}>

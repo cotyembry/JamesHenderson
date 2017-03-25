@@ -23,7 +23,7 @@ export default class Home extends React.Component {
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 		
 		//this resets the css style in case it was changed by another component
-		$('#emblem-element').css({ width: '100%', height: 350 });
+		// $('#emblem-element').css({ width: '100%', height: 350 });
 
 
 		var emblemElementOuterWidth = $('#backgroundImage').outerWidth(true);
@@ -60,7 +60,7 @@ export default class Home extends React.Component {
 
 		var widthToSet = $(document.documentElement).outerWidth();
 		var backgroundImageWidth = $('#backgroundImage').outerWidth(true);
-		var callResizeAgain = false;	//this does nothing for messing
+		var callResizeAgain = false;
 		if(backgroundImageWidth > widthToSet) {
 			widthToSet = backgroundImageWidth;
 			callResizeAgain = true;
@@ -71,17 +71,17 @@ export default class Home extends React.Component {
 		if(widthToSet >= this.state.smallestWidthPossible) {
 			$('#page').css({ 'width': widthToSet + 'px' });
 
-			$('#emblem-element').css({ width: '100%' });
-			$('#fontHeader').css({ width: '100%' });
-			EmblemObject.locked = false;
+			// $('#emblem-element').css({ width: '100%' });
+			// $('#fontHeader').css({ width: '100%' });
+			// EmblemObject.locked = false;
 		}
 		else {
 			// console.log('two')
 			$('#page').css({ 'width': this.state.smallestWidthPossible + 'px' });
 
-			$('#emblem-element').css({ width: '100%' });
-			$('#fontHeader').css({ width: '100%' });
-			EmblemObject.locked = false;
+			// $('#emblem-element').css({ width: '100%' });
+			// $('#fontHeader').css({ width: '100%' });
+			// EmblemObject.locked = false;
 		}
 
 
