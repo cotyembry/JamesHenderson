@@ -12,9 +12,10 @@
 
 //Get modules.
 var express = require('express');
-express.static.mime.define({
-    'text/css': ['css']
-});
+// express.static.mime.define({
+//     'text/css': ['css'],
+//     'html': ['html']
+// });
 
 var routes = require('./routes');
 
@@ -27,11 +28,11 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
+// app.use(express.favicon());                  //coty commented out 03-25-2017 since I upgraded express and version 4.x doesnt have it bundled with the default npm package
+// app.use(express.logger('dev'));              //^^^
+// app.use(express.bodyParser());               //^^^
+// app.use(express.methodOverride());           //^^^
+// app.use(app.router);                         //^^^
 app.use(express.static(path.join(__dirname, 'public')));
 app.locals.theme = process.env.THEME; //Make the THEME environment variable available to the app. 
 
@@ -44,8 +45,7 @@ config = JSON.parse(config);
 //define the modules Ill be using for the email feature
 var nodemailer = require('nodemailer');
 
-var emailAddressToSendTo = 'cotyembry@gmail.com';
-// var emailAddressToSendTo = 'CHIEFAMCKAY@gmail.com';
+var emailAddressToSendTo = 'CHIEFAMCKAY@gmail.com';
 
 //the sendEmail object will do the work to get the email to be send when necessary (I should make this more modular something later in the future)
 var sendEmail = {
@@ -113,6 +113,16 @@ app.post('/send', function(req, res) {
 // app.get('/contact', routes.contact);
 // app.get('/history', routes.history);
 app.get('/', routes.home);
+
+
+
+app.use(function(req, res) {
+    //this makes the user default to Home.jsx
+    res.redirect('/');
+    // res.sendfile('./views/index.html');
+    // res.type('html').sendFile(__dirname + '/views/index.html');
+});
+// app.get('/', routes.home);
 // app.get('/tribaladministration', routes.tribaladministration);
 //end
 

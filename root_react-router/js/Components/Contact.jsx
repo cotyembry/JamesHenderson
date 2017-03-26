@@ -134,8 +134,10 @@ export default class Contact extends React.Component {
 	}
 	render() {
 		// $.extend(styles.mapParent, { marginLeft: this.state.marginLeft })
-		var tempStyle = styles.mapParent;
-		$.extend(tempStyle, { marginLeft: this.state.marginLeft });
+		// var tempStyle = styles.mapParent;
+		// $.extend(tempStyle, { marginLeft: this.state.marginLeft });
+		var _styles = {}
+		_styles.mapParent = { ...styles.mapParent, marginLeft: this.state.marginLeft }
 
 		return (
 			<div>
@@ -165,7 +167,7 @@ export default class Contact extends React.Component {
 
 					<LoadingIcon />
 					
-					<div id="google-map" style={tempStyle}>
+					<div id="google-map" style={_styles.mapParent}>
 						
 						<iframe id="mapiframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={Object.assign(styles.mapStyle, this.state.iframeVisibility)}></iframe>
 					</div>

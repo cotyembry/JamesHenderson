@@ -1,3 +1,19 @@
+
+
+
+
+
+
+// TODO: make the width logic transition smoothly from Home.jsx to History.jsx (just switch back and forth between pages on a mobile device to reproduce the issue)
+
+
+
+
+
+
+
+
+
 import React from 'react';
 
 import $ from 'jquery';

@@ -51,9 +51,10 @@ var Navbar = React.createClass({
 		this.refs['contact'] = '';
 	},
 	componentDidMount: function(e) {
+		//pageLocationHelper is passed in to allow updating to the UI when the user navigates to another component
 		window.updatePageLocation = this.pageLocationHelper;
 
-		$(window).resize(this.adjustSize);
+		// $(window).resize(this.adjustSize);
 
 		// I will finish this logic later when I have more time
 		
@@ -187,7 +188,7 @@ var Navbar = React.createClass({
 		)
 	},
 	adjustSize: function() {
-		this.setState({ default: 'default' })
+		// this.setState({ default: 'default' })
 	},
 	onClickApplication: function() {
 		location = './application';
@@ -262,6 +263,8 @@ var styles = {
 		backgroundColor: '#e69500'
 	},
 	navbarWrapper: {
+		marginRight: '10px',
+		marginLeft: '10px',
 		display: 'inline-block',
 		boxShadow: '1px 1px 10px white, 7px 7px 10px black'
 	}

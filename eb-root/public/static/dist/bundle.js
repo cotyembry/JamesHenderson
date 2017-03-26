@@ -38745,9 +38745,10 @@
 			this.refs['contact'] = '';
 		},
 		componentDidMount: function componentDidMount(e) {
+			//pageLocationHelper is passed in to allow updating to the UI when the user navigates to another component
 			window.updatePageLocation = this.pageLocationHelper;
 
-			(0, _jquery2.default)(window).resize(this.adjustSize);
+			// $(window).resize(this.adjustSize);
 
 			// I will finish this logic later when I have more time
 
@@ -38909,7 +38910,7 @@
 			);
 		},
 		adjustSize: function adjustSize() {
-			this.setState({ default: 'default' });
+			// this.setState({ default: 'default' })
 		},
 		onClickApplication: function onClickApplication() {
 			location = './application';
@@ -38984,6 +38985,8 @@
 			backgroundColor: '#e69500'
 		},
 		navbarWrapper: {
+			marginRight: '10px',
+			marginLeft: '10px',
 			display: 'inline-block',
 			boxShadow: '1px 1px 10px white, 7px 7px 10px black'
 		}
@@ -39505,6 +39508,10 @@
 
 	var _assign2 = _interopRequireDefault(_assign);
 
+	var _extends2 = __webpack_require__(326);
+
+	var _extends3 = _interopRequireDefault(_extends2);
+
 	var _getPrototypeOf = __webpack_require__(235);
 
 	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -39683,8 +39690,11 @@
 			key: 'render',
 			value: function render() {
 				// $.extend(styles.mapParent, { marginLeft: this.state.marginLeft })
-				var tempStyle = styles.mapParent;
-				_jquery2.default.extend(tempStyle, { marginLeft: this.state.marginLeft });
+				// var tempStyle = styles.mapParent;
+				// $.extend(tempStyle, { marginLeft: this.state.marginLeft });
+				var _styles = {};
+
+				_styles.mapParent = (0, _extends3.default)({}, styles.mapParent, { marginLeft: this.state.marginLeft });
 
 				return _react2.default.createElement(
 					'div',
@@ -39727,7 +39737,7 @@
 						_react2.default.createElement(_LoadingIcon2.default, null),
 						_react2.default.createElement(
 							'div',
-							{ id: 'google-map', style: tempStyle },
+							{ id: 'google-map', style: _styles.mapParent },
 							_react2.default.createElement('iframe', { id: 'mapiframe', src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754', allowFullScreen: true, style: (0, _assign2.default)(styles.mapStyle, this.state.iframeVisibility) })
 						),
 						_react2.default.createElement(
@@ -41015,13 +41025,13 @@
 				_react2.default.createElement(
 					'div',
 					{ id: 'page', style: styles.page },
+					_react2.default.createElement(_Navbar2.default, { fontSize: 20, ref: function ref(elem) {
+							return _this.elements['Navbar'] = elem;
+						} }),
 					_react2.default.createElement(
 						'div',
 						{ id: 'paddingHelper' },
 						_react2.default.createElement(_Header2.default, null),
-						_react2.default.createElement(_Navbar2.default, { fontSize: 20, ref: function ref(elem) {
-								return _this.elements['Navbar'] = elem;
-							} }),
 						_react2.default.createElement(
 							'div',
 							{ style: styles.allContent },

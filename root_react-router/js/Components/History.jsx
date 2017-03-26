@@ -90,9 +90,9 @@ var History = React.createClass({
 				<div style={styles.paddingBottom}>
 					<div id="page" style={styles.page}>
 
+							<Navbar fontSize={20} ref={(elem) => this.elements['Navbar'] = elem } />
 						<div id="paddingHelper">
 							<Header />
-							<Navbar fontSize={20} ref={(elem) => this.elements['Navbar'] = elem } />
 
 							<div style={styles.allContent}>
 								
