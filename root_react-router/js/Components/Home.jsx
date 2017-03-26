@@ -4,8 +4,15 @@
 
 
 
-// TODO: make the width logic transition smoothly from Home.jsx to History.jsx (just switch back and forth between pages on a mobile device to reproduce the issue)
+/* TODO: 
+	-make the width logic transition smoothly from Home.jsx to History.jsx (just switch back and forth between pages on a mobile device to reproduce the issue)
+	-add React's renderToDOMString method (or whatever it is called)
+	-minify files
+	-require the css files inside of webpacks bundle.js file
 
+	-eventually maybe add caching
+	-eventually it'd be nice to add a custom favicon for the browser to use (probably just use the logo)
+*/
 
 
 
