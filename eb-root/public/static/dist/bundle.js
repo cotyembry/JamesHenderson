@@ -41997,7 +41997,7 @@
 						_react2.default.createElement(
 							'h3',
 							null,
-							'Below is a district map of the state of Arizona outlining the administrations district regions.'
+							'Below is a district map of the state of Arkansas outlining the administrations district regions.'
 						)
 					),
 					_react2.default.createElement(

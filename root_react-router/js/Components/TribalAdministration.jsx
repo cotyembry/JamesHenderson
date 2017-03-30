@@ -224,7 +224,7 @@ export default class TribalAdministration extends React.Component {
 				</center>
 
 				<center style={styles.imgCaptionTransition}>
-					<h3>Below is a district map of the state of Arizona outlining the administrations district regions.</h3>
+					<h3>Below is a district map of the state of Arkansas outlining the administrations district regions.</h3>
 				</center>
 
 				<center id="imgParent" style={styles.imgParent}>
