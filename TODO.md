@@ -7,3 +7,6 @@
 
 3
 	Update code to account for the beliefs.jade page's background image width getting messed up sometimes and setting its self as too small for the page's width. I noticed this when viewing the sit on the express.js server
+
+4
+        Add a timesheet file and put in it that i uploaded the pics of my conversation togoogle lhotos
