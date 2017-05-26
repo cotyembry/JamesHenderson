@@ -7,6 +7,7 @@ export default class CIFrame extends React.Component {
 		this.refs = [];
 	}
 	componentDidMount() {
+		//
 		//once this iframe mounts (even though its hidden to the user) this method is invoked
 		//I use the reference to the root div DOM element walk the DOM down to find the child
 		//iframe - I had to do it this way because refs weren't working on the iframe element
