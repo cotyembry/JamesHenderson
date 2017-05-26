@@ -8,9 +8,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Navbar from './Navbar.jsx';
+import EmailForm from './EmailForm_staticWebpageVersion.jsx';	//coty added but kept commented for reference 03-24-2017
 // import EmailForm from './EmailForm.jsx';							//coty commented out 03-24-2017
-// import EmailForm from './EmailForm_staticWebpageVersion.jsx';	//coty added but kept commented for reference 03-24-2017
-import EmailForm from './EmailForm_serverSideLogicRequired.jsx';
+// import EmailForm from './EmailForm_serverSideLogicRequired.jsx';
 
 
 
@@ -169,7 +169,7 @@ export default class Contact extends React.Component {
 					
 					<div id="google-map" style={_styles.mapParent}>
 						
-						<iframe id="mapiframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={Object.assign(styles.mapStyle, this.state.iframeVisibility)}></iframe>
+						<iframe id="mapiframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={{...styles.mapStyle, visibility: this.state.iframeVisibility.visibility}}></iframe>
 					</div>
 
 
@@ -191,8 +191,8 @@ export default class Contact extends React.Component {
 						<a style={styles.a} href = 'mailto:CHIEFAMCKAY@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
 
 						*/}
-						<EmailForm /> {/* coty added 03-24-2017 */}
-
+						<EmailForm /> 	{/* coty added 03-24-2017 */}
+						
 						<div style={styles.emailCaptionEnding}>
 							Or send it directly at: <span style={styles.span}>CHIEFAMCKAY@gmail.com</span>
 						</div>
@@ -203,35 +203,8 @@ export default class Contact extends React.Component {
 			</div>
 		)
 	}
-
-	sendMailMethod() {
-
-
-		// var sendmail = require('sendmail')();
-	 
-		// sendmail({
-		//     from: 'no-reply@yourdomain.com',
-		//     to: 'cotyembry@gmail.com, cotyembry@live.com',
-		//     subject: 'test sendmail',
-		//     html: 'Mail of test sendmail ',
-		//   }, function(err, reply) {
-		//     console.log(err && err.stack);
-		//     console.dir(reply);
-		// });
-
-
-	}
 }
 
-// class ContactPage extends React.Component {
-// 	render() {
-// 		return (
-// 			<div id="contact-page" style={styles.contactPage}>
-				
-// 			</div>
-// 		)
-// 	}
-// }
 
 
 var styles = {
@@ -286,17 +259,13 @@ var styles = {
 		color: '#4db8ff'
 	},
 	mapParent: {
-		display: 'inline-block'//,
-		// marginLeft: '100px',
-		// marginRight: 'auto'
+		display: 'inline-block'
 	},
 	mapStyle: {
 		width: 600,
 		height: 450,
 		frameBorder: 0,
-		border: 0//,
-		// marginLeft: 'auto',
-		// marginRight: 'auto'
+		border: 0
 	},
 	paddingBottom: {
 		paddingBottom: 15

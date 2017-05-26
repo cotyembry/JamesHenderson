@@ -2,7 +2,7 @@ import React from 'react';
 
 import $ from 'jquery';
 
-var self;
+import CIFrame from './CIFrame.jsx';
 
 export default class EmailForm extends React.Component {
   constructor(props) {
@@ -15,10 +15,6 @@ export default class EmailForm extends React.Component {
   }
 
   componentDidMount() {
-    self = this;
-
-    // $('#submitButton').click(self.handleClick);
-
     //now I will format the labels and input elements
     var widthAvailable = $('#inputContainer').outerWidth();
     $('#inputContainer').css({ width: widthAvailable });
@@ -56,9 +52,10 @@ export default class EmailForm extends React.Component {
     //this in the client
 
 
-    self.post('/send', finalObject);
+    //self.post('/send', finalObject);
+    let messageToSend = 'subject=' + this.state.subject + '&messageBody=' + messageBody;
 
-
+    this.sendEmail(messageToSend);
 
     event.preventDefault();
   }
@@ -85,7 +82,17 @@ export default class EmailForm extends React.Component {
         document.body.appendChild(form);
         form.submit();
   }
+  sendEmail(messageStringToSend) {
+    let iframe = $('#emailiFrameContainer')[0],
+      gForm = $(iframe.contentWindow.document).find('#gform')[0],
+      scriptUrl = gForm.getAttribute('action');
 
+    gForm.setAttribute('action', scriptUrl + '?' + messageStringToSend)
+    $(gForm).submit();  //do a POST submission using the <form> element that is being rendered in the hidden <iframe></iframe> on the page
+    
+    location.reload();  //I do this because after having submitted the form once, chrome gives me an error saying something about a cross origin issue (but it works on the first submit...)
+
+  }
   render() {
     return (
       <div id="divFormId">
@@ -115,7 +122,7 @@ export default class EmailForm extends React.Component {
 
         <br />
 
-        
+        <CIFrame />   {/* coty added 05-25-2017 - this helps me send the email from the client side */}
       </div>
     );
   }
