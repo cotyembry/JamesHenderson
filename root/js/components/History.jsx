@@ -5,7 +5,6 @@ import $ from 'jquery';
 // import Emblem from './Emblem.jsx';
 import Header from './Header.jsx';
 import Navbar from './Navbar.jsx';
-import Footer from './Footer.jsx';
 
 
 var History = React.createClass({
@@ -16,6 +15,9 @@ var History = React.createClass({
 	smallestWidthPossible: 445,
 
 	componentDidMount: function() {
+		//this is exposed in index.js
+		window.store.pageLocation = 'history';
+
 		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 		this.minPageWidth = $('#minPageWidthHelper').outerWidth() > $('#emblem-element').outerWidth() ? $('#emblem-element').outerWidth() : $('#minPageWidthHelper').outerWidth();
 
@@ -24,7 +26,10 @@ var History = React.createClass({
 
 		//first I will set the page's width
 		var widthToSet = $(document.documentElement).outerWidth();
-		$('#page').css({ 'width': widthToSet + 'px' });
+//		$('#page').css({ 'width': widthToSet + 'px' });	//coty 03-08-2017 commented out since this was causing a verticle scroll bar
+
+
+
 
 		// console.log('document.documentElement.clientWidth = ', document.documentElement.clientWidth, 'widthToSet = ', widthToSet);
 
@@ -43,11 +48,13 @@ var History = React.createClass({
 		// var totalFontWidth = fontText1 + fontText2;
 		// this.totalFontWidth = totalFontWidth;
 
-		// alert($(window).outerWidth())
-		// alert($(window).outerHeight())
-		$(window).resize( self.resize )
+
+
+//		$(window).resize( self.resize )			coty commented out 03-08-2017 since I am just setting the width to be 100%
 		//and so its ran at least one time
-		this.resize();
+//		this.resize();
+
+
 
 		// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 		// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
@@ -81,15 +88,15 @@ var History = React.createClass({
 	render: function() {		
 			return (
 				<div style={styles.paddingBottom}>
-					<div id="page">
+					<div id="page" style={styles.page}>
 
+							<Navbar fontSize={20} ref={(elem) => this.elements['Navbar'] = elem } />
 						<div id="paddingHelper">
 							<Header />
-							<Navbar fontSize={20} ref={(elem) => this.elements['Navbar'] = elem } />
 
-							<div style={styles.allContent} id="all-content">
+							<div style={styles.allContent}>
 								
-								<div style={styles.section1} id="section-1" className="section">
+								<div style={styles.section1} id="section-1">
 					
 									<div style={styles.paragraphWrapper}>
 										
@@ -209,9 +216,9 @@ var styles = {
 	    backgroundColor: '#FFF',
 	    boxShadow: '0 2px 2px 0 rgba(0,0,0,.16),0 0 2px 0 rgba(0,0,0,.12)'
 	},
-	// page: { //added 12-08-2016 to help fix IE issue with the background picture
-	// 	position: 'relative'
-	// },
+	page: {
+		zIndex: 2 //the Emblem.jsx Component returns the logo and all set with zIndex: 1 so to keep that Component from overlapping over the top of the content, this zIndex: 2 is needed
+	},
 	paddingBottom: {
 		paddingBottom: 15
 	},
