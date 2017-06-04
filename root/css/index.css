@@ -23,6 +23,10 @@ html, body {
 	margin: 0px;
 	padding: 0px;
 }
+#app {
+	width: 100%;
+	height: 100%;
+}
 #fontText1 {
 	padding-right: 10px;
 }
@@ -111,6 +115,8 @@ html, body {
 }
 #page {
 	width: 100%;
+	min-height: 100%;
+	min-width: 375px;	/* coty added 03-08-2017 to not allow the page to get smaller than Al's picture width size */
 	margin-top: 425px;
 	position: absolute;
 	background: #d9d9d9;
@@ -124,14 +130,14 @@ html, body {
 #gradientHelper {
 	width: 100%;
 	height: 75px;
-	/*background: #511515;*/
+	/*background: #511515;	Coty commented out 02-16-2017 since this is no longer needed
 	background: #511515;
 	background: -moz-linear-gradient(#511515, #000);
 	background: -webkit-linear-gradient(#511515, #000);
 	background: -o-linear-gradient(#511515, #000);
-	background: -ms-linear-gradient(#511515, #000);/*For IE10*/
+	background: -ms-linear-gradient(#511515, #000);/*For IE10
 	background: linear-gradient(#511515, #000);
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000');/*For IE7-8-9*/
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff', endColorstr='#000000'); For IE7-8-9*/
 	margin-bottom: 5px;
 }
 /*#jpg1 {

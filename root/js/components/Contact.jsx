@@ -8,7 +8,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Navbar from './Navbar.jsx';
-import EmailForm from './EmailForm.jsx';
+import EmailForm from './EmailForm_staticWebpageVersion.jsx';	//coty added but kept commented for reference 03-24-2017
+// import EmailForm from './EmailForm.jsx';							//coty commented out 03-24-2017
+// import EmailForm from './EmailForm_serverSideLogicRequired.jsx';
+
+
+
+import StaticEmailForm from './StaticEmailForm.jsx';
+
+
+
 
 import LoadingIcon from './LoadingIcon1.jsx';
 
@@ -31,6 +40,9 @@ export default class Contact extends React.Component {
 		}
 	}
 	componentDidMount() {
+		//this is exposed in index.js
+		window.store.pageLocation = 'contact';
+
 		self = this;
 
 		$('#mapiframe').on('load', self.iframeLoaded.bind(self));
@@ -56,8 +68,10 @@ export default class Contact extends React.Component {
 		//end
 
 
-		$(window).resize(self.resize);
+		$(window).resize(self.resize.bind(self));
 		this.setState({ marginLeft: marginLeft });
+
+		this.resize();
 	}
 
 	iframeLoaded() {
@@ -72,7 +86,7 @@ export default class Contact extends React.Component {
 	}
 
 	resize() {
-		var outerWidth = this.window.document.documentElement.clientWidth;
+		var outerWidth = window.document.documentElement.clientWidth;
 		var totalWidth = $('#page').outerWidth();
 		if(styles.mapStyle.width < totalWidth) {
 			var marginLeft = (totalWidth - styles.mapStyle.width) / 2;
@@ -104,28 +118,30 @@ export default class Contact extends React.Component {
 		if(outerWidth > smallestWidthPossible) {
 			$('#page').css({ width: '100%' });
 
-			$('#emblem-element').css({ width: '100%' });
+			// $('#emblem-element').css({ width: '100%' });
 			$('#fontHeader').css({ width: '100%' });
-			EmblemObject.locked = false;
+			// EmblemObject.locked = false;
 		}
 		else if(outerWidth <= smallestWidthPossible) {
 			$('#page').css({ width: smallestWidthPossible });
 
-			$('#emblem-element').css({ width: smallestWidthPossible });
+			// $('#emblem-element').css({ width: smallestWidthPossible });
 			$('#fontHeader').css({ width: smallestWidthPossible });
-			EmblemObject.locked = true;
+			// EmblemObject.locked = true;
 		}
 
 		self.setState({ marginLeft: marginLeft });
 	}
 	render() {
 		// $.extend(styles.mapParent, { marginLeft: this.state.marginLeft })
-		var tempStyle = styles.mapParent;
-		$.extend(tempStyle, { marginLeft: this.state.marginLeft });
+		// var tempStyle = styles.mapParent;
+		// $.extend(tempStyle, { marginLeft: this.state.marginLeft });
+		var _styles = {}
+		_styles.mapParent = { ...styles.mapParent, marginLeft: this.state.marginLeft }
 
 		return (
 			<div>
-				<div id="page" style={styles.contactRoot}>
+				<div id="page" style={styles.page}>
 					
 					<Navbar fontSize={20} />
 					
@@ -151,9 +167,9 @@ export default class Contact extends React.Component {
 
 					<LoadingIcon />
 					
-					<div id="google-map" style={tempStyle}>
+					<div id="google-map" style={_styles.mapParent}>
 						
-						<iframe id="mapiframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={Object.assign(styles.mapStyle, this.state.iframeVisibility)}></iframe>
+						<iframe id="mapiframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3259.445493348869!2d-93.15553778507295!3d35.22027866272146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87cc544b72349d3b%3A0x46c7a963a17e55fe!2s115+Locust+St%2C+Dardanelle%2C+AR+72834!5e0!3m2!1sen!2sus!4v1474150689754" allowFullScreen style={{...styles.mapStyle, visibility: this.state.iframeVisibility.visibility}}></iframe>
 					</div>
 
 
@@ -163,11 +179,23 @@ export default class Contact extends React.Component {
 
 					<center style={styles.emailFormParent}>
 						<div style={styles.emailCaption}>
-							Send us an email below
+							To send us an email, add a subject (if you want) and type your message to send below:
 						</div>
 
-						<EmailForm />
+						{/*<StaticEmailForm /><EmailForm /> Coty commented out 02-17-2017 */}
+						{/*
+							coty commented out 03-24-2017
+							As a temporary workaround for dealing with a static webpage, the following code would (when clicking on the link) popup the users native email client (a problem that I dont like about this is if the user doesnt have an email account setup then this method will fail for the user...and thats not a good user experience. If they do have the email set up it works perfectly though!)
 
+						<a style={styles.a} href = 'mailto:cotyembry@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
+						<a style={styles.a} href = 'mailto:CHIEFAMCKAY@gmail.com?subject=Contact Sovereign Chickamauga Cherokee'><span style={styles.link}>Click Here</span> (this opens your mail app)</a>
+
+						*/}
+						<EmailForm /> 	{/* coty added 03-24-2017 */}
+						
+						<div style={styles.emailCaptionEnding}>
+							Or send it directly at: <span style={styles.span}>CHIEFAMCKAY@gmail.com</span>
+						</div>
 					</center>
 
 
@@ -175,42 +203,21 @@ export default class Contact extends React.Component {
 			</div>
 		)
 	}
-
-	sendMailMethod() {
-
-
-		// var sendmail = require('sendmail')();
-	 
-		// sendmail({
-		//     from: 'no-reply@yourdomain.com',
-		//     to: 'cotyembry@gmail.com, cotyembry@live.com',
-		//     subject: 'test sendmail',
-		//     html: 'Mail of test sendmail ',
-		//   }, function(err, reply) {
-		//     console.log(err && err.stack);
-		//     console.dir(reply);
-		// });
-
-
-	}
 }
 
-// class ContactPage extends React.Component {
-// 	render() {
-// 		return (
-// 			<div id="contact-page" style={styles.contactPage}>
-				
-// 			</div>
-// 		)
-// 	}
-// }
 
 
 var styles = {
-	contactRoot: {
+	a: {
+		color: 'white',
+		cursor: 'pointer',
+		fontSize: 20
+	},
+	page: {
 		width: '100%',
 		// height: 1000,
 		// top: 350,
+		zIndex: 2,			//the Emblem.jsx Component returns the logo and all set with zIndex: 1 so to keep that Component from overlapping over the top of the content, this zIndex: 2 is needed
 		background: 'white',
 		marginTop: 425,
 		paddingBottom: 50,
@@ -236,24 +243,29 @@ var styles = {
 		fontSize: 25,
 		marginBottom: 10
 	},
+	emailCaptionEnding: {
+		color: 'white',
+		fontSize: 18,
+		marginTop: 10,
+		marginBottom: 10
+	},
 	emailFormParent: {
 		width: '100%'
 	},
 	fontSizeHelper: {
 		fontSize: 30
 	},
+	link: {
+		color: '#4db8ff'
+	},
 	mapParent: {
-		display: 'inline-block'//,
-		// marginLeft: '100px',
-		// marginRight: 'auto'
+		display: 'inline-block'
 	},
 	mapStyle: {
 		width: 600,
 		height: 450,
 		frameBorder: 0,
-		border: 0//,
-		// marginLeft: 'auto',
-		// marginRight: 'auto'
+		border: 0
 	},
 	paddingBottom: {
 		paddingBottom: 15
@@ -271,6 +283,9 @@ var styles = {
 		margin: 0,
 		marginTop: 30,
 		padding: 0
+	},
+	span: {
+		// color: '#4db8ff'
 	}
 }
 

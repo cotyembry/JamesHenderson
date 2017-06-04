@@ -35,15 +35,54 @@ height - not very intrusive at all)
 		// });
 
 
-var Emblem = React.createClass({
-	getInitialState: function() {
-		return {
+export default class Emblem extends React.Component {
+	addCSSStyleSheet() {
+		//if the style element for the cmGauge.css code has not been appended & it is not found in the DOM, append it
+		if(this.cssDynamicStylesheetCreated == false && document.getElementById('dynamicStyleDefinitionEmblem') === null) {
+			var cssDynamicStyleElement = document.createElement('style');
+			cssDynamicStyleElement.type = 'text/css';
+			cssDynamicStyleElement.className = 'dynamicStyleDefinitionEmblemClass';
+			cssDynamicStyleElement.id = 'dynamicStyleDefinitionEmblem';
+
+			let dynamicStyleDefinitionEmblem = `@font-face {
+    font-family: "CustomFont1";
+    src: url(./assets/fonts/AlexBrush-Regular.ttf) format("truetype");
+}
+.customfont1 { 
+    font-family: "CustomFont1", Verdana, Tahoma;
+    /*font-size: 70px;*/
+    font-size: 100px;
+}`		
+
+			//finally, now that the element has been created, insert the css into it
+			cssDynamicStyleElement.innerHTML = dynamicStyleDefinitionEmblem;
+			//and append it to the document
+			document.head.appendChild(cssDynamicStyleElement);
+
+			this.cssDynamicStylesheetCreated = true;	//to not allow this element to be created again
+		}
+
+
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.cssDynamicStylesheetCreated = false;	//this will be used in the addCSSStyleSheet method
+
+		this.state = {
 			gradientHelperTopShift: 350,
 			displayForFontHeader: 'block',
 			visibilityForFontHeader: 'hidden'
 		}
-	},
-	componentDidMount: function() {
+	}
+	componentWillMount() {
+		window.onunload = function(){ window.scrollTo(0,0); }
+		this.addCSSStyleSheet();		
+	}
+	componentDidMount() {
+		//I do this because I want the user to be able to see the animation of the font header when it fades in
+		$("html, body").animate({ scrollTop: 0 }, "slow");
 		//this .locked property will help me know if I need to adjust the font text
 
 		EmblemObject.locked = false;
@@ -63,7 +102,7 @@ var Emblem = React.createClass({
 		document.getElementById('logo').appendChild(document.getElementById('svg2'));
 
 		//here I need to add an event to listen if the browser window zoomed
-		EmblemObject.bodyElement = document.getElementById('body');
+		EmblemObject.bodyElement = document.getElementsByTagName('body')[0];
 		$(window).resize( EmblemObject.resize );
 		EmblemObject.resize();
 
@@ -86,9 +125,10 @@ var Emblem = React.createClass({
 				this.setState({							//Coty added 01-13-2017 to make sure to show the element
 					displayForFontHeader: 'none',		//I set this to none because I am about to do a jquery animation
 					visibilityForFontHeader: 'visible'
-				});	
+				});
+
 				//now that the display is set to none I will do the animation
-				$('#fontHeader').fadeIn(2000);
+				$('#fontHeaderFix').fadeIn(2000);
 				this.setState({displayForFontHeader: 'block'})
 			}
 		}
@@ -107,17 +147,20 @@ var Emblem = React.createClass({
 
 		//now I will set the logo's position up in the correct position on the screen
 		EmblemObject.topShift = $('#logo').outerHeight() - 40;	//-10 to not cut off the bottom of the fancy font heading
-		$('#fontHeader').css({ top: EmblemObject.topShift });
+		$('#fontHeaderFix').css({ top: EmblemObject.topShift });
 
-	},
-	render: function() {
+	}
+	render() {
 		//Coty added 01-13-2017 next three lines to add a fade in effect on the font header
 		var fontHeaderContainerTempClone = {};
 		Object.assign(fontHeaderContainerTempClone, styles.fontHeaderContainer);
 		fontHeaderContainerTempClone.visibility = this.state.visibilityForFontHeader;
 		fontHeaderContainerTempClone.display = this.state.displayForFontHeader;
+		
+		fontHeaderContainerTempClone.width = '100%';
+
 		return (
-			<div>
+			<div className="emblemElementParent" style={styles.emblemElement}>
 				{/*<div style={styles.backgroundImage}></div>*/}
 				<div id="backgroundImage"style={styles.backgroundImage}></div>
 				<div id="emblem-element" style={styles.one}>
@@ -127,18 +170,19 @@ var Emblem = React.createClass({
 				</div>
 				
 
-				{/* the font declarations and the size is set in index.html */}
-				<div style={fontHeaderContainerTempClone} id="fontHeader">
-					<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
-				</div>
-				
+				{/* the font declarations and the size is set in index.html - id="fontHeader"*/}
+				<center>
+					<div style={fontHeaderContainerTempClone} id='fontHeaderFix'>
+						<div style={styles.fontHeader} className="customfont1" id="fontText1">Chickamauga</div><div style={styles.fontHeader} className="customfont1" id="fontText2">Cherokee</div>
+					</div>
+				</center>
 
 
 				<div id="gradientHelper" style={styles.gradientHelper}></div>
 			</div>
 		)
 	}
-});
+}
 
 /* //I will have to convert this css into what react expects in the inline styles
 	width: 100%;
@@ -239,7 +283,7 @@ var EmblemObject = {
 				$('.customfont1').each(function() {
 					$(this).css({ fontSize: '90px' });
 				});
-				$('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+				$('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 
 				fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 				if(fontTotalWidth >= totalWidth) {
@@ -249,7 +293,7 @@ var EmblemObject = {
 
 					// alert(EmblemObject.topShift)
 
-					$('#fontHeader').css({ top: EmblemObject.topShift + 10 });					
+					$('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });					
 
 					fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 					if(fontTotalWidth >= totalWidth) {
@@ -257,7 +301,7 @@ var EmblemObject = {
 							$(this).css({ fontSize: '70px' });
 						});
 
-						$('#fontHeader').css({ top: EmblemObject.topShift + 20 });			
+						$('#fontHeaderFix').css({ top: EmblemObject.topShift + 20 });			
 				
 						fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 						if(fontTotalWidth >= totalWidth) {
@@ -265,7 +309,7 @@ var EmblemObject = {
 								$(this).css({ fontSize: '60px' });
 							});
 
-							$('#fontHeader').css({ top: EmblemObject.topShift + 30 });
+							$('#fontHeaderFix').css({ top: EmblemObject.topShift + 30 });
 							
 							fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 							if(fontTotalWidth >= totalWidth) {
@@ -273,7 +317,7 @@ var EmblemObject = {
 									$(this).css({ fontSize: '50px' });
 								});
 
-								$('#fontHeader').css({ top: EmblemObject.topShift + 40 });
+								$('#fontHeaderFix').css({ top: EmblemObject.topShift + 40 });
 								
 								fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 								if(fontTotalWidth >= totalWidth) {
@@ -281,7 +325,7 @@ var EmblemObject = {
 										$(this).css({ fontSize: '40px' });
 									});
 
-									$('#fontHeader').css({ top: EmblemObject.topShift + 50 });
+									$('#fontHeaderFix').css({ top: EmblemObject.topShift + 50 });
 									
 									fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 									if(fontTotalWidth >= totalWidth) {
@@ -289,7 +333,7 @@ var EmblemObject = {
 											$(this).css({ fontSize: '30px' });
 										});
 
-										$('#fontHeader').css({ top: EmblemObject.topShift + 60 });
+										$('#fontHeaderFix').css({ top: EmblemObject.topShift + 60 });
 
 										fontTotalWidth = $(fontText1).outerWidth() + $(fontText2).outerWidth();
 										if(fontTotalWidth >= totalWidth) {
@@ -297,7 +341,7 @@ var EmblemObject = {
 												$(this).css({ fontSize: '20px' });
 											});
 
-											$('#fontHeader').css({ top: EmblemObject.topShift + 70 });
+											$('#fontHeaderFix').css({ top: EmblemObject.topShift + 70 });
 										}
 									}
 								}
@@ -337,7 +381,7 @@ var EmblemObject = {
 					$('.customfont1').each(function() {
 						$(this).css({ fontSize: '' });
 					});
-					$('#fontHeader').css({ top: EmblemObject.topShift });
+					$('#fontHeaderFix').css({ top: EmblemObject.topShift });
 				}
 				else {
 					customfont1Clone.style.fontSize = '30px';
@@ -349,7 +393,7 @@ var EmblemObject = {
 							$(this).css({ fontSize: '30px' });
 						});
 
-						$('#fontHeader').css({ top: EmblemObject.topShift + 60 });
+						$('#fontHeaderFix').css({ top: EmblemObject.topShift + 60 });
 
 						customfont1Clone.style.fontSize = '40px';
 						customfont2Clone.style.fontSize = '40px';
@@ -361,7 +405,7 @@ var EmblemObject = {
 								$(this).css({ fontSize: '40px' });
 							});
 
-							$('#fontHeader').css({ top: EmblemObject.topShift + 50 });
+							$('#fontHeaderFix').css({ top: EmblemObject.topShift + 50 });
 
 							customfont1Clone.style.fontSize = '50px';
 							customfont2Clone.style.fontSize = '50px';
@@ -373,7 +417,7 @@ var EmblemObject = {
 									$(this).css({ fontSize: '50px' });
 								});
 
-								$('#fontHeader').css({ top: EmblemObject.topShift + 40 });
+								$('#fontHeaderFix').css({ top: EmblemObject.topShift + 40 });
 
 								customfont1Clone.style.fontSize = '60px';
 								customfont2Clone.style.fontSize = '60px';
@@ -385,7 +429,7 @@ var EmblemObject = {
 										$(this).css({ fontSize: '60px' });
 									});
 
-									$('#fontHeader').css({ top: EmblemObject.topShift + 30 });
+									$('#fontHeaderFix').css({ top: EmblemObject.topShift + 30 });
 
 									customfont1Clone.style.fontSize = '70px';
 									customfont2Clone.style.fontSize = '70px';
@@ -397,7 +441,7 @@ var EmblemObject = {
 											$(this).css({ fontSize: '70px' });
 										});
 
-										$('#fontHeader').css({ top: EmblemObject.topShift + 20 });
+										$('#fontHeaderFix').css({ top: EmblemObject.topShift + 20 });
 									
 										customfont1Clone.style.fontSize = '80px';
 										customfont2Clone.style.fontSize = '80px';
@@ -409,7 +453,7 @@ var EmblemObject = {
 												$(this).css({ fontSize: '80px' });
 											});
 
-											$('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+											$('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 
 											customfont1Clone.style.fontSize = '90px';
 											customfont2Clone.style.fontSize = '90px';
@@ -421,7 +465,7 @@ var EmblemObject = {
 													$(this).css({ fontSize: '90px' });
 												});
 
-												$('#fontHeader').css({ top: EmblemObject.topShift + 10 });
+												$('#fontHeaderFix').css({ top: EmblemObject.topShift + 10 });
 											}
 										}
 									}								
@@ -441,7 +485,7 @@ var EmblemObject = {
 			//end Coty 12-28-2016
 
 		}
-	},
+	}
 }
 
 var stylesHelper = {
@@ -453,6 +497,9 @@ var stylesHelper = {
 }
 
 var styles = {
+	emblemElement: {
+		width: '100%'
+	},
 	one: {
 		width: stylesHelper.helperWidth, 
 		height: stylesHelper.helperHeight,
@@ -476,14 +523,14 @@ var styles = {
 	gradientHelper: {
 		width: '100%',
 		height: 75,
-		background: '#D5EFF8',
-		background: '#D5EFF8',
-		background: '-moz-linear-gradient(#D5EFF8, #D5EFF8)',
-		background: '-webkit-linear-gradient(#D5EFF8, #D5EFF8)',
-		background: '-o-linear-gradient(#D5EFF8, #D5EFF8)',
-		background: '-ms-linear-gradient(#D5EFF8, #D5EFF8)',/*For IE10*/
-		background: 'linear-gradient(#D5EFF8, #D5EFF8)',
-		filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#D5EFF8', endColorstr='#D5EFF8')",/*For IE7-8-9*/
+		// background: '#D5EFF8',
+		// background: '#D5EFF8',
+		// background: '-moz-linear-gradient(#D5EFF8, #D5EFF8)',
+		// background: '-webkit-linear-gradient(#D5EFF8, #D5EFF8)',
+		// background: '-o-linear-gradient(#D5EFF8, #D5EFF8)',
+		// background: '-ms-linear-gradient(#D5EFF8, #D5EFF8)',/*For IE10*/
+		// background: 'linear-gradient(#D5EFF8, #D5EFF8)',
+		// filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#D5EFF8', endColorstr='#D5EFF8')",/*For IE7-8-9*/
 		marginBottom: 5,
 		top: 350,
 		position: 'fixed'
@@ -524,7 +571,7 @@ var styles = {
 		visibility: 'hidden',
 		textAlign: 'center',
 		position: 'fixed',
-		zIndex: 3
+		zIndex: 2
 	}
 }
 

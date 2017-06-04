@@ -5,22 +5,32 @@ import $ from 'jquery';
 // import Emblem from './Emblem.jsx';
 import Header from './Header.jsx';
 import Navbar from './Navbar.jsx';
-import Footer from './Footer.jsx';
 
 
-var Home = React.createClass({
-	elements: [],
+export default class Home extends React.Component {
+	constructor(props) {
+		super(props);
+		this.elements= [];
+		this.totalFontWidth= 0;
+		this.smallestWidthPossible= 445;
+	}
+	componentDidMount() {
+		//this is exposed in index.js
+		window.store.pageLocation = 'application';
 
-	totalFontWidth: 0,
+		
+		// let self = this; //self helps me with not conflicting with jquery's `this` in the code later on
 
-	smallestWidthPossible: 445,
+		// //this resets the css style in case it was changed by another component
+		// $('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
+		
 
-	componentDidMount: function() {
-		var self = this; //self helps me with not conflicting with jquery's `this` in the code later on
+		// $('#emblem-element').css({ width: '100%', height: 350 });
 
-		//first I will set the page's width
-		var widthToSet = $(document.documentElement).outerWidth();
-		$('#page').css({ 'width': widthToSet + 'px' });
+
+		//here I will set the page's width (TODO: convert this to use strictly this.state)
+		// var widthToSet = $(document.documentElement).outerWidth();
+		// $('#page').css({ 'width': widthToSet + 'px' });
 
 		
 
@@ -40,99 +50,105 @@ var Home = React.createClass({
 		// this.totalFontWidth = totalFontWidth;
 
 
-		$(window).resize( self.resize )
-		//and so its ran at least one time
-		this.resize();
+
+		// $(window).resize( self.resize )
+		// //and so its ran at least one time
+		// this.resize();
+
+		// // Listen for orientation changes
+		// window.addEventListener("orientationchange", this.resize);
 
 		// $('#piece1').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 		// $('#headerWrapperCenterElement').css({ paddingTop: $('#headerWrapper').outerHeight() + 42 })
 
-	},
-	resize: function() {
-		var self = this;
+	}
+	// resize() {
+	// 	var self = this;
 
 		
 
-		var widthToSet = $(document.documentElement).outerWidth();
+	// 	// var widthToSet = $(document.documentElement).outerWidth();
 
-		// console.log(widthToSet)
+	// 	// console.log(widthToSet)
 
-		if(widthToSet >= this.smallestWidthPossible) {
-			$('#page').css({ 'width': widthToSet + 'px' });
-		}
+	// 	// if(widthToSet >= this.smallestWidthPossible) {
+	// 	// 	$('#page').css({ 'width': widthToSet + 'px' });
+	// 	// 	$('#emblem-element').css({ width: widthToSet + 'px', height: 350 });
+	// 	// }
 
-		// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
+	// 	// console.log(allContentElementWidth, smallestWidthTheContainerThatHoldsThePictureCanBe);
 
-		// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
+	// 	// if(allContentElementWidth >= smallestWidthTheContainerThatHoldsThePictureCanBe) {
 			
-		// 	this.setPageWidth();
+	// 	// 	this.setPageWidth();
 
-		// }
-		// else {
-		// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
-		// 	// //
-		// 	// if(currentWidth > this.lastWidth) {
+	// 	// }
+	// 	// else {
+	// 	// 	// //I added this else if flow so that I can make sure the page, when it enters the  keeps getting wider in width
+	// 	// 	// //
+	// 	// 	// if(currentWidth > this.lastWidth) {
 
-		// 	// }
+	// 	// 	// }
 
-		// 	var 
-		// }
-
-
+	// 	// 	var 
+	// 	// }
 
 
-		// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
-		//
-		// //now I need to position the font element
-		// var fontText1Element = document.getElementById('fontText1');
-		// var fontText2Element = document.getElementById('fontText2');
-		// // var fontText1 = $(fontText1Element).outerWidth();
-		// // var fontText2 = $(fontText2Element).outerWidth();
-		// // var totalFontWidth = fontText1 + fontText2;
 
-		// var totalWidth = parseFloat(document.getElementById('page').style.width);
 
-		// //sometimes when this resize method runs nothing gets accomplished
-		// //so I need to account for this when the width is '', otherwise I
-		// //can continue with the flow as normal
-		// if(document.getElementById('page').style.width == '') {
-		// 	//for the set timeout option
-		// 	setTimeout(self.resize, 100);
-		// }
-		// else {
-		// 	if(totalWidth < this.totalFontWidth) {
-		// 		$(fontText1Element).css({ display: 'block'});
-		// 		$(fontText2Element).css({ display: 'block'});
-		// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
-		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
-		// 	}
-		// 	else {
-		// 		$(fontText1Element).css({ display: 'inline-block'});
-		// 		$(fontText2Element).css({ display: 'inline-block'});
-		// 		var fontHeaderHeight = $('#fontText1').outerHeight();
-		// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
-		// 	}
-		// }
+	// 	// Coty commented out the below 12-21-2016 since I am moving the fancy font header to the Emblem.jsx file
+	// 	//
+	// 	// //now I need to position the font element
+	// 	// var fontText1Element = document.getElementById('fontText1');
+	// 	// var fontText2Element = document.getElementById('fontText2');
+	// 	// // var fontText1 = $(fontText1Element).outerWidth();
+	// 	// // var fontText2 = $(fontText2Element).outerWidth();
+	// 	// // var totalFontWidth = fontText1 + fontText2;
 
-		// this.lastWidth = widthToSet;
-	},
-	render: function() {		
+	// 	// var totalWidth = parseFloat(document.getElementById('page').style.width);
+
+	// 	// //sometimes when this resize method runs nothing gets accomplished
+	// 	// //so I need to account for this when the width is '', otherwise I
+	// 	// //can continue with the flow as normal
+	// 	// if(document.getElementById('page').style.width == '') {
+	// 	// 	//for the set timeout option
+	// 	// 	setTimeout(self.resize, 100);
+	// 	// }
+	// 	// else {
+	// 	// 	if(totalWidth < this.totalFontWidth) {
+	// 	// 		$(fontText1Element).css({ display: 'block'});
+	// 	// 		$(fontText2Element).css({ display: 'block'});
+	// 	// 		var fontHeaderHeight = $('#fontText1').outerHeight() * 2;
+	// 	// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');			
+	// 	// 	}
+	// 	// 	else {
+	// 	// 		$(fontText1Element).css({ display: 'inline-block'});
+	// 	// 		$(fontText2Element).css({ display: 'inline-block'});
+	// 	// 		var fontHeaderHeight = $('#fontText1').outerHeight();
+	// 	// 		$('#fontHeader').css('top', '-' + fontHeaderHeight + 'px');
+	// 	// 	}
+	// 	// }
+
+	// 	// this.lastWidth = widthToSet;
+	// }
+	render() {		
 			return (
-				<div style={styles.paddingBottom}>
+				<div style={styles.root}>
 					{/*<Emblem />*/}
 					{/*<div id="backgroundDiv"></div> commented out 12-08-2016 to help fix issue with background image */}
-					<div id="page">
+					<div id="page" style={styles.page}>
 						
 						<div style={styles.application}>
-							<Navbar doNotSetPadding={true} />
-							<center style={styles.pdfLink}>Click <a id="pdfLink" target="_blank" href="../../assets/application_final.pdf" style={styles.a}>here</a> for an application (opens in a new tab).</center>
+							<Navbar />
+							{/*<center style={styles.pdfLink}>Click <a id="pdfLink" target="_blank" href="../../assets/application_final.pdf" style={styles.a}>here</a> for an application (opens in a new tab).</center>*/}
+							<center style={styles.pdfLink}>Click <a id="pdfLink" target="_blank" href="/assets/application_final.pdf" style={styles.a}>here</a> for an application (opens in a new tab).</center>
 						</div>
 
 					</div>
 				</div>
 			)
 	}
-})
+}
 
 //3144 / 2388 //original image size
 //so,
@@ -140,6 +156,10 @@ var Home = React.createClass({
 
 const widthHelper = 300; //set the width for the image here to preserver aspect ratio
 var styles = {
+	root: {
+		width: '100%',
+		paddingBottom: 15
+	},
 	a: {
 		cursor: 'pointer'
 	},
@@ -149,8 +169,7 @@ var styles = {
 	application: {
 		width: '100%',
 		height: 1000,
-		fontSize: 20,
-		marginTop: 50
+		fontSize: 20
 	},
 	credits: {
 		fontSize: 14
@@ -184,6 +203,9 @@ var styles = {
 	paddingBottom: {
 		paddingBottom: 15
 	},
+	page: {
+		zIndex: 2 //the Emblem.jsx Component returns the logo and all set with zIndex: 1 so to keep that Component from overlapping over the top of the content, this zIndex: 2 is needed
+	},	
 	paragraphOne: {
 		width: 'calc(100% - 300px)',
 		float: 'right'
