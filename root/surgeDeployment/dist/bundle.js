@@ -37006,7 +37006,7 @@
 								'Click ',
 								_react2.default.createElement(
 									'a',
-									{ id: 'pdfLink', target: '_blank', href: '../../assets/application_final.pdf', style: styles.a },
+									{ id: 'pdfLink', target: '_blank', href: '/assets/application_final.pdf', style: styles.a },
 									'here'
 								),
 								' for an application (opens in a new tab).'
@@ -39955,9 +39955,14 @@
 
 
 	      //self.post('/send', finalObject);
-	      var messageToSend = 'subject=' + this.state.subject + '&messageBody=' + messageBody;
+	      // let messageToSend = 'subject=' + this.state.subject + '&messageBody=' + messageBody;
+	      // this.sendEmail(messageToSend);
 
-	      this.sendEmail(messageToSend);
+	      var messageObject = {
+	        subject: this.state.subject,
+	        messageBody: messageBody
+	      };
+	      this.sendEmail(messageObject);
 
 	      event.preventDefault();
 	    }
@@ -39988,13 +39993,18 @@
 	    }
 	  }, {
 	    key: 'sendEmail',
-	    value: function sendEmail(messageStringToSend) {
-	      var iframe = (0, _jquery2.default)('#emailiFrameContainer')[0],
-	          gForm = (0, _jquery2.default)(iframe.contentWindow.document).find('#gform')[0],
-	          scriptUrl = gForm.getAttribute('action');
+	    value: function sendEmail(messageObject) {
+	      // let iframe = $('#emailiFrameContainer')[0],
+	      //   gForm = $(iframe.contentWindow.document).find('#gform')[0],
+	      //   scriptUrl = gForm.getAttribute('action');
 
-	      gForm.setAttribute('action', scriptUrl + '?' + messageStringToSend);
-	      (0, _jquery2.default)(gForm).submit(); //do a POST submission using the <form> element that is being rendered in the hidden <iframe></iframe> on the page
+	      // gForm.setAttribute('action', scriptUrl + '?' + messageStringToSend)
+	      //$(gForm).submit();  //do a POST submission using the <form> element that is being rendered in the hidden <iframe></iframe> on the page
+
+
+	      _jquery2.default.post('https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec', { subject: messageObject.subject, messageBody: messageObject.messageBody }).done(function (data) {
+	        alert('Data Loaded: ' + data);
+	      });
 
 	      location.reload(); //I do this because after having submitted the form once, chrome gives me an error saying something about a cross origin issue (but it works on the first submit...)
 	    }
@@ -40131,6 +40141,7 @@
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				//
 				//once this iframe mounts (even though its hidden to the user) this method is invoked
 				//I use the reference to the root div DOM element walk the DOM down to find the child
 				//iframe - I had to do it this way because refs weren't working on the iframe element

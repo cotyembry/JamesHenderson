@@ -53,9 +53,14 @@ export default class EmailForm extends React.Component {
 
 
     //self.post('/send', finalObject);
-    let messageToSend = 'subject=' + this.state.subject + '&messageBody=' + messageBody;
+    // let messageToSend = 'subject=' + this.state.subject + '&messageBody=' + messageBody;
+    // this.sendEmail(messageToSend);
 
-    this.sendEmail(messageToSend);
+    let messageObject = {
+      subject: this.state.subject,
+      messageBody: messageBody
+    }
+    this.sendEmail(messageObject);
 
     event.preventDefault();
   }
@@ -82,14 +87,25 @@ export default class EmailForm extends React.Component {
         document.body.appendChild(form);
         form.submit();
   }
-  sendEmail(messageStringToSend) {
-    let iframe = $('#emailiFrameContainer')[0],
-      gForm = $(iframe.contentWindow.document).find('#gform')[0],
-      scriptUrl = gForm.getAttribute('action');
+  sendEmail(messageObject) {
+    // let iframe = $('#emailiFrameContainer')[0],
+    //   gForm = $(iframe.contentWindow.document).find('#gform')[0],
+    //   scriptUrl = gForm.getAttribute('action');
 
-    gForm.setAttribute('action', scriptUrl + '?' + messageStringToSend)
-    $(gForm).submit();  //do a POST submission using the <form> element that is being rendered in the hidden <iframe></iframe> on the page
+    // gForm.setAttribute('action', scriptUrl + '?' + messageStringToSend)
+    //$(gForm).submit();  //do a POST submission using the <form> element that is being rendered in the hidden <iframe></iframe> on the page
     
+
+
+    $.post(
+      'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+      { subject: messageObject.subject, messageBody: messageObject.messageBody }
+    )
+    .done(function( data ) {
+      alert( 'Data Loaded: ' + data );
+    })
+
+
     location.reload();  //I do this because after having submitted the form once, chrome gives me an error saying something about a cross origin issue (but it works on the first submit...)
 
   }
