@@ -84,11 +84,7 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _PDF = __webpack_require__(341);
-
-	var _PDF2 = _interopRequireDefault(_PDF);
-
-	var _TribalAdministration = __webpack_require__(342);
+	var _TribalAdministration = __webpack_require__(341);
 
 	var _TribalAdministration2 = _interopRequireDefault(_TribalAdministration);
 
@@ -119,7 +115,6 @@
 			_react2.default.createElement(_reactRouter.Route, { path: '/application', component: _Application2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/beliefs', component: _Beliefs2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/assets/application_final.pdf', component: _PDF2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '*', component: _Home2.default })
 		), document.getElementById('app'));
 	});
@@ -37011,7 +37006,7 @@
 								'Click ',
 								_react2.default.createElement(
 									'a',
-									{ id: 'pdfLink', target: '_blank', href: '../../assets/application_final.pdf', style: styles.a },
+									{ id: 'pdfLink', target: '_blank', href: '/assets/application_final.pdf', style: styles.a },
 									'here'
 								),
 								' for an application (opens in a new tab).'
@@ -41736,86 +41731,6 @@
 
 /***/ },
 /* 341 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _getPrototypeOf = __webpack_require__(235);
-
-	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-	var _classCallCheck2 = __webpack_require__(261);
-
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-	var _createClass2 = __webpack_require__(262);
-
-	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	var _possibleConstructorReturn2 = __webpack_require__(266);
-
-	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-	var _inherits2 = __webpack_require__(313);
-
-	var _inherits3 = _interopRequireDefault(_inherits2);
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _jquery = __webpack_require__(233);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var PDF = function (_React$Component) {
-		(0, _inherits3.default)(PDF, _React$Component);
-
-		function PDF() {
-			(0, _classCallCheck3.default)(this, PDF);
-			return (0, _possibleConstructorReturn3.default)(this, (PDF.__proto__ || (0, _getPrototypeOf2.default)(PDF)).apply(this, arguments));
-		}
-
-		(0, _createClass3.default)(PDF, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				document.getElementById('emblem').style.display = 'none';
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				document.getElementById('emblem').style.display = '';
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement('iframe', { style: styles.iframe, src: '../../assets/application_final.pdf' });
-			}
-		}]);
-		return PDF;
-	}(_react2.default.Component);
-
-	exports.default = PDF;
-
-
-	var styles = {
-		iframe: {
-			width: '100%',
-			height: '100%',
-			margin: '0px',
-			padding: '0px',
-			border: '0px'
-		}
-	};
-
-/***/ },
-/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
