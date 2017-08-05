@@ -1,0 +1,1 @@
+All of the views/*.jade files never get backed up through github so I am storing them as .txt files but just know that every single one of the files in the backups/views/* folder, they should all (very most likely) have a .jade extension. This is just a backup and Im backing them up using a .txt extension because of the github issue I mentioned earlier.
