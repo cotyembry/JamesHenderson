@@ -140,7 +140,7 @@ export default class Home extends React.Component {
 						
 						<div style={styles.application}>
 							<Navbar />
-							<center style={styles.pdfLink}>Click <a id="pdfLink" target="_blank" href="../../assets/application_final.pdf" style={styles.a}>here</a> for an application (opens in a new tab).</center>
+							<center style={styles.pdfLink}>Click <a id="pdfLink" target="_blank" href="#/applicationForm" style={styles.a}>here</a> for an application (opens in a new tab).</center>
 							{/*<center style={styles.pdfLink}>Click <a id="pdfLink" target="_blank" href="/#/assets/application_final.pdf" style={styles.a}>here</a> for an application (opens in a new tab).</center>*/}
 						</div>
 

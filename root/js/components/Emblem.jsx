@@ -545,7 +545,7 @@ var styles = {
 		// width: '1000px', 
 		// // height: stylesHelper.helperHeight,
 		// height: '1000px',
-		backgroundImage: 'url("../../assets/main-background.jpg")',
+		backgroundImage: 'url("./assets/main-background.jpg")',
 		// transform: 'scale(1.25, 1.25)',
 		position: 'fixed',
 		top: '0px',

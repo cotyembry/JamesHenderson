@@ -38,7 +38,7 @@ $(document).ready(function() {
 	    <Route path="/application" component={Application} />
 	    <Route path="/beliefs" component={Beliefs} />
 	    <Route path="/contact" component={Contact} />
-	    <Route path="/assets/application_final.pdf" component={PDF} />
+	    <Route path="/applicationForm" component={PDF} />
 	    <Route path="*" component={Home} />
 	  </Router>,
 	  document.getElementById('app')

@@ -11,8 +11,10 @@ export default class PDF extends React.Component {
 		document.getElementById('emblem').style.display = '';
 	}
 	render() {
+		//https://rawgit.com/cotyembry/DjangoWebserver/master/simpleWebsite/App1/js/dist/bundle.js
+			// <iframe style={styles.iframe} src='https://raw.githubusercontent.com/cotyembry/JamesHenderson/master/root/assets/application_final.pdf'>
 		return (
-			<iframe style={styles.iframe} src='../../assets/application_final.pdf'>
+			<iframe style={styles.iframe} src='https://rawgit.com/cotyembry/JamesHenderson/master/root/assets/application_final.pdf'>
 
 			</iframe>
 		)
