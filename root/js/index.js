@@ -11,6 +11,7 @@ import Contact from './Components/Contact.jsx';
 import Emblem from './Components/Emblem.jsx';
 import History from './Components/History.jsx';
 import Home from './Components/Home.jsx';
+import PDF from './Components/PDF.jsx';
 import TribalAdministration from './Components/TribalAdministration.jsx';
 
 
@@ -37,6 +38,7 @@ $(document).ready(function() {
 	    <Route path="/application" component={Application} />
 	    <Route path="/beliefs" component={Beliefs} />
 	    <Route path="/contact" component={Contact} />
+	    <Route path="/assets/application_final.pdf" component={PDF} />
 	    <Route path="*" component={Home} />
 	  </Router>,
 	  document.getElementById('app')
