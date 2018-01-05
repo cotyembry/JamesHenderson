@@ -8,6 +8,27 @@ import Navbar from './Navbar.jsx';
 // var ReactFitText = require('../../node_modules/react-fittext/lib/ReactFitText');
 
 
+//started at like 11:16pm 1/4/18
+/*
+
+//do a get request on the following url and see if I can somehow pass back a json object
+//https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec
+
+var ranges = [
+  // Range names ...
+];
+gapi.client.sheets.spreadsheets.values.batchGet({
+   spreadsheetId: spreadsheetId,
+   ranges: ranges
+}).then((response) => {
+  var result = response.result;
+  console.log(`${result.valueRanges.length} ranges retrieved.`);
+});
+
+
+
+*/
+
 export default class TribalAdministration extends React.Component {
 	constructor(props) {
 		super(props);
@@ -203,6 +224,12 @@ export default class TribalAdministration extends React.Component {
 						<div style={styles.positionFontSize} className="paddingBottom15"><b>Council Members</b></div>{/* I added a style to tribaladministration.css for this element*/}
 						<br />
 						<div style={styles.paddingLeft}>
+							{this.props.tribalAdministration.map((personsName, i) =>
+								<div style={styles.fontSize}>{personsName}</div>						
+							)}
+							
+							
+							
 							<div style={styles.fontSize}>District 1: Robert Jones - (479)-280-8168</div>
 							<br />
 							<br />
