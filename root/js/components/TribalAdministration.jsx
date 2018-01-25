@@ -3,6 +3,8 @@ import { findDOMNode } from 'react-dom';
 
 import Navbar from './Navbar.jsx';
 
+import store from '../store.js';
+
 // import $ from 'jquery';
 
 // var ReactFitText = require('../../node_modules/react-fittext/lib/ReactFitText');
@@ -33,6 +35,7 @@ export default class TribalAdministration extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			administration: [],		//this will eventually hold an array of strings representing the administration names to render in TribalAdministration.jsx
 			marginHelper: {
 				marginLeft: 25,
 				marginRight: 25
@@ -229,7 +232,7 @@ export default class TribalAdministration extends React.Component {
 							)}
 							
 							
-							
+							{/*
 							<div style={styles.fontSize}>District 1: Robert Jones - (479)-280-8168</div>
 							<br />
 							<br />
@@ -246,6 +249,11 @@ export default class TribalAdministration extends React.Component {
 							<br />
 							<br />
 							<div style={styles.fontSize}>District 7: James Henderson - (580)-421-3507</div>
+							*/}
+
+							{this.state.administration.map((admin, i) =>
+								<admin key={i} />
+							)}
 						</div>
 					</div>
 				</center>
