@@ -7,6 +7,9 @@ import store from '../store.js';
 
 import GetSheetDone from 'get-sheet-done';
 
+/**
+ * This TribalAdministration.jsx component links up with a google spreadsheet found in my own drive.google.com folder under the Scripts folder and the spreadsheet's name is JamesHenderson
+ */
 
 // import $ from 'jquery';
 
