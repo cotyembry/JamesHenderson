@@ -54,149 +54,26 @@ export default class TribalAdministration extends React.Component {
 		//now I will add the sizing api for the header
 		$(this.refs['header']).fitText(1.1, { minFontSize: '16px', maxFontSize: '60px' });
 
-
-
-		//at first I let the container that gives the shadow effect not have a
-		//width specified, but after everything is done rendering, I want
-		//all of the container boxes to have the same width so I get the
-		//largest one, then set all of them to the that width
-
-		// coty commented out 03-09-2017 since I am going to try to just have margin helpers on both sides of the element
-		//
-		//TODO: convert this to use this.setState(...) rather than setting the DOM directly with jquery
-		// var largestWidth = 0,
-		// currentWidth = 0;
-		// $('.hasContainer').each((index, element) => {
-		// 	currentWidth = $(element).outerWidth();
-		// 	if(currentWidth > largestWidth) {
-		// 		largestWidth = currentWidth;
-		// 	}
-		// })
-		// this.largestWidth = largestWidth;	//store this for use later
-		// $('.hasContainer').each((index, element) => {
-		// 	$(element).css({ width: largestWidth });
-		// })
-
-
-		// if I ever use this logic, it needs to be moved to a resize event handler and converted to use jquery instead
-		// var totalWidth = $('#page').outerWidth();
-
-		// if(styles.container.width > totalWidth + 20) {	//+20 to account for the 10px margin I will put on the left and right sides later in the logic
-		// 	styles.container.width = 'calc(100% - 20px)';
-		// }
-		// else {
-		// 	styles.container.width = '';
-		// }
-		
-
-		//coty commented out 3170308
-		//$(window).resize(this.resize.bind(this))
-		//this.priorWidth = $('#page').outerWidth();	//save this for the resize event
-
-		// coty commented out 03-08-2017
-		//
-		// $(window).resize(this.resize.bind(this))
-		// this.priorWidth = $('#page').outerWidth();	//save this for the resize event
-
-		// $(window).resize(this.resizetwo.bind(this));
-
+		//1. make request to google app script spreadsheet to get the administration names out of the excel spreadsheet
+		// https://script.googleusercontent.com/macros/echo?user_content_key=0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ
+		$.get("https://script.googleusercontent.com/macros/echo?user_content_key=0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ", function (data) {
+			console.log(data);
+			alert("Load was performed.");
+		});
 	}
-
-	// resize() {
-
-	// 	//I noticed that when the page gets to be a certain size (very small in width) the #page
-	// 	//element gets smaller than the styles.container elements so this code will change the
-	// 	//#page elements css from the 100% in the stylesheet to an inline style if ever it needs
-	// 	//to then change it back to width = '' and let the css stylesheet take over again
-	// 	var totalWidth = $('#page').outerWidth();				//this is the current width of the page
-	// 	var containerWidth = $('#lastContainer').outerWidth();
-	// 	var windowWidth = $(window).width();
-
-	// 	//this if else logic and adding the inline widths and taking them off is making sure once the content is the smallest size it can be, the other content stops decreasing in size as well
-	// 	//note: the EmblemObject is exposed through the window global and setting the .locked property says to Emblem.jsx 'do not run logic to set the font header elements size'
-	// 	if(totalWidth <= containerWidth) {
-	// 		//if the total width available is less than the container's width this is wrong and
-	// 		//should be changed
-	// 		if(windowWidth > containerWidth) {
-	// 			$('#page').css({ width: '' });
-	// 			$('#emblem-element').css({ width: '100%' });
-	// 			$('#fontHeader').css({ width: '100%' });
-	// 			EmblemObject.locked = false;				
-	// 		}
-	// 		else {
-	// 			$('#page').css({ width: containerWidth });
-	// 			$('#emblem-element').css({ width: containerWidth });
-	// 			$('#fontHeader').css({ width: containerWidth });
-	// 			EmblemObject.locked = true;
-	// 		}
-	// 	}
-	// 	else {
-	// 		$('#page').css({ width: '' });
-	// 		$('#emblem-element').css({ width: '100%' });
-	// 		$('#fontHeader').css({ width: '100%' });
-	// 		EmblemObject.locked	= false;		
-	// 	}
-
-	// 	//Coty added 3161230 to make it where the header element only gets as small as the container elements then when the page allows (i.e. there is enough widht space) it allows the header element to get wider than the #container elements
-	// 	var headerElement = $('#headerElement')[0];
-
-	// 	var leftSide = this.largestWidth + styles.container.padding * 2; 
-	// 	var rightSide = $(headerElement).width() + 2 * styles.pageName.padding;
-
-	// 	//the if else logic below deals with the id="headerElement"
-	// 	if(this.hasBeenSet == false) {
-	// 		// if(this.largestWidth >= ($(headerElement).outerWidth() - (this.state.marginHelper.marginLeft + this.state.marginHelper.marginRight))) {
-	// 		if(leftSide >= rightSide) {	//*2 to account for right and left
-	// 			this.oldTotalWidth = totalWidth;
-	// 			this.hasBeenSet = true;
-
-	// 			$(headerElement).css({ width: this.largestWidth });
-	// 			this.setState({
-	// 				marginHelper: {
-	// 					marginLeft: 0,
-	// 					marginRight: 0
-	// 				}
-	// 			})
-	// 		}
-	// 	}
-	// 	else {
-
-	// 		if(totalWidth > this.oldTotalWidth) {
-	// 			//if here then the page has gotten back big enough to set the margins back to what they were
-	// 			this.setState({
-	// 				marginHelper: {
-	// 					marginLeft: 25,
-	// 					marginRight: 25
-	// 				}
-	// 			})
-	// 			//I can also remove the width on the element now
-	// 			$(headerElement).css({ width: '' });
-	// 			this.hasBeenSet = false;
-	// 		}			
-	// 	}
-	// 	//end 3161230
-
-
-	// 	//Coty added 01-15-2017
-	// 	//now to add logic to be able to properly set the <img> elements parent width (i.e. the <center> element)
-	// 	//everytime the page size changes, with respect to width, change the center element's width to match
-	// 	var currentWidth = $('#page').outerWidth();
-	// 	if(currentWidth !== this.priorWidth) {
-	// 		//the width has changed and needs to be set
-	// 		$('#imgParent').css({ width: currentWidth });
-	// 	}
-	// 	this.priorWidth = currentWidth;	//make sure to save this for the next iteration
-	// }
 	render() {
 		var _styles = {}
-
+		
 		if(document.documentElement.clientWidth < 400) {
 			_styles.container = { ...styles.container, width: 'calc(100% - 70px)', marginLeft: 35, marginRight: 35 }	//-20px to account for the margin on the left and right side
 		}
 		else {
 			_styles.container = { ...styles.container }
 		}
-
+		
+		// {this.props.tribalAdministration.map((personsName, i) =>
+		// 	<div style={styles.fontSize}>{personsName}</div>						
+		// )}
 		return (
 			<div id="page" ref={(ref) => { this.refs['page'] = ref }} style={styles.page}>
 				<Navbar fontSize={20} />
@@ -227,9 +104,6 @@ export default class TribalAdministration extends React.Component {
 						<div style={styles.positionFontSize} className="paddingBottom15"><b>Council Members</b></div>{/* I added a style to tribaladministration.css for this element*/}
 						<br />
 						<div style={styles.paddingLeft}>
-							{this.props.tribalAdministration.map((personsName, i) =>
-								<div style={styles.fontSize}>{personsName}</div>						
-							)}
 							
 							
 							{/*
