@@ -15,6 +15,7 @@
     "babel-polyfill": "^6.13.0",
     "babel-runtime": "^6.11.6",
     "express": "^4.14.0",
+    "get-sheet-done": "^0.1.4",
     "jquery": "^3.1.0",
     "mailgun-js": "^0.8.2",
     "nodemailer": "^2.7.0",

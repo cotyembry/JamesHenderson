@@ -5,6 +5,9 @@ import Navbar from './Navbar.jsx';
 
 import store from '../store.js';
 
+import GetSheetDone from 'get-sheet-done';
+
+
 // import $ from 'jquery';
 
 // var ReactFitText = require('../../node_modules/react-fittext/lib/ReactFitText');
@@ -56,15 +59,20 @@ export default class TribalAdministration extends React.Component {
 
 		//1. make request to google app script spreadsheet to get the administration names out of the excel spreadsheet
 		// https://script.googleusercontent.com/macros/echo?user_content_key=0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ
-		$.get('https://script.googleusercontent.com/macros/echo?user_content_key=0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ', (data) => {
-			console.log(data);
+		// $.get('https://script.googleusercontent.com/macros/echo?user_content_key=0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ', (data) => {
+		// $.get('https://sheets.googleapis.com/v4/spreadsheets/1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo/values/A1:B10000', (data) => {	//TODO: change the A1 notation from A1:B10000 to be more intelligent and query as many rows as possible
+		// 	console.log(data);
 			
-			let nameArray = data.split('__$$^$$__');
+		// // 	// let nameArray = data.split('__$$^$$__');
 
-			this.setState({
-				administration: nameArray
-			})
-		});
+		// // 	// this.setState({
+		// // 	// 	administration: nameArray
+		// // 	// })
+		// });
+
+		// GetSheetDone.labeledCols('0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ').then(sheet => console.log(sheet))
+		GetSheetDone.raw('1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo')
+		.then(sheet => this.setState({administration: sheet.data}))
 	}
 	render() {
 		var _styles = {}
@@ -131,7 +139,7 @@ export default class TribalAdministration extends React.Component {
 							*/}
 
 							{this.state.administration.map((textForSection, i) =>
-								<div>
+								<div key={i}>
 									{i === 0 &&
 										<br />
 									}
