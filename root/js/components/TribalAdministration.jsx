@@ -56,9 +56,14 @@ export default class TribalAdministration extends React.Component {
 
 		//1. make request to google app script spreadsheet to get the administration names out of the excel spreadsheet
 		// https://script.googleusercontent.com/macros/echo?user_content_key=0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ
-		$.get("https://script.googleusercontent.com/macros/echo?user_content_key=0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ", function (data) {
+		$.get('https://script.googleusercontent.com/macros/echo?user_content_key=0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ', (data) => {
 			console.log(data);
-			alert("Load was performed.");
+			
+			let nameArray = data.split('__$$^$$__');
+
+			this.setState({
+				administration: nameArray
+			})
 		});
 	}
 	render() {
@@ -125,8 +130,15 @@ export default class TribalAdministration extends React.Component {
 							<div style={styles.fontSize}>District 7: James Henderson - (580)-421-3507</div>
 							*/}
 
-							{this.state.administration.map((admin, i) =>
-								<admin key={i} />
+							{this.state.administration.map((textForSection, i) =>
+								<div>
+									{i === 0 &&
+										<br />
+									}
+									<div key={i} style={styles.fontSize}>{textForSection}</div>
+									<br />
+									<br />
+								</div>
 							)}
 						</div>
 					</div>
