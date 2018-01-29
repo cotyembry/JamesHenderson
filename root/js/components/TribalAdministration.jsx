@@ -74,6 +74,8 @@ export default class TribalAdministration extends React.Component {
 		// });
 
 		// GetSheetDone.labeledCols('0qR4aI2yaXavSfPiyMa6C9Key0UcZcrr3bgvRXuqq1LQa56nH9ohJQuFlvsxeSHV6PHSuFYFq-89eO-J6U1Rq9-digFasIQ1m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFFUUEpROvUKp2hF6ZyVz85GlDw60gZe2QG-teAEP9RpLH8Q2aVmUXMp4pjG62aaobq7Om5fZs7D&lib=MTI9A92u9q3Z5vm0jZywCZWEEqCYY8GRQ').then(sheet => console.log(sheet))
+		
+		//now I will use an npm api to make using google sheets easier
 		GetSheetDone.raw('1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo')
 		.then(sheet => this.setState({administration: sheet.data}))
 	}

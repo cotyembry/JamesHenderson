@@ -5,6 +5,7 @@ import { Router, Route, hashHistory } from 'react-router';
 
 import $ from 'jquery';
 
+import Admin from './Components/Admin.jsx';
 import Application from './Components/Application.jsx';
 import Beliefs from './Components/Beliefs.jsx';
 import Contact from './Components/Contact.jsx';
@@ -39,6 +40,7 @@ $(document).ready(function() {
 	    <Route path="/beliefs" component={Beliefs} />
 	    <Route path="/contact" component={Contact} />
 	    <Route path="/applicationForm" component={PDFJCE} />
+	    <Route path="/admin" component={Admin} />
 	    <Route path="*" component={Home} />
 	  </Router>,
 	  document.getElementById('app')
