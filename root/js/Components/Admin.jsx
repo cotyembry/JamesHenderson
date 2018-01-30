@@ -33,8 +33,9 @@ export default class Admin extends React.Component {
         navButtonDisplay = this.state.EditTribalAdminOverlay === '' ? '' : 'none';
     return (
         <div id='Admin' className={this.state.animationHelper} style={{...styles.root, visibility: this.state.rootVisibility, opacity: this.state.animationHelper === '' ? 0 : ''}}>
-            <div style={{...styles.navButton, display: navButtonDisplay}}>Edit Tribal Administration:{'  '}<span style={styles.button} onClick={this.editTribalAdmin.bind(this)}>Go</span></div>
-            {/* <div></div> */}
+            {navButtonDisplay !== 'none' &&
+                <div style={styles.navButton}>Edit Tribal Administration:{'  '}<span style={styles.button} onClick={this.editTribalAdmin.bind(this)}>Go</span></div>
+            }
             
             
             {EditTribalAdminOverlay !== '' &&
@@ -95,19 +96,32 @@ class EditTribalAdminOverlay extends React.Component {
         return (
             <div style={{zIndex: 2}}>
                 {this.state.administration.map((textForSection, i) =>
-                    <div key={i}>
-                        {i === 0 &&
+                    <div key={'adminContainer_' + i}>
+                        <div key={i}>
+                            {i === 0 &&
+                                <br />
+                            }
+                            <input key={i} style={styles.fontSize} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
                             <br />
+                            <br />
+                        </div>
+                        {i === this.state.administration.length &&  //if true then this is the last iteration
+                            <AddAdmin key={i} style={styles.fontSize} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
                         }
-                        <input key={i} style={styles.fontSize} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
-                        <br />
-                        <br />
                     </div>
                 )}
             </div>
         )
     }
 
+}
+
+class AddAdmin extends React.Component {
+    render() {
+        return (
+            <input key={i} style={styles.fontSize} value={this.props.value} onChange={this.onInputChange.bind(this, i)} />
+        )
+    }
 }
 
 var styles = {
