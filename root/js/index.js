@@ -40,7 +40,7 @@ $(document).ready(function() {
 	    <Route path="/beliefs" component={Beliefs} />
 	    <Route path="/contact" component={Contact} />
 	    <Route path="/applicationForm" component={PDFJCE} />
-	    <Route path="/admin" component={Admin} />
+	    <Route path="/editadmin" component={Admin} />
 	    <Route path="*" component={Home} />
 	  </Router>,
 	  document.getElementById('app')

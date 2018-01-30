@@ -1,11 +1,14 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 
+import GetSheetDone from 'get-sheet-done';
+
 import Navbar from './Navbar.jsx';
 
 import store from '../store.js';
 
-import GetSheetDone from 'get-sheet-done';
+import '../../css/Admin.css';
+
 
 /**
  * This TribalAdministration.jsx component links up with a google spreadsheet found in my own drive.google.com folder under the Scripts folder and the spreadsheet's name is JamesHenderson
@@ -94,76 +97,7 @@ export default class TribalAdministration extends React.Component {
 		// )}
 		return (
 			<div id="page" ref={(ref) => { this.refs['page'] = ref }} style={styles.page}>
-				<Navbar fontSize={20} />
-				<center>
-					<div id="headerElement" ref={(ref) => { this.refs['header'] = ref }}  style={Object.assign(styles.pageName, this.state.marginHelper)} className="paddingTop">Tribal Administration of the Soverign Chickamauga Cherokee Tribe</div>
-
-
-					<br />
-					<br />
-
-					<div style={_styles.container} className="hasContainer">
-							<div style={styles.positionFontSize} className="paddingBottom15"><b>Tribal Chief</b></div>
-							<br />
-							<div style={styles.fontSize}>Albert McKay</div>
-					</div>
-
-					<br />
-
-					<div style={_styles.container} className="hasContainer">
-						<div style={styles.positionFontSize} className="paddingBottom15"><b>Assistant Chief</b></div>
-						<br />
-						<div style={styles.fontSize}>Dwight Vincent</div>
-					</div>
-
-					<br />
-
-					<div style={_styles.container} className="hasContainer" id="lastContainer">
-						<div style={styles.positionFontSize} className="paddingBottom15"><b>Council Members</b></div>{/* I added a style to tribaladministration.css for this element*/}
-						<br />
-						<div style={styles.paddingLeft}>
-							
-							
-							{/*
-							<div style={styles.fontSize}>District 1: Robert Jones - (479)-280-8168</div>
-							<br />
-							<br />
-							<div style={styles.fontSize}>District 2: Darrell Ritter - (918)-413-4468</div>
-							<br />
-							<br />
-							<div style={styles.fontSize}>District 4: Jimmy Huett - (479)-970-4830</div>
-							<br />
-							<br />
-							<div style={styles.fontSize}>District 5: Kenneth Wilkerson - (479)-477-2577</div>
-							<br />
-							<br />
-							<div style={styles.fontSize}>District 6: Bob Dixon - (479)-355-0595</div>
-							<br />
-							<br />
-							<div style={styles.fontSize}>District 7: James Henderson - (580)-421-3507</div>
-							*/}
-
-							{this.state.administration.map((textForSection, i) =>
-								<div key={i}>
-									{i === 0 &&
-										<br />
-									}
-									<div key={i} style={styles.fontSize}>{textForSection}</div>
-									<br />
-									<br />
-								</div>
-							)}
-						</div>
-					</div>
-				</center>
-
-				<center style={styles.imgCaptionTransition}>
-					<h3>Below is a district map of the state of Arkansas outlining the administrations district regions.</h3>
-				</center>
-
-				<center id="imgParent" style={styles.imgParent}>
-					<img id="districtMap" style={styles.districtMap.img} src={styles.districtMap.src}></img>
-				</center>
+				
 			</div>
 		)
 	}

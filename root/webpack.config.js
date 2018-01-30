@@ -38,10 +38,10 @@ module.exports = {
         {
             test: /\.css$/,
             loader: 'css-loader',
-            query: {
-              modules: true,
-              localIdentName: '[name]__[local]__[hash:base64:5]'
-            }
+            // query: {
+            //   modules: true,
+            //   localIdentName: '[name]__[local]__[hash:base64:5]'
+            // }
         }
     ]
   },
