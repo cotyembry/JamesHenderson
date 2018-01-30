@@ -23,7 +23,7 @@ export default class Admin extends React.Component {
         }, 3000)
     }
     editTribalAdmin(e) {
-        let EditTribalAdminOverlay = '';
+        // let EditTribalAdminOverlay = '';
         this.setState({
             EditTribalAdminOverlay: EditTribalAdminOverlay
         })
@@ -46,12 +46,26 @@ export default class Admin extends React.Component {
 }
 
 class EditTribalAdminOverlay extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            administration: []
+        }
+    }
     componentWillMount() {
         //1. get tribal administration list
         GetSheetDone.raw('1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo')
-        .then(sheet => this.setState({ administration: sheet.data }))
+        .then(sheet => {
+
+            console.log('sheet = ', sheet);
+
+
+            this.setState({ administration: sheet.data })
         
-        console.log('data = ', data);
+        
+        })
+        
         //2. separate fields
         // sheet.data.map((data, i) => {
 
@@ -72,6 +86,11 @@ class EditTribalAdminOverlay extends React.Component {
         //7. update the spreadsheet values
         //now I will use an npm api to make using google sheets easier
     }
+    onInputChange(id, event) {
+        let adminArray = this.state.administration.map((e) => e);
+        adminArray[id] = event.value;
+        this.setState({administration: administration});
+    }
     render() {
         return (
             <div style={{zIndex: 2}}>
@@ -80,7 +99,7 @@ class EditTribalAdminOverlay extends React.Component {
                         {i === 0 &&
                             <br />
                         }
-                        <div key={i} style={styles.fontSize}>{textForSection}</div>
+                        <input key={i} style={styles.fontSize} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
                         <br />
                         <br />
                     </div>
