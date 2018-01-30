@@ -51,20 +51,23 @@ class EditTribalAdminOverlay extends React.Component {
         super(props);
 
         this.state = {
-            administration: []
+            administration: [],
+            newAdmin: []
         }
+    }
+    addAdmin() {
+        let clonedAdmin = this.state.newAdmin.map((value) => value);
+        clonedAdmin.push('');
+
+        this.setState({
+            newAdmin: clonedAdmin
+        })
     }
     componentWillMount() {
         //1. get tribal administration list
         GetSheetDone.raw('1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo')
         .then(sheet => {
-
-            console.log('sheet = ', sheet);
-
-
             this.setState({ administration: sheet.data })
-        
-        
         })
         
         //2. separate fields
@@ -90,24 +93,33 @@ class EditTribalAdminOverlay extends React.Component {
     onInputChange(id, event) {
         let adminArray = this.state.administration.map((e) => e);
         adminArray[id] = event.value;
-        this.setState({administration: administration});
+        this.setState({administration: adminArray});
     }
     render() {
         return (
             <div style={{zIndex: 2}}>
                 {this.state.administration.map((textForSection, i) =>
-                    <div key={'adminContainer_' + i}>
-                        <div key={i}>
-                            {i === 0 &&
-                                <br />
-                            }
-                            <input key={i} style={styles.fontSize} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+                    <div key={i}>
+                        {i === 0 &&
                             <br />
-                            <br />
-                        </div>
-                        {i === this.state.administration.length &&  //if true then this is the last iteration
-                            <AddAdmin key={i} style={styles.fontSize} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
                         }
+                        <input key={i} style={styles.fontSize} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+                        <br />
+                        <br />
+                    </div>
+                )}
+                
+                
+                <div style={{...styles.buttonContainer, marginBottom: '28px'}}>
+                    <button style={styles.button} onClick={this.addAdmin.bind(this)}>Add Admin</button>
+                </div>
+                
+                
+                {this.state.newAdmin.map((nullPlaceholder, i) => 
+                    <div key={i}>
+                        <AddAdmin key={'addAdmin_' + i} style={styles.fontSize} />
+                        <br />
+                        <br />
                     </div>
                 )}
             </div>
@@ -117,9 +129,19 @@ class EditTribalAdminOverlay extends React.Component {
 }
 
 class AddAdmin extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: 'Add Admin (type whatever you want to show here)'
+        }
+    }
+    componentDidMount() {
+        console.log('mounted')
+    }
     render() {
         return (
-            <input key={i} style={styles.fontSize} value={this.props.value} onChange={this.onInputChange.bind(this, i)} />
+            <input key={this.props.i} style={this.props.style} value={this.state.value} onChange={(event) => {this.setState({value: event.value})}} />
         )
     }
 }
@@ -136,7 +158,8 @@ var styles = {
         position: 'fixed',
         color: 'white',
         fontSize: '28px',
-        alignItems: 'center'
+        alignItems: 'center',
+        overflowY: 'auto'
     },
     button: {
         padding: '5px',
@@ -146,6 +169,10 @@ var styles = {
         color: 'black',
         borderRadius: '4px',
         cursor: 'pointer'
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     fontSize: {
         fontSize: 30,
