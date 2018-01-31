@@ -25,7 +25,9 @@ $(document).ready(function() {
 			//update the value inside the store so that I can get it later
 			window.store._pageLocation = locationThatWasJustSet;
 			//window.updatePageLocation is defined in Navbar.jsx - it exposes this method to allow its internal state to be updated
-			window.updatePageLocation(locationThatWasJustSet);
+			if(typeof window.updatePageLocation !== 'undefined') {
+				window.updatePageLocation(locationThatWasJustSet);
+			}
 		}
 	}
 

@@ -63,7 +63,7 @@ class EditTribalAdminOverlay extends React.Component {
             newAdmin: clonedAdmin
         })
     }
-    componentWillMount() {
+    componentDidMount() {
         //1. get tribal administration list
         GetSheetDone.raw('1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo')
         .then(sheet => {
