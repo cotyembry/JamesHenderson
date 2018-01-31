@@ -34,7 +34,7 @@ export default class Admin extends React.Component {
     return (
         <div id='Admin' className={this.state.animationHelper} style={{...styles.root, visibility: this.state.rootVisibility, opacity: this.state.animationHelper === '' ? 0 : ''}}>
             {navButtonDisplay !== 'none' &&
-                <div style={styles.navButton}>Edit Tribal Administration:{'  '}<span style={styles.button} onClick={this.editTribalAdmin.bind(this)}>Go</span></div>
+                <div style={styles.navButton}>Edit Tribal Administration:{'  '}<span className='button buttonHover' style={styles.button} onClick={this.editTribalAdmin.bind(this)}>Go</span></div>
             }
             
             
@@ -111,17 +111,27 @@ class EditTribalAdminOverlay extends React.Component {
                 
                 
                 <div style={{...styles.buttonContainer, marginBottom: '28px'}}>
-                    <button style={styles.button} onClick={this.addAdmin.bind(this)}>Add Admin</button>
+                    <button className='buttonHover button' style={{...styles.button, marginRight: '28px'}} onClick={this.addAdmin.bind(this)}>Add Admin</button>
                 </div>
                 
                 
-                {this.state.newAdmin.map((nullPlaceholder, i) => 
-                    <div key={i} style={{ padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box' }}>
-                        <AddAdmin key={'addAdmin_' + i} style={{...styles.fontSize, width: '100%'}} />
-                        <br />
-                        <br />
+                {this.state.newAdmin.map((nullPlaceholder, i) =>
+                    <div style={{width: '100%'}}>
+                        <div key={i} style={{ padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box' }}>
+                            <AddAdmin key={'addAdmin_' + i} style={{...styles.fontSize, width: '100%'}} />
+                            <br />
+                            <br />
+                        </div>
                     </div>
                 )}
+
+                {this.state.newAdmin.length > 0 &&
+                    <div style={{ width: '100%', textAlign: 'center', marginBottom: '28px', display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
+                        <center>
+                            <div className='button buttonHover' style={{ ...styles.button, fontSize: '33px', display: 'inline-block' }}>Save</div>
+                        </center>
+                    </div>
+                }
             </div>
         )
     }
@@ -165,7 +175,7 @@ var styles = {
         padding: '5px',
         border: '1px solid white',
         boxSizing: 'border-box',
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         color: 'black',
         borderRadius: '4px',
         cursor: 'pointer'
