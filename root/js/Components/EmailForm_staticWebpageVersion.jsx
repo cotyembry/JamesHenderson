@@ -99,10 +99,14 @@ export default class EmailForm extends React.Component {
 
     $.post(
       'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
-      { subject: messageObject.subject, messageBody: messageObject.messageBody }
+      {
+        action: 'sendEmail',
+        subject: messageObject.subject,
+        messageBody: messageObject.messageBody
+      }
     )
-    .done(function( data ) {
-      alert( 'Data Loaded: ' + data );
+    .done(data => {
+      //do whatever you want
     })
 
 

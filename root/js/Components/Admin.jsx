@@ -90,14 +90,123 @@ class EditTribalAdminOverlay extends React.Component {
         //7. update the spreadsheet values
         //now I will use an npm api to make using google sheets easier
     }
+    makeApiCall() {
+        var params = {
+            // The spreadsheet to apply the updates to.
+            spreadsheetId: '1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo'
+        };
+
+        var batchUpdateSpreadsheetRequestBody = {
+            // A list of updates to apply to the spreadsheet.
+            // Requests will be applied in the order they are specified.
+            // If any request is not valid, no requests will be applied.
+            requests: [
+                'one',
+                'two',
+                'three'
+            ]
+
+            // TODO: Add desired properties to the request body.
+        };
+
+        var request = gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateSpreadsheetRequestBody);
+        request.then(function (response) {
+            // TODO: Change code below to process the `response` object:
+            console.log(response.result, response);
+        }, function (reason) {
+            console.error('error: ' + reason.result.error.message, reason);
+        });
+    }
     onInputChange(id, event) {
         let adminArray = this.state.administration.map((e) => e);
         adminArray[id] = event.value;
         this.setState({administration: adminArray});
     }
+    saveAdmin() {
+        let inputs = document.getElementsByTagName('input'),
+            concatinatedString = '';
+
+        for(let i = 0; i < inputs.length; i++) {
+            concatinatedString += inputs[i].value + '__$$^$$__';
+        }
+    
+        console.log(concatinatedString);
+
+        //send concatinatedString data to google spreadsheet to update it
+        // this.makeApiCall();
+
+       let sendToGoogleAppsScript = {
+           test: 'hi',
+           one: 'two',
+           3: 'for'
+       }
+
+
+        // POST https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate
+        // $.ajax({
+        //     type: 'POST',
+        //     url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+        //     data: sendToGoogleAppsScript,
+        //     success: (e) => {console.log('in success', e)},
+        //     // dataType: dataType
+        // });
+
+
+
+        // $.post(
+        //     'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?key=AIzaSyDtnDMOY1JcsigOSqtAVbB4mC4dCJj9LrA',
+        //     { subject: 'testSubject', messageBody: 'messageBodyTest' }
+        // )
+        // .done(function (data) {
+        //     alert('Data Loaded: ' + data);
+        // })
+
+
+
+        $.post(
+            'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+            {
+                action: 'sendEmail',
+                subject: 'messageObject.subject',
+                messageBody: 'messageObject.messageBody'
+            }
+        )
+            .done(data => {
+                //do whatever you want
+            })
+
+
+        // $.ajax({
+        //     type: "GET",
+        //     url: 'script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+        //     dataType: 'jsonp',
+        //     data: {
+        //         subject: 'testSubject..', messageBody: 'messagebody test'
+        //     },
+        //     mimeType: 'application/json',
+        //     success: (e) => {console.log(e)}
+        // })
+
+/*
+POST /v4/spreadsheets/{spreadsheetId}:batchUpdate
+Applies one or more updates to the spreadsheet.
+
+
+*/
+
+
+
+        // $.ajax({
+        //     type: 'POST',
+        //     url: 'https://sheets.googleapis.com/v4/spreadsheets/1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo:batchUpdate',
+        //     data: data,
+        //     success: (e) => {console.log('in success', e)},
+        //     // dataType: dataType
+        // });
+    }
     render() {
         return (
-            <div style={{zIndex: 2, width: '100%', height: '100%'}}>
+            <div ref={(eref) => {this.refs['admin_root']}} style={{zIndex: 2, width: '100%', height: '100%'}}>
                 {this.state.administration.map((textForSection, i) =>
                     <div key={i} style={{padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box'}}>
                         {i === 0 &&
@@ -118,7 +227,7 @@ class EditTribalAdminOverlay extends React.Component {
                 {this.state.newAdmin.map((nullPlaceholder, i) =>
                     <div style={{width: '100%'}}>
                         <div key={i} style={{ padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box' }}>
-                            <AddAdmin key={'addAdmin_' + i} style={{...styles.fontSize, width: '100%'}} />
+                            <AddAdmin updateParent={this.addAdmin} key={'addAdmin_' + i} style={{...styles.fontSize, width: '100%'}} />
                             <br />
                             <br />
                         </div>
@@ -128,7 +237,7 @@ class EditTribalAdminOverlay extends React.Component {
                 {this.state.newAdmin.length > 0 &&
                     <div style={{ width: '100%', textAlign: 'center', marginBottom: '28px', display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
                         <center>
-                            <div className='button buttonHover' style={{ ...styles.button, fontSize: '33px', display: 'inline-block' }}>Save</div>
+                            <div className='button buttonHover' style={{ ...styles.button, fontSize: '33px', display: 'inline-block' }} onClick={this.saveAdmin.bind(this)}>Save</div>
                         </center>
                     </div>
                 }
@@ -146,12 +255,13 @@ class AddAdmin extends React.Component {
             value: 'Add Admin (type whatever you want to show here)'
         }
     }
-    componentDidMount() {
-        console.log('mounted')
+    onChange(event) {
+        this.setState({ value: event.value });
+        this.props.updateParent(event.value, this.props.i);
     }
     render() {
         return (
-            <input key={this.props.i} style={this.props.style} value={this.state.value} onChange={(event) => {this.setState({value: event.value})}} />
+            <input key={this.props.i} style={this.props.style} value={this.state.value} onChange={this.onChange.bind(this)} />
         )
     }
 }
