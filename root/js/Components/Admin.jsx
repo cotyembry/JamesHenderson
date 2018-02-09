@@ -263,7 +263,7 @@ class EditTribalAdminOverlay extends React.Component {
                 {this.state.newAdmin.map((nullPlaceholder, i) =>
                     <div key={'parent_' + i} style={{width: '100%'}}>
                         <div key={i} style={{ padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box' }}>
-                            <AddAdmin updateParent={this.addAdmin} key={'addAdmin_' + i} style={{...styles.fontSize, width: '100%'}} />
+                            <AddAdmin updateParent={this.addAdmin.bind(this)} key={'addAdmin_' + i} style={{...styles.fontSize, width: '100%'}} />
                             <br key={i + '_a'} />
                             <br key={i + '_b'} />
                         </div>
