@@ -136,31 +136,20 @@ class EditTribalAdminOverlay extends React.Component {
 
         //send concatinatedString data to google spreadsheet to update it
         // this.makeApiCall();
-
-       let sendToGoogleAppsScript = {
-           test: 'hi',
-           one: 'two',
-           3: 'for'
-       }
-
         // this._sendEmail({test: 1});  //this sends an email by using the <CIFrame /> component below (I think lol - commenting out for now)
-
-
         console.log('doing get');
 
         $.get({
             url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
             data: {
-                test: 1,
-                and: 'two'
+                // test: 1,
+                // and: 'two',
+                type: 'updateAdmin',
+                // newAdmin: concatinatedString
             },
             success: (e) => {
                 console.log('e = ', e);
-            }
-        
-        
-        
-        
+            }        
         })
 
 
@@ -296,7 +285,7 @@ class AddAdmin extends React.Component {
     }
     onChange(event) {
         this.setState({ value: event.value });
-        this.props.updateParent(event.value, this.props.i);
+        // this.props.updateParent(event.value, this.props.i);
     }
     render() {
         return (
