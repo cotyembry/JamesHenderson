@@ -246,11 +246,11 @@ class EditTribalAdminOverlay extends React.Component {
                 {this.state.administration.map((textForSection, i) =>
                     <div key={i} style={{padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box'}}>
                         {i === 0 &&
-                            <br />
+                            <br key={i+ 'brzero'} />
                         }
                         <input key={i} style={{...styles.fontSize, width: '100%'}} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
-                        <br />
-                        <br />
+                        <br key={i + 'br_a'} />
+                        <br key={i + 'br_b'} />
                     </div>
                 )}
                 
@@ -261,11 +261,11 @@ class EditTribalAdminOverlay extends React.Component {
                 
                 
                 {this.state.newAdmin.map((nullPlaceholder, i) =>
-                    <div style={{width: '100%'}}>
+                    <div key={'parent_' + i} style={{width: '100%'}}>
                         <div key={i} style={{ padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box' }}>
                             <AddAdmin updateParent={this.addAdmin} key={'addAdmin_' + i} style={{...styles.fontSize, width: '100%'}} />
-                            <br />
-                            <br />
+                            <br key={i + '_a'} />
+                            <br key={i + '_b'} />
                         </div>
                     </div>
                 )}
