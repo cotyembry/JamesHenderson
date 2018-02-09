@@ -4,6 +4,8 @@ import $ from 'jquery';
 
 import GetSheetDone from 'get-sheet-done';
 
+import SendEmail from './SendEmail.jsx';
+
 
 export default class Admin extends React.Component {
     constructor(props) {
@@ -141,6 +143,37 @@ class EditTribalAdminOverlay extends React.Component {
            3: 'for'
        }
 
+        // this._sendEmail({test: 1});  //this sends an email by using the <CIFrame /> component below (I think lol - commenting out for now)
+
+
+        console.log('doing get');
+
+        $.get({
+            url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+            data: {
+                test: 1,
+                and: 'two'
+            },
+            success: (e) => {
+                console.log('e = ', e);
+            }
+        
+        
+        
+        
+        })
+
+
+
+
+        // $.post(
+        //     'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+        //     { subject: 'messageObject.subject', messageBody: 'messageObject.messageBody' }
+        // )
+        // .done(function (data) {
+        //     alert('Data Loaded: ' + data);
+        // })
+
 
         // POST https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate
         // $.ajax({
@@ -163,17 +196,17 @@ class EditTribalAdminOverlay extends React.Component {
 
 
 
-        $.post(
-            'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
-            {
-                action: 'sendEmail',
-                subject: 'messageObject.subject',
-                messageBody: 'messageObject.messageBody'
-            }
-        )
-            .done(data => {
-                //do whatever you want
-            })
+        // $.post(
+        //     'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+        //     {
+        //         action: 'sendEmail',
+        //         subject: 'messageObject.subject',
+        //         messageBody: 'messageObject.messageBody'
+        //     }
+        // )
+        //     .done(data => {
+        //         //do whatever you want
+        //     })
 
 
         // $.ajax({
@@ -187,14 +220,12 @@ class EditTribalAdminOverlay extends React.Component {
         //     success: (e) => {console.log(e)}
         // })
 
-/*
-POST /v4/spreadsheets/{spreadsheetId}:batchUpdate
-Applies one or more updates to the spreadsheet.
+        /*
+        POST /v4/spreadsheets/{spreadsheetId}:batchUpdate
+        Applies one or more updates to the spreadsheet.
 
 
-*/
-
-
+        */
 
         // $.ajax({
         //     type: 'POST',
@@ -203,6 +234,11 @@ Applies one or more updates to the spreadsheet.
         //     success: (e) => {console.log('in success', e)},
         //     // dataType: dataType
         // });
+    }
+    sendEmailCallbackSetter(sendEmailCallback) {
+        this._sendEmail = sendEmailCallback;
+
+        console.log('set: ', this._sendEmail);
     }
     render() {
         return (
@@ -241,6 +277,9 @@ Applies one or more updates to the spreadsheet.
                         </center>
                     </div>
                 }
+
+
+                {/* <SendEmail componentDidMount={this.sendEmailCallbackSetter.bind(this)} /> */}
             </div>
         )
     }
