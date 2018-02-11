@@ -97,20 +97,32 @@ export default class EmailForm extends React.Component {
     
 
 
-    $.post(
-      'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
-      {
-        action: 'sendEmail',
+    // $.post(
+    //   'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+    //   {
+    //     action: 'sendEmail',
+    //     subject: messageObject.subject,
+    //     messageBody: messageObject.messageBody
+    //   }
+    // )
+    // .done(data => {
+    //   //do whatever you want
+    // })
+
+    $.get({
+      url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+      data: {
+        // test: 1,
+        // and: 'two',
+        type: 'sendEmail',
         subject: messageObject.subject,
         messageBody: messageObject.messageBody
+        // dataType: 'jsonp',
+      },
+      success: (e) => {
+        location.reload();
       }
-    )
-    .done(data => {
-      //do whatever you want
     })
-
-
-    location.reload();  //I do this because after having submitted the form once, chrome gives me an error saying something about a cross origin issue (but it works on the first submit...)
 
   }
   render() {
