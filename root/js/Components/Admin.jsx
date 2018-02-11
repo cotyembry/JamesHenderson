@@ -139,13 +139,29 @@ class EditTribalAdminOverlay extends React.Component {
         // this._sendEmail({test: 1});  //this sends an email by using the <CIFrame /> component below (I think lol - commenting out for now)
         console.log('doing get');
 
+
+//var url = "https://script.google.com/macros/s/{YourProjectId}/exec?offset="+offset+"&baseDate="+baseDate+"&callback=?";
+   //$.getJSON( url,function( returnValue ){...});
+
+        // window.callback = function(e) {
+        //     console.log('in callback', e);
+        // }
+
+        // $.getJSON('https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?callback=callback',
+        //     function(e) {
+        //         console.log('in getJSON return ', e);
+        //     }
+        // )
+
+       
         $.get({
             url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
             data: {
                 // test: 1,
                 // and: 'two',
                 type: 'updateAdmin',
-                // newAdmin: concatinatedString
+                // dataType: 'jsonp',
+                newAdmin: concatinatedString
             },
             success: (e) => {
                 console.log('e = ', e);
