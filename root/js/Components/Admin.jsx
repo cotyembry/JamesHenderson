@@ -134,24 +134,7 @@ class EditTribalAdminOverlay extends React.Component {
     
         console.log(concatinatedString);
 
-        //send concatinatedString data to google spreadsheet to update it
-        // this.makeApiCall();
-        // this._sendEmail({test: 1});  //this sends an email by using the <CIFrame /> component below (I think lol - commenting out for now)
         console.log('doing get');
-
-
-//var url = "https://script.google.com/macros/s/{YourProjectId}/exec?offset="+offset+"&baseDate="+baseDate+"&callback=?";
-   //$.getJSON( url,function( returnValue ){...});
-
-        // window.callback = function(e) {
-        //     console.log('in callback', e);
-        // }
-
-        // $.getJSON('https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?callback=callback',
-        //     function(e) {
-        //         console.log('in getJSON return ', e);
-        //     }
-        // )
 
        
         $.get({
@@ -167,78 +150,6 @@ class EditTribalAdminOverlay extends React.Component {
                 console.log('e = ', e);
             }        
         })
-
-
-
-
-        // $.post(
-        //     'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
-        //     { subject: 'messageObject.subject', messageBody: 'messageObject.messageBody' }
-        // )
-        // .done(function (data) {
-        //     alert('Data Loaded: ' + data);
-        // })
-
-
-        // POST https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate
-        // $.ajax({
-        //     type: 'POST',
-        //     url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
-        //     data: sendToGoogleAppsScript,
-        //     success: (e) => {console.log('in success', e)},
-        //     // dataType: dataType
-        // });
-
-
-
-        // $.post(
-        //     'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?key=AIzaSyDtnDMOY1JcsigOSqtAVbB4mC4dCJj9LrA',
-        //     { subject: 'testSubject', messageBody: 'messageBodyTest' }
-        // )
-        // .done(function (data) {
-        //     alert('Data Loaded: ' + data);
-        // })
-
-
-
-        // $.post(
-        //     'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
-        //     {
-        //         action: 'sendEmail',
-        //         subject: 'messageObject.subject',
-        //         messageBody: 'messageObject.messageBody'
-        //     }
-        // )
-        //     .done(data => {
-        //         //do whatever you want
-        //     })
-
-
-        // $.ajax({
-        //     type: "GET",
-        //     url: 'script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
-        //     dataType: 'jsonp',
-        //     data: {
-        //         subject: 'testSubject..', messageBody: 'messagebody test'
-        //     },
-        //     mimeType: 'application/json',
-        //     success: (e) => {console.log(e)}
-        // })
-
-        /*
-        POST /v4/spreadsheets/{spreadsheetId}:batchUpdate
-        Applies one or more updates to the spreadsheet.
-
-
-        */
-
-        // $.ajax({
-        //     type: 'POST',
-        //     url: 'https://sheets.googleapis.com/v4/spreadsheets/1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo:batchUpdate',
-        //     data: data,
-        //     success: (e) => {console.log('in success', e)},
-        //     // dataType: dataType
-        // });
     }
     sendEmailCallbackSetter(sendEmailCallback) {
         this._sendEmail = sendEmailCallback;
