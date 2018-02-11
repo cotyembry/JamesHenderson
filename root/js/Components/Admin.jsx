@@ -14,7 +14,8 @@ export default class Admin extends React.Component {
         this.state = {
             animationHelper: '',
             EditTribalAdminOverlay: '',
-            rootVisibility: ''
+            rootVisibility: '',
+            passwordValue: ''
         }
     }
     componentDidMount() {
@@ -36,7 +37,7 @@ export default class Admin extends React.Component {
     return (
         <div id='Admin' className={this.state.animationHelper} style={{...styles.root, visibility: this.state.rootVisibility, opacity: this.state.animationHelper === '' ? 0 : ''}}>
             {navButtonDisplay !== 'none' &&
-                <div style={styles.navButton}>Edit Tribal Administration:{'  '}<span className='button buttonHover' style={styles.button} onClick={this.editTribalAdmin.bind(this)}>Go</span></div>
+                <div style={styles.navButton}>Edit Tribal Administration:{'  '}<input value={this.state.passwordValue} onChange={(e) => {this.setState({passwordValue: e.target.value})}}/><span className='button buttonHover' style={styles.button} onClick={this.editTribalAdmin.bind(this)}>Go</span></div>
             }
             
             
