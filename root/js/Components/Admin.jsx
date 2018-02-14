@@ -1,4 +1,5 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom';
 
 import $ from 'jquery';
 
@@ -27,7 +28,10 @@ export default class Admin extends React.Component {
             this.setState({
                 animationHelper: 'fadeIn'
             })
-        }, 3000)
+        }, 3000);
+    }
+    componentWillMount() {
+        this.refs = [];
     }
     editTribalAdmin(e) {
 		//I could not get the success or .then callbacks/promises to work so I used the google apps script ContentService to help return javascript that will be executed to on the page globally to let this Admin component know the request has came back
@@ -36,7 +40,12 @@ export default class Admin extends React.Component {
 			url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?type=validatePassword&password=' + this.state.passwordValue,
 			dataType: 'jsonp'
 		});
-	}
+    }
+    passwordKeyPressed(e) {
+        if(e.key.toString().search(/enter/gi) !== -1) {
+            this.editTribalAdmin();
+        }
+    }
 	passwordValidationCallback(e) {		
 		if (e === true) {
 			console.log('correct password');
@@ -46,7 +55,7 @@ export default class Admin extends React.Component {
 		}
 		else {
 			console.log('incorrect password')
-			//set the font color red or something
+			//set the font color red or something to tell the user...hey...this password submission was wrong
 			this.setState({
 				inputFontColor: 'red'
 			})
@@ -62,7 +71,7 @@ export default class Admin extends React.Component {
                     <div style={styles.navButton}>
                         <span>Edit Tribal Administration:{'  '}</span>
 						
-						<input style={{width: '100%', textAlign: 'center', color: this.state.inputFontColor}} placeholder='password' value={this.state.passwordValue} onChange={(e) => {this.setState({passwordValue: e.target.value, inputFontColor: 'black'})}} />
+                        <input ref={eref => { this.refs['passwordInput'] = findDOMNode(eref)}} style={{ width: '100%', textAlign: 'center', color: this.state.inputFontColor }} placeholder='password' value={this.state.passwordValue} onChange={(e) => { this.setState({ passwordValue: e.target.value, inputFontColor: 'black' }) }} onKeyPress={this.passwordKeyPressed.bind(this)} />
                         
 						<div style={{display: 'flex', marginTop: '5px'}}>
                             <span className='button buttonHover' style={{...styles.button}} onClick={this.editTribalAdmin.bind(this)}>Go</span>
@@ -85,7 +94,8 @@ class EditTribalAdminOverlay extends React.Component {
 
         this.state = {
             administration: [],
-            newAdmin: []
+            newAdmin: [],
+            removeAdminHeight: 0
         }
     }
     addAdmin() {
@@ -101,34 +111,23 @@ class EditTribalAdminOverlay extends React.Component {
         GetSheetDone.raw('1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo')
         .then(sheet => {
             this.setState({ administration: sheet.data })
-        })
-        
-        //2. separate fields
-        // sheet.data.map((data, i) => {
-
-
-        //     return (
-
-        //     )
-        // })
-
-        //3. add different field values into text boxes
-
-        //4. add save button
-
-        //5. onclick collect the input values
-
-        //6. send input values as a string to the google spreadsheet
-
-        //7. update the spreadsheet values
-        //now I will use an npm api to make using google sheets easier
+        });
+    }
+    componentWillMount() {
+        this.refs = [];
+    }
+    getInputHeight() {
+        let inputHeight = 0;
+        if(typeof this.refs['addAdminParent_0'] !== 'undefined') {
+            inputHeight = this.refs['addAdminParent_0'].clientHeight;
+        }
+        return parseFloat(inputHeight);
     }
     makeApiCall() {
         var params = {
             // The spreadsheet to apply the updates to.
             spreadsheetId: '1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo'
         };
-
         var batchUpdateSpreadsheetRequestBody = {
             // A list of updates to apply to the spreadsheet.
             // Requests will be applied in the order they are specified.
@@ -141,7 +140,6 @@ class EditTribalAdminOverlay extends React.Component {
 
             // TODO: Add desired properties to the request body.
         };
-
         var request = gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateSpreadsheetRequestBody);
         request.then(function (response) {
             // TODO: Change code below to process the `response` object:
@@ -155,6 +153,11 @@ class EditTribalAdminOverlay extends React.Component {
         adminArray[id] = event.value;
         this.setState({administration: adminArray});
     }
+    removeAdminClicked(i) {
+        let newAdministrationArray = this.state.administration.map(e => e);
+        newAdministrationArray.splice(i, 1);
+        this.setState({administration: newAdministrationArray})
+    }
     saveAdmin() {
         let inputs = document.getElementsByTagName('input'),
             concatinatedString = '';
@@ -162,12 +165,8 @@ class EditTribalAdminOverlay extends React.Component {
         for(let i = 0; i < inputs.length; i++) {
             concatinatedString += inputs[i].value + '__$$^$$__';
         }
-    
         console.log(concatinatedString);
-
         console.log('doing get');
-
-       
         $.get({
             url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
             data: {
@@ -184,8 +183,6 @@ class EditTribalAdminOverlay extends React.Component {
     }
     sendEmailCallbackSetter(sendEmailCallback) {
         this._sendEmail = sendEmailCallback;
-
-        console.log('set: ', this._sendEmail);
     }
     render() {
         return (
@@ -195,7 +192,15 @@ class EditTribalAdminOverlay extends React.Component {
                         {i === 0 &&
                             <br key={i+ 'brzero'} />
                         }
-                        <input key={i} style={{...styles.fontSize, width: '100%'}} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+                        
+                        <div style={styles.alreadyAdminInputParent}>
+                            <input key={i} style={{...styles.fontSize, width: 'calc(100% - 35px)',}} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+                            
+                            <div>
+                                <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white', marginLeft: '5px' }} onClick={() => {this.removeAdminClicked(i)}}>-</span>
+                            </div>
+                        </div>
+                        
                         <br key={i + 'br_a'} />
                         <br key={i + 'br_b'} />
                     </div>
@@ -209,7 +214,7 @@ class EditTribalAdminOverlay extends React.Component {
                 
                 {this.state.newAdmin.map((nullPlaceholder, i) =>
                     <div key={'parent_' + i} style={{width: '100%'}}>
-                        <div key={i} style={{ padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box' }}>
+                        <div key={i} ref={eref => {this.refs['addAdminParent_' + i] = findDOMNode(eref)}} style={{ padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box' }}>
                             <AddAdmin updateParent={this.addAdmin.bind(this)} key={'addAdmin_' + i} style={{...styles.fontSize, width: '100%'}} />
                             <br key={i + '_a'} />
                             <br key={i + '_b'} />
@@ -246,8 +251,14 @@ class AddAdmin extends React.Component {
         // this.props.updateParent(event.value, this.props.i);
     }
     render() {
+
+        // console.log({ ...this.props.style, width: 'calc(100% - 35px)' });
+
         return (
-            <input key={this.props.i} style={this.props.style} value={this.state.value} onChange={this.onChange.bind(this)} />
+            <div>
+                <input key={this.props.i} style={{...this.props.style, width: 'calc(100% - 35px)'}} value={this.state.value} onChange={this.onChange.bind(this)} />
+                {/* <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white' }}>-</span> */}
+            </div>
         )
     }
 }
@@ -266,6 +277,12 @@ var styles = {
         fontSize: '28px',
         alignItems: 'center',
         overflowY: 'auto'
+    },
+    alreadyAdminInputParent: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     button: {
         padding: '5px',
