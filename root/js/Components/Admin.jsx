@@ -13,9 +13,10 @@ export default class Admin extends React.Component {
 
         this.state = {
             animationHelper: '',
-            EditTribalAdminOverlay: '',
-            rootVisibility: '',
-            passwordValue: ''
+			EditTribalAdminOverlay: '',
+			inputFontColor: 'black',
+            passwordValue: '',
+            rootVisibility: ''
         }
     }
     componentDidMount() {
@@ -33,10 +34,13 @@ export default class Admin extends React.Component {
             this.setState({
                 EditTribalAdminOverlay: EditTribalAdminOverlay
             })
-        }
+		}
         else {
             console.log('incorrect password')
-            //set the font color red or something
+			//set the font color red or something
+			this.setState({
+				inputFontColor: 'red'
+			})
         }
     }
     render() {
@@ -49,7 +53,7 @@ export default class Admin extends React.Component {
                     <div style={styles.navButton}>
                         <span>Edit Tribal Administration:{'  '}</span>
 						
-						<input style={{width: '100%', textAlign: 'center'}} placeholder='password' value={this.state.passwordValue} onChange={(e) => {this.setState({passwordValue: e.target.value})}} />
+						<input style={{width: '100%', textAlign: 'center', color: this.state.inputFontColor}} placeholder='password' value={this.state.passwordValue} onChange={(e) => {this.setState({passwordValue: e.target.value, inputFontColor: 'black'})}} />
                         
 						<div style={{display: 'flex', marginTop: '5px'}}>
                             <span className='button buttonHover' style={{...styles.button}} onClick={this.editTribalAdmin.bind(this)}>Go</span>
