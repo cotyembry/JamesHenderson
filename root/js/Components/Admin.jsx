@@ -27,26 +27,43 @@ export default class Admin extends React.Component {
     }
     editTribalAdmin(e) {
         // let EditTribalAdminOverlay = '';
-        this.setState({
-            EditTribalAdminOverlay: EditTribalAdminOverlay
-        })
+        let thePasswordTheUserHasSelected = 'sovereignsomething';
+        if (this.state.passwordValue === thePasswordTheUserHasSelected) {
+            console.log('correct password');
+            this.setState({
+                EditTribalAdminOverlay: EditTribalAdminOverlay
+            })
+        }
+        else {
+            console.log('incorrect password')
+            //set the font color red or something
+        }
     }
-  render() {
-    let EditTribalAdminOverlay = this.state.EditTribalAdminOverlay,    //just so it doesnt look weird during the return in render
-        navButtonDisplay = this.state.EditTribalAdminOverlay === '' ? '' : 'none';
-    return (
-        <div id='Admin' className={this.state.animationHelper} style={{...styles.root, visibility: this.state.rootVisibility, opacity: this.state.animationHelper === '' ? 0 : ''}}>
-            {navButtonDisplay !== 'none' &&
-                <div style={styles.navButton}>Edit Tribal Administration:{'  '}<input value={this.state.passwordValue} onChange={(e) => {this.setState({passwordValue: e.target.value})}}/><span className='button buttonHover' style={styles.button} onClick={this.editTribalAdmin.bind(this)}>Go</span></div>
-            }
-            
-            
-            {EditTribalAdminOverlay !== '' &&
-                <EditTribalAdminOverlay />
-            }
-        </div>
-    );
-  }
+    render() {
+        let EditTribalAdminOverlay = this.state.EditTribalAdminOverlay,    //just so it doesnt look weird during the return in render
+            navButtonDisplay = this.state.EditTribalAdminOverlay === '' ? '' : 'none',
+            flexHelper = navButtonDisplay !== 'none' ? {} : {};
+        return (
+            <div id='Admin' className={this.state.animationHelper} style={{...styles.root, visibility: this.state.rootVisibility, opacity: this.state.animationHelper === '' ? 0 : ''}}>
+                {navButtonDisplay !== 'none' &&
+                    <div style={styles.navButton}>
+                        <span>Edit Tribal Administration:{'  '}</span>
+						
+						<input style={{width: '100%', textAlign: 'center'}} placeholder='password' value={this.state.passwordValue} onChange={(e) => {this.setState({passwordValue: e.target.value})}} />
+                        
+						<div style={{display: 'flex', marginTop: '5px'}}>
+                            <span className='button buttonHover' style={{...styles.button}} onClick={this.editTribalAdmin.bind(this)}>Go</span>
+                        </div>
+                    </div>
+                }
+                
+                
+                {EditTribalAdminOverlay !== '' &&
+                    <EditTribalAdminOverlay />
+                }
+            </div>
+        );
+    }
 }
 
 class EditTribalAdminOverlay extends React.Component {
@@ -257,6 +274,9 @@ var styles = {
         paddingBottom: 10
     },
     navButton: {
-        zIndex: 1                       //needed because of how the background image is set
+        zIndex: 1,                       //needed because of how the background image is set
+        display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center'
     }
 }
