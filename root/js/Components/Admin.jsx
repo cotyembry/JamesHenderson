@@ -20,6 +20,9 @@ export default class Admin extends React.Component {
         }
     }
     componentDidMount() {
+		window.AdminPasswordValidationCallback = (e) => {
+			this.passwordValidationCallback(e);
+		}
         window.setTimeout(() => {
             this.setState({
                 animationHelper: 'fadeIn'
@@ -27,22 +30,28 @@ export default class Admin extends React.Component {
         }, 3000)
     }
     editTribalAdmin(e) {
-        // let EditTribalAdminOverlay = '';
-        let thePasswordTheUserHasSelected = 'sovereignsomething';
-        if (this.state.passwordValue === thePasswordTheUserHasSelected) {
-            console.log('correct password');
-            this.setState({
-                EditTribalAdminOverlay: EditTribalAdminOverlay
-            })
+		//I could not get the success or .then callbacks/promises to work so I used the google apps script ContentService to help return javascript that will be executed to on the page globally to let this Admin component know the request has came back
+		//window.AdminPasswordValidationCallback is what is called after returning back from the following .ajax request which in turn calls this.passwordValidationLogic
+		$.ajax({
+			url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?type=validatePassword&password=' + this.state.passwordValue,
+			dataType: 'jsonp'
+		});
+	}
+	passwordValidationCallback(e) {		
+		if (e === true) {
+			console.log('correct password');
+			this.setState({
+				EditTribalAdminOverlay: EditTribalAdminOverlay
+			})
 		}
-        else {
-            console.log('incorrect password')
+		else {
+			console.log('incorrect password')
 			//set the font color red or something
 			this.setState({
 				inputFontColor: 'red'
 			})
-        }
-    }
+		}
+	}
     render() {
         let EditTribalAdminOverlay = this.state.EditTribalAdminOverlay,    //just so it doesnt look weird during the return in render
             navButtonDisplay = this.state.EditTribalAdminOverlay === '' ? '' : 'none',
