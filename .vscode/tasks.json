@@ -7,7 +7,11 @@
             "label": "build",
             "type": "shell",
             "command": "cd ./root; npm run start;",
-            "problemMatcher": []
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

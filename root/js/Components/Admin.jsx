@@ -24,6 +24,9 @@ export default class Admin extends React.Component {
 		window.AdminPasswordValidationCallback = (e) => {
 			this.passwordValidationCallback(e);
 		}
+        // window.AdminUpdateDoneCallback = (e) => {
+		// 	this.updateAdminCallback(e);
+		// }
         window.setTimeout(() => {
             this.setState({
                 animationHelper: 'fadeIn'
@@ -60,7 +63,10 @@ export default class Admin extends React.Component {
 				inputFontColor: 'red'
 			})
 		}
-	}
+    }
+    updateAdminCallback(e) {
+        alert('in updateAdminCallback')
+    }
     render() {
         let EditTribalAdminOverlay = this.state.EditTribalAdminOverlay,    //just so it doesnt look weird during the return in render
             navButtonDisplay = this.state.EditTribalAdminOverlay === '' ? '' : 'none',
@@ -143,7 +149,7 @@ class EditTribalAdminOverlay extends React.Component {
         var request = gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateSpreadsheetRequestBody);
         request.then(function (response) {
             // TODO: Change code below to process the `response` object:
-            console.log(response.result, response);
+            // console.log(response.result, response);
         }, function (reason) {
             console.error('error: ' + reason.result.error.message, reason);
         });
@@ -165,8 +171,8 @@ class EditTribalAdminOverlay extends React.Component {
         for(let i = 0; i < inputs.length; i++) {
             concatinatedString += inputs[i].value + '__$$^$$__';
         }
-        console.log(concatinatedString);
-        console.log('doing get');
+        // console.log(concatinatedString);
+        // console.log('doing get');
         $.get({
             url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
             data: {
@@ -177,7 +183,7 @@ class EditTribalAdminOverlay extends React.Component {
                 newAdmin: concatinatedString
             },
             success: (e) => {
-                console.log('e = ', e);
+                alert('successfully updated admin :)')
             }        
         })
     }
@@ -222,13 +228,13 @@ class EditTribalAdminOverlay extends React.Component {
                     </div>
                 )}
 
-                {this.state.newAdmin.length > 0 &&
+                {/* {this.state.newAdmin.length > 0 && */}
                     <div style={{ width: '100%', textAlign: 'center', marginBottom: '28px', display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
                         <center>
                             <div className='button buttonHover' style={{ ...styles.button, fontSize: '33px', display: 'inline-block' }} onClick={this.saveAdmin.bind(this)}>Save</div>
                         </center>
                     </div>
-                }
+                {/* } */}
 
 
                 {/* <SendEmail componentDidMount={this.sendEmailCallbackSetter.bind(this)} /> */}

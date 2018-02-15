@@ -53,12 +53,13 @@ module.exports = {
       });
     })
     // new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildExit:[_onBuildEnd]}),
+    */
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
     }),
     new webpack.optimize.UglifyJsPlugin()
-    */
+    
   ]
 }
