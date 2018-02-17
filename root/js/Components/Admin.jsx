@@ -8,6 +8,16 @@ import GetSheetDone from 'get-sheet-done';
 import SendEmail from './SendEmail.jsx';
 
 
+
+/*
+    TODO:
+            -add logic to update the Chief and the Assistant Chief sections within the spreadsheet
+            -after that update the components to pull in the correct data when the user is actually viewing the administration etc
+
+
+*/
+
+
 export default class Admin extends React.Component {
     constructor(props) {
         super(props);
