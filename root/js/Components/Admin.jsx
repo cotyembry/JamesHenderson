@@ -206,11 +206,20 @@ class EditTribalAdminOverlay extends React.Component {
     }
     saveAdmin() {
         let inputs = document.getElementsByClassName('administrationInput'),
-            concatinatedString = '';
+            adminAssistantInputs = document.getElementsByClassName('adminAssistant')[0],    //there is only one input right now but maybe there will be more later
+            concatinatedString = '',
+            adminAssistantString = '';
 
         for(let i = 0; i < inputs.length; i++) {
             concatinatedString += inputs[i].value + '__$$^$$__';
         }
+        for(let i = 0; i < adminAssistantInputs.length; i++) {
+            adminAssistantString += adminAssistantInputs[i].value + '__$$^$$__';
+        }
+
+
+        console.log('in save with: ', adminAssistantInputs, adminAssistantString);
+
         // console.log(concatinatedString);
         // console.log('doing get');
         $.get({
@@ -226,6 +235,19 @@ class EditTribalAdminOverlay extends React.Component {
                 alert('successfully updated admin :)')
             }        
         })       
+            $.get({
+                url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+                data: {
+                    // test: 1,
+                    // and: 'two',
+                    type: 'setAssistantChief',
+                    // dataType: 'jsonp',
+                    newAdmin: concatinatedString
+                },
+                success: (e) => {
+                    alert('successfully updated admin :)')
+                }        
+            })       
     }
     sendEmailCallbackSetter(sendEmailCallback) {
         this._sendEmail = sendEmailCallback;
@@ -262,7 +284,7 @@ class EditTribalAdminOverlay extends React.Component {
                         }
 
                         <div style={styles.alreadyAdminInputParent}>
-                            <input key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+                            <input className='adminAssistant' key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
 
                             <div>
                                 <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white', marginLeft: '5px' }} onClick={() => { this.removeAdminClicked(i) }}>-</span>
