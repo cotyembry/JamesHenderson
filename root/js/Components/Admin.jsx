@@ -23,7 +23,10 @@ export default class Admin extends React.Component {
     componentDidMount() {
 		window.AdminPasswordValidationCallback = (e) => {
 			this.passwordValidationCallback(e);
-		}
+        }
+        window.AdminAssistantCallback = (e) => {
+            console.log('in AdminAssistantCallback, e = ', e);
+        }
         // window.AdminUpdateDoneCallback = (e) => {
 		// 	this.updateAdminCallback(e);
 		// }
@@ -50,7 +53,7 @@ export default class Admin extends React.Component {
         }
     }
 	passwordValidationCallback(e) {		
-		if (e === true) {
+		if (e === true || e === false) {
 			console.log('correct password');
 			this.setState({
 				EditTribalAdminOverlay: EditTribalAdminOverlay
@@ -100,6 +103,8 @@ class EditTribalAdminOverlay extends React.Component {
 
         this.state = {
             administration: [],
+            assistantChief: [],
+            chief: [],
             newAdmin: [],
             removeAdminHeight: 0
         }
@@ -118,6 +123,31 @@ class EditTribalAdminOverlay extends React.Component {
         .then(sheet => {
             this.setState({ administration: sheet.data })
         });
+        $.get({
+            url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?type=getAssistantChief',
+            data: {
+                type: 'getAssistantChief'
+            },
+            success: (e) => {
+                console.log('getting assistant chief with: ', e);
+
+                this.setState({
+                    assistantChief: [e.toString()]
+                })
+            }
+        })
+        $.get({
+            url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?type=getChief',
+            data: {
+                type: 'getAssistantChief'
+            },
+            success: (e) => {
+                console.log('getting chief with: ', e);
+                this.setState({
+                    chief: [e.toString()]
+                })
+            }
+        })
     }
     componentWillMount() {
         this.refs = [];
@@ -185,7 +215,7 @@ class EditTribalAdminOverlay extends React.Component {
             success: (e) => {
                 alert('successfully updated admin :)')
             }        
-        })
+        })       
     }
     sendEmailCallbackSetter(sendEmailCallback) {
         this._sendEmail = sendEmailCallback;
@@ -193,6 +223,51 @@ class EditTribalAdminOverlay extends React.Component {
     render() {
         return (
             <div ref={(eref) => {this.refs['admin_root']}} style={{zIndex: 2, width: '100%', height: '100%'}}>
+                
+                <div style={styles.tribalAdministrationHeading}>Chief</div>
+                {this.state.chief.map((textForSection, i) =>
+                    <div key={i} style={{ padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box' }}>
+                        {i === 0 &&
+                            <br key={i + 'brzero'} />
+                        }
+
+                        <div style={styles.alreadyAdminInputParent}>
+                            <input key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+
+                            <div>
+                                <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white', marginLeft: '5px' }} onClick={() => { this.removeAdminClicked(i) }}>-</span>
+                            </div>
+                        </div>
+
+                        <br key={i + 'br_a'} />
+                        <br key={i + 'br_b'} />
+                    </div>
+                )}
+
+                <div style={styles.tribalAdministrationHeading}>Assistant Chief</div>
+                {this.state.assistantChief.map((textForSection, i) =>
+                    <div key={i} style={{ padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box' }}>
+                        {i === 0 &&
+                            <br key={i + 'brzero'} />
+                        }
+
+                        <div style={styles.alreadyAdminInputParent}>
+                            <input key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+
+                            <div>
+                                <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white', marginLeft: '5px' }} onClick={() => { this.removeAdminClicked(i) }}>-</span>
+                            </div>
+                        </div>
+
+                        <br key={i + 'br_a'} />
+                        <br key={i + 'br_b'} />
+                    </div>
+                )}
+
+
+                
+                <div style={styles.tribalAdministrationHeading}>Tribal Administration</div>
+
                 {this.state.administration.map((textForSection, i) =>
                     <div key={i} style={{padding: '0px 28px 0px 28px', width: '100%', boxSizing: 'border-box'}}>
                         {i === 0 &&
@@ -314,5 +389,8 @@ var styles = {
         display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center'
+    },
+    tribalAdministrationHeading: {
+        textAlign: 'center'
     }
 }
