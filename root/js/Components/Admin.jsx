@@ -195,7 +195,7 @@ class EditTribalAdminOverlay extends React.Component {
         this.setState({administration: newAdministrationArray})
     }
     saveAdmin() {
-        let inputs = document.getElementsByTagName('input'),
+        let inputs = document.getElementsByClassName('administrationInput'),
             concatinatedString = '';
 
         for(let i = 0; i < inputs.length; i++) {
@@ -275,7 +275,7 @@ class EditTribalAdminOverlay extends React.Component {
                         }
                         
                         <div style={styles.alreadyAdminInputParent}>
-                            <input key={i} style={{...styles.fontSize, width: 'calc(100% - 35px)',}} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+                            <input className='administrationInput' key={i} style={{...styles.fontSize, width: 'calc(100% - 35px)',}} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
                             
                             <div>
                                 <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white', marginLeft: '5px' }} onClick={() => {this.removeAdminClicked(i)}}>-</span>
