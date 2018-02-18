@@ -69,7 +69,7 @@ export default class Admin extends React.Component {
         }
     }
 	passwordValidationCallback(e) {		
-		if (e === true || e === false) {
+		if (e === true) {
 			console.log('correct password');
 			this.setState({
 				EditTribalAdminOverlay: EditTribalAdminOverlay
@@ -155,7 +155,7 @@ class EditTribalAdminOverlay extends React.Component {
         $.get({
             url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?type=getChief',
             data: {
-                type: 'getAssistantChief'
+                // type: 'getAssistantChief'
             },
             success: (e) => {
                 console.log('getting chief with: ', e);
@@ -295,11 +295,11 @@ class EditTribalAdminOverlay extends React.Component {
                         }
 
                         <div style={styles.alreadyAdminInputParent}>
-                            <input className='chiefInput' key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onChiefInputChange.bind(this, i)} />
+                            <input className='chiefInput' key={i} style={{ ...styles.fontSize, width: 'calc(100% - 0px)', }} value={textForSection} onChange={this.onChiefInputChange.bind(this, i)} />
 
-                            <div>
+                            {/* <div>
                                 <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white', marginLeft: '5px' }} onClick={() => { this.removeAdminClicked(i) }}>-</span>
-                            </div>
+                            </div> */}
                         </div>
 
                         <br key={i + 'br_a'} />
@@ -315,11 +315,11 @@ class EditTribalAdminOverlay extends React.Component {
                         }
 
                         <div style={styles.alreadyAdminInputParent}>
-                            <input className='adminAssistant' key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onAssistantChiefInputChange.bind(this, i)} />
+                            <input className='adminAssistant' key={i} style={{ ...styles.fontSize, width: 'calc(100% - 0px)', }} value={textForSection} onChange={this.onAssistantChiefInputChange.bind(this, i)} />
 
-                            <div>
+                            {/* <div>
                                 <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white', marginLeft: '5px' }} onClick={() => { this.removeAdminClicked(i) }}>-</span>
-                            </div>
+                            </div> */}
                         </div>
 
                         <br key={i + 'br_a'} />
