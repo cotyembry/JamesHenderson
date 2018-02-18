@@ -40,6 +40,9 @@ export default class Admin extends React.Component {
         window.AssistantChiefUpdateDoneCallback = (e) => {
             console.log('in AssistantChiefUpdateDoneCallback, e = ', e);
         }
+        window.ChiefUpdateDoneCallback = (e) => {
+            console.log('in ChiefUpdateDoneCallback, e = ', e);
+        }
         // window.AdminUpdateDoneCallback = (e) => {
 		// 	this.updateAdminCallback(e);
 		// }
@@ -210,8 +213,10 @@ class EditTribalAdminOverlay extends React.Component {
     saveAdmin() {
         let inputs = document.getElementsByClassName('administrationInput'),
             adminAssistantInputs = document.getElementsByClassName('adminAssistant')[0],    //there is only one input right now but maybe there will be more later
+            chiefInput = document.getElementsByClassName('chiefInput')[0],
             concatinatedString = '',
-            adminAssistantString = '';
+            adminAssistantString = '',
+            chiefString = '';
 
         for(let i = 0; i < inputs.length; i++) {
             concatinatedString += inputs[i].value + '__$$^$$__';
@@ -223,7 +228,7 @@ class EditTribalAdminOverlay extends React.Component {
 
         console.log('in save with: ', adminAssistantInputs, adminAssistantString);
 
-        console.log('with: ->', adminAssistantInputs, 'two ->', )
+        console.log('with: ->', chiefInput, 'two ->', chiefInput.value);
 
         // console.log(concatinatedString);
         // console.log('doing get');
@@ -236,10 +241,7 @@ class EditTribalAdminOverlay extends React.Component {
             $.get({
                 url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
                 data: {
-                    // test: 1,
-                    // and: 'two',
                     type: 'updateAdmin',
-                    // dataType: 'jsonp',
                     newAdmin: concatinatedString
                 },
                 success: (e) => {
@@ -249,26 +251,37 @@ class EditTribalAdminOverlay extends React.Component {
             $.get({
                 url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
                 data: {
-                    // test: 1,
-                    // and: 'two',
                     type: 'setAssistantChief',
-                    // dataType: 'jsonp',
                     newAssistantChief: adminAssistantInputs.value
                 },
                 success: (e) => {
                     alert('successfully updated Assistent Chief :)')
                 }        
             })     
-        
+            $.get({
+                url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?type=setChief',
+                data: {
+                    // type: 'setChief',
+                    newChief: chiefInput.value
+                },
+                success: (e) => {
+                    alert('successfully updated Chief :)')
+                }
+            })  
         }
     }
     sendEmailCallbackSetter(sendEmailCallback) {
         this._sendEmail = sendEmailCallback;
     }
-    onAssistantChiefInputChange(i) {
+    onAssistantChiefInputChange(id, event) {
         let assistantChiefArray = this.state.assistantChief.map((e) => e);
         assistantChiefArray[id] = event.value;
         this.setState({ assistantChief: assistantChiefArray });
+    }
+    onChiefInputChange(id, event) {
+        let chiefArray = this.state.chief.map((e) => e);
+        chiefArray[id] = event.value;
+        this.setState({ chief: chiefArray });
     }
     render() {
         return (
@@ -282,7 +295,7 @@ class EditTribalAdminOverlay extends React.Component {
                         }
 
                         <div style={styles.alreadyAdminInputParent}>
-                            <input key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+                            <input className='chiefInput' key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onChiefInputChange.bind(this, i)} />
 
                             <div>
                                 <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white', marginLeft: '5px' }} onClick={() => { this.removeAdminClicked(i) }}>-</span>

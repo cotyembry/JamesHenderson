@@ -45,6 +45,7 @@ export default class TribalAdministration extends React.Component {
 		super(props);
 		this.state = {
 			administration: [],		//this will eventually hold an array of strings representing the administration names to render in TribalAdministration.jsx
+			assistantChief: [],
 			marginHelper: {
 				marginLeft: 25,
 				marginRight: 25
@@ -81,6 +82,20 @@ export default class TribalAdministration extends React.Component {
 		//now I will use an npm api to make using google sheets easier
 		GetSheetDone.raw('1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo')
 		.then(sheet => this.setState({administration: sheet.data}))
+
+		$.get({
+			url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?type=getAssistantChief',
+			data: {
+				type: 'getAssistantChief'
+			},
+			success: (e) => {
+				console.log('getting assistant chief with: ', e);
+
+				this.setState({
+					assistantChief: [e.toString()]
+				})
+			}
+		})
 	}
 	render() {
 		var _styles = {}
@@ -92,6 +107,9 @@ export default class TribalAdministration extends React.Component {
 			_styles.container = { ...styles.container }
 		}
 		
+
+		console.log(this.state.assistantChief)
+
 		// {this.props.tribalAdministration.map((personsName, i) =>
 		// 	<div style={styles.fontSize}>{personsName}</div>						
 		// )}
@@ -115,9 +133,18 @@ export default class TribalAdministration extends React.Component {
 
 					<div style={_styles.container} className="hasContainer">
 						<div style={styles.positionFontSize} className="paddingBottom15"><b>Assistant Chief</b></div>
-						<br />
-						<div style={styles.fontSize}>Dwight Vincent</div>
+						{this.state.assistantChief.map((textForSection, i) =>
+							<div key={'a_' + i}>
+								{i > 0 &&
+									<br />
+								}
+								<div key={'b_' + i} style={styles.fontSize}>{textForSection}</div>
+							</div>
+						)}
 					</div>
+
+					{/* <br />
+					<div style={styles.fontSize}>Dwight Vincent</div> */}
 
 					<br />
 
