@@ -46,6 +46,7 @@ export default class TribalAdministration extends React.Component {
 		this.state = {
 			administration: [],		//this will eventually hold an array of strings representing the administration names to render in TribalAdministration.jsx
 			assistantChief: [],
+			chief: [],
 			marginHelper: {
 				marginLeft: 25,
 				marginRight: 25
@@ -96,6 +97,18 @@ export default class TribalAdministration extends React.Component {
 				})
 			}
 		})
+		$.get({
+			url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec?type=getChief',
+			data: {
+				// type: 'getAssistantChief'
+			},
+			success: (e) => {
+				console.log('getting chief with: ', e);
+				this.setState({
+					chief: [e.toString()]
+				})
+			}
+		})
 	}
 	render() {
 		var _styles = {}
@@ -125,10 +138,18 @@ export default class TribalAdministration extends React.Component {
 
 					<div style={_styles.container} className="hasContainer">
 						<div style={styles.positionFontSize} className="paddingBottom15"><b>Tribal Chief</b></div>
-						<br />
-						<div style={styles.fontSize}>Albert McKay</div>
+						{this.state.chief.map((textForSection, i) =>
+							<div key={'a_' + i}>
+								{i > 0 &&
+									<br />
+								}
+								<div key={'b_' + i} style={styles.fontSize}>{textForSection}</div>
+							</div>
+						)}
 					</div>
 
+						{/* <br />
+						<div style={styles.fontSize}>Albert McKay</div> */}
 					<br />
 
 					<div style={_styles.container} className="hasContainer">
