@@ -37,6 +37,9 @@ export default class Admin extends React.Component {
         window.AdminAssistantCallback = (e) => {
             console.log('in AdminAssistantCallback, e = ', e);
         }
+        window.AssistantChiefUpdateDoneCallback = (e) => {
+            console.log('in AssistantChiefUpdateDoneCallback, e = ', e);
+        }
         // window.AdminUpdateDoneCallback = (e) => {
 		// 	this.updateAdminCallback(e);
 		// }
@@ -169,31 +172,31 @@ class EditTribalAdminOverlay extends React.Component {
         }
         return parseFloat(inputHeight);
     }
-    makeApiCall() {
-        var params = {
-            // The spreadsheet to apply the updates to.
-            spreadsheetId: '1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo'
-        };
-        var batchUpdateSpreadsheetRequestBody = {
-            // A list of updates to apply to the spreadsheet.
-            // Requests will be applied in the order they are specified.
-            // If any request is not valid, no requests will be applied.
-            requests: [
-                'one',
-                'two',
-                'three'
-            ]
+    // makeApiCall() {
+    //     var params = {
+    //         // The spreadsheet to apply the updates to.
+    //         spreadsheetId: '1hZr_x7r36h_qAe0bpQ6P33Bxd5msf5tpg1eS2J3uDFo'
+    //     };
+    //     var batchUpdateSpreadsheetRequestBody = {
+    //         // A list of updates to apply to the spreadsheet.
+    //         // Requests will be applied in the order they are specified.
+    //         // If any request is not valid, no requests will be applied.
+    //         requests: [
+    //             'one',
+    //             'two',
+    //             'three'
+    //         ]
 
-            // TODO: Add desired properties to the request body.
-        };
-        var request = gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateSpreadsheetRequestBody);
-        request.then(function (response) {
-            // TODO: Change code below to process the `response` object:
-            // console.log(response.result, response);
-        }, function (reason) {
-            console.error('error: ' + reason.result.error.message, reason);
-        });
-    }
+    //         // TODO: Add desired properties to the request body.
+    //     };
+    //     var request = gapi.client.sheets.spreadsheets.batchUpdate(params, batchUpdateSpreadsheetRequestBody);
+    //     request.then(function (response) {
+    //         // TODO: Change code below to process the `response` object:
+    //         // console.log(response.result, response);
+    //     }, function (reason) {
+    //         console.error('error: ' + reason.result.error.message, reason);
+    //     });
+    // }
     onInputChange(id, event) {
         let adminArray = this.state.administration.map((e) => e);
         adminArray[id] = event.value;
@@ -220,21 +223,29 @@ class EditTribalAdminOverlay extends React.Component {
 
         console.log('in save with: ', adminAssistantInputs, adminAssistantString);
 
+        console.log('with: ->', adminAssistantInputs, 'two ->', )
+
         // console.log(concatinatedString);
         // console.log('doing get');
-        $.get({
-            url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
-            data: {
-                // test: 1,
-                // and: 'two',
-                type: 'updateAdmin',
-                // dataType: 'jsonp',
-                newAdmin: concatinatedString
-            },
-            success: (e) => {
-                alert('successfully updated admin :)')
-            }        
-        })       
+       
+       
+        let turnOffGetRequests = false;
+
+        if(turnOffGetRequests === false) {
+       
+            $.get({
+                url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
+                data: {
+                    // test: 1,
+                    // and: 'two',
+                    type: 'updateAdmin',
+                    // dataType: 'jsonp',
+                    newAdmin: concatinatedString
+                },
+                success: (e) => {
+                    alert('successfully updated Tribal Administration :)')
+                }        
+            })       
             $.get({
                 url: 'https://script.google.com/macros/s/AKfycbw3jmNPfOGLzWA5gPjsVHE2_LA_ey4R6hFgeIh_hWSVhzqreQwj/exec',
                 data: {
@@ -242,15 +253,22 @@ class EditTribalAdminOverlay extends React.Component {
                     // and: 'two',
                     type: 'setAssistantChief',
                     // dataType: 'jsonp',
-                    newAdmin: concatinatedString
+                    newAssistantChief: adminAssistantInputs.value
                 },
                 success: (e) => {
-                    alert('successfully updated admin :)')
+                    alert('successfully updated Assistent Chief :)')
                 }        
-            })       
+            })     
+        
+        }
     }
     sendEmailCallbackSetter(sendEmailCallback) {
         this._sendEmail = sendEmailCallback;
+    }
+    onAssistantChiefInputChange(i) {
+        let assistantChiefArray = this.state.assistantChief.map((e) => e);
+        assistantChiefArray[id] = event.value;
+        this.setState({ assistantChief: assistantChiefArray });
     }
     render() {
         return (
@@ -284,7 +302,7 @@ class EditTribalAdminOverlay extends React.Component {
                         }
 
                         <div style={styles.alreadyAdminInputParent}>
-                            <input className='adminAssistant' key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onInputChange.bind(this, i)} />
+                            <input className='adminAssistant' key={i} style={{ ...styles.fontSize, width: 'calc(100% - 35px)', }} value={textForSection} onChange={this.onAssistantChiefInputChange.bind(this, i)} />
 
                             <div>
                                 <span className='button buttonHover' style={{ ...styles.button, backgroundColor: 'red', color: 'white', marginLeft: '5px' }} onClick={() => { this.removeAdminClicked(i) }}>-</span>
