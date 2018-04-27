@@ -28,6 +28,7 @@
     "react-nav-bar": "^0.6.4",
     "react-navbar": "^1.0.0",
     "react-pdf": "^1.8.3",
+    "react-pdf-js": "^3.0.7",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   },
